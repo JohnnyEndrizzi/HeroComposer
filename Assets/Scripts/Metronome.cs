@@ -34,7 +34,6 @@ public class Metronome {
         //Fire an initial tick on beat 0
         if (initalTick == false)
         {
-
             args.positionInBeats = 0;
             Tick(this, args);
             Debug.Log("Metronome ticked at beat 0.");
@@ -47,7 +46,7 @@ public class Metronome {
             positionInBeats += (float)1/beatDivisions;
             args.positionInBeats = positionInBeats;
             Tick(this, args);
-            Debug.Log(string.Format("Metronome ticked for beat {0} at {1}. Next tick at {2}", positionInBeats, currentTime, nextTickTime));
+            //Debug.Log(string.Format("Metronome ticked for beat {0} at {1}. Next tick at {2}", positionInBeats, currentTime, nextTickTime));
             nextTickTime += tickLength;
         }
     }
