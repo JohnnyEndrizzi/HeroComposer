@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Curtains
+  m_Name: CurtainsClose
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -33,7 +33,7 @@ AnimationClip:
     - time: 0.5
       value: {fileID: 21300000, guid: f90784f7d8eca5d4688a87f562b57d38, type: 3}
     - time: 0.5833333
-      value: {fileID: 21300000, guid: 6a9009bc3248da84d8d308a32c83f5bc, type: 3}
+      value: {fileID: 21300000, guid: aeffd3707b54b3c4dbd04c42b944a473, type: 3}
     - time: 0.6666667
       value: {fileID: 21300000, guid: 72673ea82af350c4faf3d0535c7e6717, type: 3}
     - time: 0.75
@@ -72,7 +72,7 @@ AnimationClip:
     - {fileID: 21300000, guid: eec18c0f3137f8140ac4bea9d5c4cf77, type: 3}
     - {fileID: 21300000, guid: b725049659f58c34bb9d57d0b545528d, type: 3}
     - {fileID: 21300000, guid: f90784f7d8eca5d4688a87f562b57d38, type: 3}
-    - {fileID: 21300000, guid: 6a9009bc3248da84d8d308a32c83f5bc, type: 3}
+    - {fileID: 21300000, guid: aeffd3707b54b3c4dbd04c42b944a473, type: 3}
     - {fileID: 21300000, guid: 72673ea82af350c4faf3d0535c7e6717, type: 3}
     - {fileID: 21300000, guid: 3b62a60658e66a841875b7321626170a, type: 3}
     - {fileID: 21300000, guid: c6cd5baba0b0e4c4c862570ab35cbd46, type: 3}

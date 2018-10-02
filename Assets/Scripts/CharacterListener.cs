@@ -68,8 +68,6 @@ public class CharacterListener : MonoBehaviour
 
         Vector3 toPosition = new Vector3(2.53f, 1.5f, -7.77f);
 
-        Debug.Log(toPosition);
-
         float counter = 0;
         while (counter < duration)
         {
@@ -127,7 +125,7 @@ public class CharacterListener : MonoBehaviour
         while (counter < duration)
         {
             counter += Time.deltaTime;
-            fromPosition.position = Vector3.Lerp(toPosition, startPos, counter / duration); ;
+            fromPosition.position = Vector3.Lerp(toPosition, startPos, counter / duration);
             yield return null;
         }
 
