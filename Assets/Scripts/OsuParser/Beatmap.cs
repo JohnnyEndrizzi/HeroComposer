@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 namespace OsuParser
 {
@@ -37,6 +38,25 @@ namespace OsuParser
                 {
                     Parse(beatmapFile);
                 }
+            }
+        }
+
+        public float GetApproachRate()
+        {
+            //Spawn 0.25*(4 - ApproachRate) beats earlier
+            if (ApproachRate < 4)
+            {
+                return 4.0f + 0.25f*(4.0f - ApproachRate);
+            }
+            //Spawn 0.25*(ApproachRate - 4) beats later 
+            else if (ApproachRate > 4)
+            {
+                return 4.0f - 0.25f*(ApproachRate - 4.0f);
+            }
+            //Default is 4 notes in advance 
+            else
+            {
+                return ApproachRate;
             }
         }
 
@@ -102,7 +122,7 @@ namespace OsuParser
                     else if((type & HitObjectType.Slider) > 0)
                     {
                         //Add new slider hit object
-                        HitObjects.Add(new SliderObject(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), (float)Convert.ToDouble(values[2]), (float)Convert.ToDouble(Convert.ToInt32(values[7]))));
+                        HitObjects.Add(new SliderObject(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), (float)Convert.ToDouble(values[2]), (float)Convert.ToDouble(values[7])));
                     }
                     //[Spinner]
                     else if((type & HitObjectType.Spinner) > 0)

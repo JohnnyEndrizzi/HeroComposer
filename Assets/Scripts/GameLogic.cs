@@ -47,7 +47,7 @@ public class GameLogic : MonoBehaviour
     void Start ()
     {
         Debug.Log("Loading beatmap file...");
-        beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Songs/trigger_happy-normal.osu");
+        beatmap = new Beatmap("C:/Users/nicol/Documents/McMaster Year 2018/Semester 1/4GP6/HeroComposer/Assets/Songs/trigger_happy-expert.osu");
         startPos = new Vector3(-3.06f, 2.15F, -7.45F);
         endPos = new Vector3(2.88F, 2.15F, -7.45F);
 
@@ -86,7 +86,7 @@ public class GameLogic : MonoBehaviour
             return;
         }
         //Spawn next note
-        else if (e.positionInBeats == (beatmap.HitObjects[noteIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) - beatmap.ApproachRate))
+        else if (e.positionInBeats == (beatmap.HitObjects[noteIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) - beatmap.GetApproachRate()))
         {
             //Debug.Log(string.Format("Spawning note {0} at beat {1}.", noteIndex, e.positionInBeats));
             SpriteRenderer beatSprite;
@@ -98,7 +98,7 @@ public class GameLogic : MonoBehaviour
             beatSprite.GetComponent<CircleNote>().endPos = endPos;
             beatSprite.GetComponent<CircleNote>().beatNumber = noteIndex;
 
-            beatSprite.GetComponent<CircleNote>().approachRate = beatmap.ApproachRate;
+            beatSprite.GetComponent<CircleNote>().approachRate = beatmap.GetApproachRate();
             beatSprite.GetComponent<CircleNote>().startTimeInBeats = beatmap.HitObjects[noteIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
             beatSprite.GetComponent<CircleNote>().songPosInBeats = e.positionInBeats;
 
