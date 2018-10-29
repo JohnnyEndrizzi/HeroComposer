@@ -74,7 +74,14 @@ public class SliderNote : MonoBehaviour
             }
 
             /* Caclulate distance between primary note and set point (in world space) */
-            barSize.x = Mathf.Abs(primaryNote.GetComponent<RectTransform>().anchoredPosition.x - (-363));
+            if (primaryNote == null)
+            {
+                barSize.x = Mathf.Abs(328 - (-363));
+            }
+            else
+            {
+                barSize.x = Mathf.Abs(primaryNote.GetComponent<RectTransform>().anchoredPosition.x - (-363));
+            }
 
             /* Resize Bar until second object with share id is instanitated*/
             gameObject.GetComponent<RectTransform>().sizeDelta = barSize;
