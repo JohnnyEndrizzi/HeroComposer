@@ -6,6 +6,9 @@ TagManager:
   tags:
   - CircleNotesLayer
   - HoldNotesLayer
+  - NotesLayer
+  - PrimaryNote
+  - SecondaryNote
   layers:
   - Default
   - TransparentFX
