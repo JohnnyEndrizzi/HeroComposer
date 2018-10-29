@@ -55,7 +55,7 @@ public class GameLogic : MonoBehaviour
     void Start ()
     {
         Debug.Log("Loading beatmap file...");
-        beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Songs/trigger_happy-normal.osu");
+        beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Songs/trigger_happy-hard.osu");
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
 
@@ -116,7 +116,7 @@ public class GameLogic : MonoBehaviour
         }
 
         //Spawn next note
-        if (e.positionInBeats == (nextBeat - beatmap.ApproachRate))
+        if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
         {
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
             if (inSliderRange && firstNoteOfSlider == true)
@@ -165,7 +165,7 @@ public class GameLogic : MonoBehaviour
                     holdNoteGO.GetComponent<SliderNote>().startPos = barStartPos;
                     holdNoteGO.GetComponent<SliderNote>().endPos = barEndPos;
 
-                    holdNoteGO.GetComponent<SliderNote>().approachRate = beatmap.ApproachRate;
+                    holdNoteGO.GetComponent<SliderNote>().approachRate = beatmap.GetApproachRate();
                     holdNoteGO.GetComponent<SliderNote>().songPosInBeats = e.positionInBeats;
 
                     //------------------------------------------------------------------------------
@@ -181,7 +181,7 @@ public class GameLogic : MonoBehaviour
             beatSprite.GetComponent<CircleNote>().endPos = endPos;
             beatSprite.GetComponent<CircleNote>().beatNumber = nextBeat;
 
-            beatSprite.GetComponent<CircleNote>().approachRate = beatmap.ApproachRate;
+            beatSprite.GetComponent<CircleNote>().approachRate = beatmap.GetApproachRate();
             beatSprite.GetComponent<CircleNote>().songPosInBeats = e.positionInBeats;
 
             if (iterationsLeft == 1)
