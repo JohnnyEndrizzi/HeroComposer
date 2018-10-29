@@ -18,7 +18,7 @@ namespace OsuParser
 
         protected Point Position;
         protected float StartTime { get; set; }
-        protected HitObjectType HitObjectType { get; set; }
+        public HitObjectType HitObjectType { get; set; }
 
         //Return the time in ms the note should be hit
         public float StartTimeInMiliseconds()

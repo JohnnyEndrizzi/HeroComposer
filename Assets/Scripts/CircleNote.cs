@@ -2,25 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleNote : MonoBehaviour {
-
-    public Vector3 startPos;
-    public Vector3 endPos;
+public class CircleNote : MonoBehaviour
+{
+    public Vector2 startPos;
+    public Vector2 endPos;
 
     public float approachRate;
     public float startTimeInBeats;
     public float songPosInBeats;
-    public int beatNumber;
+    public float beatNumber;
 
-	// Update is called once per frame
-	void Update ()
+    public float id;
+    public bool firstNoteOfSlider;
+    public bool secondNoteOfSlider;
+    public float endTimeOfSlider;
+
+    // Update is called once per frame
+    void Update ()
     {
-        transform.position = Vector3.Lerp(startPos, endPos, (approachRate - (startTimeInBeats - songPosInBeats)) / approachRate);
-        if (transform.position == endPos)
+        if (transform.GetComponent<RectTransform>().anchoredPosition != endPos)
         {
-            //Debug.Log(string.Format("Deleting note {0}.", beatNumber));
-            Destroy(transform.root.gameObject);
-            GameLogic.hitIndex++;
+            transform.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(startPos, endPos, (approachRate - (startTimeInBeats - songPosInBeats)) / approachRate);
+        }
+        else
+        {
+            if (firstNoteOfSlider)
+            {
+                if (songPosInBeats >= endTimeOfSlider)
+                {
+                    Debug.Log("Delete Secondary Note: " + id);
+                    Destroy(transform.gameObject);
+                }
+            }
+            else
+            {
+                Debug.Log("Delete Primary Note: " + id);
+                Destroy(transform.gameObject);
+                GameLogic.hitIndex++;
+            }
         }
     }
 

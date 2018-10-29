@@ -57,7 +57,6 @@ MonoBehaviour:
   approachRate: 0
   startTimeInBeats: 0
   songPosInBeats: 0
-  beatNumber: 0
 --- !u!212 &212850710424538098
 SpriteRenderer:
   m_ObjectHideFlags: 1

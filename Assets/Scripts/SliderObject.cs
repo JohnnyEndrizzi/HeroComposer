@@ -30,7 +30,7 @@ namespace OsuParser
 
         public float EndTimeInBeats(float beatLength, float sliderMultiplier)
         {
-            return PixelLength/(100*sliderMultiplier);
+            return PixelLength / (100 * sliderMultiplier);
         }
     }
 }
