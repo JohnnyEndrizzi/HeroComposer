@@ -9,6 +9,8 @@ TagManager:
   - NotesLayer
   - PrimaryNote
   - SecondaryNote
+  - SongDropdown
+  - DifficultyDropdown
   layers:
   - Default
   - TransparentFX

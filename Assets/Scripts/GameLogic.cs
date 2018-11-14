@@ -15,6 +15,7 @@ public class GameLogic : MonoBehaviour
     public SpriteRenderer curtains;
 
     public static float nextHit;
+    public static float nextHitEnd = 0;
     public static int hitIndex = 0;
     public bool introFinished;
 
@@ -54,8 +55,8 @@ public class GameLogic : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        Debug.Log("Loading beatmap file...");
-        beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Songs/trigger_happy-hard.osu");
+        Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
+        beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
 
@@ -71,6 +72,11 @@ public class GameLogic : MonoBehaviour
             if (!notesDone)
             {
                 nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
+
+                if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
+                {
+                    nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
+                }
             }
             else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
             {
@@ -132,7 +138,7 @@ public class GameLogic : MonoBehaviour
 
             if (inSliderRange)
             {
-                Debug.Log(string.Format("Spawning slider note {0} at beat {1}.", noteIndex, e.positionInBeats));
+                //Debug.Log(string.Format("Spawning slider note {0} at beat {1}.", noteIndex, e.positionInBeats));
                 //beatSprite.GetComponent<Image>().color = Color.green;
 
                 if (firstNoteOfSlider == true)
@@ -141,11 +147,9 @@ public class GameLogic : MonoBehaviour
                     float startTime = currObject.StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
                     endTime = ((SliderObject)currObject).EndTimeInBeats((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + startTime;
 
-                    Debug.Log(string.Format("Spawning slider bar for index {0} at beat {1}.", noteIndex, e.positionInBeats));
+                    //Debug.Log(string.Format("Spawning slider bar for index {0} at beat {1}.", noteIndex, e.positionInBeats));
                     beatSprite.GetComponent<CircleNote>().firstNoteOfSlider = firstNoteOfSlider;
                     beatSprite.GetComponent<CircleNote>().endTimeOfSlider = endTime;
-
-                    //------------------------------------------------------------------------------
 
                     Vector2 barStartPos = startPos;
                     Vector2 barEndPos = endPos;
@@ -167,9 +171,6 @@ public class GameLogic : MonoBehaviour
 
                     holdNoteGO.GetComponent<SliderNote>().approachRate = beatmap.GetApproachRate();
                     holdNoteGO.GetComponent<SliderNote>().songPosInBeats = e.positionInBeats;
-
-                    //------------------------------------------------------------------------------
-
                 }
             }
 

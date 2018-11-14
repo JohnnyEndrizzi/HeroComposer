@@ -115,14 +115,13 @@ public class SliderNote : MonoBehaviour
             }
             else
             {
-                Debug.Log("DONE");
                 doneScaleLerp2 = true;
             }
         }
         
         if (donelerp && doneScaleLerp1 && doneScaleLerp2)
         {
-            Debug.Log("Delete Bar:  " + id);
+            //Debug.Log("Delete Bar:  " + id);
             Destroy(transform.gameObject);
         }
     }

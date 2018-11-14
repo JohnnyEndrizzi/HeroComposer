@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
 {
+    public GameObject noteBarCircle;
+
     public AudioClip ATK_sfx;
     public AudioClip DEF_low_sfx;
     public AudioClip DEF_high_sfx;
@@ -21,41 +23,44 @@ public class CharacterListener : MonoBehaviour
 
     public SpriteRenderer shield;
 
+    private bool inSliderHitRange = false;
+    private bool keyUp;
+    private bool keyHold;
+
     void CheckInputBeat(int character_num, decimal time)
     {
         decimal hitTime = time * 1000;
         decimal nextTime = (decimal)GameLogic.nextHit + (1000 * GameLogic.songStartTime);
 
-        Debug.Log(string.Format("{0} Command with Character {1}: {2}", ClickListener.menu_state, character_num, time));
-        Debug.Log(string.Format("Next Hit = {0}, Input Hit = {1}", nextTime, hitTime));
+        //Debug.Log(string.Format("{0} Command with Character {1}: {2}", ClickListener.menu_state, character_num, time));
+        //Debug.Log(string.Format("Next Hit = {0}, Input Hit = {1}", nextTime, hitTime));
 
         SpriteRenderer noteScoreSprite;
-        SpriteRenderer note;
 
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
-            Debug.Log("PERFECT");
+            //Debug.Log("PERFECT");
             noteScoreSprite = perfect_note_sprite;
         }
         else if (errorDifference <= 100)
         {
-            Debug.Log("GREAT");
+            //Debug.Log("GREAT");
             noteScoreSprite = great_note_sprite;
         }
         else if (errorDifference <=  200)
         {
-            Debug.Log("GOOD");
+            //Debug.Log("GOOD");
             noteScoreSprite = good_note_sprite;
         }
         else
         {
             /* It should say 'Miss' only when a note passes, not on invalid clicks */
-            Debug.Log("MISS");
+            //Debug.Log("MISS");
             noteScoreSprite = miss_note_sprite;
         }
 
-        StartCoroutine(spawnNoteScore(new Vector3(2.53f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
+        StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
     }
 
     private int currentSprite = 0;
@@ -66,7 +71,7 @@ public class CharacterListener : MonoBehaviour
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
-        Vector3 toPosition = new Vector3(2.53f, 1.5f, -7.77f);
+        Vector3 toPosition = new Vector3(2.45f, 1.5f, -7.77f);
 
         float counter = 0;
         while (counter < duration)
@@ -136,25 +141,49 @@ public class CharacterListener : MonoBehaviour
     {
         GameObject toUseGO = null;
 
-        if (Event.current.Equals(Event.KeyboardEvent("u")))
+        decimal time = ((decimal)AudioSettings.dspTime + 0.150m) * 1000;
+        if (time > ((decimal)GameLogic.nextHit + (1000 * GameLogic.songStartTime)) && 
+            time < ((decimal)GameLogic.nextHitEnd + (1000 * GameLogic.songStartTime)))
+        {
+            inSliderHitRange = true;
+        }
+        else
+        {
+            inSliderHitRange = false;
+        }
+
+        Event e = Event.KeyboardEvent("u");
+
+        if (Input.GetKeyDown("u") || Input.GetKeyDown("i") || Input.GetKeyDown("o") || Input.GetKeyDown("p"))
+        {
+            //Debug.Log("Down");
+            noteBarCircle.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else if (Input.GetKeyUp("u") || Input.GetKeyUp("i") || Input.GetKeyUp("o") || Input.GetKeyUp("p"))
+        {
+            //Debug.Log("Up");
+            noteBarCircle.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
+        if ((Event.current.Equals(Event.KeyboardEvent("u")) && !Input.GetKey("u")) || Input.GetKeyUp("u"))//Event.current.Equals(Event.KeyboardEvent("u")))
         {
             CheckInputBeat(1, ((decimal)AudioSettings.dspTime + 0.150m));
             toUseGO = character_1;
             currentSprite = 1;
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("i")))
+        else if ((Event.current.Equals(Event.KeyboardEvent("i")) && !Input.GetKey("i")) || Input.GetKeyUp("i"))
         {
             CheckInputBeat(2, ((decimal)AudioSettings.dspTime + 0.150m));
             toUseGO = character_2;
             currentSprite = 2;
-        }
-        else if (Event.current.Equals(Event.KeyboardEvent("o")))
+        } 
+        else if ((Event.current.Equals(Event.KeyboardEvent("o")) && !Input.GetKey("o")) || Input.GetKeyUp("o"))
         {
             CheckInputBeat(3, ((decimal)AudioSettings.dspTime + 0.150m));
             toUseGO = character_3;
             currentSprite = 3;
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("p")))
+        else if ((Event.current.Equals(Event.KeyboardEvent("p")) && !Input.GetKey("p")) || Input.GetKeyUp("p"))
         {
             CheckInputBeat(4, ((decimal)AudioSettings.dspTime + 0.150m));
             toUseGO = character_4;
@@ -165,8 +194,8 @@ public class CharacterListener : MonoBehaviour
         {
             if (ClickListener.menu_state == ClickListener.state.ATK)
             {
-                GetComponent<AudioSource>().PlayOneShot(ATK_sfx, 0.7F);
-                StartCoroutine(attackMovement(toUseGO.transform, boss.transform.position, 0.1f, currentSprite));
+                GetComponent<AudioSource>().PlayOneShot(ATK_sfx, 0.5F);
+                StartCoroutine(attackMovement(toUseGO.transform, boss.transform.position, 0.075f, currentSprite));
             }
             else if (ClickListener.menu_state == ClickListener.state.DEF)
             {

@@ -30,13 +30,13 @@ public class CircleNote : MonoBehaviour
             {
                 if (songPosInBeats >= endTimeOfSlider)
                 {
-                    Debug.Log("Delete Secondary Note: " + id);
+                    //Debug.Log("Delete Secondary Note: " + id);
                     Destroy(transform.gameObject);
                 }
             }
             else
             {
-                Debug.Log("Delete Primary Note: " + id);
+                //Debug.Log("Delete Primary Note: " + id);
                 Destroy(transform.gameObject);
                 GameLogic.hitIndex++;
             }
