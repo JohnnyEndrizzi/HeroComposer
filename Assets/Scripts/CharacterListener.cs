@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
-{
-    public GameObject noteBarCircle;
-
+{ 
     public AudioClip ATK_sfx;
     public AudioClip DEF_low_sfx;
     public AudioClip DEF_high_sfx;
@@ -26,6 +24,12 @@ public class CharacterListener : MonoBehaviour
     private bool inSliderHitRange = false;
     private bool keyUp;
     private bool keyHold;
+    private Color color;
+
+    public void ChangeNoteBarHighlight(Color c)
+    {
+        GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
+    }
 
     void CheckInputBeat(int character_num, decimal time)
     {
@@ -66,7 +70,7 @@ public class CharacterListener : MonoBehaviour
     private int currentSprite = 0;
     private int[] lockCoroutine = {0, 0, 0, 0};
 
-    IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
+    public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
@@ -137,6 +141,11 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 0;
     }
 
+    void Start()
+    {
+        color = Color.red;
+    }
+
     void OnGUI()
     {
         GameObject toUseGO = null;
@@ -152,18 +161,18 @@ public class CharacterListener : MonoBehaviour
             inSliderHitRange = false;
         }
 
-        Event e = Event.KeyboardEvent("u");
+        //Event e = Event.KeyboardEvent("u");
 
         if (Input.GetKeyDown("u") || Input.GetKeyDown("i") || Input.GetKeyDown("o") || Input.GetKeyDown("p"))
         {
-            //Debug.Log("Down");
-            noteBarCircle.GetComponent<SpriteRenderer>().color = Color.white;
+            color = Color.white;
         }
         else if (Input.GetKeyUp("u") || Input.GetKeyUp("i") || Input.GetKeyUp("o") || Input.GetKeyUp("p"))
         {
-            //Debug.Log("Up");
-            noteBarCircle.GetComponent<SpriteRenderer>().color = Color.red;
+            color = Color.red;
         }
+
+        ChangeNoteBarHighlight(color);
 
         if ((Event.current.Equals(Event.KeyboardEvent("u")) && !Input.GetKey("u")) || Input.GetKeyUp("u"))//Event.current.Equals(Event.KeyboardEvent("u")))
         {

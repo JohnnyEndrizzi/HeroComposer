@@ -11,6 +11,11 @@ TagManager:
   - SecondaryNote
   - SongDropdown
   - DifficultyDropdown
+  - NoteBar
+  - Character
+  - Boss
+  - Curtains
+  - Stage
   layers:
   - Default
   - TransparentFX
