@@ -330,6 +330,10 @@ Prefab:
       propertyPath: noteBarCircle
       value: 
       objectReference: {fileID: 1914263174}
+    - target: {fileID: 1776005878029106, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
+      propertyPath: m_TagString
+      value: Menu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0

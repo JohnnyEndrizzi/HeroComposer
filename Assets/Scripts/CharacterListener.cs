@@ -161,8 +161,6 @@ public class CharacterListener : MonoBehaviour
             inSliderHitRange = false;
         }
 
-        //Event e = Event.KeyboardEvent("u");
-
         if (Input.GetKeyDown("u") || Input.GetKeyDown("i") || Input.GetKeyDown("o") || Input.GetKeyDown("p"))
         {
             color = Color.white;

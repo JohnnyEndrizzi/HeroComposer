@@ -16,6 +16,7 @@ TagManager:
   - Boss
   - Curtains
   - Stage
+  - Menu
   layers:
   - Default
   - TransparentFX
