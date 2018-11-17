@@ -13,12 +13,7 @@ public class CharacterListener : MonoBehaviour
     public GameObject character_3;
     public GameObject character_4;
     public GameObject boss;
-
-    public SpriteRenderer miss_note_sprite;
-    public SpriteRenderer good_note_sprite;
-    public SpriteRenderer great_note_sprite;
-    public SpriteRenderer perfect_note_sprite;
-
+    
     public SpriteRenderer shield;
 
     private bool inSliderHitRange = false;
@@ -31,44 +26,52 @@ public class CharacterListener : MonoBehaviour
         GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
     }
 
-    void CheckInputBeat(int character_num, decimal time)
+    public SpriteRenderer CalculateInputAccuracy(decimal nextTime, decimal hitTime)
     {
-        decimal hitTime = time * 1000;
-        decimal nextTime = (decimal)GameLogic.nextHit + (1000 * GameLogic.songStartTime);
-
-        //Debug.Log(string.Format("{0} Command with Character {1}: {2}", ClickListener.menu_state, character_num, time));
-        //Debug.Log(string.Format("Next Hit = {0}, Input Hit = {1}", nextTime, hitTime));
-
         SpriteRenderer noteScoreSprite;
 
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
             //Debug.Log("PERFECT");
-            noteScoreSprite = perfect_note_sprite;
+            noteScoreSprite = Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
             //Debug.Log("GREAT");
-            noteScoreSprite = great_note_sprite;
+            noteScoreSprite = Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
-        else if (errorDifference <=  200)
+        else if (errorDifference <= 200)
         {
             //Debug.Log("GOOD");
-            noteScoreSprite = good_note_sprite;
+            noteScoreSprite = Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
             /* It should say 'Miss' only when a note passes, not on invalid clicks */
             //Debug.Log("MISS");
-            noteScoreSprite = miss_note_sprite;
+            noteScoreSprite = Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
 
+        return noteScoreSprite;
+    }
+
+    void CheckInputBeat(int character_num, decimal time)
+    {
+        decimal hitTime = time * 1000;
+        decimal nextTime = (decimal)GameLogic.nextHit + (1000 * GameLogic.songStartTime);
+
+        SpriteRenderer noteScoreSprite = CalculateInputAccuracy(nextTime, hitTime);
         StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
     }
 
+    public void moveNoteScore(float counter, float duration, SpriteRenderer score, Vector3 spawnPoint, Vector3 toPosition)
+    {
+        score.transform.position = Vector3.Lerp(spawnPoint, toPosition, counter / duration);
+    }
+
     private int currentSprite = 0;
-    private int[] lockCoroutine = {0, 0, 0, 0};
+    private int[] lockCoroutine = { 0, 0, 0, 0 };
 
     public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
@@ -80,8 +83,9 @@ public class CharacterListener : MonoBehaviour
         float counter = 0;
         while (counter < duration)
         {
+            moveNoteScore(counter, duration, score, spawnPoint, toPosition);
+
             counter += Time.deltaTime;
-            score.transform.position = Vector3.Lerp(spawnPoint, toPosition, counter / duration);
             yield return null;
         }
 

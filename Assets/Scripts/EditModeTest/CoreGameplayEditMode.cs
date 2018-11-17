@@ -55,6 +55,44 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
+    [UnityTest]
+    public IEnumerator NoteBarAccuracyCalculation()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        /* Error Bounds
+         * (25 >= x >= 0):   Perfect 
+         * (100 >= x > 25):  Great
+         * (200 >= x > 100): Good
+         * (200 < x):        Miss */
+        CharacterListener test = new CharacterListener();
+
+        Debug.Log(test.CalculateInputAccuracy(125, 100));
+
+        if (test.CalculateInputAccuracy(125, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect"))
+        {
+            Assert.Fail();
+        }
+
+        if (test.CalculateInputAccuracy(150, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great"))
+        {
+            Assert.Fail();
+        }
+
+        if (test.CalculateInputAccuracy(250, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good"))
+        {
+            Assert.Fail();
+        }
+
+        if (test.CalculateInputAccuracy(350, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss"))
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
     // ==== Characters ====
 
     [UnityTest]
@@ -108,26 +146,6 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    [UnityTest]
-    public IEnumerator NoteAccuracyTextExists() // Doesn't work yet
-    {
-        SetupCoreScene("Assets/Scenes/main.unity");
-    
-        CharacterListener test = new CharacterListener();
-    
-        SpriteRenderer noteScoreSprite = Resources.Load("Assets/Prefabs/NoteMessage/Perfect.prefab") as SpriteRenderer;
-    
-        StartCoroutine(test.spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 5.3f, noteScoreSprite));
-    
-        if (GameObject.Find("Perfect") != null)
-        {
-            Assert.Pass();
-        }
-
-        Assert.Fail();
-        yield return null;
-    }
-
     // ==== Menu ====
 
     [UnityTest]
@@ -161,7 +179,7 @@ public class CoreGameplayTest : MonoBehaviour
     [UnityTest]
     public IEnumerator MenuHasCorrectStateAndSpriteUponChange()
     {
-        SetupCoreScene("Assets/Scenes/TestScene.unity");
+        SetupCoreScene("Assets/Scenes/main.unity");
 
         GameObject Menu = GameObject.FindGameObjectWithTag("Menu");
         if (Menu == null)
@@ -223,7 +241,90 @@ public class CoreGameplayTest : MonoBehaviour
 
     // ==== Boss ====
 
+    [UnityTest]
+    public IEnumerator BossExists()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectsWithTag("Boss") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator BossPosition()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectWithTag("Boss").transform.position == new Vector3(-3.5f, 1.16f, -5.5f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
     // ==== Scene ====
+
+    [UnityTest]
+    public IEnumerator SceneCurtainExists()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectsWithTag("Curtains") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneCurtainPosition()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectWithTag("Curtains").transform.position == new Vector3(0.0f, 1.43f, -7.95f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneStageExists()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectsWithTag("Stage") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneStagePosition()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectWithTag("Stage").transform.position == new Vector3(0.0f, 7.9f, -2.0f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
 
     // Yifu code
 
