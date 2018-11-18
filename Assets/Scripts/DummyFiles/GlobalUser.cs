@@ -7,6 +7,7 @@ public class GlobalUser : MonoBehaviour
 {
     private int Cash = 0;
     private List<GameItems> UserItems = new List<GameItems> { };
+    public List<Characters> CharacterList = new List<Characters> { };
     public int AddCash(int add)
     {
         return 0;
@@ -18,6 +19,10 @@ public class GlobalUser : MonoBehaviour
     public List<GameItems> GetItemList()
     {
         return new List<GameItems> { };
+    }
+    public List<Characters> GetCharacterList()
+    {
+        return new List<Characters> { };
     }
     public int AddItem(GameItems add)
     {
