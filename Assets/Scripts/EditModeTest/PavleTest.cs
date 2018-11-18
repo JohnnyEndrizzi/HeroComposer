@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 public class PavleTest : MonoBehaviour {
@@ -608,7 +609,7 @@ public class PavleTest : MonoBehaviour {
 
         try
         {
-            GameObject.FindGameObjectsWithTag("BackGroundLinup");
+            GameObject.FindGameObjectsWithTag("BackGroundLineup");
         }
         catch (Exception e)
         {
@@ -627,7 +628,7 @@ public class PavleTest : MonoBehaviour {
         try
         {
             AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundLineup").GetComponent<AudioSource>();
-            if (audio.clip.name != "recruitMusic" && audio.isPlaying == false)
+            if (audio.clip.name != "lineupMusic" && audio.isPlaying == false)
             {
                 Assert.Fail();
             }
@@ -668,7 +669,366 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
-        void SetupCoreScene(string s)
+    // ==== Main Menu Selection Logic ====
+    [UnityTest]
+    public IEnumerator SelectShopOnMainMenu()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        GlobalLogic.chooseShopScene();
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        Assert.That(currentScene.name == "shop");
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SelectRecruitOnMainMenu()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        GlobalLogic.chooseShopScene();
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        Assert.That(currentScene.name == "Recruit");
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SelectLineupOnMainMenu()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        GlobalLogic.chooseShopScene();
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        Assert.That(currentScene.name == "Lineup");
+
+        yield return null;
+    }
+
+    // ==== Settings ====
+    [UnityTest]
+    public IEnumerator AdjustMusicVolumeExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("AdjustMusicVolume");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("AdjustMusicVolume").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustMusicVolume()
+    {
+        GlobalLogic globalLogic = new GlobalLogic();
+
+        globalLogic.adjustMusic(90);
+
+        Assert.That(globalLogic.musicVolume == 90);
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustVolumeExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("AdjustSoundVolume");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("AdjustSoundVolume").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustSoundVolume()
+    {
+        GlobalLogic globalLogic = new GlobalLogic();
+
+        globalLogic.adjustSound(90);
+
+        Assert.That(globalLogic.soundVolume == 90);
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustDisplaySettingsExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("AdjustDisplaySettings");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("AdjustDisplaySettings").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustDisplaySettings()
+    {
+        GlobalLogic globalLogic = new GlobalLogic();
+
+        globalLogic.adjustVideoSettings("fov", "resolution", "detail level");
+
+        Assert.That(globalLogic.videoSettings[0] == "fov");
+        Assert.That(globalLogic.videoSettings[0] == "resolution");
+        Assert.That(globalLogic.videoSettings[0] == "detail level");
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustKeyBindsExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("KeyBinds");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("KeyBinds").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustKeyBindsSuccess()
+    {
+        KeyBinds keyBinds = new KeyBinds();
+
+        keyBinds.rebindKey("r", "k");
+
+        bool keyFound = false;
+        foreach(string key in keyBinds.keybinds)
+        {
+            Assert.That(key != "r");
+
+            if(key == "k")
+            {
+                keyFound = true;
+            }
+        }
+
+        if(!keyFound)
+        {
+            Assert.Fail();
+        }
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustKeyBindsFailure()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+
+        KeyBinds keyBinds = new KeyBinds();
+
+        keyBinds.rebindKey("r", "k");
+        keyBinds.rebindKey("q", "k");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("KeyBindFailed");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        foreach (string key in keyBinds.keybinds)
+        {
+            if (key == "q")
+            {
+                Assert.Pass();
+            }
+        }
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustAudioLatencyExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("AudioLatency");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("AudioLatency").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustAudioLatency()
+    {
+        GlobalLogic globalLogic = new GlobalLogic();
+
+        globalLogic.adjustAudioLatency(90);
+
+        Assert.That(globalLogic.audioLatency == 90);
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustVideoLatencyExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("VideoLatency");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("VideoLatency").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator AdjustVideoLatency()
+    {
+        GlobalLogic globalLogic = new GlobalLogic();
+
+        globalLogic.adjustVideoLatency(90);
+
+        Assert.That(globalLogic.videoLatency == 90);
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator BackGroundImageSettingsExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("BackGroundSettings");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator BackGroundMusicSettingsExists()
+    {
+        SetupCoreScene("Assets/Scenes/Settings.unity");
+
+        try
+        {
+            AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundSettings").GetComponent<AudioSource>();
+            if (audio.clip.name != "SettingsMusic" && audio.isPlaying == false)
+            {
+                Assert.Fail();
+            }
+
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+
+    // ==== WorldMap ====
+    [UnityTest]
+    public IEnumerator WorldMapExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("WorldMap");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator WorldMapLevelSelected()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        GlobalLogic.loadBattleLevel("Level One", new Characters[] { Characters.GenerateCharacter() });
+
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        Assert.That(currentScene.name == "main");
+        
+        yield return null;
+    }
+
+
+
+
+
+
+    void SetupCoreScene(string s)
     {
 
         //AudioSource x = GameObject.FindGameObjectWithTag("Menu").GetComponent<AudioSource>();
