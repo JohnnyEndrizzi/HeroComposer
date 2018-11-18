@@ -7,6 +7,10 @@ using UnityEditor.SceneManagement;
 
 public class CoreGameplayTest : MonoBehaviour
 {
+    void SetupCoreScene(string s)
+    {
+        EditorSceneManager.OpenScene(s);
+    }
 
     // ==== Note Bar ====
 
@@ -65,26 +69,24 @@ public class CoreGameplayTest : MonoBehaviour
          * (100 >= x > 25):  Great
          * (200 >= x > 100): Good
          * (200 < x):        Miss */
-        CharacterListener test = new CharacterListener();
-
-        Debug.Log(test.CalculateInputAccuracy(125, 100));
-
-        if (test.CalculateInputAccuracy(125, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect"))
+        CharacterListener listener = new CharacterListener();
+        
+        if (listener.GetNoteAccuracySprite(100, 100, 25) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect"))
         {
             Assert.Fail();
         }
 
-        if (test.CalculateInputAccuracy(150, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great"))
+        if (listener.GetNoteAccuracySprite(100, 100, 50) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great"))
         {
             Assert.Fail();
         }
 
-        if (test.CalculateInputAccuracy(250, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good"))
+        if (listener.GetNoteAccuracySprite(100, 100, 150) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good"))
         {
             Assert.Fail();
         }
 
-        if (test.CalculateInputAccuracy(350, 100) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss"))
+        if (listener.GetNoteAccuracySprite(100, 100, 250) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss"))
         {
             Assert.Fail();
         }
@@ -99,6 +101,8 @@ public class CoreGameplayTest : MonoBehaviour
     public IEnumerator CharactersExist()
     {
         SetupCoreScene("Assets/Scenes/main.unity");
+
+        int numberOfCharacters = 4;
 
         GameObject[] characters = GameObject.FindGameObjectsWithTag("Character");
 
@@ -268,6 +272,7 @@ public class CoreGameplayTest : MonoBehaviour
         Assert.Fail();
         yield return null;
     }
+    
     // ==== Scene ====
 
     [UnityTest]
@@ -326,14 +331,71 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
+    [UnityTest]
+    public IEnumerator SceneSpotlightExists()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectsWithTag("Spotlight").Length == 2)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneSpotlightPosition()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        GameObject[] spotlights = GameObject.FindGameObjectsWithTag("Spotlight");
+
+        for (int i = 0; i < spotlights.Length; i++)
+        {
+            if (spotlights[i].transform.localPosition != new Vector3(-0.72f, 1.25f, -9.0f))
+            {
+                Assert.Fail();
+            }
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneBackgroundExists()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectsWithTag("Background") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SceneBackgroundPosition()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+
+        if (GameObject.FindGameObjectWithTag("Background").transform.localPosition == new Vector3(21.75f, 4.03f, 6.0f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
     // Yifu code
 
 
 
     // Pavle code
 
-    void SetupCoreScene(string s)
-    {
-        EditorSceneManager.OpenScene(s);
-    }
 }

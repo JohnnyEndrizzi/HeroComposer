@@ -17,6 +17,8 @@ TagManager:
   - Curtains
   - Stage
   - Menu
+  - Spotlight
+  - Background
   layers:
   - Default
   - TransparentFX
