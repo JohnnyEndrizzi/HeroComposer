@@ -198,7 +198,7 @@ public class PavleTest : MonoBehaviour {
         try
         {
             AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundShop").GetComponent<AudioSource>();
-            if (audio.name != "shopMusic" && audio.isPlaying == false)
+            if (audio.clip.name != "shopMusic" && audio.isPlaying == false)
             {
                 Assert.Fail();
             }
@@ -382,7 +382,7 @@ public class PavleTest : MonoBehaviour {
 
         try
         {
-            GameObject.FindGameObjectsWithTag("BackGroundShop");
+            GameObject.FindGameObjectsWithTag("BackGroundRecruit");
         }
         catch (Exception e)
         {
@@ -400,8 +400,8 @@ public class PavleTest : MonoBehaviour {
 
         try
         {
-            AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundShop").GetComponent<AudioSource>();
-            if (audio.name != "recruitMusic" && audio.isPlaying == false)
+            AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundRecruit").GetComponent<AudioSource>();
+            if (audio.clip.name != "recruitMusic" && audio.isPlaying == false)
             {
                 Assert.Fail();
             }
@@ -497,7 +497,178 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
-    void SetupCoreScene(string s)
+    // ==== Line Up Room ====
+
+    [UnityTest]
+    public IEnumerator Position1UIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("Position1");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("Position1").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator Position2UIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("Position2");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("Position2").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator Position3UIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("Position3");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("Position3").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator Position4UIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("Position4");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("Position4").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator EditLineUpUIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("EditLineup");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        if (GameObject.FindGameObjectWithTag("EditLineup").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator BackGroundImageLineupExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("BackGroundLinup");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator BackGroundMusicLineupExists()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+
+        try
+        {
+            AudioSource audio = GameObject.FindGameObjectWithTag("BackGroundLineup").GetComponent<AudioSource>();
+            if (audio.clip.name != "recruitMusic" && audio.isPlaying == false)
+            {
+                Assert.Fail();
+            }
+
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator ChangeLineup()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+
+        GlobalLogic globalState = new GlobalLogic();
+        globalState.changeLineup(new Characters[4] { Characters.GenerateCharacter(), Characters.GenerateCharacter(), Characters.GenerateCharacter(), Characters.GenerateCharacter() });
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("LineupChanged");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        int count = 0;
+        foreach (Characters character in globalState.Lineup)
+        {
+            Assert.That(character.characterId != null);
+        }
+
+        yield return null;
+    }
+
+        void SetupCoreScene(string s)
     {
 
         //AudioSource x = GameObject.FindGameObjectWithTag("Menu").GetComponent<AudioSource>();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Characters : MonoBehaviour {
+    public string characterId;
     private CharacterType type;
     private string characterName;
     private List<GameItems> equippedItems;
