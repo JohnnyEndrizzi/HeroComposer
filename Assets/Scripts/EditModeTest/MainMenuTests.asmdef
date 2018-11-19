@@ -1,8 +1,7 @@
 {
     "name": "Tests",
     "references": [
-        "game",
-        "DummyAssembly"
+        "game"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
