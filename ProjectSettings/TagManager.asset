@@ -17,6 +17,12 @@ TagManager:
   - Curtains
   - Stage
   - Menu
+  - MenuPanelBG
+  - PlayButton
+  - AuditionButton
+  - MusicShopButton
+  - SoundCheckButton
+  - RehersalButton
   layers:
   - Default
   - TransparentFX
