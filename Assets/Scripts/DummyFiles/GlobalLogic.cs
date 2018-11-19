@@ -11,6 +11,12 @@ public class GlobalLogic : MonoBehaviour {
     public int videoLatency = 0;
     public string[] videoSettings = new string[3];
 
+    public GlobalUser getGlobalUser()
+    {
+        GlobalUser user = new GlobalUser();
+        return user;
+    }
+
     public void changeLineup(Characters[] characters)
     {
 

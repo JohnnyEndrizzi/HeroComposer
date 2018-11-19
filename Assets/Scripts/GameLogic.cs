@@ -48,6 +48,11 @@ public class GameLogic : MonoBehaviour
         return songStartTime;
     }
 
+    public bool isSongDone()
+    {
+        return songDone;
+    }
+
     private IEnumerator introDelay()
     {
         yield return new WaitForSeconds(6.0f);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GlobalUser : MonoBehaviour
 {
-    private int Cash = 0;
+    public int Cash = 0;
     public int XP = 0;
     private List<GameItems> UserItems = new List<GameItems> { };
     public List<Characters> CharacterList = new List<Characters> { };

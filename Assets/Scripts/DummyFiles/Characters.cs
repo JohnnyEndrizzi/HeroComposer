@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class Characters : MonoBehaviour {
     public string characterId;
+    public float currentHealth;
+    public float defenseValue;
+    public int currentLevel;
+    public float currentXP;
+    public float currentBoundedXP;
+    public float specialGaugeValue;
     private CharacterType type;
     private string characterName;
-    public List<string> ugrades;
+    public List<string> upgrades;
     public List<GameItems> equippedItems;
     private string characterBackstory;
     private int characterCost;
@@ -15,6 +21,12 @@ public class Characters : MonoBehaviour {
     private int attack;
     private int defense;
     private int magic;
+
+    public void calculateLevelUpXP()
+    {
+        /* Uses the current level to derive how much XP is needed to level up (Default is 0 for now). */
+        currentBoundedXP = 0;
+    }
 
     public static Characters GenerateCharacter()
     {
@@ -40,12 +52,6 @@ public class Characters : MonoBehaviour {
     {
 
     }
-
-
-    
-    
-	
-
 }
 
 public enum CharacterType
