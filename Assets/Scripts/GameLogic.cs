@@ -38,6 +38,16 @@ public class GameLogic : MonoBehaviour
     private decimal latency = 0.150m;
     public static decimal songStartTime;
 
+    public float getNextHit()
+    {
+        return nextHit;
+    }
+
+    public decimal getSongStartTime()
+    {
+        return songStartTime;
+    }
+
     private IEnumerator introDelay()
     {
         yield return new WaitForSeconds(6.0f);
