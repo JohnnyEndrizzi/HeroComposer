@@ -13,7 +13,8 @@ public class PavleTest : MonoBehaviour {
 
 
     // ==== Shop Room ====
-    //1
+    //UI has not been created so therefore placeholder positions are currently set
+    //1 This tests if the first instrument ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Instrument1UIExists()
     {
@@ -33,7 +34,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-    //2
+    //2 This tests if the second instrument ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Instrument2UIExists()
     {
@@ -53,7 +54,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-    //3
+    //3 This tests if the first defence item ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Defence1UIExists()
     {
@@ -73,7 +74,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-    //4
+    //4 This tests if the second defence item ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Defence2UIExists()
     {
@@ -93,6 +94,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
+    //5 This tests if the first powerup item ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator PowerUp1UIExists()
     {
@@ -112,6 +114,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
+    //6 This tests if the second powerup item ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator PowerUp2UIExists()
     {
@@ -133,7 +136,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-
+    //7 This tests that the current cash amount UI to the user is present and in correct position
     [UnityTest]
     public IEnumerator CurrentCashUIExists()
     {
@@ -155,7 +158,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-
+    //8 This tests that the current inventory of items UI is present and in correct location
     [UnityTest]
     public IEnumerator InventoryUIExists()
     {
@@ -177,7 +180,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
-
+    //9 This tests that the background image for the shop exits
     [UnityTest]
     public IEnumerator BackGroundImageShopExists()
     {
@@ -196,6 +199,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //10 This tests that correct background song for the shop is being played
     [UnityTest]
     public IEnumerator BackGroundMusicShopExists()
     {
@@ -219,6 +223,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //11 This tests that when a user selects an item the correct info is outputed
     [UnityTest]
     public IEnumerator SelectItem()
     {
@@ -238,7 +243,8 @@ public class PavleTest : MonoBehaviour {
         Assert.Pass();
         yield return null;
     }
-
+    
+    //12 This tests that when a user successfully purchases an item that it gets added to the user
     [UnityTest]
     public IEnumerator BuyItemSuccess()
     {
@@ -264,6 +270,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //13 This tests that a failure scenario where the user doesn't have enough money to buy an item
     [UnityTest]
     public IEnumerator BuyItemFail()
     {
@@ -287,6 +294,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //14 This tests that the user can access the inventory of items they have bought
     [UnityTest]
     public IEnumerator AccessInventory()
     {
@@ -303,6 +311,7 @@ public class PavleTest : MonoBehaviour {
 
 
     // ==== Recruiting Room ====
+    //15 This tests if the first recruitable character ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Recruit1UIExists()
     {
@@ -323,6 +332,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //16 This tests if the second recruitable character ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Recruit2UIExists()
     {
@@ -343,6 +353,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //17 This tests if the third recruitable character ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Recruit3UIExists()
     {
@@ -363,6 +374,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //18 This tests if the fourth recruitable character ui is present in the store and in correct location (item is a placeholder)
     [UnityTest]
     public IEnumerator Recruit4UIExists()
     {
@@ -383,6 +395,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //19 This tests that the current cash amount UI to the user is present and in correct position on the recruiting scene
     [UnityTest]
     public IEnumerator CurrentCashRecruitUIExists()
     {
@@ -405,6 +418,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //20 This tests that the background image for the recruiting exits
     [UnityTest]
     public IEnumerator BackGroundImageRecruitExists()
     {
@@ -423,6 +437,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //21 This tests that correct background song for the recruit scene is being played
     [UnityTest]
     public IEnumerator BackGroundMusicRecruitExists()
     {
@@ -446,7 +461,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
-
+    //22 This tests that the character inventory UI exits
     [UnityTest]
     public IEnumerator InventoryUIExistsInRecruit()
     {
@@ -469,6 +484,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //23 This test ensures that an info screen pops up when selecting a recruitable character
     [UnityTest]
     public IEnumerator SelectRecruit()
     {
@@ -489,6 +505,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //24 This tests when a user buys a character successfully
     [UnityTest]
     public IEnumerator BuyCharacterSuccess()
     {
@@ -499,6 +516,7 @@ public class PavleTest : MonoBehaviour {
 
         try
         {
+            //Display and accompanying sound affect
             GameObject characterRecruited = GameObject.FindGameObjectWithTag("CharacterRecruited");
             Assert.That(characterRecruited.GetComponent<AudioSource>().isPlaying == true);
         }
@@ -511,6 +529,8 @@ public class PavleTest : MonoBehaviour {
         Assert.That(test.Count == 1);
         yield return null;
     }
+
+    //25 This tests when a user fails to buy a character
     [UnityTest]
     public IEnumerator BuyCharacterFail()
     {
@@ -534,6 +554,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //26 This tests that the user can access the inventory of characters they have bought
     [UnityTest]
     public IEnumerator AccessCharacterInventory()
     {
@@ -548,7 +569,7 @@ public class PavleTest : MonoBehaviour {
     }
 
     // ==== Line Up Room ====
-
+    //27 This tests if the first position in the lineup UI exists and in correct position 
     [UnityTest]
     public IEnumerator Position1UIExists()
     {
@@ -569,6 +590,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //28 This tests if the second position in the lineup UI exists and in correct position 
     [UnityTest]
     public IEnumerator Position2UIExists()
     {
@@ -589,6 +611,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //29 This tests if the third position in the lineup UI exists and in correct position 
     [UnityTest]
     public IEnumerator Position3UIExists()
     {
@@ -609,6 +632,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //30 This tests if the fourth position in the lineup UI exists and in correct position 
     [UnityTest]
     public IEnumerator Position4UIExists()
     {
@@ -629,6 +653,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //31 This tests if the edit button UI exists and in correct position
     [UnityTest]
     public IEnumerator EditLineUpUIExists()
     {
@@ -651,6 +676,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //32 This tests that the background image for the rehearsal exists
     [UnityTest]
     public IEnumerator BackGroundImageLineupExists()
     {
@@ -669,6 +695,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //33 This tests that correct background song for the rehearsal scene is being played
     [UnityTest]
     public IEnumerator BackGroundMusicLineupExists()
     {
@@ -692,13 +719,14 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //34 This tests that a user is able to change the lineup of characters they want to go to battle with
     [UnityTest]
     public IEnumerator ChangeLineup()
     {
         SetupCoreScene("Assets/Scenes/Lineup.unity");
 
         GlobalLogic globalState = new GlobalLogic();
-        globalState.changeLineup(new Characters[4] { Characters.GenerateCharacter(), Characters.GenerateCharacter(), Characters.GenerateCharacter(), Characters.GenerateCharacter() });
+        globalState.changeLineup(new Characters[4] { new Characters { name = "test" }, new Characters { name = "test" }, new Characters { name = "test" }, new Characters { name = "test" } });
 
         try
         {
@@ -709,15 +737,17 @@ public class PavleTest : MonoBehaviour {
             Assert.Fail();
         }
 
+        //Checks to make each positons was filled with the change
         int count = 0;
         foreach (Characters character in globalState.Lineup)
         {
-            Assert.That(character.characterId != null);
+            Assert.That(character.name == "test");
         }
 
         yield return null;
     }
 
+    //35 This tests that a user is able to select a character and get information on them
     [UnityTest]
     public IEnumerator SelectCharacter()
     {
@@ -738,6 +768,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //36 This tests that a user can equip a character with a piece of equipment
     [UnityTest]
     public IEnumerator EquipCharacter()
     {
@@ -753,8 +784,133 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //37 This tests that a user can select an upgrade on a characters upgrade path and get info on it
+    [UnityTest]
+    public IEnumerator SelectUpgadePath()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        Characters character = Characters.GenerateCharacter();
+
+        List<string> listOfUpgrades = character.getUpgrades();
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradePath");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Upgrade.getSpecificUpgradeInfo(listOfUpgrades.ToArray()[0]);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradeDescription");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        yield return null;
+    }
+
+    //38 This tests if a user successfully made an upgrade for a character
+    [UnityTest]
+    public IEnumerator UpgradeSuccessful()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        Characters character = Characters.GenerateCharacter();
+        GlobalUser user = new GlobalUser();
+        user.XP = 100;
+
+        List<string> listOfUpgrades = character.getUpgrades();
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradePath");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Upgrade.getSpecificUpgradeInfo(listOfUpgrades.ToArray()[0]);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradeDescription");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        character.upgradeCharacter(listOfUpgrades.ToArray()[0], user);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradeSuccess");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.That(character.getUpgrades().Count == listOfUpgrades.Count + 1);
+
+        yield return null;
+    }
+
+    //39 This tests the scenario when a user doesn't have enough xp to upgrade a character
+    [UnityTest]
+    public IEnumerator UpgradeFailed()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        Characters character = Characters.GenerateCharacter();
+        GlobalUser user = new GlobalUser();
+
+        List<string> listOfUpgrades = character.getUpgrades();
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradePath");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Upgrade.getSpecificUpgradeInfo(listOfUpgrades.ToArray()[0]);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradeDescription");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        character.upgradeCharacter(listOfUpgrades.ToArray()[0], user);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("UpgradeFailed");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.That(character.getUpgrades().Count == listOfUpgrades.Count);
+
+        yield return null;
+    }
 
     // ==== Main Menu Selection Logic ====
+    //40 This tests that Shop selection on the menu goes to the correct scene
     [UnityTest]
     public IEnumerator SelectShopOnMainMenu()
     {
@@ -768,6 +924,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //41 This tests that Recruit selection on the menu goes to the correct scene
     [UnityTest]
     public IEnumerator SelectRecruitOnMainMenu()
     {
@@ -781,6 +938,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //43 This tests that Rehearsal selection on the menu goes to the correct scene
     [UnityTest]
     public IEnumerator SelectLineupOnMainMenu()
     {
@@ -795,6 +953,7 @@ public class PavleTest : MonoBehaviour {
     }
 
     // ==== Settings ====
+    //44 This tests that ui for music volume ajustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustMusicVolumeExists()
     {
@@ -815,6 +974,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //45 This tests that a user is able to adjust the volume of the music
     [UnityTest]
     public IEnumerator AdjustMusicVolume()
     {
@@ -827,6 +987,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //46 This tests that ui for sound volume ajustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustVolumeExists()
     {
@@ -847,6 +1008,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //47 This tests that a user is able to adjust the volume of the sound
     [UnityTest]
     public IEnumerator AdjustSoundVolume()
     {
@@ -859,6 +1021,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //48 This tests that ui for diplay settings ajustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustDisplaySettingsExists()
     {
@@ -879,6 +1042,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //49 This tests that a user is able to adjust the display settings 
     [UnityTest]
     public IEnumerator AdjustDisplaySettings()
     {
@@ -893,6 +1057,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //50 This tests that ui for key bind adjustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustKeyBindsExists()
     {
@@ -913,6 +1078,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //51 This tests that a user is able to successfully customize their keybind
     [UnityTest]
     public IEnumerator AdjustKeyBindsSuccess()
     {
@@ -939,6 +1105,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //52 This tests a failure scenario where a user tries to rebind two keys to the same key
     [UnityTest]
     public IEnumerator AdjustKeyBindsFailure()
     {
@@ -969,6 +1136,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //53 This tests that ui for audio latency adjustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustAudioLatencyExists()
     {
@@ -989,6 +1157,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //52 This tests that a user is able to adjust the audio latency
     [UnityTest]
     public IEnumerator AdjustAudioLatency()
     {
@@ -1001,6 +1170,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //54 This tests that ui for video latency adjustment exists and is located in the proper place
     [UnityTest]
     public IEnumerator AdjustVideoLatencyExists()
     {
@@ -1021,6 +1191,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //55 This tests that a user is able to adjust the video latency
     [UnityTest]
     public IEnumerator AdjustVideoLatency()
     {
@@ -1033,6 +1204,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //56 This tests that the background image for the settings exists
     [UnityTest]
     public IEnumerator BackGroundImageSettingsExists()
     {
@@ -1051,6 +1223,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //57 This tests that correct background song for the settings scene is being played
     [UnityTest]
     public IEnumerator BackGroundMusicSettingsExists()
     {
@@ -1076,6 +1249,7 @@ public class PavleTest : MonoBehaviour {
 
 
     // ==== WorldMap ====
+    //58 This tests if the world map ui exists
     [UnityTest]
     public IEnumerator WorldMapExists()
     {
@@ -1094,6 +1268,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //59 This tests if the user can choose a level on the world map
     [UnityTest]
     public IEnumerator WorldMapLevelSelected()
     {
@@ -1109,6 +1284,8 @@ public class PavleTest : MonoBehaviour {
     }
 
     // ==== Cutscenes ====
+
+    //60 This tests if the first cutscene is exists and in correct location
     [UnityTest]
     public IEnumerator CutScene1Exists()
     {
@@ -1129,6 +1306,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //61 This tests if the second cutscene is exists and in correct location
     [UnityTest]
     public IEnumerator CutScene2Exists()
     {
@@ -1149,6 +1327,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //62 This tests if the third cutscene is exists and in correct location
     [UnityTest]
     public IEnumerator CutScene3Exists()
     {
@@ -1169,6 +1348,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //63 This tests if the third cutscene is exists and in correct location
     [UnityTest]
     public IEnumerator CutScene4Exists()
     {
@@ -1189,6 +1369,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //64 This tests if the fourth cutscene is exists and in correct location
     [UnityTest]
     public IEnumerator CutScene5Exists()
     {
@@ -1209,6 +1390,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //65 This tests if the skip button during a cutscene exists and in correct location
     [UnityTest]
     public IEnumerator SkipUIExists()
     {
@@ -1229,6 +1411,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //66 This tests that a cutscene will be played for the user
     [UnityTest]
     public IEnumerator PlayCutscene()
     {
@@ -1243,6 +1426,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //67 This tests if a user can pause and unpause a cutscene
     [UnityTest]
     public IEnumerator PauseAndUnPauseCutscene()
     {
@@ -1267,7 +1451,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
-
+    //68 This tests if a user can skip a cutscene
     [UnityTest]
     public IEnumerator SkipCutscene()
     {
@@ -1288,7 +1472,7 @@ public class PavleTest : MonoBehaviour {
     }
 
     // ==== Saving and Loading Games ====
-
+    //69 This tests if a user can save the game
     [UnityTest]
     public IEnumerator ManualSave()
     {
@@ -1324,6 +1508,7 @@ public class PavleTest : MonoBehaviour {
 
 
     [UnityTest]
+    //70 This tests if the system can automatically save for the user
     public IEnumerator AutomaticSave()
     {
         SetupCoreScene("Assets/Scenes/Menu.unity");
@@ -1344,6 +1529,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //71 This tests if a user selects an empty save slot
     [UnityTest]
     public IEnumerator SelectEmptySavePath()
     {
@@ -1354,6 +1540,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //72 This tests if a user selects an occupied save slot
     [UnityTest]
     public IEnumerator SelectOccupiedSavePath()
     {
@@ -1376,6 +1563,7 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    //73 This tests when a user loads a saved game
     [UnityTest]
     public IEnumerator LoadSaveFile()
     {
@@ -1396,13 +1584,69 @@ public class PavleTest : MonoBehaviour {
     }
 
     // ==== Pause and UnPause Games ====
+    //74 This tests when a user pauses and unpauses during a battle
+    [UnityTest]
+    public IEnumerator PauseAndUnpauseGame()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+        PausingLogic pauseGameLogic = new PausingLogic();
 
+        pauseGameLogic.PauseGame();
+
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("GamePaused");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.That(pauseGameLogic.paused == true);
+
+        pauseGameLogic.UnPauseGame();
+
+        Assert.That(pauseGameLogic.paused == false);
+
+
+        yield return null;
+    }
+
+    [UnityTest]
+    //75 This tests when a user exits a level when in the pause screen
+    public IEnumerator ExitLevel()
+    {
+        SetupCoreScene("Assets/Scenes/main.unity");
+        PausingLogic pauseGameLogic = new PausingLogic();
+
+        pauseGameLogic.PauseGame();
+
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("GamePaused");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.That(pauseGameLogic.paused == true);
+
+        pauseGameLogic.exitLevel();
+
+
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        Assert.That(currentScene.name == "Menu");
+
+        yield return null;
+    }
 
 
     void SetupCoreScene(string s)
     {
-
-        //AudioSource x = GameObject.FindGameObjectWithTag("Menu").GetComponent<AudioSource>();
         EditorSceneManager.OpenScene(s);
     }
 }

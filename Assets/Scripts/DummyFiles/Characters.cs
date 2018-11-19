@@ -7,6 +7,7 @@ public class Characters : MonoBehaviour {
     public string characterId;
     private CharacterType type;
     private string characterName;
+    public List<string> ugrades;
     public List<GameItems> equippedItems;
     private string characterBackstory;
     private int characterCost;
@@ -26,6 +27,16 @@ public class Characters : MonoBehaviour {
     }
 
     public void equipItem(GameItems item)
+    {
+
+    }
+
+    public List<string> getUpgrades()
+    {
+        return new List<string> { };
+    }
+
+    public void upgradeCharacter(string Upgrade, GlobalUser User)
     {
 
     }
