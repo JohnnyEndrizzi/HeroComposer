@@ -1,8 +1,7 @@
 {
     "name": "PlayModeTest",
     "references": [
-        "game",
-        "DummyAssembly"
+        "game"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
