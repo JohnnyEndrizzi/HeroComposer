@@ -8,4 +8,9 @@ public class StoreLogic : MonoBehaviour
     public static void BuyItem(GameItems item)
     {
     }
+
+    public static void ShowInformation(GameItems item)
+    {
+
+    }
 }

@@ -7,7 +7,7 @@ public class Characters : MonoBehaviour {
     public string characterId;
     private CharacterType type;
     private string characterName;
-    private List<GameItems> equippedItems;
+    public List<GameItems> equippedItems;
     private string characterBackstory;
     private int characterCost;
     private object character;
@@ -19,6 +19,17 @@ public class Characters : MonoBehaviour {
     {
         return new Characters { } ;
     }
+
+    public Characters getCharacterInfo(Characters character)
+    {
+        return new Characters { };
+    }
+
+    public void equipItem(GameItems item)
+    {
+
+    }
+
 
     
     

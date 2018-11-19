@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class PavleTest : MonoBehaviour {
 
 
     // ==== Shop Room ====
+    //1
     [UnityTest]
     public IEnumerator Instrument1UIExists()
     {
@@ -31,6 +33,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
+    //2
     [UnityTest]
     public IEnumerator Instrument2UIExists()
     {
@@ -50,6 +53,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
+    //3
     [UnityTest]
     public IEnumerator Defence1UIExists()
     {
@@ -69,6 +73,7 @@ public class PavleTest : MonoBehaviour {
         Assert.Fail();
         yield return null;
     }
+    //4
     [UnityTest]
     public IEnumerator Defence2UIExists()
     {
@@ -215,6 +220,26 @@ public class PavleTest : MonoBehaviour {
     }
 
     [UnityTest]
+    public IEnumerator SelectItem()
+    {
+        SetupCoreScene("Assets/Scenes/shop.unity");
+
+        StoreLogic.ShowInformation(GameItems.Instrument1);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("ShopItemInformation");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
     public IEnumerator BuyItemSuccess()
     {
         SetupCoreScene("Assets/Scenes/shop.unity");
@@ -222,19 +247,23 @@ public class PavleTest : MonoBehaviour {
         GlobalUser user = new GlobalUser();
         StoreLogic.BuyItem(GameItems.Instrument1);
 
+        
         try
         {
-            GameObject.FindGameObjectsWithTag("ItemBought");
+            GameObject ItemBought = GameObject.FindGameObjectWithTag("ItemBought");
+            Assert.That(ItemBought.GetComponent<AudioSource>().isPlaying == true);
         }
         catch (Exception e)
         {
             Assert.Fail();
         }
-
+        
+       
         List<GameItems> test = user.GetItemList();
         Assert.That(test.Count == 1);
         yield return null;
     }
+
     [UnityTest]
     public IEnumerator BuyItemFail()
     {
@@ -440,6 +469,25 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    [UnityTest]
+    public IEnumerator SelectRecruit()
+    {
+        SetupCoreScene("Assets/Scenes/Recruit.unity");
+
+        RecruitLogic.ShowCharacterInfo(Characters.GenerateCharacter());
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("RecruitInformation");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
 
     [UnityTest]
     public IEnumerator BuyCharacterSuccess()
@@ -451,7 +499,8 @@ public class PavleTest : MonoBehaviour {
 
         try
         {
-            GameObject.FindGameObjectsWithTag("CharacterRecruited");
+            GameObject characterRecruited = GameObject.FindGameObjectWithTag("CharacterRecruited");
+            Assert.That(characterRecruited.GetComponent<AudioSource>().isPlaying == true);
         }
         catch (Exception e)
         {
@@ -668,6 +717,42 @@ public class PavleTest : MonoBehaviour {
 
         yield return null;
     }
+
+    [UnityTest]
+    public IEnumerator SelectCharacter()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+        
+        LineupLogic.showCharacterInfo(Characters.GenerateCharacter());
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CharacterInformation");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.Pass();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator EquipCharacter()
+    {
+        SetupCoreScene("Assets/Scenes/Lineup.unity");
+
+        Characters character = Characters.GenerateCharacter();
+
+        Assert.That(character.equippedItems.Count == 0);
+
+        character.equipItem(GameItems.Instrument1);
+
+        Assert.That(character.equippedItems.Count == 1);
+        yield return null;
+    }
+
 
     // ==== Main Menu Selection Logic ====
     [UnityTest]
@@ -1023,8 +1108,294 @@ public class PavleTest : MonoBehaviour {
         yield return null;
     }
 
+    // ==== Cutscenes ====
+    [UnityTest]
+    public IEnumerator CutScene1Exists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CutScene1");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("CutScene1").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator CutScene2Exists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CutScene2");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("CutScene2").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator CutScene3Exists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CutScene3");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("CutScene3").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator CutScene4Exists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CutScene4");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("CutScene4").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator CutScene5Exists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("CutScene5");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("CutScene5").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SkipUIExists()
+    {
+        SetupCoreScene("Assets/Scenes/Cutscene.unity");
+        try
+        {
+            GameObject.FindGameObjectsWithTag("SkipScene");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        if (GameObject.FindGameObjectWithTag("SkipScene").transform.position == new Vector3(-0.47f, 2.7f, -5.97f))
+        {
+            Assert.Pass();
+        }
+        Assert.Fail();
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator PlayCutscene()
+    {
+        CutsceneLogic cutScene = new CutsceneLogic();
+
+        cutScene.playCutscene(1);
+
+        Assert.That(cutScene.currentCutscene == 1);
+        Assert.That(cutScene.isCutScenePlaying == true);
 
 
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator PauseAndUnPauseCutscene()
+    {
+        CutsceneLogic cutScene = new CutsceneLogic();
+
+        cutScene.playCutscene(1);
+
+        Thread.Sleep(100);
+
+        cutScene.pauseCutscene();
+
+
+        Assert.That(cutScene.isCutScenePaused == true);
+        Assert.That(cutScene.isCutScenePlaying == false);
+
+        cutScene.unPauseCutscene();
+
+        Assert.That(cutScene.isCutScenePaused == false);
+        Assert.That(cutScene.isCutScenePlaying == true);
+
+
+        yield return null;
+    }
+
+
+    [UnityTest]
+    public IEnumerator SkipCutscene()
+    {
+        CutsceneLogic cutScene = new CutsceneLogic();
+
+        cutScene.playCutscene(1);
+
+        Assert.That(cutScene.currentCutscene == 1);
+        Assert.That(cutScene.isCutScenePlaying == true);
+
+        cutScene.pauseCutscene();
+        cutScene.skipCutscene();
+
+        Assert.That(cutScene.isCutScenePlaying == false);
+        Assert.That(cutScene.currentCutscene == 0);
+
+        yield return null;
+    }
+
+    // ==== Saving and Loading Games ====
+
+    [UnityTest]
+    public IEnumerator ManualSave()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+        SaveState savestate = new SaveState();
+        savestate.selectSavePath("test");
+        savestate.saveGameState(false);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("DoYouWantToSave");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+
+        Assert.That(savestate.saveState.Length != 0);
+
+        savestate.confirmSave();
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("SaveSuccessful");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        yield return null;
+    }
+
+
+    [UnityTest]
+    public IEnumerator AutomaticSave()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+        SaveState savestate = new SaveState();
+        savestate.selectSavePath("test");
+        savestate.saveGameState(true);
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("SaveSuccessFullAuto");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        Assert.That(savestate.saveState.Length != 0);
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SelectEmptySavePath()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+        SaveState savestate = new SaveState();
+        savestate.selectSavePath("test");
+        Assert.That(savestate.savePath == "test");
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator SelectOccupiedSavePath()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+        SaveState savestate = new SaveState();
+        savestate.selectSavePath("test");
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("PathOccupied");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+
+        savestate.confirmOverwrite();
+
+        Assert.That(savestate.savePath== "test");
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator LoadSaveFile()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+        SaveState savestate = new SaveState();
+        savestate.loadGameState();
+
+        try
+        {
+            GameObject.FindGameObjectsWithTag("LoadGameSuccess");
+        }
+        catch (Exception e)
+        {
+            Assert.Fail();
+        }
+        
+        yield return null;
+    }
+
+    // ==== Pause and UnPause Games ====
 
 
 
