@@ -14,7 +14,7 @@ public class DoorHandler : MonoBehaviour
 	private int doorstatus;
 	public Canvas selectcanvas;
 	public Button play;
-    public string i;
+
     void Start()
     {
 		selectcanvas.enabled = false; 
@@ -42,9 +42,7 @@ public class DoorHandler : MonoBehaviour
 		if (selectcanvas.enabled == false)
         {
 			doorstatus = 1;
-            //uncommon later
-            //closeddoor.Play("door_open");
-            openeddoorAnimation();
+			closeddoor.Play("door_open");
 		}
 	}
 
@@ -52,7 +50,7 @@ public class DoorHandler : MonoBehaviour
 	{
         doorstatus = 0;
 		closeddoor.Play("door_animation");
-    }
+	}
 
 	void PlaybuttonOnClick()
 	{
@@ -63,16 +61,5 @@ public class DoorHandler : MonoBehaviour
 
         SceneManager.LoadScene("Scenes/main", LoadSceneMode.Single);
     }
-
-    public void openeddoorAnimation()
-    {
-        Debug.Log("the clip 1 is " + closeddoor.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        //closeddoor.Play("door_open");
-        GameObject.Find("PlayDoorClose").GetComponent<Animator>().Play("door_open");
-        Debug.Log("the clip 2 is " + GameObject.Find("PlayDoorClose").GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        i = closeddoor.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-    }
-
-
 }
 
