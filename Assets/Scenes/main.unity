@@ -154,12 +154,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1009297791615958, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
       propertyPath: m_Name
-      value: Spotlight (1)
+      value: Spotlight_2
       objectReference: {fileID: 0}
     - target: {fileID: 114331216321269034, guid: 2e546d2e4d8f3254695ab6f611b8441e,
         type: 2}
       propertyPath: right_side
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009297791615958, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
+      propertyPath: m_TagString
+      value: Spotlight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
@@ -333,6 +337,10 @@ Prefab:
     - target: {fileID: 1776005878029106, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
       propertyPath: m_TagString
       value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211558528795714, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
+      propertyPath: m_TagString
+      value: Background
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
@@ -1318,6 +1326,14 @@ Prefab:
     - target: {fileID: 4034721780641256, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009297791615958, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
+      propertyPath: m_Name
+      value: Spotlight_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009297791615958, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
+      propertyPath: m_TagString
+      value: Spotlight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e546d2e4d8f3254695ab6f611b8441e, type: 2}
