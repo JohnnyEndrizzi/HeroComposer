@@ -1263,7 +1263,6 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-
     // ==== WorldMap ====
 
     // Test 58: This tests if the world map ui exists
@@ -1820,7 +1819,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 83: */
+    /* Test 83: This test checks that the characters are able to level up upon gaining XP values. */
     [UnityTest]
     public IEnumerator CharacterLevelUp()
     {
@@ -1848,7 +1847,7 @@ public class CoreGameplayTest : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 84: */
+    /* Test 84: This test checks that the characters are able to increase their special gauge throughout the level. */
     [UnityTest]
     public IEnumerator CharacterSpecialGaugeIncrease()
     {
@@ -2047,6 +2046,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
+    /* Test 92: This test checks that the boss's health bar is instantiated in the proper position. */
     [UnityTest]
     public IEnumerator BossAttacksCharacter()
     {
@@ -2079,7 +2079,7 @@ public class CoreGameplayTest : MonoBehaviour
 
     // ==== Scene ====
 
-    /* Test 92: This test checks that the curtains exist within the scene. */
+    /* Test 93: This test checks that the curtains exist within the scene. */
     [UnityTest]
     public IEnumerator SceneCurtainExists()
     {
@@ -2095,7 +2095,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 93: This test checks that the curtains are instantiated in the proper position. */
+    /* Test 94: This test checks that the curtains are instantiated in the proper position. */
     [UnityTest]
     public IEnumerator SceneCurtainPosition()
     {
@@ -2111,7 +2111,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 94: This test checks that the stage exists within the scene. */
+    /* Test 95: This test checks that the stage exists within the scene. */
     [UnityTest]
     public IEnumerator SceneStageExists()
     {
@@ -2127,7 +2127,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 95: This test checks that the stage is instantiated in the proper position. */
+    /* Test 96: This test checks that the stage is instantiated in the proper position. */
     [UnityTest]
     public IEnumerator SceneStagePosition()
     {
@@ -2143,7 +2143,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 96: This test checks that the spotlights exist within the scene. */
+    /* Test 97: This test checks that the spotlights exist within the scene. */
     [UnityTest]
     public IEnumerator SceneSpotlightExists()
     {
@@ -2159,7 +2159,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 97: This test checks that the spotlights are instantiated in the proper position. */
+    /* Test 98: This test checks that the spotlights are instantiated in the proper position. */
     [UnityTest]
     public IEnumerator SceneSpotlightPosition()
     {
@@ -2181,7 +2181,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 98: This test checks that the background exists within the scene. */
+    /* Test 99: This test checks that the background exists within the scene. */
     [UnityTest]
     public IEnumerator SceneBackgroundExists()
     {
@@ -2197,7 +2197,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 99: This test checks that the background is instantiated in the proper position. */
+    /* Test 100: This test checks that the background is instantiated in the proper position. */
     [UnityTest]
     public IEnumerator SceneBackgroundPosition()
     {
@@ -2213,7 +2213,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 100: */
+    /* Test 101: This test checks that a score can be accumulated and caclulated throughout a level.  */
     [UnityTest]
     public IEnumerator SceneStageScore()
     {
@@ -2262,7 +2262,7 @@ public class CoreGameplayTest : MonoBehaviour
         yield return null;
     }
 
-    /* Test 101: */
+    /* Test 102: This test checks that a player can complete or fail a level depending on their score. */
     [UnityTest]
     public IEnumerator SceneStageCompletion()
     {
@@ -2310,11 +2310,184 @@ public class CoreGameplayTest : MonoBehaviour
 
         yield return null;
     }
-    
-    // Yifu code
 
+    /* Test 103: This test checks that the background image exists. */
+    [UnityTest]
+    public IEnumerator MenuBackgroundExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
 
+        if (GameObject.FindGameObjectsWithTag("MenuPanelBG") != null)
+        {
+            Assert.Pass();
+        }
 
-    // Pavle code
+        Assert.Fail();
+        yield return null;
+    }
 
+    /* Test 104: This test checks that the background image is in the correct spot. */
+    [UnityTest]
+    public IEnumerator MenuBackgroundPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.Find("MainMenuBackground").transform.position == new Vector3(0, 0, 0))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 105: This test checks that the Play button exists. */
+    [UnityTest]
+    public IEnumerator MenuPlayButtonExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindGameObjectsWithTag("PlayButton") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 106: This test checks that the Play button is in the correct spot. */
+    [UnityTest]
+    public IEnumerator MenuPlayButtonPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.Find("PlayDoorClose").transform.position == new Vector3(0, 0, -0.1f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 107: This test checks that the Music Shop button exists. */
+    [UnityTest]
+    public IEnumerator MenuMusicShopButtonExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindGameObjectsWithTag("MusicShopButton") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 108: This test checks that the Music Shop button is in the correct spot. */
+    [UnityTest]
+    public IEnumerator MenuMusicShopButtonPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.Find("music_shop_close").transform.position == new Vector3(6.53f, 4.83f, -3.77f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 109: This test checks that the Audition Room button exists. */
+    [UnityTest]
+    public IEnumerator MenuAuditionButtonExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindGameObjectsWithTag("AuditionButton") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 110: This test checks that the Audition Room button is in the correct spot.*/
+    [UnityTest]
+    public IEnumerator AuditionButtonPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.Find("audition_close").transform.position == new Vector3(6.53f, 4.83f, -3.77f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 111: This test checks that the Sound Check button exists. */
+    [UnityTest]
+    public IEnumerator MenuSoundCheckButtonExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindGameObjectsWithTag("SoundCheckButton") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 112: This test checks that the Sound Check button is in the correct spot. */
+    [UnityTest]
+    public IEnumerator MenuSoundCheckButtonPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.Find("Sound_check_close").transform.position == new Vector3(7.28f, -1.99f, -3.84f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 113: This test checks that the Rehersal Room button exists. */
+    [UnityTest]
+    public IEnumerator MenuRehersalButtonExists()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindGameObjectsWithTag("RehersalButton") != null)
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
+
+    /* Test 114: This test checks that the Rehersal Room button is in the correct spot. */
+    [UnityTest]
+    public IEnumerator MenuRehersalButtonPosition()
+    {
+        SetupCoreScene("Assets/Scenes/Menu.unity");
+
+        if (GameObject.FindWithTag("Rehersal_close").transform.position == new Vector3(7.28f, -1.99f, -3.84f))
+        {
+            Assert.Pass();
+        }
+
+        Assert.Fail();
+        yield return null;
+    }
 }

@@ -13,7 +13,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
 
     // ==== Note Bar ====
 
-    /* Test 102: This test checks that the accuracy text exists within the scene upon the user inputting an action. */
+    /* Test 115: This test checks that the accuracy text exists within the scene upon the user inputting an action. */
     [UnityTest]
     public IEnumerator NoteBarAccuracyTextExists()
     {
@@ -57,7 +57,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         yield return null;
     }
 
-    /* Test 103: This test checks that the song's physical note objects are instantiated in the proper position. */
+    /* Test 116: This test checks that the song's physical note objects are instantiated in the proper position. */
     [UnityTest]
     public IEnumerator NoteBarNoteSpawnPosition()
     {
@@ -88,7 +88,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 104: This test checks that the song's physical note objects are instantiated in the proper position. */
+    /* Test 117: This test checks the calculation for deciding whether a note was Perfect, Great, Good, or Miss. */
     [UnityTest]
     public IEnumerator NoteBarNoteSpawnTiming()
     {
@@ -140,7 +140,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 105: This test checks that the song's physical note objects are destroyed at the proper position. */
+    /* Test 118: This test checks that the song's physical note objects are destroyed at the proper position. */
     [UnityTest]
     public IEnumerator NoteBarNoteDestroyPosition()
     {
@@ -186,7 +186,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
 
     // ==== Characters ====
 
-    /* Test 106: This test checks that the character's shield spawns as a result of the user selecting 'DEF' from the menu. */
+    /* Test 119: This test checks that the character's shield spawns as a result of the user selecting 'DEF' from the menu. */
     [UnityTest]
     public IEnumerator CharacterSpawnShield()
     {
@@ -222,7 +222,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 107: This test checks that the character's shield plays the correct SFX. */
+    /* Test 120: This test checks that the character's shield plays the correct SFX. */
     [UnityTest]
     public IEnumerator CharacterShieldSFX()
     {
@@ -255,7 +255,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 108: This test checks that the character's attack animation plays the correct SFX. */
+    /* Test 121: This test checks that the character's attack animation plays the correct SFX. */
     [UnityTest]
     public IEnumerator CharacterAttackSFX()
     {
@@ -291,7 +291,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
 
     // ==== Scene ====
 
-    /* Test 109: This test checks that the curtain's opening animation plays correctly with proper timing. */
+    /* Test 122: This test checks that the curtain's opening animation plays correctly with proper timing. */
     [UnityTest]
     public IEnumerator SceneCurtainOpeningAnimation()
     {
@@ -313,7 +313,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 110: This test checks that the spotlights are destroyed upon the curtain's opening animation playing. */
+    /* Test 123: This test checks that the spotlights are destroyed upon the curtain's opening animation playing. */
     [UnityTest]
     public IEnumerator SceneSpotlightDestroy()
     {
@@ -337,7 +337,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 111: This test checks that the curtains renderer is disabled upon the curtain's opening animation finishing. */
+    /* Test 124: This test checks that the curtains renderer is disabled upon the curtain's opening animation finishing. */
     [UnityTest]
     public IEnumerator SceneCurtainDisableAfterAnimation()
     {
@@ -368,7 +368,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 112: This test checks that the scene plays the correct applause SFX upon loading in. */
+    /* Test 125: This test checks that the scene plays the correct applause SFX upon loading in. */
     [UnityTest]
     public IEnumerator SceneCurtainApplauseSFX()
     {
@@ -385,7 +385,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 113: This test checks that the scene plays the correct stage music upon the curtains disabling. */
+    /* Test 126: This test checks that the scene plays the correct stage music upon the curtains disabling. */
     [UnityTest]
     public IEnumerator SceneStageSongPlays()
     {
@@ -411,7 +411,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 114: */ 
+    /* Test 127: This test checks that the user's currency increases upon completing a level. */ 
     [UnityTest]
     public IEnumerator SceneGainCurrency()
     {
@@ -443,7 +443,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 115: */
+    /* Test 128: This test checks that the character's XP value increases upon completing a level. */
     [UnityTest]
     public IEnumerator SceneEXPGain()
     {
