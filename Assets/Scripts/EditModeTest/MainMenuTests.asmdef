@@ -1,0 +1,15 @@
+{
+    "name": "Tests",
+    "references": [
+        "game",
+        "DummyAssembly"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
