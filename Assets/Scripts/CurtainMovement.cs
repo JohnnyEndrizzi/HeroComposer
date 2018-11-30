@@ -19,6 +19,9 @@ public class CurtainMovement : MonoBehaviour
     {
         delayLock = true;
 
+        //SpriteRenderer Menu = Instantiate(MenuRender, MenuRender.transform.position, Quaternion.identity);
+        //GameLogic script = Menu.GetComponent<GameLogic>();
+
         yield return new WaitForSeconds(3.0f);
 
         curtainAnim.Play("CurtainsOpen");
@@ -34,7 +37,7 @@ public class CurtainMovement : MonoBehaviour
             yield return null;
         }
 
-        GetComponent<SpriteRenderer>().enabled = false;
+        //script.introFinished = true;
 
         delayLock = false;
     }
@@ -42,8 +45,6 @@ public class CurtainMovement : MonoBehaviour
     private IEnumerator closeAnimation()
     {
         delayLock = true;
-
-        GetComponent<SpriteRenderer>().enabled = true;
 
         audioSource.volume = 1;
         GetComponent<AudioSource>().PlayOneShot(applauseSFX, 0.7F);

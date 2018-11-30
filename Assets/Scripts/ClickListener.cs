@@ -12,42 +12,33 @@ public class ClickListener : MonoBehaviour
 
     public enum state {ATK, DEF, MGC, ULT};
     public static state menu_state;
-    public int test;
 
     void Start()
     {
         menu_state = state.ATK;
-        test = 0;
-    }
-
-    public state GetMenuState()
-    {
-        return menu_state;
-    }
-
-    public void ChangeMenuState(Sprite s, state state)
-    {
-        GetComponent<SpriteRenderer>().sprite = s;
-        menu_state = state;
     }
 
     void OnGUI()
     {
         if (Event.current.Equals(Event.KeyboardEvent("q")))
         {
-            ChangeMenuState(ATK_sprite, state.ATK);
+            GetComponent<SpriteRenderer>().sprite = ATK_sprite;
+            menu_state = state.ATK;
         }
         else if (Event.current.Equals(Event.KeyboardEvent("w")))
         {
-            ChangeMenuState(DEF_sprite, state.DEF);
+            GetComponent<SpriteRenderer>().sprite = DEF_sprite;
+            menu_state = state.DEF;
         }
         else if (Event.current.Equals(Event.KeyboardEvent("e")))
         {
-            ChangeMenuState(MGC_sprite, state.MGC);
+            GetComponent<SpriteRenderer>().sprite = MGC_sprite;
+            menu_state = state.MGC;
         }
         else if (Event.current.Equals(Event.KeyboardEvent("r")))
         {
-            ChangeMenuState(ULT_sprite, state.ULT);
+            GetComponent<SpriteRenderer>().sprite = ULT_sprite;
+            menu_state = state.ULT;
         }
     }
 }
