@@ -3258,6 +3258,10 @@ MonoBehaviour:
   closeddoor: {fileID: 1543785761}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 87094477}
+  character1: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
+  character2: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
+  character3: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
+  character4: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
 --- !u!60 &1543785765
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3645,7 +3649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1790627239
 RectTransform:
   m_ObjectHideFlags: 0

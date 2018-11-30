@@ -10,6 +10,7 @@ public class GameLogic : MonoBehaviour
     public GameObject holdNote;
 
     public GameObject test;
+    public GameObject characterPlaceholder;
 
     public SpriteRenderer note;
     public SpriteRenderer curtains;
@@ -37,6 +38,38 @@ public class GameLogic : MonoBehaviour
     private int noteIndex = 0;
     private decimal latency = 0.150m;
     public static decimal songStartTime;
+
+    public void spawnCharacters()
+    {
+        Debug.Log("TEST: " + Assets.Scripts.MainMenu.ApplicationModel.characters.Count);
+
+        for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Count; i++)
+        {
+            Vector3 characterSpawnPosition;
+
+            if (i == 0)
+            {
+                characterSpawnPosition = new Vector3(3.38f, 1.56f, -4.5f);
+            }
+            else if (i == 1)
+            {
+                characterSpawnPosition = new Vector3(1.43f, 1.19f, -4.8f);
+            }
+            else if (i == 2)
+            {
+                characterSpawnPosition = new Vector3(1.43f, -0.35f, -5.1f);
+            }
+            else
+            {
+                characterSpawnPosition = new Vector3(2.82f, -0.67f, -5.5f);
+            }
+
+            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite;
+            GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
+            spawnedPlayer.name = "character_" + (i + 1);  
+
+        }
+    }
 
     public float getNextHit()
     {
@@ -70,6 +103,8 @@ public class GameLogic : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        spawnCharacters();
+
         if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "")
         {
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");

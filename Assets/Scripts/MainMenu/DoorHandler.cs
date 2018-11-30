@@ -15,9 +15,14 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
+    public Character character1;
+    public Character character2;
+    public Character character3;
+    public Character character4;
+
     void Start()
     {
-		selectcanvas.enabled = false; 
+        selectcanvas.enabled = false; 
     }
 
     // Update is called once per frame
@@ -54,6 +59,11 @@ public class DoorHandler : MonoBehaviour
 
 	void PlaybuttonOnClick()
 	{
+        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character1);
+        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character2);
+        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character3);
+        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character4);
+
         string songTitle = GameObject.Find("Song Dropdown").GetComponent<Dropdown>().captionText.text;
         string songDifficulty = GameObject.Find("Difficulty Dropdown").GetComponent<Dropdown>().captionText.text;
 
