@@ -1,0 +1,13 @@
+{
+    "name": "PlayModeTest",
+    "references": [
+        "game",
+        "DummyAssembly"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

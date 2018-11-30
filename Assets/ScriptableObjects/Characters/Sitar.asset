@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3765b4a8ac3efd4459c88895f76a27df, type: 3}
+  m_Name: Sitar
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 02bcbeb5a6a6bb840b77abe29fcb5eaa, type: 3}
+  characterName: Sitar
+  startingHp: 100
+  def: 5
+  atk: 5
+  characterAbilities: []
