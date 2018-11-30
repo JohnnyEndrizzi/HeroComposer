@@ -108,12 +108,12 @@ public class GameLogic : MonoBehaviour
         if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "")
         {
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
-            beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
+            beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
         }
         else
         {
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
-            beatmap = new Beatmap("C:/Users/Damian/Documents/GitHub/HeroComposer/Assets/Resources/Songs/ALiVE_Normal.osu");
+            beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
         }
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
