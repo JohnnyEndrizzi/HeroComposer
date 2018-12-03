@@ -41,8 +41,6 @@ public class GameLogic : MonoBehaviour
 
     public void spawnCharacters()
     {
-        Debug.Log("TEST: " + Assets.Scripts.MainMenu.ApplicationModel.characters.Count);
-
         for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Count; i++)
         {
             Vector3 characterSpawnPosition;
@@ -64,7 +62,7 @@ public class GameLogic : MonoBehaviour
                 characterSpawnPosition = new Vector3(2.82f, -0.67f, -5.5f);
             }
 
-            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite;
+            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
             GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
             spawnedPlayer.name = "character_" + (i + 1);  
 

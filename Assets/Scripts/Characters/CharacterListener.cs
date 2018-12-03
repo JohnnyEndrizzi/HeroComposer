@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
-{ 
-    public AudioClip ATK_sfx;
-    public AudioClip DEF_low_sfx;
-    public AudioClip DEF_high_sfx;
+{
+    [SerializeField] public AudioClip ATK_sfx;
+    [SerializeField] public AudioClip DEF_low_sfx;
+    [SerializeField] public AudioClip DEF_high_sfx;
 
     public GameObject boss;
     
