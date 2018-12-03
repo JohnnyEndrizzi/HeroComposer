@@ -32,8 +32,6 @@ public class CharacterListener : MonoBehaviour
         decimal hitTime = currentHit * 1000;
         decimal nextTime = nextHit + (1000 * songStartTime);
 
-        SpriteRenderer noteScoreSprite;
-
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
@@ -161,6 +159,20 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 0;
     }
 
+    IEnumerator magicAnimation(GameObject toUseGO, float duration, int spriteLock)
+    {
+        if (lockCoroutine[spriteLock - 1] != 0)
+        {
+            yield break;
+        }
+
+        lockCoroutine[spriteLock - 1] = 1;
+
+        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mgc_animation, spriteLock, 5);
+
+        lockCoroutine[spriteLock - 1] = 0;
+    }
+
     void Start()
     {
         color = Color.red;
@@ -233,6 +245,10 @@ public class CharacterListener : MonoBehaviour
             else if (ClickListener.menu_state == ClickListener.state.DEF)
             {
                 StartCoroutine(spawnShield(toUseGO.transform.position, 0.3f, currentSprite));
+            }
+            else if (ClickListener.menu_state == ClickListener.state.MGC)
+            {
+                StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
             }
         }
     }

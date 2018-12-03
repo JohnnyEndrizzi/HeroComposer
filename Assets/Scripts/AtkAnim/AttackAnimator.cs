@@ -34,10 +34,10 @@ public class AttackAnimator : MonoBehaviour
     void Start()
     {
         //List of all targetable locations
-        LocationMap.Add("P1", new Locations(4, 3, 1));   //P1
-        LocationMap.Add("P2", new Locations(4, -3, 1)); //P2
-        LocationMap.Add("P3", new Locations(9, 4, 1)); //P3
-        LocationMap.Add("P4", new Locations(9, -4, 1)); //P4    
+        LocationMap.Add("P1", new Locations(3.38f, 1.56f, -4.5f));   //P1
+        LocationMap.Add("P2", new Locations(1.43f, 1.19f, -4.8f)); //P2
+        LocationMap.Add("P3", new Locations(1.43f, -0.35f, -5.1f)); //P3
+        LocationMap.Add("P4", new Locations(2.82f, -0.67f, -5.5f)); //P4    
         LocationMap.Add("P5", new Locations(6.5f, 0, 1)); //Centre of team
 
         LocationMap.Add("C", new Locations(0, 0, 1)); //CentrePoint
@@ -47,7 +47,7 @@ public class AttackAnimator : MonoBehaviour
         LocationMap.Add("E2", new Locations(-4, -3, 1)); //E2
         LocationMap.Add("E3", new Locations(-9, 4, 1)); //E3
         LocationMap.Add("E4", new Locations(-9, -4, 1)); //E4
-        LocationMap.Add("E5", new Locations(-7, 0, 1)); //Boss
+        LocationMap.Add("E5", new Locations(-3.5f, 1.16f, -5.5f)); //Boss
 
         LocationMap.Add("HL", new Locations(-5f, 20, 1)); //High Left
         LocationMap.Add("HR", new Locations(2.5f, 10, 1)); //High Right
@@ -65,7 +65,7 @@ public class AttackAnimator : MonoBehaviour
         AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
         AttackMap.Add("slash1", new Attacks(1, slash, -1, 0, 0.0f, 1, 52));
         AttackMap.Add("slash2", new Attacks(1, slash, -1, 0, 0.0f, 1, 53));
-        AttackMap.Add("fireball", new Attacks(2, fireball, 0, 0, 0.0f, 5));
+        AttackMap.Add("fireball", new Attacks(3, fireball, 0, 0, 0.0f, 5));
         AttackMap.Add("arrow", new Attacks(3, arrow, 0, 0, 0.0f, 1));
         AttackMap.Add("healTeam", new Attacks(4, heal, 0, 0, 0.0f, 7, 4));
         AttackMap.Add("arrowHail", new Attacks(6, arrow, 0, 0, 0.0f, 0.25f, 11));
@@ -133,6 +133,8 @@ public class AttackAnimator : MonoBehaviour
 
         else { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist"); }
 
+        Debug.Log("Start: " + Pos1);
+        Debug.Log("End:   " + Pos2);
 
         if (AttackMap[AtkName].customCmd == 11) { BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot); }//multishot w/ random
         else if (AttackMap[AtkName].customCmd == 12) { BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot); }//multishot w/ spin random

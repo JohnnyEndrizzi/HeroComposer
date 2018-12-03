@@ -1123,50 +1123,10 @@ MonoBehaviour:
   closeddoor: {fileID: 337746310}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 0}
-  character1:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character2:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character3:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character4:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
 --- !u!1 &340478364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,50 +2004,10 @@ MonoBehaviour:
   closeddoor: {fileID: 649775894}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 0}
-  character1:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character2:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character3:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character4:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
 --- !u!1 &689612378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,50 +2803,10 @@ MonoBehaviour:
   closeddoor: {fileID: 1090653876}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 0}
-  character1:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character2:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character3:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character4:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
 --- !u!1 &1207103426
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,50 +3318,10 @@ MonoBehaviour:
   closeddoor: {fileID: 1543785761}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 87094477}
-  character1:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character2:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character3:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character4:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
+  character1: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
+  character2: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
+  character3: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
+  character4: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
 --- !u!60 &1543785765
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4268,50 +4108,10 @@ MonoBehaviour:
   closeddoor: {fileID: 2060354584}
   selectcanvas: {fileID: 892171032}
   play: {fileID: 0}
-  character1:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character2:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character3:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
-  character4:
-    name: 
-    unlocked: 0
-    sprite: 
-    level: 0
-    hp: 0
-    atk: 0
-    def: 0
-    rcv: 0
-    mgc: 0
-    mgc_animation: 
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
 --- !u!95 &2060354584
 Animator:
   serializedVersion: 3
