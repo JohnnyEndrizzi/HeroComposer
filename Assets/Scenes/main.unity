@@ -347,6 +347,16 @@ Prefab:
       propertyPath: characterPlaceholder
       value: 
       objectReference: {fileID: 612959183}
+    - target: {fileID: 114776331401034802, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: fireball
+      value: 
+      objectReference: {fileID: 8300000, guid: 75d00e11c9649a44dad53860fb23d0b8, type: 3}
+    - target: {fileID: 114776331401034802, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: fireball_sfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 75d00e11c9649a44dad53860fb23d0b8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0
@@ -606,7 +616,7 @@ MonoBehaviour:
   def: 0
   rcv: 0
   mgc: 0
-  mgc_animation: 
+  attack: 
 --- !u!1 &707070425 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1009297791615958, guid: 2e546d2e4d8f3254695ab6f611b8441e,
@@ -1398,7 +1408,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1062803907266300, guid: 11aee0653c8498c45bff43a390839817, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1062803907266300, guid: 11aee0653c8498c45bff43a390839817, type: 2}
       propertyPath: m_TagString

@@ -7,6 +7,9 @@ public class CharacterListener : MonoBehaviour
     [SerializeField] public AudioClip ATK_sfx;
     [SerializeField] public AudioClip DEF_low_sfx;
     [SerializeField] public AudioClip DEF_high_sfx;
+    [SerializeField] public AudioClip fireball_sfx;
+
+    public float score;
 
     public GameObject boss;
     
@@ -21,6 +24,7 @@ public class CharacterListener : MonoBehaviour
 
     private int currentSprite = 0;
     private int[] lockCoroutine = { 0, 0, 0, 0 };
+    int noteLock = 0;
 
     public void ChangeNoteBarHighlight(Color c)
     {
@@ -35,18 +39,21 @@ public class CharacterListener : MonoBehaviour
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
-            //Debug.Log("PERFECT");
+            Debug.Log("PERFECT");
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
+            GameLogic.hitIndex++;
         }
         else if (errorDifference <= 100)
         {
-            //Debug.Log("GREAT");
+            Debug.Log("GREAT");
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
+            GameLogic.hitIndex++;
         }
         else if (errorDifference <= 200)
         {
-            //Debug.Log("GOOD");
+            Debug.Log("GOOD");
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
+            GameLogic.hitIndex++;
         }
         else
         {
@@ -88,6 +95,13 @@ public class CharacterListener : MonoBehaviour
 
     public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
+        if (noteLock != 0)
+        {
+            yield break;
+        }
+
+        noteLock = 1;
+
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
@@ -103,6 +117,8 @@ public class CharacterListener : MonoBehaviour
         }
 
         Destroy(score.gameObject);
+
+        noteLock = 0;
     }
 
     IEnumerator spawnShield(Vector3 spawnPoint, float duration, int spriteLock)
@@ -169,6 +185,7 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 1;
 
         toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mgc_animation, spriteLock, 5);
+        GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         lockCoroutine[spriteLock - 1] = 0;
     }

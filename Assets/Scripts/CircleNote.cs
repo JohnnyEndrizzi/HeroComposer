@@ -38,7 +38,7 @@ public class CircleNote : MonoBehaviour
             {
                 //Debug.Log("Delete Primary Note: " + id);
                 Destroy(transform.gameObject);
-                GameLogic.hitIndex++;
+                //GameLogic.hitIndex++;
             }
         }
     }

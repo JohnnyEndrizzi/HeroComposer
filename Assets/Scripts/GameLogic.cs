@@ -183,6 +183,14 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
+        Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
+        if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
+        {
+            StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
+            hitIndex++;
+            Debug.Log("MISS");
+        }
+
         //Spawn next note
         if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
         {
