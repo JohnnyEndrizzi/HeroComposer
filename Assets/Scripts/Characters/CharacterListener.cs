@@ -9,7 +9,8 @@ public class CharacterListener : MonoBehaviour
     [SerializeField] public AudioClip DEF_high_sfx;
     [SerializeField] public AudioClip fireball_sfx;
 
-    public float score;
+    public float songScore;
+    public GameObject songScoreText;
 
     public GameObject boss;
     
@@ -31,6 +32,13 @@ public class CharacterListener : MonoBehaviour
         GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
     }
 
+    public void UpdateScore(float value)
+    {
+        // Score += Note Value + (Note Value * (Combo Multiplier * Difficulty Multiplier) / 25)
+        songScore += (value + (value * ((0 * 1) / 25)));
+        songScoreText.GetComponent<UnityEngine.UI.Text>().text = "Score : " + songScore;
+    }
+
     public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
     {
         decimal hitTime = currentHit * 1000;
@@ -40,20 +48,23 @@ public class CharacterListener : MonoBehaviour
         if (errorDifference <= 25)
         {
             Debug.Log("PERFECT");
+            //GameLogic.hitIndex++;
+            UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
-            GameLogic.hitIndex++;
         }
         else if (errorDifference <= 100)
         {
             Debug.Log("GREAT");
+            //GameLogic.hitIndex++;
+            UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
-            GameLogic.hitIndex++;
         }
         else if (errorDifference <= 200)
         {
             Debug.Log("GOOD");
+            //GameLogic.hitIndex++;
+            UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
-            GameLogic.hitIndex++;
         }
         else
         {
