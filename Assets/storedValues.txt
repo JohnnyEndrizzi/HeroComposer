@@ -12,4 +12,4 @@ Potion1;Damage Potion;Reallllllllllly looooooooooong text blurbbbbbbbbbbbbbbbbbb
 Potion1;Revive Potion;Item3;1000;
 Potion1;Life Potion;Item4;2000;
 NEXT
-3;0;4;2;4;0;2;0;4;0;4;4;1;1;1;2;4;2;1;1;1;2;2;4;2;2;3;3;1;2;
+3;0;4;2;4;0;2;0;4;0;4;4;1;1;1;2;4;2;1;1;1;2;2;4;2;2;3;3;1;2;4;

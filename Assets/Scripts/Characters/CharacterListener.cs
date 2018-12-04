@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
-{ 
-    public AudioClip ATK_sfx;
-    public AudioClip DEF_low_sfx;
-    public AudioClip DEF_high_sfx;
+{
+    [SerializeField] public AudioClip ATK_sfx;
+    [SerializeField] public AudioClip DEF_low_sfx;
+    [SerializeField] public AudioClip DEF_high_sfx;
+    [SerializeField] public AudioClip fireball_sfx;
+
+    public float songScore;
+    public GameObject songScoreText;
 
     public GameObject boss;
     
@@ -21,10 +25,18 @@ public class CharacterListener : MonoBehaviour
 
     private int currentSprite = 0;
     private int[] lockCoroutine = { 0, 0, 0, 0 };
+    int noteLock = 0;
 
     public void ChangeNoteBarHighlight(Color c)
     {
         GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
+    }
+
+    public void UpdateScore(float value)
+    {
+        // Score += Note Value + (Note Value * (Combo Multiplier * Difficulty Multiplier) / 25)
+        songScore += (value + (value * ((0 * 1) / 25)));
+        songScoreText.GetComponent<UnityEngine.UI.Text>().text = "Score : " + songScore;
     }
 
     public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
@@ -32,22 +44,26 @@ public class CharacterListener : MonoBehaviour
         decimal hitTime = currentHit * 1000;
         decimal nextTime = nextHit + (1000 * songStartTime);
 
-        SpriteRenderer noteScoreSprite;
-
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
-            //Debug.Log("PERFECT");
+            Debug.Log("PERFECT");
+            //GameLogic.hitIndex++;
+            UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
-            //Debug.Log("GREAT");
+            Debug.Log("GREAT");
+            //GameLogic.hitIndex++;
+            UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
-            //Debug.Log("GOOD");
+            Debug.Log("GOOD");
+            //GameLogic.hitIndex++;
+            UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
@@ -90,6 +106,13 @@ public class CharacterListener : MonoBehaviour
 
     public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
+        if (noteLock != 0)
+        {
+            yield break;
+        }
+
+        noteLock = 1;
+
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
@@ -105,6 +128,8 @@ public class CharacterListener : MonoBehaviour
         }
 
         Destroy(score.gameObject);
+
+        noteLock = 0;
     }
 
     IEnumerator spawnShield(Vector3 spawnPoint, float duration, int spriteLock)
@@ -157,6 +182,21 @@ public class CharacterListener : MonoBehaviour
             fromPosition.position = Vector3.Lerp(toPosition, startPos, counter / duration);
             yield return null;
         }
+
+        lockCoroutine[spriteLock - 1] = 0;
+    }
+
+    IEnumerator magicAnimation(GameObject toUseGO, float duration, int spriteLock)
+    {
+        if (lockCoroutine[spriteLock - 1] != 0)
+        {
+            yield break;
+        }
+
+        lockCoroutine[spriteLock - 1] = 1;
+
+        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mgc_animation, spriteLock, 5);
+        GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         lockCoroutine[spriteLock - 1] = 0;
     }
@@ -233,6 +273,10 @@ public class CharacterListener : MonoBehaviour
             else if (ClickListener.menu_state == ClickListener.state.DEF)
             {
                 StartCoroutine(spawnShield(toUseGO.transform.position, 0.3f, currentSprite));
+            }
+            else if (ClickListener.menu_state == ClickListener.state.MGC)
+            {
+                StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
             }
         }
     }

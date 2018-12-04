@@ -14,13 +14,18 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    public Character character1;
-    public Character character2;
-    public Character character3;
-    public Character character4;
+    public CharacterScriptObject character1;
+    public CharacterScriptObject character2;
+    public CharacterScriptObject character3;
+    public CharacterScriptObject character4;
 
     void Start()
     {
+        if (GetComponent<LoadData>() != null)
+        {
+            GetComponent<LoadData>().LoadCharacters();
+        }
+
         selectcanvas.enabled = false; 
     }
 
@@ -53,11 +58,6 @@ public class DoorHandler : MonoBehaviour
 		if (selectcanvas.enabled == false)
         {
 			doorstatus = 1;
-
-
-            
-
-
 
             if (this.name.Equals("InventoryDoorClose"))
             {
@@ -101,9 +101,6 @@ public class DoorHandler : MonoBehaviour
             closeddoor.Play(tempName + "Close");
         }
     }
-
-    
-
 
     void OnClick()
     {

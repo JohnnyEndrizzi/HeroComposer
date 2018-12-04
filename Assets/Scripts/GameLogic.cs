@@ -41,8 +41,6 @@ public class GameLogic : MonoBehaviour
 
     public void spawnCharacters()
     {
-        Debug.Log("TEST: " + Assets.Scripts.MainMenu.ApplicationModel.characters.Count);
-
         for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Count; i++)
         {
             Vector3 characterSpawnPosition;
@@ -64,10 +62,16 @@ public class GameLogic : MonoBehaviour
                 characterSpawnPosition = new Vector3(2.82f, -0.67f, -5.5f);
             }
 
-            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite;
+            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
             GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
-            spawnedPlayer.name = "character_" + (i + 1);  
 
+            spawnedPlayer.name = "character_" + (i + 1);
+            spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
+            spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
+            spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
+            spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
+            spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc_animation;
         }
     }
 
@@ -177,6 +181,14 @@ public class GameLogic : MonoBehaviour
             noteTag = "PrimaryNote";
             nextBeat = beatmap.HitObjects[noteIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
             firstNoteOfSlider = true;
+        }
+
+        Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
+        if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
+        {
+            StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
+            hitIndex++;
+            Debug.Log("MISS");
         }
 
         //Spawn next note
