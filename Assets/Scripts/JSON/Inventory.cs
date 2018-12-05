@@ -6,4 +6,5 @@ using System.Collections;
 [System.Serializable]
 public class Inventory {
     public string StoredItems;
+    public string SelUnits;
 }

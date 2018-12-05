@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharMenuCtrl : MonoBehaviour {
+public class RehCharMenuCtrl : MonoBehaviour {
 
     //Gameobject locations
     [SerializeField]
@@ -11,20 +11,25 @@ public class CharMenuCtrl : MonoBehaviour {
 
     public Dictionary<int, UnitDict> Units;
 
-    private List<GameObject> buttons;   
+    private List<GameObject> buttons;
 
-    public void creator() {//Start but triggered after information is passed in
+    public void creator()
+    {//Start but triggered after information is passed in
         buttons = new List<GameObject>();
 
-        if (buttons.Count > 0) { //Destroy buttons to allow for reload //TODO needed?
-            foreach (GameObject button in buttons){
+        if (buttons.Count > 0)
+        { //Destroy buttons to allow for reload //TODO needed?
+            foreach (GameObject button in buttons)
+            {
                 Destroy(button.gameObject);
             }
             buttons.Clear();
-        }            
+        }
 
-        for (int i = 0; i<Units.Count-1; i++){            
-            if (Units[i].Unlocked == true) {
+        for (int i = 0; i < Units.Count; i++)
+        {
+            if (Units[i].Unlocked == true)
+            {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
 
@@ -38,7 +43,8 @@ public class CharMenuCtrl : MonoBehaviour {
     }
 
 
-    public void ButtonClicked(int intID){ //TODO clean up protections
+    public void ButtonClicked(int intID)
+    { //TODO clean up protections
         GameObject.Find("InvController").GetComponent<InvController>().setImage(Units[intID].img);
         GameObject.Find("InvController").GetComponent<InvController>().loadInv(intID);
     }

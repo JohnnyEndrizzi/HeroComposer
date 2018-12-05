@@ -52,7 +52,7 @@ public class GameLogic : MonoBehaviour
     {
         /* This loop counts how many characters are on the current team and spawns them to the correct location.
          * HealthBars are also spawned and linked to their respective character. */
-        for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Count; i++)
+        for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Length; i++)
         {
             Vector3 characterSpawnPosition;
             Vector3 healthPos;

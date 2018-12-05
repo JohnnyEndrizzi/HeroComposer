@@ -16,12 +16,12 @@ public class LoadData : MonoBehaviour
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
         string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");  
-        CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
+        //CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
 
         for (int i = 0; i < guids.Length; i++)         
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
+            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
             //Debug.Log(a[i].unlocked);
 
             for (int j = 0; j < characters.Length; j++)
@@ -52,6 +52,7 @@ public class LoadData : MonoBehaviour
                 int[] stats = { characters[j].level, characters[j].hp, characters[j].atk, characters[j].def, characters[j].mgc, characters[j].rcv};
                 GameObject.Find("Values").GetComponent<StoredValues>().importUnits(j, characters[j].name, characters[j].desc, "Characters/" + characters[j].sprite, "SoundEffects/" + characters[j].sound, eqp, characters[j].unlocked, stats, characters[j].mag_Eqp);
             }
+            GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
         }
     }
 
@@ -60,7 +61,37 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
+        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
+        //CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
+
         GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        string[] tempNames = inventory[0].SelUnits.Split(';');
+
+        for (int i = 0; i < guids.Length; i++)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
+
+            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[0])
+            {Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);}
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[1])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[2])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[3])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+
+        }
+
+    
+        
+
+
+        //Debug.Log(guids.Length.ToString());
+        //for(int j = 0; j<2; j++)
+        //{
+        //    Debug.Log(AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(AssetDatabase.GUIDToAssetPath(guids[j])).name);
+        //}     
     }
 
     public void LoadItems()
