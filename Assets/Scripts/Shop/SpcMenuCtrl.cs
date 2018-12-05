@@ -17,13 +17,12 @@ public class SpcMenuCtrl : MonoBehaviour {
     public List<int> shopItems;
     public Dictionary<int, AllItemDict> Dict;
 
-    public void creator(){ //Generate/Regenerate List 
+    public void creator(){ //Generate/Regenerate List   
         shopInventory = new List<PlayerItem>();
 
         if (GameObject.Find("SpcBtn #0") != null) { //Destroy buttons to allow for reload
             DestroyerOfLists();
-        }     
-
+        }
 
         for (int i = 0; i<shopItems.Count; i++){ 
             PlayerItem newItem = new PlayerItem();

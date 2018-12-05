@@ -27,16 +27,44 @@ public class StoredValues : MonoBehaviour {
     private List<int> spcOffers = new List<int>();
     private List<int> normOffers = new List<int>();
 
+    public static StoredValues instance = null;
+
     //Universal values
     private static int cash;
 
     public static int Cash{
         get{return cash;}
         set{cash = value;}
+    } 
+    
+    void Awake(){
+        if (!instance){
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else{
+            Destroy(this.gameObject);
+            return;
+        }
+        
     }
 
-    public void Start(){
-        load();
+    private void OnLevelWasLoaded() //TODO replace with new code
+    {
+        Starter();
+    }
+
+    
+
+    public void Starter(){
+        //load();
+
+        try
+        { InvCtrl = GameObject.Find("InvController").GetComponent<InvController>(); }
+        catch { }
+        try
+        { ShopCtrl = GameObject.Find("ShopController").GetComponent<ShopController>(); }
+        catch { }
 
         if (ShopCtrl != null) {
             ShopCtrl.Units = Units;
@@ -49,6 +77,7 @@ public class StoredValues : MonoBehaviour {
             ShopCtrl.normalOffers = normOffers;
 
             ShopCtrl.Starter();
+            
         }
         if (InvCtrl != null) {
             InvCtrl.Units = Units;
@@ -60,6 +89,7 @@ public class StoredValues : MonoBehaviour {
     }
 
     private void findOffers(){ //TODO tie into game
+        spcOffers.Clear();
         spcOffers.Add(4);
         spcOffers.Add(4);
         spcOffers.Add(3);
@@ -67,6 +97,7 @@ public class StoredValues : MonoBehaviour {
         spcOffers.Add(0);
         spcOffers.Add(0);
 
+        normOffers.Clear();
         for (int i = 0; i < 16; i++) {
             normOffers.Add(Random.Range(0,5));
         }
@@ -107,6 +138,7 @@ public class StoredValues : MonoBehaviour {
 
 
     public void save(){
+        return;
         //backup(); //TODO Needed?
         emptyTxt();
 
@@ -163,7 +195,42 @@ public class StoredValues : MonoBehaviour {
     }
 
 
+    public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
+    {
+        if (!Units.ContainsKey(i))
+        {
+            //Debug.Log(i.ToString() + " " + unitName);
+            Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
+        }
+    }
+
+    public void importItems(int i, string itemName, string itemTitle, string itemDesc, string itemSprite, int itemCost)
+    {
+        if (!AllItems.ContainsKey(i))
+        {
+            AllItems.Add(i, new AllItemDict(itemName, itemTitle, itemDesc, Resources.Load<Sprite>(itemSprite), itemCost)); //TODO expand with stats        
+        }
+        else
+        {
+            Debug.Log("AllItems KeyAlreadyExists " + i.ToString());
+        }
+    }
+    public void importInventory(string[] inventoryLoad)
+    {
+        for (int i = 0; i < inventoryLoad.Length; i++){
+            storedItems.Add(int.Parse(inventoryLoad[i]));
+        }
+    }
+
+    public void nullItem()
+    {
+        AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines
+        AllItems[0].img = null;
+    }
+
     public void load(){
+        Debug.Log("LOADING from TXT");
+
         string path = "Assets/storedValues.txt";
         string temp;
         string[] tempA;
@@ -177,7 +244,7 @@ public class StoredValues : MonoBehaviour {
         //UNIT LIST
         while (temp != "NEXT") {
             tempA = temp.Split(';');
-            Units.Add(i,new UnitDict(tempA[0], tempA[1], tempA[2], tempA[3], tempA[4], tempA[5],UnitImg[i]));
+            Units.Add(i,new UnitDict(tempA[0], tempA[1], tempA[2], tempA[3], tempA[4], tempA[5], UnitImg[i]));
 
             i++;
             temp = reader.ReadLine();
@@ -219,9 +286,27 @@ public class UnitDict { //All Units Dictionary
     public int item1;
     public int item2;
     public int item3;
+    public string mag_eqp;
 
     public Sprite img;
+    public AudioClip sound;
 
+    public UnitDict(string unitNameX, string unitDescX, bool unlockedX, int item1X, int item2X, int item3X, Sprite imgX, AudioClip soundX, int[] statsX, string mag_eqpX)
+    {
+        unitName = unitNameX;
+        unitDesc = unitDescX;
+        Unlocked = unlockedX ;
+
+        item1 = item1X;
+        item2 = item2X;
+        item3 = item3X;
+
+        img = imgX;
+        sound = soundX;
+
+        stats = statsX;
+        mag_eqp = mag_eqpX;
+    }
     public UnitDict(string unitNameX, string unitDescX, bool unlockedX, int item1X, int item2X, int item3X) {
         unitName = unitNameX;
         unitDesc = unitDescX;
@@ -291,6 +376,13 @@ public class AllItemDict { //All game items Dictionary
         Desc = DescX;
         img = imgX;
         Cost = int.Parse(CostX);
+    }
+    public AllItemDict(string itemNameX, string TitleX, string DescX, Sprite imgX, int CostX){
+        itemName = itemNameX;
+        Title = TitleX;
+        Desc = DescX;
+        img = imgX;
+        Cost = CostX;
     }
     public AllItemDict(string itemNameX, string TitleX, Sprite imgX) {
         itemName = itemNameX;

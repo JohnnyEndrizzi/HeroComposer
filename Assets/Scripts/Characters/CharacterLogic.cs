@@ -5,6 +5,8 @@ using UnityEngine;
 public class CharacterLogic : MonoBehaviour {
 
     public string sprite;
+    public string sound;
+
     public int hp;
     public int atk;
     public int def;
@@ -12,6 +14,7 @@ public class CharacterLogic : MonoBehaviour {
     public int mgc;
     public string attack;
     public int magicQueue = 0;
+
 
     // Use this for initialization
     void Start () {
@@ -23,3 +26,12 @@ public class CharacterLogic : MonoBehaviour {
 		
 	}
 }
+
+
+
+
+
+
+
+
+

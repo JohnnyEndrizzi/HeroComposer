@@ -24,6 +24,8 @@ public class DoorHandler : MonoBehaviour
         if (GetComponent<LoadData>() != null)
         {
             GetComponent<LoadData>().LoadCharacters();
+            GetComponent<LoadData>().LoadItems();
+            GetComponent<LoadData>().LoadInv();
         }
 
         selectcanvas.enabled = false; 
