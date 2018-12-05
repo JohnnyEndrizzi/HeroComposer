@@ -369,6 +369,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 198.22
       objectReference: {fileID: 0}
+    - target: {fileID: 212617938107007508, guid: 99121d6520edbb043807429fa258188f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99121d6520edbb043807429fa258188f, type: 2}
   m_IsPrefabAsset: 0
@@ -1111,7 +1116,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 26955638}
   m_HandleRect: {fileID: 26955637}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2513,7 +2518,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 76007636}
   m_HandleRect: {fileID: 76007635}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3307,7 +3312,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1539064672}
   m_HandleRect: {fileID: 1539064671}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
