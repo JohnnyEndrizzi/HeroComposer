@@ -93,7 +93,7 @@ public class GameLogic : MonoBehaviour
             spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
             spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
             spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
-            spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc_animation;
+            spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mag_Eqp;
         }
     }
 

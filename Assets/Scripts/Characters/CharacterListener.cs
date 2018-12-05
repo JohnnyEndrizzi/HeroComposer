@@ -195,7 +195,7 @@ public class CharacterListener : MonoBehaviour
 
         lockCoroutine[spriteLock - 1] = 1;
 
-        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mgc_animation, spriteLock, 5);
+        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
         GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         lockCoroutine[spriteLock - 1] = 0;
