@@ -47,21 +47,21 @@ public class CharacterListener : MonoBehaviour
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
-            Debug.Log("PERFECT");
+            //Debug.Log("PERFECT");
             //GameLogic.hitIndex++;
             UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
-            Debug.Log("GREAT");
+            //Debug.Log("GREAT");
             //GameLogic.hitIndex++;
             UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
-            Debug.Log("GOOD");
+            //Debug.Log("GOOD");
             //GameLogic.hitIndex++;
             UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
@@ -206,7 +206,7 @@ public class CharacterListener : MonoBehaviour
         color = Color.red;
     }
     
-    void OnGUI()
+    void Update()
     {
         GameObject toUseGO = null;
 
@@ -221,45 +221,41 @@ public class CharacterListener : MonoBehaviour
             inSliderHitRange = false;
         }
 
-        if (Input.GetKeyDown("u") || Input.GetKeyDown("i") || Input.GetKeyDown("o") || Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("i") || Input.GetKeyDown("j") || Input.GetKeyDown("k") || Input.GetKeyDown("l"))
         {
             color = Color.white;
         }
-        else if (Input.GetKeyUp("u") || Input.GetKeyUp("i") || Input.GetKeyUp("o") || Input.GetKeyUp("p"))
+        else if (Input.GetKeyUp("i") || Input.GetKeyUp("j") || Input.GetKeyUp("k") || Input.GetKeyUp("l"))
         {
             color = Color.red;
         }
 
         ChangeNoteBarHighlight(color);
 
-        if (Event.current != null)
+        if (Input.GetKeyUp("i"))
         {
-            if ((Event.current.Equals(Event.KeyboardEvent("u")) && !Input.GetKey("u")) || Input.GetKeyUp("u"))
-            {
-                currentSprite = 1;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("i")) && !Input.GetKey("i")) || Input.GetKeyUp("i"))
-            {
-                currentSprite = 2;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("o")) && !Input.GetKey("o")) || Input.GetKeyUp("o"))
-            {
-                currentSprite = 3;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("p")) && !Input.GetKey("p")) || Input.GetKeyUp("p"))
-            {
-                currentSprite = 4;
-            }
-            else
-            {
-                currentSprite = 0;
-            }
+            currentSprite = 1;
         }
-        
+        else if (Input.GetKeyUp("j"))
+        {
+            currentSprite = 2;
+        }
+        else if (Input.GetKeyUp("k"))
+        {
+            currentSprite = 3;
+        }
+        else if (Input.GetKeyUp("l"))
+        {
+            currentSprite = 4;
+        }
+        else
+        {
+            currentSprite = 0;
+        }
+
         if (currentSprite > 0)
         {
             toUseGO = GameObject.Find("character_" + currentSprite);
-
             SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
             StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
@@ -276,7 +272,16 @@ public class CharacterListener : MonoBehaviour
             }
             else if (ClickListener.menu_state == ClickListener.state.MGC)
             {
-                StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
+                Debug.Log(toUseGO.GetComponent<CharacterLogic>().magicQueue);
+                if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
+                {
+                    StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
+                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
+                }
+                else
+                {
+                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
+                }
             }
         }
     }

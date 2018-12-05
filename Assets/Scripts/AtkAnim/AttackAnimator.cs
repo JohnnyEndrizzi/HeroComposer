@@ -34,10 +34,10 @@ public class AttackAnimator : MonoBehaviour
     void Start()
     {
         //List of all targetable locations
-        LocationMap.Add("P1", new Locations(3.38f, 1.56f, -4.5f));   //P1
-        LocationMap.Add("P2", new Locations(1.43f, 1.19f, -4.8f)); //P2
-        LocationMap.Add("P3", new Locations(1.43f, -0.35f, -5.1f)); //P3
-        LocationMap.Add("P4", new Locations(2.82f, -0.67f, -5.5f)); //P4    
+        LocationMap.Add("P1", new Locations(3.29f, 1.75f, -4.8f));   //P1
+        LocationMap.Add("P2", new Locations(1.02f, 0.33f, -5.1f)); //P2
+        LocationMap.Add("P3", new Locations(2.94f, -0.82f, -5.5f)); //P3
+        LocationMap.Add("P4", new Locations(5.31f, 0.32f, -5.1f)); //P4    
         LocationMap.Add("P5", new Locations(6.5f, 0, 1)); //Centre of team
 
         LocationMap.Add("C", new Locations(0, 0, 1)); //CentrePoint

@@ -11,6 +11,7 @@ public class CharacterLogic : MonoBehaviour {
     public int rcv;
     public int mgc;
     public string attack;
+    public int magicQueue = 0;
 
     // Use this for initialization
     void Start () {
