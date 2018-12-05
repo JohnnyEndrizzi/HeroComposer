@@ -8,6 +8,7 @@ public class MoneyOutput : MonoBehaviour {
 
     void Start () {
         txtOut.text = "Money\n" + "$" +  spliter(StoredValues.Cash);
+        //Debug.Log(StoredValues.Cash);
     }
 
     void Update () {

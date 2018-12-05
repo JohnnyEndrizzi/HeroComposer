@@ -23,12 +23,15 @@ public class DoorHandler : MonoBehaviour
     {
         if (GetComponent<LoadData>() != null)
         {
-            GetComponent<LoadData>().LoadCharacters();
+            GetComponent<LoadData>().LoadCharacters();   //This code runs 5 times
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
+            //GetComponent<LoadData>().LoadMagic(); //TODO
         }
 
-        selectcanvas.enabled = false; 
+        selectcanvas.enabled = false;
+
+        StoredValues.Cash += 5000;
     }
 
     // Update is called once per frame
