@@ -6,65 +6,87 @@ using OsuParser;
 
 public class GameLogic : MonoBehaviour
 {
+    /* GameObjects that will appear on the Canvas*/
     public GameObject healthBar;
+    public GameObject characterHealthBar;
     public GameObject holdNote;
-
     public GameObject test;
+    public SpriteRenderer note;
+
+    /* Used to spawn in characters */
     public GameObject characterPlaceholder;
 
-    public SpriteRenderer note;
+    /* Used for the opening curtain animation */
     public SpriteRenderer curtains;
+    bool delayLock = true;
 
+    /* Variables used for hit logic */
     public static float nextHit;
+    public static float nextBeat;
     public static float nextHitEnd = 0;
     public static int hitIndex = 0;
     public bool introFinished;
 
     private float maxHealth;
 
+    /* Variables used for note logic */
     private string noteTag;
     private int iterationsLeft = 1;
     private bool firstNoteOfSlider = true;
 
+    /* Variables used for song completion logic */
     private bool notesDone = false;
     public static bool songDone = false;
 
-    bool delayLock = true;
-
+    /* Variables used for note movement */
+    public Beatmap beatmap;
+    private Metronome metronome;
     private Vector2 startPos;
     private Vector2 endPos;
-    private Metronome metronome;
-    private Beatmap beatmap;
     private int noteIndex = 0;
     private decimal latency = 0.150m;
     public static decimal songStartTime;
 
+    /* The following function spawns in the selected characters that are sent to ApplicationModel */
     public void spawnCharacters()
     {
+        /* This loop counts how many characters are on the current team and spawns them to the correct location.
+         * HealthBars are also spawned and linked to their respective character. */
         for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Count; i++)
         {
             Vector3 characterSpawnPosition;
+            Vector3 healthPos;
 
             if (i == 0)
             {
-                characterSpawnPosition = new Vector3(3.38f, 1.56f, -4.5f);
+                characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
+                healthPos = new Vector3(187.7f, 97.2f, 0.0f);
             }
             else if (i == 1)
             {
-                characterSpawnPosition = new Vector3(1.43f, 1.19f, -4.8f);
+                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                healthPos = new Vector3(74.3f, -103.2f, 0.0f);
             }
             else if (i == 2)
             {
-                characterSpawnPosition = new Vector3(1.43f, -0.35f, -5.1f);
+                characterSpawnPosition = new Vector3(2.94f, -0.82f, -5.5f);
+                healthPos = new Vector3(198.6f, -166.4f, 0.0f);
             }
             else
             {
-                characterSpawnPosition = new Vector3(2.82f, -0.67f, -5.5f);
+                characterSpawnPosition = new Vector3(5.31f, 0.32f, -5.1f);
+                healthPos = new Vector3(337.0f, -103.2f, 0.0f);
             }
+            
+            /* Health Bars */
+            GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
+            healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+            healthBar.name = "character_health_" + (i + 1);
 
             characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
             GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
 
+            /* Characters */
             spawnedPlayer.name = "character_" + (i + 1);
             spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
             spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
@@ -75,66 +97,94 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    /* Returns the next note's beat in the song */
     public float getNextHit()
     {
         return nextHit;
     }
 
+    /* Returns the next note's beat in the song */
+    public float getNextBeat()
+    {
+        return nextBeat;
+    }
+
+    /* Returns the starting beat of the selected beatmap */
     public decimal getSongStartTime()
     {
         return songStartTime;
     }
 
+    /* Returns the state of the song */
     public bool isSongDone()
     {
         return songDone;
     }
 
+    /* Animation sequence used to open curtains at the start of a song */
     private IEnumerator introDelay()
     {
         yield return new WaitForSeconds(6.0f);
-
         songStartTime = (decimal)AudioSettings.dspTime + latency;
+
+        /* Creates the metronome publisher and connects it to the SpawnNote function as its subscriber */
         metronome = new Metronome(songStartTime, beatmap.TimingPoints[0].TimePerBeat);
         metronome.Tick += SpawnNote;
 
+        /* Plays applause */
         GetComponent<AudioSource>().Play();
 
         delayLock = false;
         yield return null;
     }
 
-    // Use this for initialization
+    /* Used for initialization */
     void Start ()
     {
+        /* Spawns the current team */
         spawnCharacters();
 
         if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "")
         {
+            /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
             beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
         }
         else
         {
+            /* This is the default song in case of an error */
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
             beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
         }
+
+        /* The spawn and kill points for incoming notes */
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
 
+        /* Tentative: Set boss' health tothe duration of the selected song */
         maxHealth = GetComponent<AudioSource>().clip.length;
+
+        /* Plays the opening curtain animation */
         StartCoroutine(introDelay());
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame */
     void Update()
     {
         if (delayLock == false)
         {
+            /* There are 4 states of a song:
+             * 1) introDelay phase (pre-song)
+             * 2) Song (incoming notes)
+             * 3) notesDone phase (but song is still playing)
+             * 4) songDone phase (song and notes are finished, and level ends) */
             if (!notesDone)
             {
+                /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
                 nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
+                nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
 
+                /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
                 if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
                 {
                     nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
@@ -142,29 +192,35 @@ public class GameLogic : MonoBehaviour
             }
             else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
             {
+                /* Waits for the song's AudioClip to finish, then marks it as done */
                 songDone = true;
                 Debug.Log("Song ended.");
             }
 
+            /* Updates the boss' health as the song plays out */
             float currHealth = GetComponent<AudioSource>().time;
             healthBar.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
 
+            /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
             metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
         }
     }
 
+    /* This function will spawn notes in accordance to published messages from the metronome */
     void SpawnNote(object sender, Metronome.TickEventArgs e)
     {
         float endTime;
         float nextBeat;
 
-        //Song ended
+        /* The song and incoming notes have ended */
         if (noteIndex >= beatmap.HitObjects.Count)
         {
             notesDone = true;
             return;
         }
 
+        /* The following is the logic that defines how held notes spawn, which sets appropriate 'SecondaryNote' and 
+         * 'PrimaryNote' labels to each GameObject */ 
         if (iterationsLeft == 2 || firstNoteOfSlider == false)
         {
             noteTag = "SecondaryNote";
@@ -183,34 +239,43 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
-        Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
+        //Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
+
+        /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
         if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
         {
             StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
             hitIndex++;
-            Debug.Log("MISS");
+            //Debug.Log("MISS");
         }
 
-        //Spawn next note
+        /* Spawn next note */
         if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
         {
+            /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
+             * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
             if (inSliderRange && firstNoteOfSlider == true)
             {
                 iterationsLeft = 2;
             }
 
+            /* Instantiates the notes on the cavas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
 
+            /* Subscribing to the metronome will allow us to receive notes faster than what the traditional 'Update'
+             * function allows. Rather than operating based on FPS, it operates on a beat-basis.*/
             metronome.Tick += beatSprite.GetComponent<CircleNote>().UpdateSongPosition;
+            metronome.Tick += GetComponent<BossLogic>().Test;
 
+            /* Different logic is required if the incoming note is a part of a held note */
             if (inSliderRange)
             {
                 //Debug.Log(string.Format("Spawning slider note {0} at beat {1}.", noteIndex, e.positionInBeats));
-                //beatSprite.GetComponent<Image>().color = Color.green;
 
+                /* If the next note is the first of a held note pair, we must spawn the bar connecting the two notes as well */
                 if (firstNoteOfSlider == true)
                 {
                     HitObject currObject = beatmap.HitObjects[noteIndex];
@@ -224,37 +289,41 @@ public class GameLogic : MonoBehaviour
                     Vector2 barStartPos = startPos;
                     Vector2 barEndPos = endPos;
 
+                    /* Transforms the world coordinates to canvas coordinates. This is necessary because the anchors of the middle bar 
+                     * have been shifted to account for its skewed scaling */
                     barStartPos.x -= GameObject.FindGameObjectWithTag("NotesLayer").transform.GetComponent<RectTransform>().rect.width / 2;
                     barEndPos.x -= GameObject.FindGameObjectWithTag("NotesLayer").transform.GetComponent<RectTransform>().rect.width / 2;
 
+                    /* Spawns the held note's connecting bar */
                     GameObject holdNoteGO;
                     holdNoteGO = Instantiate(holdNote, startPos, Quaternion.identity);
                     holdNoteGO.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
 
+                    /* The slider note must also subscribe to the metronome publisher */
                     metronome.Tick += holdNoteGO.GetComponent<SliderNote>().UpdateSongPosition;
 
+                    /* "Deserializes" the values of the held note to the GameObject */
                     holdNoteGO.GetComponent<SliderNote>().id = noteIndex;
                     holdNoteGO.GetComponent<SliderNote>().startTimeInBeats = nextBeat;
                     holdNoteGO.GetComponent<SliderNote>().endTimeInBeats = nextBeat + ((SliderObject)beatmap.HitObjects[noteIndex]).EndTimeInBeats((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier);
                     holdNoteGO.GetComponent<SliderNote>().startPos = barStartPos;
                     holdNoteGO.GetComponent<SliderNote>().endPos = barEndPos;
-
                     holdNoteGO.GetComponent<SliderNote>().approachRate = beatmap.GetApproachRate();
                     holdNoteGO.GetComponent<SliderNote>().songPosInBeats = e.positionInBeats;
                 }
             }
 
+            /* "Deserializes" the values of the next note to the GameObject */
             beatSprite.gameObject.tag = noteTag;
-
             beatSprite.GetComponent<CircleNote>().id = noteIndex;
             beatSprite.GetComponent<CircleNote>().startTimeInBeats = nextBeat;
             beatSprite.GetComponent<CircleNote>().startPos = startPos;
             beatSprite.GetComponent<CircleNote>().endPos = endPos;
             beatSprite.GetComponent<CircleNote>().beatNumber = nextBeat;
-
             beatSprite.GetComponent<CircleNote>().approachRate = beatmap.GetApproachRate();
             beatSprite.GetComponent<CircleNote>().songPosInBeats = e.positionInBeats;
 
+            /* The first note has been killed */
             if (iterationsLeft == 1)
             {
                 firstNoteOfSlider = true;

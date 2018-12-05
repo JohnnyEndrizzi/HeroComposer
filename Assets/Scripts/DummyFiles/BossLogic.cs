@@ -1,5 +1,4 @@
-﻿using DummyFiles;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +10,22 @@ public class BossLogic : MonoBehaviour
 
     public void BossAttack(Characters target)
     {
-        target.currentHealth -= bossPower * 0.75f * (target.defenseValue / 100);
+        //target.currentHealth -= (int)(bossPower * 0.75f * (target.def / 100));
     }
 
     public void BossSpecial(Characters target)
     {
-        target.currentHealth -= bossPower * 2.0f * (target.defenseValue / 100);
+        //target.currentHealth -= (int)(bossPower * 2 * (target.def / 100));
     }
+
+    void Start()
+    {
+        //GetComponent<GameLogic>().metronome.Tick += Test;
+        //metronome = new Metronome(songStartTime, beatmap.TimingPoints[0].TimePerBeat);
+    }
+
+    //public void Test(object sender, Metronome.TickEventArgs e)
+    //{
+
+    //}
 }

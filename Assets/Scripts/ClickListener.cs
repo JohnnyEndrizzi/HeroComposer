@@ -33,19 +33,19 @@ public class ClickListener : MonoBehaviour
 
     void OnGUI()
     {
-        if (Event.current.Equals(Event.KeyboardEvent("q")))
+        if (Event.current.Equals(Event.KeyboardEvent("w")))
         {
             ChangeMenuState(ATK_sprite, state.ATK);
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("w")))
+        else if (Event.current.Equals(Event.KeyboardEvent("a")))
         {
             ChangeMenuState(DEF_sprite, state.DEF);
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("e")))
+        else if (Event.current.Equals(Event.KeyboardEvent("d")))
         {
             ChangeMenuState(MGC_sprite, state.MGC);
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("r")))
+        else if (Event.current.Equals(Event.KeyboardEvent("s")))
         {
             ChangeMenuState(ULT_sprite, state.ULT);
         }

@@ -19,6 +19,7 @@ TagManager:
   - Menu
   - Spotlight
   - Background
+  - Health Bar
   layers:
   - Default
   - TransparentFX
