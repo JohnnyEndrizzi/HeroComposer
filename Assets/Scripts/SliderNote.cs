@@ -25,6 +25,7 @@ public class SliderNote : MonoBehaviour
     private GameObject secondaryNote;
     private Vector2 barSize;
 
+    /* Use this for initialization */
     void Start ()
     {
         donelerp = false;
@@ -34,19 +35,28 @@ public class SliderNote : MonoBehaviour
         barSize = gameObject.GetComponent<RectTransform>().sizeDelta;
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame */
     void Update ()
     {
-        //Debug.Log("Current = " + transform.GetComponent<RectTransform>().anchoredPosition);
-        //Debug.Log("End     = " + endPos);
+        /* The middle bar between hold notes works as follows:
+         *  1) Leading note of slider note spawns (PrimaryNote)
+         *  2) Middle bar spawns with scale set to 0.1 and its anchor set to the right
+         *  3) As PrimaryNote lerps along the NoteBar the middle bar will follow 
+         *  4) While its lerping, the middle bar will increase its scale, keeping an end at the PrimaryNote and the other at the spawn point
+         *  5) The ending note of the slider note spawns (SecondaryNote)
+         *  6) Upon SecondaryNote spawning, the middle bar will stop increasing its scale (with an end at the PrimaryNote and the other at the SecondaryNote)
+         *  7) The "combined" hold note will lerp together 
+         *  8) PrimaryNote will eventually reach the kill point, but will stay there until SecondaryNote also arrives, dying at the same time.
+         *  9) The middle bar will decrease its scale accordingly as the distance between PrimaryNote and SecondaryNote decrease 
+         * 10) Once SecondaryNote arrives atthe kill point with PrimaryNote (middle bar should have a ~0.1 scale), the "combined" hold note will kill together */
 
+        /* This is the logic that will lerp the middle bar from spawn to kill point using the current song's BPM value */
         if (donelerp == false)
         {
             lerpTime = ((approachRate - (startTimeInBeats - songPosInBeats)) / approachRate) >= 0 ?
                         (approachRate - (startTimeInBeats - songPosInBeats)) / approachRate :
                         ((approachRate - (startTimeInBeats - 0)) / approachRate);
 
-            //transform.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(startPos, endPos, lerpTime);
             transform.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(startPos, endPos, lerpTime);
 
             if (transform.GetComponent<RectTransform>().anchoredPosition == endPos)
@@ -55,10 +65,10 @@ public class SliderNote : MonoBehaviour
             }
         }
 
+        /* Step 4 from above: The middle bar will increase its scale relative to the PrimaryNote and spawn point, until SecondaryNote spawns */
         if (doneScaleLerp1 == false)
         {
-            /* Search for the primary note with the same id */
-
+            /* Search for PrimaryNote with the same id as the middle bar */
             if (primaryNote == null)
             {
                 GameObject[] possiblePrimaryNotes;
@@ -73,7 +83,7 @@ public class SliderNote : MonoBehaviour
                 }
             }
 
-            /* Caclulate distance between primary note and set point (in world space) */
+            /* Caclulate distance between PrimaryNote and spawn point (in world space) */
             if (primaryNote == null)
             {
                 barSize.x = Mathf.Abs(328 - (-363));
@@ -83,9 +93,10 @@ public class SliderNote : MonoBehaviour
                 barSize.x = Mathf.Abs(primaryNote.GetComponent<RectTransform>().anchoredPosition.x - (-363));
             }
 
-            /* Resize Bar until second object with share id is instanitated*/
+            /* Resize middle bar until SecondaryNote with same id is instanitated */
             gameObject.GetComponent<RectTransform>().sizeDelta = barSize;
 
+            /* Search for SecondaryNote with the same id as the middle bar and PrimaryNote */
             if (secondaryNote == null)
             {
                 GameObject[] possibleSecondaryNotes;
@@ -101,8 +112,7 @@ public class SliderNote : MonoBehaviour
                 }
             }
         }
-
-
+        /* Step 9 from above: The middle bar will decrease its scale until SecondaryNote catches up PrimaryNote at the kill point */
         else if (doneScaleLerp2 == false && (doneScaleLerp1 && donelerp))
         {
             if (secondaryNote != null)
@@ -118,14 +128,15 @@ public class SliderNote : MonoBehaviour
                 doneScaleLerp2 = true;
             }
         }
-        
+
+        /* Step 10 from above: PrimaryNote, SecondaryNote, and the middle bar will die together upon arriving at the kill point */
         if (donelerp && doneScaleLerp1 && doneScaleLerp2)
         {
-            //Debug.Log("Delete Bar:  " + id);
             Destroy(transform.gameObject);
         }
     }
 
+    /* This function is subscribed to the metronome's publishing, which will drive the note spawn/movement */
     public void UpdateSongPosition(object sender, Metronome.TickEventArgs e)
     {
         songPosInBeats = e.positionInBeats;
