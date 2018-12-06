@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class RehController : MonoBehaviour {
 
@@ -81,9 +82,50 @@ public class RehController : MonoBehaviour {
     }
 
     private void passTeam(){
-        GetComponent<LoadData>().setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
+        setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
+        //getTeam();
     }
-        
+
+    public void getTeam() //TODO Remove (testing)
+    {
+        Debug.Log("======");
+        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[0].name);
+        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[1].name);
+        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[2].name);
+        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[3].name);        
+    }
+
+
+    public void setTeam(string[] chars)
+    {
+        clearTeam();
+
+        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
+
+        for (int i = 0; i < guids.Length; i++)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
+
+            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[0])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[1])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[2])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[3])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+        }
+    }
+
+    public void clearTeam()
+    {
+        Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[2] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
+    }
+
     public void loadPortraits()
     { //Loads last saved data and brings a selected Character to the front
          for (int i=0; i < 4; i++)
@@ -175,7 +217,12 @@ public class RehController : MonoBehaviour {
                 HoldNum = 0;
                 UnitMenu.lightsOut();
             }
-        }        
+        }
+        else {
+            origin.GetComponent<BtnUnit>().SetIcon(null);
+            unitsInPortraits[item - 1] = -1;
+        }
+        passTeam();
     }
 
     public int DoubleCheck(){ //check for doubles

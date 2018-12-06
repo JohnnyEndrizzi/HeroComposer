@@ -16,13 +16,10 @@ public class LoadData : MonoBehaviour
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
         string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");  
-        //CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
 
         for (int i = 0; i < guids.Length; i++)         
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
-            //Debug.Log(a[i].unlocked);
 
             for (int j = 0; j < characters.Length; j++)
             {
@@ -46,7 +43,6 @@ public class LoadData : MonoBehaviour
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).eqp2 = characters[j].eqp2;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).eqp3 = characters[j].eqp3;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).mag_Eqp = characters[j].mag_Eqp;
-                    //AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).mgc_animation = characters[j].mgc_animation;
                 }
                 int[] eqp = {characters[j].eqp1, characters[j].eqp2, characters[j].eqp3};
                 int[] stats = { characters[j].level, characters[j].hp, characters[j].atk, characters[j].def, characters[j].mgc, characters[j].rcv};
@@ -62,7 +58,6 @@ public class LoadData : MonoBehaviour
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
         string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
-        //CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
 
         GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
         string[] tempNames = inventory[0].SelUnits.Split(';');
@@ -70,7 +65,6 @@ public class LoadData : MonoBehaviour
         for (int i = 0; i < guids.Length; i++)
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
 
             if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[0])
             {Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);}
@@ -80,35 +74,9 @@ public class LoadData : MonoBehaviour
             { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
             else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[3])
             { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-        }
-
-        //Debug.Log(guids.Length.ToString());
-        //for(int j = 0; j<2; j++)
-        //{
-        //    Debug.Log(AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(AssetDatabase.GUIDToAssetPath(guids[j])).name);
-        //}     
+        }   
     }
-
-    public void setTeam(string[] chars){       
-
-        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
-
-        for (int i = 0; i < guids.Length; i++)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
-
-            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[0])
-            {Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);}
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[1])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[2])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[3])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-        }
-    }
-
+    
     public void LoadItems()
     {
         string jsonString = LoadResourceTextfile("items.json");
