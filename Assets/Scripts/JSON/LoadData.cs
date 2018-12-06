@@ -16,13 +16,10 @@ public class LoadData : MonoBehaviour
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
         string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");  
-        CharacterScriptObject[] a = new CharacterScriptObject[guids.Length];
 
         for (int i = 0; i < guids.Length; i++)         
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
-            //Debug.Log(a[i].unlocked);
 
             for (int j = 0; j < characters.Length; j++)
             {
@@ -47,12 +44,12 @@ public class LoadData : MonoBehaviour
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).eqp2 = characters[j].eqp2;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).eqp3 = characters[j].eqp3;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).mag_Eqp = characters[j].mag_Eqp;
-                    //AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).mgc_animation = characters[j].mgc_animation;
                 }
                 int[] eqp = {characters[j].eqp1, characters[j].eqp2, characters[j].eqp3};
                 int[] stats = { characters[j].level, characters[j].hp, characters[j].atk, characters[j].def, characters[j].mgc, characters[j].rcv};
                 GameObject.Find("Values").GetComponent<StoredValues>().importUnits(j, characters[j].name, characters[j].desc, "Characters/" + characters[j].sprite, "SoundEffects/" + characters[j].sound, eqp, characters[j].unlocked, stats, characters[j].mag_Eqp);
             }
+            GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
         }
     }
 
@@ -61,9 +58,26 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
-        GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
-    }
+        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
 
+        GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        string[] tempNames = inventory[0].SelUnits.Split(';');
+
+        for (int i = 0; i < guids.Length; i++)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+
+            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[0])
+            {Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);}
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[1])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[2])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[3])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+        }   
+    }
+    
     public void LoadItems()
     {
         string jsonString = LoadResourceTextfile("items.json");

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -369,6 +369,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 198.22
       objectReference: {fileID: 0}
+    - target: {fileID: 212617938107007508, guid: 99121d6520edbb043807429fa258188f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99121d6520edbb043807429fa258188f, type: 2}
   m_IsPrefabAsset: 0
@@ -659,6 +664,7 @@ MonoBehaviour:
   storedItems: 
   ShopCtrl: {fileID: 2131346349}
   InvCtrl: {fileID: 0}
+  RehCtrl: {fileID: 0}
 --- !u!4 &380856665
 Transform:
   m_ObjectHideFlags: 0
@@ -1369,7 +1375,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 705748323}
-        m_MethodName: sceneSwitch
+        m_MethodName: sceneSwitchCurtains
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

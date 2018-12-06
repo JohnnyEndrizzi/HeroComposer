@@ -19,10 +19,12 @@ public class StoredValues : MonoBehaviour {
     [SerializeField]
     private List<int> storedItems; 
 
-    [SerializeField]
+    [SerializeField] //TODO remove serialize
     private ShopController ShopCtrl = null; 
     [SerializeField]
-    private InvController InvCtrl = null; 
+    private InvController InvCtrl = null;
+    [SerializeField]
+    private RehController RehCtrl = null;
 
     private List<int> spcOffers = new List<int>();
     private List<int> normOffers = new List<int>();
@@ -54,8 +56,6 @@ public class StoredValues : MonoBehaviour {
         Starter();
     }
 
-    
-
     public void Starter(){
         //load();
 
@@ -64,6 +64,9 @@ public class StoredValues : MonoBehaviour {
         catch { }
         try
         { ShopCtrl = GameObject.Find("ShopController").GetComponent<ShopController>(); }
+        catch { }
+        try
+        { RehCtrl = GameObject.Find("RehController").GetComponent<RehController>(); }
         catch { }
 
         if (ShopCtrl != null) {
@@ -85,6 +88,13 @@ public class StoredValues : MonoBehaviour {
             InvCtrl.storedItems = storedItems;
 
             InvCtrl.Starter();
+        }
+        if (RehCtrl != null)
+        {
+            RehCtrl.Units = Units;
+            RehCtrl.AllItems = AllItems;
+
+            RehCtrl.Starter();
         }
     }
 
@@ -212,7 +222,7 @@ public class StoredValues : MonoBehaviour {
         }
         else
         {
-            Debug.Log("AllItems KeyAlreadyExists " + i.ToString());
+            //Debug.Log("AllItems KeyAlreadyExists " + i.ToString()); //TODO prevent on menu reload
         }
     }
     public void importInventory(string[] inventoryLoad)
@@ -224,9 +234,20 @@ public class StoredValues : MonoBehaviour {
 
     public void nullItem()
     {
-        AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines
-        AllItems[0].img = null;
+        if (!AllItems.ContainsKey(0))
+        {
+            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  //TODO make null -1???
+            AllItems[0].img = null;
+        }
     }
+    public void nullUnit()  //TODO does it break menus?
+    {
+        if (!Units.ContainsKey(-1)) 
+        {
+            Units.Add(-1, new UnitDict("", "", false, null, null));  //TODO merge lines
+        }
+    }
+    
 
     public void load(){
         Debug.Log("LOADING from TXT");
@@ -306,6 +327,15 @@ public class UnitDict { //All Units Dictionary
 
         stats = statsX;
         mag_eqp = mag_eqpX;
+    }
+    public UnitDict(string unitNameX, string unitDescX, bool unlockedX, Sprite imgX, AudioClip soundX) //nullUnit
+    {
+        unitName = unitNameX;
+        unitDesc = unitDescX;
+        Unlocked = unlockedX;
+
+        img = imgX;
+        sound = soundX;
     }
     public UnitDict(string unitNameX, string unitDescX, bool unlockedX, int item1X, int item2X, int item3X) {
         unitName = unitNameX;

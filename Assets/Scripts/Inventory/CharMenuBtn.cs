@@ -7,12 +7,16 @@ public class CharMenuBtn : MonoBehaviour {
 
     //Gameobject locations
     [SerializeField]
-    private CharMenuCtrl charMenuCtrl = null;
-    [SerializeField]
     private Text btnText = null;
+    [SerializeField]
+    private Image imgIcon = null;
+    [SerializeField]
+    private Image highlighter = null;
 
     private string btnTextTxt;
-    private int intID;
+
+    private int invID; //Location ID
+    private int itemID; //Held item ID
 
     void Start(){
         this.GetComponent<Button>().onClick.AddListener(delegate {OnClick();});
@@ -26,15 +30,56 @@ public class CharMenuBtn : MonoBehaviour {
         btnTextTxt = textString;
 	}
 
-    public void SetID(int ID){ //Set ID value
-        intID = ID;
-    }
+    public void SetInvID(int ID){invID = ID;} //Set ID value   
+    public int GetInvID(){return invID; } //Get ID value
+    public void SetItemID(int ID){itemID = ID;} //Set ID value
+    public int GetItemID(){return itemID; } //Get ID value
 
     public void SetImage(Sprite image){ //Set Sprite
         this.GetComponent<Image>().sprite = image;
     }
 
+    public void SetIcon(Sprite mySprite) { //Set Icon Sprite
+        if (mySprite == null){imgIcon.GetComponent<Image>().enabled = false;}
+        else{imgIcon.GetComponent<Image>().enabled = true;} 
+
+        imgIcon.sprite = mySprite; 
+    }
+    public Sprite GetIcon() { //Get Sprite
+        return imgIcon.sprite;
+    }
+    public bool HasIcon() { //Is spot filled?
+        if (imgIcon.sprite == true) {return true;}
+        else{return false;}
+    }
+
+    public void toggleHigh(){
+        Debug.Log(highlighter.enabled.ToString() + " High");
+        if (highlighter.enabled) {
+            highlighter.enabled = false;
+        }
+        else {
+            highlighter.enabled = true;
+        }
+    }
+
     void OnClick(){ //Gets Clicked
-        charMenuCtrl.ButtonClicked(intID);
+        //To find who called this sceipt (different parents use this child script)
+        if(GameObject.Find("InvController") != null){
+            this.transform.parent.parent.parent.GetComponent<CharMenuCtrl>().ButtonClicked(invID);
+
+        }
+        else if(GameObject.Find("RehController") != null){
+            toggleHigh();
+            this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
+        }
     }
 }
+
+
+
+
+
+
+
+

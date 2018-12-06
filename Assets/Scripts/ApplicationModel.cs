@@ -8,6 +8,7 @@ namespace Assets.Scripts.MainMenu
     public class ApplicationModel
     {
         static public string songPathName = "";
-        static public List<CharacterScriptObject> characters = new List<CharacterScriptObject>();
+        //static public List<CharacterScriptObject> characters = new List<CharacterScriptObject>();
+        static public CharacterScriptObject[] characters = new CharacterScriptObject[4];
     }
 }

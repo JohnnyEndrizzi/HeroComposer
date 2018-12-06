@@ -14,15 +14,13 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    public CharacterScriptObject character1;
-    public CharacterScriptObject character2;
-    public CharacterScriptObject character3;
-    public CharacterScriptObject character4;
+    private bool Done = false;
 
     void Start()
     {
-        if (GetComponent<LoadData>() != null)
+        if (GetComponent<LoadData>() != null && Done == false)
         {
+            Done = true;
             GetComponent<LoadData>().LoadCharacters();   //This code runs 5 times
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
@@ -46,8 +44,7 @@ public class DoorHandler : MonoBehaviour
                 
                 if (!selectcanvas.enabled)
                 {
-                    selectcanvas.enabled = true;
-                    charSet();
+                    selectcanvas.enabled = true;                    
                     play.onClick.AddListener(PlaybuttonOnClick);
                 }
                 else
@@ -119,13 +116,7 @@ public class DoorHandler : MonoBehaviour
         }
     }
 
-    void charSet()
-    {
-        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character1);
-        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character2);
-        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character3);
-        Assets.Scripts.MainMenu.ApplicationModel.characters.Add(character4);
-    }
+
 
 	void PlaybuttonOnClick()
 	{
