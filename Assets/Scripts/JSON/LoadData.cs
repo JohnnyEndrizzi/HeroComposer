@@ -31,6 +31,7 @@ public class LoadData : MonoBehaviour
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name = characters[j].name;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).desc = characters[j].desc;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).sprite = "Characters/" + characters[j].sprite;
+                    AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).headshot = "Headshots/" + characters[j].headshot;
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).sound = "SoundEffects/" + characters[j].sound;
 
                     AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).unlocked = characters[j].unlocked;

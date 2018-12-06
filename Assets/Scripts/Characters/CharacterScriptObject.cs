@@ -7,6 +7,7 @@ public class CharacterScriptObject : ScriptableObject
     public string name;
     public string desc;    
     public string sprite;
+    public string headshot;
     public string sound;
 
     public bool unlocked;

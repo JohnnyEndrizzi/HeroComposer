@@ -27,12 +27,15 @@ public class GameLogic : MonoBehaviour
     public static int hitIndex = 0;
     public bool introFinished;
 
+    /* Variables used for defending against attacks and health logic*/
+    public static int defendNote = -1;
     private float maxHealth;
 
     /* Variables used for note logic */
     private string noteTag;
     private int iterationsLeft = 1;
     private bool firstNoteOfSlider = true;
+    private int defenseState = -1;
 
     /* Variables used for song completion logic */
     private bool notesDone = false;
@@ -101,6 +104,12 @@ public class GameLogic : MonoBehaviour
     public float getNextHit()
     {
         return nextHit;
+    }
+
+    /* Sets the next noteas a defend note */
+    public void setDefendNote(int value)
+    {
+        defendNote = value;
     }
 
     /* Returns the next note's beat in the song */
@@ -246,7 +255,6 @@ public class GameLogic : MonoBehaviour
         {
             StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
             hitIndex++;
-            //Debug.Log("MISS");
         }
 
         /* Spawn next note */
@@ -263,7 +271,49 @@ public class GameLogic : MonoBehaviour
             /* Instantiates the notes on the cavas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
+
+            /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
+
+            /* This code will spawn the corresponding character's headshot on the notebar to represent a queued attack by the
+             * boss This code will either run when: 1) The boss has queued an attack; 2) They queued at the start of a hold note 
+             * and the end note in the pair is next */
+            if ((defendNote != -1 && firstNoteOfSlider == true) || (defenseState > -1 && firstNoteOfSlider == false))
+            {
+                /* These are notes that lead a hold note pair*/
+                if (firstNoteOfSlider == true && iterationsLeft == 2)
+                {
+                    beatSprite.gameObject.name = "defendNoteStart";
+
+                    beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
+                    beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+
+                    defenseState = defendNote;
+
+                }
+                /* These are notes that either end a hold note pair or are just regular standalone notes*/
+                else
+                {
+                    beatSprite.gameObject.name = "defendNoteEnd";
+
+                    /* This is a standalone note */
+                    if (defendNote > -1)
+                    {
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                    }
+                    /* This is a note that ends a hold note pair */
+                    else
+                    {
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defenseState].headshot);
+                    }
+
+                    defenseState = -1;
+                }
+
+                /* Resize the character's headshot to be more visible on the notebar */
+                ((RectTransform)beatSprite.GetComponent(typeof(RectTransform))).sizeDelta = new Vector2(150, 150);
+                defendNote = -1;
+            }
 
             /* Subscribing to the metronome will allow us to receive notes faster than what the traditional 'Update'
              * function allows. Rather than operating based on FPS, it operates on a beat-basis.*/
@@ -298,6 +348,7 @@ public class GameLogic : MonoBehaviour
                     GameObject holdNoteGO;
                     holdNoteGO = Instantiate(holdNote, startPos, Quaternion.identity);
                     holdNoteGO.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
+                    holdNoteGO.transform.SetAsFirstSibling();
 
                     /* The slider note must also subscribe to the metronome publisher */
                     metronome.Tick += holdNoteGO.GetComponent<SliderNote>().UpdateSongPosition;
