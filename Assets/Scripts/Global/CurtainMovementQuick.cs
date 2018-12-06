@@ -9,7 +9,6 @@ public class CurtainMovementQuick : MonoBehaviour {
 
     private AudioSource audioSource;
 
-
     private IEnumerator OpenAnimation(){
         curtainAnim.Play("CurtainsOpen");
 

@@ -80,18 +80,33 @@ public class LoadData : MonoBehaviour
             { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
             else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == tempNames[3])
             { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-
         }
-
-    
-        
-
 
         //Debug.Log(guids.Length.ToString());
         //for(int j = 0; j<2; j++)
         //{
         //    Debug.Log(AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(AssetDatabase.GUIDToAssetPath(guids[j])).name);
         //}     
+    }
+
+    public void setTeam(string[] chars){       
+
+        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
+
+        for (int i = 0; i < guids.Length; i++)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
+
+            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[0])
+            {Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);}
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[1])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[2])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[3])
+            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+        }
     }
 
     public void LoadItems()

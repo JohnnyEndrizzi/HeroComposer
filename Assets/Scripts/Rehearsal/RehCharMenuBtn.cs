@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharMenuBtn : MonoBehaviour {
+public class RehCharMenuBtn : MonoBehaviour {
 
     //Gameobject locations
     [SerializeField]
@@ -21,14 +21,16 @@ public class CharMenuBtn : MonoBehaviour {
     void Start(){
         this.GetComponent<Button>().onClick.AddListener(delegate {OnClick();});
 
+        try{highlighter.enabled = false;}catch{}
+
         btnText.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         btnText.fontSize = 16;
     }
-       
+
     public void SetText(string textString) { //Set Text
         btnText.text = textString; 
         btnTextTxt = textString;
-	}
+    }
 
     public void SetInvID(int ID){invID = ID;} //Set ID value   
     public int GetInvID(){return invID; } //Get ID value
@@ -54,13 +56,18 @@ public class CharMenuBtn : MonoBehaviour {
     }
 
     public void toggleHigh(){
-        Debug.Log(highlighter.enabled.ToString() + " High");
         if (highlighter.enabled) {
             highlighter.enabled = false;
         }
         else {
             highlighter.enabled = true;
         }
+    }
+    public void HighOff(){
+        highlighter.enabled = false;
+    }
+    public void HighOn(){
+        highlighter.enabled = true;
     }
 
     void OnClick(){ //Gets Clicked
@@ -70,16 +77,10 @@ public class CharMenuBtn : MonoBehaviour {
 
         }
         else if(GameObject.Find("RehController") != null){
-            toggleHigh();
             this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
         }
     }
 }
-
-
-
-
-
 
 
 

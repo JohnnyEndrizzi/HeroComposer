@@ -42,18 +42,14 @@ public class RehController : MonoBehaviour {
     //Local Values
     private int HoldNum; //Save what is held
     private int[] unitsInPortraits = new int[4];
-    
+
     public void Starter()
     {
-        
-
-        //UnitMenu.Units = Units;
-        //UnitMenu.AllItems = AllItems;
-        //UnitMenu.creator();
+        UnitMenu.Units = Units;
+        UnitMenu.AllItems = AllItems;
+        UnitMenu.creator();
 
         loadPortraits();
-        //loadInv(0);
-        //setImage(Units[0].img);
     }
 
     void Start()
@@ -64,25 +60,33 @@ public class RehController : MonoBehaviour {
         txtBoxDesc.fontSize = descFontSize;
 
         //Equipted items buttons
-        UnitDisplay1.onClick.AddListener(delegate { EqpOnClick("Disp1", 1); });
-        UnitDisplay2.onClick.AddListener(delegate { EqpOnClick("Disp2", 2); });
-        UnitDisplay3.onClick.AddListener(delegate { EqpOnClick("Disp3", 3); });
-        UnitDisplay4.onClick.AddListener(delegate { EqpOnClick("Disp4", 4); });
+        UnitDisplay1.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay1, 1); });
+        UnitDisplay2.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay2, 2); });
+        UnitDisplay3.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay3, 3); });
+        UnitDisplay4.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay4, 4); });
     }
+
     void Update()
     {
         if (Input.GetMouseButtonUp(1))
         {
-            //loadInv(FrontAndCentre);  //TODO ???
+            DropHeld();
         }
     }
 
+    void DropHeld(){
+        Drag.SetIcon(null);
+        HoldNum = 0;
+        UnitMenu.lightsOut();
+    }
+
+    private void passTeam(){
+        GetComponent<LoadData>().setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
+    }
+        
     public void loadPortraits()
     { //Loads last saved data and brings a selected Character to the front
-      //FrontAndCentre = SelName;
-      //DropHeld();
-
-        for (int i=0; i < 4; i++)
+         for (int i=0; i < 4; i++)
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
@@ -93,25 +97,12 @@ public class RehController : MonoBehaviour {
                 unitsInPortraits[i] = -1;
             }
         }
-        
 
 
         UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[0]].img);
         UnitDisplay2.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[1]].img);
         UnitDisplay3.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[2]].img);
         UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[3]].img);
-
-        //Debug.Log(unitsInPortraits[0].ToString());
-        //Debug.Log(unitsInPortraits[1].ToString());
-        //Debug.Log(unitsInPortraits[2].ToString());
-        //Debug.Log(unitsInPortraits[3].ToString());
-
-        //it[1] = Units[SelName].item1;
-        //it[2] = Units[SelName].item2;
-        //it[3] = Units[SelName].item3;
-
-        //InventoryMenu.storedItems = storedItems;
-        //InventoryMenu.creator();
     }
 
     public int findKeyUnits(string name)
@@ -126,165 +117,89 @@ public class RehController : MonoBehaviour {
         return -1;
     }
 
-    public void setPortrait(int SelName, int target)
-    { 
-        switch (target)
-        {
-            case 1: UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-                break;
-            case 2: UnitDisplay2.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-                break;
-            case 3: UnitDisplay3.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-                break;
-            case 4: UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-                break;
-            default:
-                break;
-        }
-    }
+//    public void setPortrait(int SelName, int target)
+//    { 
+//        switch (target)
+//        {
+//            case 1: UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
+//                break;
+//            case 2: UnitDisplay2.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
+//                break;
+//            case 3: UnitDisplay3.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
+//                break;
+//            case 4: UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-    public void OnClickUnitMenu()
+    public void OnClickUnitMenu(int intID)
     {
-
+        Drag.SetIcon(Units[intID].img);
+        HoldNum = intID;
     }
+
     public void OnClickUnitDisp(Button origin, int item)
     {
-        if (Drag.Dragging() == true)
-        { //place
-            origin.GetComponent<BtnUnit>().SetIcon(Drag.GetIcon());
-            Drag.SetIcon(null);
+        if (Drag.Dragging() == true){ //place
+            int Check = DoubleCheck();
 
-            unitsInPortraits[item] = HoldNum;
-            HoldNum = 0;
+            if (Check != item) {    
+                switch (Check) {
+                    case 0:
+                        break;
+                    case 1:                        
+                        UnitDisplay1.GetComponent<BtnUnit>().SetIcon(null);
+                        unitsInPortraits[0] = -1;
+                        break;
+                    case 2:                        
+                        UnitDisplay2.GetComponent<BtnUnit>().SetIcon(null);
+                        unitsInPortraits[1] = -1;
+                        break;
+                    case 3:                        
+                        UnitDisplay3.GetComponent<BtnUnit>().SetIcon(null);
+                        unitsInPortraits[2] = -1;
+                        break;
+                    case 4:                        
+                        UnitDisplay4.GetComponent<BtnUnit>().SetIcon(null);
+                        unitsInPortraits[3] = -1;
+                        break;
+
+                    default:
+                        break;                     
+                }
+                origin.GetComponent<BtnUnit>().SetIcon(Drag.GetIcon());
+                Drag.SetIcon(null);
+                unitsInPortraits[item - 1] = HoldNum;
+                HoldNum = 0;
+                UnitMenu.lightsOut();
+            }
         }        
     }
 
-    public void EqpOnClick(string s, int i) //TODO Remove
-    {
-
+    public int DoubleCheck(){ //check for doubles
+        if (UnitDisplay1.GetComponent<BtnUnit>().HasIcon() && UnitDisplay1.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
+            return 1;
+        }
+        if (UnitDisplay2.GetComponent<BtnUnit>().HasIcon() && UnitDisplay2.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
+            return 2;
+        }
+        if (UnitDisplay3.GetComponent<BtnUnit>().HasIcon() && UnitDisplay3.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
+            return 3;
+        }
+        if (UnitDisplay4.GetComponent<BtnUnit>().HasIcon() && UnitDisplay4.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
+            return 4;
+        }
+        return 0;
     }
-
-
-
 }
 
 
 
 
 
-
 /*
-
-
-
-    public void loadInv(int SelName)
-    { //Loads last saved data and brings a selected Character to the front
-        FrontAndCentre = SelName;
-        DropHeld();
-        BtnTop.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item1].img);
-        BtnMid.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item2].img);
-        BtnBottom.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item3].img);
-
-
-        it[1] = Units[SelName].item1;
-        it[2] = Units[SelName].item2;
-        it[3] = Units[SelName].item3;
-
-        InventoryMenu.storedItems = storedItems;
-        InventoryMenu.creator();
-    }
-
-    public void saveInv()
-    {
-        Units[FrontAndCentre].item1 = it[1]; //TODO Update?
-        Units[FrontAndCentre].item2 = it[2];
-        Units[FrontAndCentre].item3 = it[3];
-
-        storedItems = InventoryMenu.GetStoredItems();
-
-        storedValues.passUp(storedItems);
-        storedValues.save();
-    }
-
-    void DropHeld()
-    {
-        Drag.SetIcon(null);
-        HoldNum = 0;
-    }
-
-    public void setImage(Sprite img)
-    {
-        UnitDisplay.GetComponent<Image>().sprite = img;
-    }
-
-
-    public void GridOnClick(int intID, int itemID)
-    { //Grid of Inventory items
-        if (Drag.Dragging() == false)
-        { //pick up           
-            Drag.SetIcon(GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon());
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(null);
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(0);
-
-            HoldNum = itemID;
-
-        }
-        else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false)
-        { //place
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldNum);
-            Drag.SetIcon(null);
-
-            HoldNum = 0;
-            saveInv();
-        }
-        else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == true)
-        { //switch
-            Sprite tempS = GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon();
-
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldNum);
-            Drag.SetIcon(tempS);
-
-            HoldNum = itemID;
-            saveInv();
-        }
-    }
-
-    void EqpOnClick(Button origin, int item)
-    { //3 Equipt buttons
-        if (Drag.Dragging() == false)
-        { //pick up           
-            Drag.SetIcon(origin.GetComponent<BtnEquipt>().GetIcon());
-            origin.GetComponent<BtnEquipt>().SetIcon(null);
-
-            HoldNum = it[item];
-            it[item] = 0;
-
-        }
-        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == false)
-        { //place
-            origin.GetComponent<BtnEquipt>().SetIcon(Drag.GetIcon());
-            Drag.SetIcon(null);
-
-            it[item] = HoldNum;
-            HoldNum = 0;
-            saveInv();
-        }
-        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true)
-        { //switch
-            Sprite tempS = origin.GetComponent<BtnEquipt>().GetIcon();
-            int tempN = HoldNum;
-
-            origin.GetComponent<BtnEquipt>().SetIcon(Drag.GetIcon());
-            Drag.SetIcon(tempS);
-
-            HoldNum = it[item];
-            it[item] = tempN;
-
-            saveInv();
-        }
-    }
 
     //Text control  
     void reWriter(string title, string desc)

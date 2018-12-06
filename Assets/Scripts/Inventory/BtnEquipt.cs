@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class BtnEquipt : EventTrigger {
+    //Unity Bug? - set imgIcon as Monobehaviour, then turn into EventTrigger keeps values but prevents editor changes
 
     //Gameobject locations
     [SerializeField]

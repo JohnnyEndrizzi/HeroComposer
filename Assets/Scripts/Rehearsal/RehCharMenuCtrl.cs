@@ -10,6 +10,7 @@ public class RehCharMenuCtrl : MonoBehaviour {
     private GameObject buttonTemplate = null;
 
     public Dictionary<int, UnitDict> Units;
+    public Dictionary<int, AllItemDict> AllItems;
 
     private List<GameObject> buttons;
 
@@ -26,26 +27,34 @@ public class RehCharMenuCtrl : MonoBehaviour {
             buttons.Clear();
         }
 
-        for (int i = 0; i < Units.Count; i++)
+        for (int i = 0; i < Units.Count-1; i++)
         {
             if (Units[i].Unlocked == true)
             {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
 
-                button.GetComponent<CharMenuBtn>().SetText(Units[i].unitName);
-                button.GetComponent<CharMenuBtn>().SetImage(Units[i].img);
-                button.GetComponent<CharMenuBtn>().SetID(i);
+                button.name = ("RehCharBtn #" + i);
+                button.GetComponent<RehCharMenuBtn>().SetText(Units[i].unitName);
+                button.GetComponent<RehCharMenuBtn>().SetImage(Units[i].img);
+                button.GetComponent<RehCharMenuBtn>().SetInvID(i);
+                //button.GetComponent<RehCharMenuBtn>().SetItemID(Units[i].);
 
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
         }
     }
 
+    public void lightsOut(){
+        for(int i = 0; i< this.transform.GetChild(0).GetChild(0).childCount -1; i++){
+            GameObject.Find("RehCharBtn #" + i).GetComponent<RehCharMenuBtn>().HighOff();    
+        }
+    }
 
     public void ButtonClicked(int intID)
     { //TODO clean up protections
-        GameObject.Find("InvController").GetComponent<InvController>().setImage(Units[intID].img);
-        GameObject.Find("InvController").GetComponent<InvController>().loadInv(intID);
+        lightsOut();
+        GameObject.Find("RehCharBtn #" + intID).GetComponent<RehCharMenuBtn>().HighOn();    
+        GameObject.Find("RehController").GetComponent<RehController>().OnClickUnitMenu(intID);
     }
 }

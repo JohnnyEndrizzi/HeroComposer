@@ -119,7 +119,7 @@ public class ShopController : MonoBehaviour {
     private int countItem(int item){
         int total = 0;
 
-        for(int i = 0; i<Units.Count ;i++){
+        for(int i = 0; i<Units.Count-1 ;i++){
             if(Units[i].item1 == item){total++;}
             if(Units[i].item2 == item){total++;}
             if(Units[i].item3 == item){total++;}
