@@ -40,13 +40,9 @@ public class CircleNote : MonoBehaviour
                 //Debug.Log("Delete Primary Note: " + id);
                 if (this.name == "defendNoteEnd")
                 {
-                    GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, defendTarget + 1);
-                    GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, defendTarget + 1);
-                    GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, defendTarget + 1);
-                    //BossAttack(defendTarget);
+                    GameObject.Find("Menu").GetComponent<BossLogic>().BossAttack(defendTarget);
                 }
                 Destroy(transform.gameObject);
-                //GameLogic.hitIndex++;
             }
         }
     }

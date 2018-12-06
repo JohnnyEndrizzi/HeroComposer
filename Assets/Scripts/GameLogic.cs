@@ -92,6 +92,7 @@ public class GameLogic : MonoBehaviour
             /* Characters */
             spawnedPlayer.name = "character_" + (i + 1);
             spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().currentHp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
             spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
             spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
             spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
@@ -300,11 +301,13 @@ public class GameLogic : MonoBehaviour
                     if (defendNote > -1)
                     {
                         beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                        beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
                     }
                     /* This is a note that ends a hold note pair */
                     else
                     {
                         beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defenseState].headshot);
+                        beatSprite.GetComponent<CircleNote>().defendTarget = defenseState;
                     }
 
                     defenseState = -1;

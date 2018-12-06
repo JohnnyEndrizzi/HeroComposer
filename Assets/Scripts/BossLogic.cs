@@ -18,18 +18,27 @@ public class BossLogic : MonoBehaviour
     private List<int> weigthedValues = new List<int>();
 
     private Beatmap beatmap;
-
-    /*
+    
     public void BossAttack(int chosen)
     {
-        //target.currentHealth -= (int)(bossPower * 0.75f * (target.def / 100));
+        GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
+        GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
+        GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
+
+        int bossPower = 200;
+        float maxHealth = GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().hp;
+
+        GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp -= (int)(bossPower * 0.75f * (GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().def / 100.0f));
+        GameObject.Find("character_health_" + (chosen + 1)).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
     }
 
+    /*
     public void BossSpecial(Characters target)
     {
         //target.currentHealth -= (int)(bossPower * 2 * (target.def / 100));
     }
     */
+
     public System.Random newRandomSeed()
     {
         return new System.Random();
@@ -60,7 +69,6 @@ public class BossLogic : MonoBehaviour
             weigthedValues.Add(1);
             weigthedValues.Add(1);
             weigthedValues.Add(1);
-            weigthedValues.Add(1);
         }
 
         if (Assets.Scripts.MainMenu.ApplicationModel.characters[2] != null)
@@ -81,7 +89,6 @@ public class BossLogic : MonoBehaviour
     {
         if (bossFrequency == 0)
         {
-            Debug.Log("Targetted " + (target + 1));
             GetComponent<GameLogic>().setDefendNote(target);
 
             System.Random random = newRandomSeed();
@@ -91,7 +98,6 @@ public class BossLogic : MonoBehaviour
 
         if (songPosInBeats > GetComponent<GameLogic>().getNextBeat())
         {
-            Debug.Log("HELLO");
             currentNoteCount++;
             bossFrequency--;
         }
