@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4842057656932164}
   - component: {fileID: 212850710424538098}
   - component: {fileID: 114638896067115708}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Note
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,11 +52,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbac85e4ef5e28541bfabc1e17444bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0}
+  endPos: {x: 0, y: 0}
   approachRate: 0
   startTimeInBeats: 0
   songPosInBeats: 0
+  beatNumber: 0
+  defendTarget: 0
+  id: 0
+  firstNoteOfSlider: 0
+  secondNoteOfSlider: 0
+  endTimeOfSlider: 0
 --- !u!212 &212850710424538098
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -11,6 +11,7 @@ public class CircleNote : MonoBehaviour
     public float startTimeInBeats;
     public float songPosInBeats;
     public float beatNumber;
+    public int defendTarget;
 
     public float id;
     public bool firstNoteOfSlider;
@@ -37,8 +38,11 @@ public class CircleNote : MonoBehaviour
             else
             {
                 //Debug.Log("Delete Primary Note: " + id);
+                if (this.name == "defendNoteEnd")
+                {
+                    GameObject.Find("Menu").GetComponent<BossLogic>().BossAttack(defendTarget);
+                }
                 Destroy(transform.gameObject);
-                //GameLogic.hitIndex++;
             }
         }
     }

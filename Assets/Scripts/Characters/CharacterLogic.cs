@@ -8,6 +8,7 @@ public class CharacterLogic : MonoBehaviour {
     public string sound;
 
     public int hp;
+    public int currentHp;
     public int atk;
     public int def;
     public int rcv;
