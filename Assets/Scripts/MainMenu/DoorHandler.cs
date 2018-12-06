@@ -14,14 +14,24 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    public Character character1;
-    public Character character2;
-    public Character character3;
-    public Character character4;
+    public CharacterScriptObject character1;
+    public CharacterScriptObject character2;
+    public CharacterScriptObject character3;
+    public CharacterScriptObject character4;
 
     void Start()
     {
-        selectcanvas.enabled = false; 
+        if (GetComponent<LoadData>() != null)
+        {
+            GetComponent<LoadData>().LoadCharacters();   //This code runs 5 times
+            GetComponent<LoadData>().LoadItems();
+            GetComponent<LoadData>().LoadInv();
+            //GetComponent<LoadData>().LoadMagic(); //TODO
+        }
+
+        selectcanvas.enabled = false;
+
+        StoredValues.Cash += 5000;
     }
 
     // Update is called once per frame
@@ -53,11 +63,6 @@ public class DoorHandler : MonoBehaviour
 		if (selectcanvas.enabled == false)
         {
 			doorstatus = 1;
-
-
-            
-
-
 
             if (this.name.Equals("InventoryDoorClose"))
             {
@@ -101,9 +106,6 @@ public class DoorHandler : MonoBehaviour
             closeddoor.Play(tempName + "Close");
         }
     }
-
-    
-
 
     void OnClick()
     {

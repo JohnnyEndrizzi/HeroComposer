@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2111,6 +2111,61 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 689612378}
   m_CullTransparentMesh: 0
+--- !u!1 &810917386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 810917388}
+  - component: {fileID: 810917387}
+  m_Layer: 0
+  m_Name: Values
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &810917387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 810917386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1e02781d873544e960eb16b747111e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitImg:
+  - {fileID: 21300000, guid: c80dd13c359756b48b6703c324700b6a, type: 3}
+  - {fileID: 21300000, guid: 1f173578a50c7cb49b8598dab265faf1, type: 3}
+  - {fileID: 21300000, guid: 763bb69f6da55a640829b5d8a27b2444, type: 3}
+  - {fileID: 21300000, guid: b0623ca7cc0b0434abb6b1a67227ed51, type: 3}
+  - {fileID: 21300000, guid: 2aaa48e7d8d2d3044857d5325d587b20, type: 3}
+  ItemImg:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 62977ba0db28e574a9e7decfb25d8116, type: 3}
+  - {fileID: 21300000, guid: 6cab44f2f9a24614b96aee7fbc03db6d, type: 3}
+  - {fileID: 21300000, guid: e52eeb3c9529a374faadd22721f5139b, type: 3}
+  - {fileID: 21300000, guid: 15bee81573ca99840ba1c02fb90b6852, type: 3}
+  storedItems: 
+  ShopCtrl: {fileID: 0}
+  InvCtrl: {fileID: 0}
+--- !u!4 &810917388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 810917386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 548.7026, y: 241.45468, z: -4.728757}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &858454257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,6 +3274,7 @@ GameObject:
   - component: {fileID: 1543785761}
   - component: {fileID: 1543785765}
   - component: {fileID: 1543785764}
+  - component: {fileID: 1543785766}
   m_Layer: 0
   m_Name: PlayDoorClose
   m_TagString: Untagged
@@ -3319,8 +3375,8 @@ MonoBehaviour:
   play: {fileID: 87094477}
   character1: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
   character2: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
-  character3: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
-  character4: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
+  character3: {fileID: 11400000, guid: 88937d2a0b21da449826b60cb14f1bf4, type: 2}
+  character4: {fileID: 11400000, guid: 7ce5abb82e8a96c4d821b1eb15e9c529, type: 2}
 --- !u!60 &1543785765
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3448,6 +3504,17 @@ PolygonCollider2D:
       - {x: -2.65, y: -6.0875}
       - {x: -2.3875, y: -5.9500003}
       - {x: -2.3625, y: -5.9625}
+--- !u!114 &1543785766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1543785760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de83ebc40ad2aa54ea1b306012efeeb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1596811813
 GameObject:
   m_ObjectHideFlags: 0

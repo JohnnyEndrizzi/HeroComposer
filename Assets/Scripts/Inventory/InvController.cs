@@ -71,10 +71,10 @@ public class InvController : MonoBehaviour {
         UnitMenu.creator();
 
         loadInv(0);
-        setImage(Units[0].img);       
+        setImage(Units[0].img);
     }
 
-	void Start () {
+	void Start () {        
         //Font
         myFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         txtBoxTitle.fontSize = titleFontSize;
@@ -205,6 +205,7 @@ public class InvController : MonoBehaviour {
         int totalLength = 0;
         CharacterInfo characterInfo = new CharacterInfo();
 
+        if (s.Equals(null)) { s = ""; }
         char[] chars = s.ToCharArray();
 
         foreach(char c in chars){

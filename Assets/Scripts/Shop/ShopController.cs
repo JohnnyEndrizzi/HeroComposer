@@ -131,7 +131,7 @@ public class ShopController : MonoBehaviour {
     }
 
     void Start () {   
-        StoredValues.Cash += 5000; //TODO TEMP cash
+        //StoredValues.Cash += 5000; //TODO TEMP cash
         OnClick(0, 0);
     }
 }

@@ -13,14 +13,14 @@ public class InvMenuCtrl : MonoBehaviour { //TODO rework
 
     private List<PlayerItem> playerInventory;
     public List<int> storedItems;
-    private int maxBtns = 99;
+    private int maxBtns = 98;
 
 
     public Dictionary<int, AllItemDict> AllItems;
 
     public void creator(){ //Generate/Regenerate List 
         playerInventory = new List<PlayerItem>();
-            
+        
         if (GameObject.Find("InvBtn #0") != null) { //Destroy buttons to allow for reload
             DestroyerOfLists();
         }     
@@ -37,7 +37,7 @@ public class InvMenuCtrl : MonoBehaviour { //TODO rework
         for (int i = storedItems.Count; i<=maxBtns-1; i++){ 
             PlayerItem newItem = new PlayerItem();
 
-            newItem.iconSprite = AllItems[0].img;   
+            //newItem.iconSprite = AllItems[0].img;   
             newItem.itemID = 0;
 
             playerInventory.Add(newItem);

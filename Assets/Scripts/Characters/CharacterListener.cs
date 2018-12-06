@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
-{ 
-    public AudioClip ATK_sfx;
-    public AudioClip DEF_low_sfx;
-    public AudioClip DEF_high_sfx;
+{
+    [SerializeField] public AudioClip ATK_sfx;
+    [SerializeField] public AudioClip DEF_low_sfx;
+    [SerializeField] public AudioClip DEF_high_sfx;
+    [SerializeField] public AudioClip fireball_sfx;
+
+    public float songScore;
+    public GameObject songScoreText;
 
     public GameObject boss;
     
@@ -21,10 +25,18 @@ public class CharacterListener : MonoBehaviour
 
     private int currentSprite = 0;
     private int[] lockCoroutine = { 0, 0, 0, 0 };
+    int noteLock = 0;
 
     public void ChangeNoteBarHighlight(Color c)
     {
         GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
+    }
+
+    public void UpdateScore(float value)
+    {
+        // Score += Note Value + (Note Value * (Combo Multiplier * Difficulty Multiplier) / 25)
+        songScore += (value + (value * ((0 * 1) / 25)));
+        songScoreText.GetComponent<UnityEngine.UI.Text>().text = "Score : " + songScore;
     }
 
     public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
@@ -32,22 +44,26 @@ public class CharacterListener : MonoBehaviour
         decimal hitTime = currentHit * 1000;
         decimal nextTime = nextHit + (1000 * songStartTime);
 
-        SpriteRenderer noteScoreSprite;
-
         decimal errorDifference = nextTime - hitTime;
         if (errorDifference <= 25)
         {
             //Debug.Log("PERFECT");
+            //GameLogic.hitIndex++;
+            UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
             //Debug.Log("GREAT");
+            //GameLogic.hitIndex++;
+            UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
             //Debug.Log("GOOD");
+            //GameLogic.hitIndex++;
+            UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
@@ -90,6 +106,13 @@ public class CharacterListener : MonoBehaviour
 
     public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
+        if (noteLock != 0)
+        {
+            yield break;
+        }
+
+        noteLock = 1;
+
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
@@ -105,6 +128,8 @@ public class CharacterListener : MonoBehaviour
         }
 
         Destroy(score.gameObject);
+
+        noteLock = 0;
     }
 
     IEnumerator spawnShield(Vector3 spawnPoint, float duration, int spriteLock)
@@ -161,12 +186,27 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 0;
     }
 
+    IEnumerator magicAnimation(GameObject toUseGO, float duration, int spriteLock)
+    {
+        if (lockCoroutine[spriteLock - 1] != 0)
+        {
+            yield break;
+        }
+
+        lockCoroutine[spriteLock - 1] = 1;
+
+        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
+        GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
+
+        lockCoroutine[spriteLock - 1] = 0;
+    }
+
     void Start()
     {
         color = Color.red;
     }
     
-    void OnGUI()
+    void Update()
     {
         GameObject toUseGO = null;
 
@@ -181,45 +221,41 @@ public class CharacterListener : MonoBehaviour
             inSliderHitRange = false;
         }
 
-        if (Input.GetKeyDown("u") || Input.GetKeyDown("i") || Input.GetKeyDown("o") || Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("i") || Input.GetKeyDown("j") || Input.GetKeyDown("k") || Input.GetKeyDown("l"))
         {
             color = Color.white;
         }
-        else if (Input.GetKeyUp("u") || Input.GetKeyUp("i") || Input.GetKeyUp("o") || Input.GetKeyUp("p"))
+        else if (Input.GetKeyUp("i") || Input.GetKeyUp("j") || Input.GetKeyUp("k") || Input.GetKeyUp("l"))
         {
             color = Color.red;
         }
 
         ChangeNoteBarHighlight(color);
 
-        if (Event.current != null)
+        if (Input.GetKeyUp("i"))
         {
-            if ((Event.current.Equals(Event.KeyboardEvent("u")) && !Input.GetKey("u")) || Input.GetKeyUp("u"))
-            {
-                currentSprite = 1;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("i")) && !Input.GetKey("i")) || Input.GetKeyUp("i"))
-            {
-                currentSprite = 2;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("o")) && !Input.GetKey("o")) || Input.GetKeyUp("o"))
-            {
-                currentSprite = 3;
-            }
-            else if ((Event.current.Equals(Event.KeyboardEvent("p")) && !Input.GetKey("p")) || Input.GetKeyUp("p"))
-            {
-                currentSprite = 4;
-            }
-            else
-            {
-                currentSprite = 0;
-            }
+            currentSprite = 1;
         }
-        
+        else if (Input.GetKeyUp("j"))
+        {
+            currentSprite = 2;
+        }
+        else if (Input.GetKeyUp("k"))
+        {
+            currentSprite = 3;
+        }
+        else if (Input.GetKeyUp("l"))
+        {
+            currentSprite = 4;
+        }
+        else
+        {
+            currentSprite = 0;
+        }
+
         if (currentSprite > 0)
         {
             toUseGO = GameObject.Find("character_" + currentSprite);
-
             SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
             StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
@@ -233,6 +269,19 @@ public class CharacterListener : MonoBehaviour
             else if (ClickListener.menu_state == ClickListener.state.DEF)
             {
                 StartCoroutine(spawnShield(toUseGO.transform.position, 0.3f, currentSprite));
+            }
+            else if (ClickListener.menu_state == ClickListener.state.MGC)
+            {
+                Debug.Log(toUseGO.GetComponent<CharacterLogic>().magicQueue);
+                if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
+                {
+                    StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
+                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
+                }
+                else
+                {
+                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
+                }
             }
         }
     }
