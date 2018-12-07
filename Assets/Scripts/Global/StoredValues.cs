@@ -9,6 +9,10 @@ public class StoredValues : MonoBehaviour {
     //Passes information to save files
     //Keeps track of your money, inventory items, and shop lists
 
+    // 8.2-9 The player must be able to save the game.  //also should be in loadData
+    // 8.2-10 The player must be able to load a saved game.
+
+
     //Game Dictionaries for Units and Item
     Dictionary<int, UnitDict> Units = new Dictionary<int, UnitDict>();
     Dictionary<int, AllItemDict> AllItems = new Dictionary<int, AllItemDict>();

@@ -6,6 +6,11 @@ using UnityEditor;
 public class RehController : MonoBehaviour {
     //Main controller for Rehearsal scene
 
+    // 8.1 1-15 The player must be able to customise their team.
+
+    // 8.1 1-19 The system must be able to calculate the players current stats. //will be here before 19th
+
+
     //Gameobject locations
     [SerializeField]
     private Button UnitDisplay1 = null;  //Portraits
