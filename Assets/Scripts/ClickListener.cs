@@ -20,11 +20,13 @@ public class ClickListener : MonoBehaviour
         test = 0;
     }
 
+    /* This function will return the current state of the menu (ATK, DEF, MGC, or ULT) */
     public state GetMenuState()
     {
         return menu_state;
     }
-
+    
+    /* This function will alter the current state of the menu (ATK, DEF, MGC, or ULT) */
     public void ChangeMenuState(Sprite s, state state)
     {
         GetComponent<SpriteRenderer>().sprite = s;
@@ -33,6 +35,14 @@ public class ClickListener : MonoBehaviour
 
     void OnGUI()
     {
+        /* The current keyboard layout for changing the menu input is WASD. We believed this will provide a much more
+         * intuitive mapping from keyboard to game space. This will reduce the amount of time the player will look at 
+         * the keyboard while they're playing, allowing them to focus on the gameplay instead.
+         * 
+         * W - ATK
+         * A - DEF
+         * S - ULT
+         * D - MGC */
         if (Event.current.Equals(Event.KeyboardEvent("w")))
         {
             ChangeMenuState(ATK_sprite, state.ATK);
