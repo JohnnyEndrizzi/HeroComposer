@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopMenuItem : MonoBehaviour {
+    //Menu cell for Items on normal shelf in Music Shop
 
     //Gameobject locations
     [SerializeField]
@@ -16,27 +15,33 @@ public class ShopMenuItem : MonoBehaviour {
     private Image textBG = null;
 
     private string iconTextTxt;
-    private int invID; //cell number
-    private int itemID; //cell contents
-       
-    void Start(){
+
+    private int invID;  //Location ID
+    private int itemID; //Held item ID
+
+    void Start()
+    {
         this.GetComponent<Button>().onClick.AddListener(delegate {OnClick();});
 
         iconText.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         iconText.fontSize = 14;
     }
 
-    public void SetInvID(int ID){invID = ID;} //Set ID value
-    public void SetItemID(int ID){itemID = ID;} //Set ID value
+    public void SetInvID(int ID) {invID = ID;}   //Set invID value   
+    public int  GetInvID() {return invID;}       //Get invID value
+    public void SetItemID(int ID) {itemID = ID;} //Set itemID value
+    public int  GetItemID() {return itemID;}     //Get itemID value
 
-    public void SetText(string textString) { //Set Text
+    public void SetText(string textString) //Set Text
+    { 
         iconText.text = textString; 
         iconTextTxt = textString;
 
         if (textString.Equals("0")) {iconText.text = "";}            
     }
 
-    public void SetIcon(Sprite mySprite) { //Set Sprite
+    public void SetIcon(Sprite mySprite) //Set Sprite on icon child object
+    { 
         if (mySprite == null){            
             imgIcon.GetComponent<Image>().enabled = false;
             textBG.GetComponent<Image>().enabled = false;
@@ -46,15 +51,18 @@ public class ShopMenuItem : MonoBehaviour {
         } 
         imgIcon.sprite = mySprite; 
     }
-    public Sprite GetIcon() { //Get Sprite
+    public Sprite GetIcon() //Get Sprite from child object
+    { 
         return imgIcon.sprite;
     }
-    public bool HasIcon() { //Is spot filled?
+    public bool HasIcon() //Is child object icon spot filled?
+    { 
         if (imgIcon.sprite == true) {return true;}
         else{return false;}
     }
 
-    void OnClick(){ //Gets clicked
+    void OnClick() //Gets clicked
+    { 
         shopMenuCtrl.ButtonClicked(invID, itemID);
     }
 }

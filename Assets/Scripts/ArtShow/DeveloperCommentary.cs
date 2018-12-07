@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Video;
 
 public class DeveloperCommentary : MonoBehaviour {
+    //To enable/disable/play/pause the video player
+    //And to enable/disable buttons and other gameobjects that would interfere with the video player
 
     GameObject player;
     VideoPlayer vp;
@@ -17,8 +17,7 @@ public class DeveloperCommentary : MonoBehaviour {
 
 	void Start () {
         vp = this.GetComponent<VideoPlayer>();
-	}
-	
+	}	
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)) {

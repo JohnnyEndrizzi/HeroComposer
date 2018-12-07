@@ -1,29 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AtkMove : MonoBehaviour {
-     
+    //This script controls Animation movement 
+
     public Vector3 StartPos;
     public Vector3 EndPos;
-
-    public int custCmd;
-    private float counter = 0f;
 
     private Vector3 StartSize;
     public Vector3 EndSize;
 
+    public int custCmd;
+    private float counter = 0f;
+       
     public float atkLerpTime;        
     float currentLerpTime = 0;
 
     private Transform mask;
     private Vector3 StartPosMask;
     private Vector3 EndPosMask;    
-
-
-    void Start (){
+    
+    void Start ()
+    {
         StartSize = transform.localScale;
 
+        //Custom commands for objects with masks
         if (this.transform.childCount == 1) { 
             mask = this.transform.GetChild(0);
             StartPosMask = mask.localPosition;
@@ -34,7 +34,8 @@ public class AtkMove : MonoBehaviour {
         }
     }
 
-    void Update(){
+    void Update()
+    {
         currentLerpTime += Time.deltaTime;
         if (currentLerpTime > atkLerpTime){
             currentLerpTime = atkLerpTime;
@@ -49,7 +50,7 @@ public class AtkMove : MonoBehaviour {
         float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg-180;
         transform.localRotation = Quaternion.Euler(Vector3.forward * angle);
 
-
+        //Custom commands during movement
         if (custCmd == 4 & perc >= 1) {
             custCmd = -1; perc = 0;
             currentLerpTime = 0;
@@ -68,7 +69,7 @@ public class AtkMove : MonoBehaviour {
         }
 
 
-        if (perc >= 1) {
+        if (perc >= 1) { //destroy When complete
             Destroy(this.gameObject);
         }
         if (mask != null) {
