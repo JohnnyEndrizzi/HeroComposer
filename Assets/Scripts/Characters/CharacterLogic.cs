@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This class is used to make a shallow and simplified copy of the character ScriptableObject 
+ * which will be used during a level. This is done because only minimal information is required
+ * to be used in a level, and the copy can then be deleted without risk. */
 public class CharacterLogic : MonoBehaviour {
 
     public string sprite;
@@ -15,17 +18,6 @@ public class CharacterLogic : MonoBehaviour {
     public int mgc;
     public string attack;
     public int magicQueue = 0;
-
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
 
 

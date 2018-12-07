@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.MainMenu
 {
+    /* This class is used to persist information between scenes */
     public class ApplicationModel
     {
         static public string songPathName = "";

@@ -5,6 +5,8 @@ using System.Text;
 
 namespace OsuParser
 {
+    /* Class for spinner objetcs (inherited from generic hit object)
+     * These notes have yet to be added. */
     class SpinnerObject : HitObject
     {
         public float EndTime;

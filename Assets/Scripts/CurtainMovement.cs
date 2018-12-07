@@ -15,18 +15,22 @@ public class CurtainMovement : MonoBehaviour
     private AudioSource audioSource;
     private bool delayLock = false;
 
+    /* The following coroutine plays the opening animation for the curtains upon starting a level */
     private IEnumerator delayedOpenAnimation()
     {
         delayLock = true;
 
+        /* The spotlights and applause will be active for 3 seconds, so the coroutine will wait */
         yield return new WaitForSeconds(3.0f);
 
+        /* The spotlights disappear upon the curtains opening */
         curtainAnim.Play("CurtainsOpen");
         Destroy(spotlight1);
         Destroy(spotlight2);
 
         yield return new WaitForSeconds(3.0f);
 
+        /* After 3 seconds, start playing the applause sound */
         float startVolume = audioSource.volume;
         while (audioSource.volume > 0)
         {
@@ -34,20 +38,24 @@ public class CurtainMovement : MonoBehaviour
             yield return null;
         }
 
+        /* Hide the opened curtains after the animation */
         GetComponent<SpriteRenderer>().enabled = false;
 
         delayLock = false;
     }
 
+    /* The following coroutine plays the closing animation for the curtains upon finishing a level */
     private IEnumerator closeAnimation()
     {
         delayLock = true;
 
         GetComponent<SpriteRenderer>().enabled = true;
 
+        /* Plays the apllause sound during the closing animation */
         audioSource.volume = 1;
         GetComponent<AudioSource>().PlayOneShot(applauseSFX, 0.7F);
 
+        /* Closes the curtains */
         curtainAnim.Play("CurtainsClose");
 
         end = true;
@@ -56,7 +64,7 @@ public class CurtainMovement : MonoBehaviour
         yield return null;
     }
 
-    // Use this for initialization
+    /* Use this for initialization */
     void Start ()
     {
         delayLock = false;
@@ -65,12 +73,12 @@ public class CurtainMovement : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(applauseSFX, 0.7F);
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame */
     void Update ()
     {
         if (!delayLock && !end)
         {
-            Debug.Log(GameLogic.songDone);
+            /* Depending if the song is done or not, the corresponding coroutine will be called */
             if (GameLogic.songDone)
             {
                 StartCoroutine(closeAnimation());

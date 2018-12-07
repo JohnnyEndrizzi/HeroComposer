@@ -5,6 +5,7 @@ using System.Text;
 
 namespace OsuParser
 {
+    /* Class for slider/hold objetcs (inherited from generic hit object) */
     class SliderObject : HitObject
     {
         public float PixelLength { get; private set; }

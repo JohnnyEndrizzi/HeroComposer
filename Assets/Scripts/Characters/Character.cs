@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Used to store (de)serialized JSON data */
-
+/* This class is used to store the (de)serialized character data form the JSON file */
 [System.Serializable]
 public class Character
 {
