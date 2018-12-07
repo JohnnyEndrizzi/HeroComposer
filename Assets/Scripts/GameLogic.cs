@@ -60,44 +60,47 @@ public class GameLogic : MonoBehaviour
             Vector3 characterSpawnPosition;
             Vector3 healthPos;
 
-            if (i == 0)
+            if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
             {
-                characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
-                healthPos = new Vector3(187.7f, 97.2f, 0.0f);
-            }
-            else if (i == 1)
-            {
-                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                healthPos = new Vector3(74.3f, -103.2f, 0.0f);
-            }
-            else if (i == 2)
-            {
-                characterSpawnPosition = new Vector3(2.94f, -0.82f, -5.5f);
-                healthPos = new Vector3(198.6f, -166.4f, 0.0f);
-            }
-            else
-            {
-                characterSpawnPosition = new Vector3(5.31f, 0.32f, -5.1f);
-                healthPos = new Vector3(337.0f, -103.2f, 0.0f);
-            }
-            
-            /* Health Bars */
-            GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
-            healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
-            healthBar.name = "character_health_" + (i + 1);
+                if (i == 0)
+                {
+                    characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
+                    healthPos = new Vector3(187.7f, 97.2f, 0.0f);
+                }
+                else if (i == 1)
+                {
+                    characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                    healthPos = new Vector3(74.3f, -103.2f, 0.0f);
+                }
+                else if (i == 2)
+                {
+                    characterSpawnPosition = new Vector3(2.94f, -0.82f, -5.5f);
+                    healthPos = new Vector3(198.6f, -166.4f, 0.0f);
+                }
+                else
+                {
+                    characterSpawnPosition = new Vector3(5.31f, 0.32f, -5.1f);
+                    healthPos = new Vector3(337.0f, -103.2f, 0.0f);
+                }
 
-            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
-            GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
+                /* Health Bars */
+                GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
+                healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+                healthBar.name = "character_health_" + (i + 1);
 
-            /* Characters */
-            spawnedPlayer.name = "character_" + (i + 1);
-            spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-            spawnedPlayer.GetComponent<CharacterLogic>().currentHp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-            spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
-            spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
-            spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
-            spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
-            spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mag_Eqp;
+                characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
+                GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
+
+                /* Characters */
+                spawnedPlayer.name = "character_" + (i + 1);
+                spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
+                spawnedPlayer.GetComponent<CharacterLogic>().currentHp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
+                spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
+                spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
+                spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
+                spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
+                spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mag_Eqp;
+            }
         }
     }
 
