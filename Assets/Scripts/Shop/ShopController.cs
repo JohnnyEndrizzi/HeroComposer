@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class ShopController : MonoBehaviour {
     //Main controller for Music Shop scene
 
+    // 8.1 1-9 he player must be able to purchase new equipment.
+
     //Gameobject locations
     [SerializeField]
     private ShopMenuCtrl shopMenuCtrl = null;

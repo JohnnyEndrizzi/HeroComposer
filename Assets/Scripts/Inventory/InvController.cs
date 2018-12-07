@@ -6,6 +6,17 @@ using UnityEngine.UI;
 public class InvController : MonoBehaviour {
     //Main controller for Inventory scene
 
+    // 8.1 1-8 The system must display the inventory screen.
+
+    // 8.1 1-10 The player must be able to customise individual characters. //partially done
+
+    // 8.1 1-11 The system must display the current equipment that each character has.
+
+    // 8.1 1-12 The player must be able view a character’s skill tree. //will be here someday
+    // 8.1 1-13 The system must be able to update a character’s skill tree.
+
+
+
     //Gameobject locations
     [SerializeField]
     private GameObject UnitDisplay = null;
