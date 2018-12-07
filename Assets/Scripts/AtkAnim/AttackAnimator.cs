@@ -12,15 +12,6 @@ public class AttackAnimator : MonoBehaviour
     public Transform heal;
     public Transform snow;
 
-    //TODO 
-    //Lightning
-    //energy
-    //snow
-    //music
-    //arrow hail
-    //meteor - detailed fireball
-    //colours
-
     //Animation Times
     public float fastshot = 0.2f;
     public float slowshot = 1.0f;
@@ -72,8 +63,7 @@ public class AttackAnimator : MonoBehaviour
         AttackMap.Add("meteor", new Attacks(6, fireball, 0, 0, 0.0f, 10, 2));
         AttackMap.Add("fire3", new Attacks(2, fireball, 0, 0, 0.0f, 2, 3));
         AttackMap.Add("blizzard", new Attacks(2, snow, 0, 0, 0.0f, 1, 12));
-        //soundwave
-
+        
         // Attack Code List //
         //0 - Single Character
         //1 - Single Char Wave
@@ -94,193 +84,101 @@ public class AttackAnimator : MonoBehaviour
         //51 - mask Lelt
         //52 - mask Up
         //53 - mask Down
-
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {// temp for manual input
-
-        // Demo inputs
-        //        if(Input.GetKeyDown(KeyCode.Keypad1)){ATTACK("heal",4,1);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad2)){ATTACK("slash1",1,1);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad3)){ATTACK("slash2",1,1);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad4)){ATTACK("fireball",3,4);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad5)){ATTACK("arrow",2,5);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad6)){ATTACK("healTeam", 1, 2);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad7)){ATTACK("arrowHail", 2, 5);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad8)){ATTACK("meteor", 2, 4);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad9)){ATTACK("fire3", 2, 5);}
-        //        if(Input.GetKeyDown(KeyCode.Keypad0)){ATTACK("blizzard", 1, 5);}
-    }
-
-    public void ATTACK(string AtkName, int summoner, int target)
-    { //calls an attack
+    public void ATTACK(string AtkName, int summoner, int target) //Calls an attack 
+    { 
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return; }
-
-
-        //Position Selector //TODO make switch
-        if (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + summoner].Spawn; }
+        
+        //Position Selector using attack codes
+        if      (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + summoner].Spawn; }
         else if (AttackMap[AtkName].targetNum == 1) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + summoner].Spawn + AttackMap[AtkName].offset; }
         else if (AttackMap[AtkName].targetNum == 2) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; }
         else if (AttackMap[AtkName].targetNum == 3) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["CP"].Spawn; Pos2 = LocationMap["CP"].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["CP"].Spawn;           Pos2 = LocationMap["CP"].Spawn; }
         else if (AttackMap[AtkName].targetNum == 5) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["HL"].Spawn; Pos2 = LocationMap["P" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["HR"].Spawn; Pos2 = LocationMap["E" + target].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["HL"].Spawn;           Pos2 = LocationMap["P" + target].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["HR"].Spawn;           Pos2 = LocationMap["E" + target].Spawn; }
 
         else { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist"); }
 
+        //Uses Custom Commands to control timing/randomizers/number spawned etc.
         if (AttackMap[AtkName].customCmd == 11) { BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot); }//multishot w/ random
         else if (AttackMap[AtkName].customCmd == 12) { BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot); }//multishot w/ spin random
         else if (AttackMap[AtkName].customCmd == 2) { BOOM(AtkName, Pos1, Pos2, slowshot); }//slowshot
         else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
-
-
     }
 
-    public void ATTACKdemo(string AtkName, int summoner, int target)
-    { //calls an attack
+    public void ATTACKdemo(string AtkName, int summoner, int target) //Calls an attack for artShow - identical but uses different mapped locations //TODO rename demo->art
+    { 
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary" + AtkName); return; }
 
-
-        //Position Selector //TODO make switch
-        if (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn; }
+        //Position Selector using attack codes
+        if      (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn; }
         else if (AttackMap[AtkName].targetNum == 1) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn + AttackMap[AtkName].offset; }
         else if (AttackMap[AtkName].targetNum == 2) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
         else if (AttackMap[AtkName].targetNum == 3) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["AD1"].Spawn; Pos2 = LocationMap["AD1"].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["AD1"].Spawn;           Pos2 = LocationMap["AD1"].Spawn; }
         else if (AttackMap[AtkName].targetNum == 5) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["ADHL"].Spawn; Pos2 = LocationMap["ADC" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["ADHR"].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["ADHL"].Spawn;          Pos2 = LocationMap["ADC" + target].Spawn; }
+        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["ADHR"].Spawn;          Pos2 = LocationMap["ADB" + target].Spawn; }
 
         else { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist"); }
 
-
+        //Uses Custom Commands to control timing/randomizers/number spawned etc.
         if (AttackMap[AtkName].customCmd == 11) { BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot); }//multishot w/ random
         else if (AttackMap[AtkName].customCmd == 12) { BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot); }//multishot w/ spin random
         else if (AttackMap[AtkName].customCmd == 2) { BOOM(AtkName, Pos1, Pos2, slowshot); }//slowshot
         else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
-
-
     }
 
-    void BOOM(string AtkName, Vector3 Pos1, Vector3 Pos2, float lerpTime)
+    private void BOOM(string AtkName, Vector3 Pos1, Vector3 Pos2, float lerpTime)  //Basic Attack spawner
     {
-        //Creation of attack, and passing in attack values
+        //Creation of attack
         var obj = Instantiate(AttackMap[AtkName].trans, Pos1 + AttackMap[AtkName].offset, transform.rotation);
         obj.gameObject.SetActive(false);
         obj.gameObject.AddComponent<AtkMove>();
 
+        //Passing in attack values
         var tempScript = obj.gameObject.GetComponent<AtkMove>();
         tempScript.StartPos = Pos1 + AttackMap[AtkName].offset;
         tempScript.EndPos = Pos2 + AttackMap[AtkName].offset;
         tempScript.atkLerpTime = 0.2f;
-        //tempScript.atkLerpTime = AttackMap[AtkName].delay   //TODO, variable timing delay?
-
+       
         tempScript.EndSize = obj.localScale * AttackMap[AtkName].scaleFactor;
         tempScript.custCmd = AttackMap[AtkName].customCmd;
         obj.gameObject.SetActive(true);
     }
 
-
-    void BOOMRandomizer(string AtkName, Vector3 pos1, Vector3 pos2, int num, float speed)
+    private void BOOMRandomizer(string AtkName, Vector3 pos1, Vector3 pos2, int num, float speed) //Creates num attacks with random spread
     {
-        Vector3[] pos2s = new Vector3[num];
+        //Vector3[] pos2s = new Vector3[num];  //TODO Test if the same
+        Vector3 pos2new = new Vector3();
+
+        //for (int i = 0; i < num; i++)
+        //{
+        //    pos2s[i].x = pos2.x + Random.Range(-5f, 5f);
+        //    pos2s[i].y = pos2.y + Random.Range(-5f, 5f);
+        //}
+        //for (int j = 0; j < num; j++)
+        //{
+        //    BOOM(AtkName, pos1, pos2s[j], speed);
+        //}
 
         for (int i = 0; i < num; i++)
         {
-            pos2s[i].x = pos2.x + Random.Range(-5f, 5f);
-            pos2s[i].y = pos2.y + Random.Range(-5f, 5f);
-        }
-        for (int j = 0; j < num; j++)
-        {
-            BOOM(AtkName, pos1, pos2s[j], speed);
-        }
-    }
-
-
-
-
-    void Select(int charSelect)
-    { //temp for manual input
-        Debug.Log(charSelect.ToString());
-
-        if (InputCounter[0] == 0)
-        { //caster
-            InputCounter[1] = charSelect;
-            InputCounter[0]++;
-        }
-        else if (InputCounter[0] == 1)
-        { //spell
-            InputCounter[2] = charSelect;
-            InputCounter[0]++;
-
-            if (AttackMap[numString(charSelect)].targetNum == 0)
-            {
-                ATTACK(numString(InputCounter[2]), InputCounter[1], -1);
-                InputCounter[0] = 0;
-            }
-            else if (AttackMap[numString(charSelect)].targetNum == 1)
-            {
-                ATTACK(numString(InputCounter[2]), InputCounter[1], -1);
-                InputCounter[0] = 0;
-            }
-            else if (AttackMap[numString(charSelect)].targetNum == 4)
-            {
-                ATTACK(numString(InputCounter[2]), InputCounter[1], -2);
-                InputCounter[0] = 0;
-            }
-        }
-        else if (InputCounter[0] == 2)
-        { //target
-            InputCounter[3] = charSelect;
-            InputCounter[0] = 0;
-            ATTACK(numString(InputCounter[2]), InputCounter[1], InputCounter[3]);
-        }
-        //0 - Single Character
-        //1 - Single Char Wave
-        //2 - A to B 
-        //3 - A to B Long
-        //4 - Whole Team
-        //5 - Colour Overlay
-
-    }
-
-    string numString(int Num)
-    { //temp for manual input
-        switch (Num)
-        {
-            case 1:
-                return "heal";
-            case 2:
-                return "shield";
-            case 3:
-                return "fireball";
-            case 4:
-                return "arrow";
-            case 5:
-                return "healTeam";
-            case 6:
-                return "arrowHail";
-            case 7:
-                return "meteor";
-
-            default:
-                Debug.Log("ERROR: numString, ATTACK DOES NOT EXIST");
-                return "heal";
+            pos2new.x = pos2.x + Random.Range(-5f, 5f);
+            pos2new.y = pos2.y + Random.Range(-5f, 5f);
+            BOOM(AtkName, pos1, pos2new, speed);
         }
     }
 }
 
 
-
-
-public class Locations
-{ //Location Dictionary 
+public class Locations //Location Dictionary 
+{ 
     public Vector3 Spawn;
 
     public Locations(Vector3 SpawnX)
@@ -305,30 +203,30 @@ public class Locations
     }
 }
 
-public class Attacks
-{ //Attack Dictionary 
+public class Attacks //Dictionary for all magical, special and ranged attacks
+{ 
     public int targetNum;
     public Transform trans;
     public Vector3 offset;
     public float scaleFactor;
     public int customCmd;
-    public Color overlay;
+    public Color overlay;  //TODO remove/move (also remove Dict Add)
 
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX)
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX) //Basic w/ Vector3 offset
     {
         targetNum = targetNumX;
         trans = transformX;
         offset = offsetX;
         scaleFactor = scaleFactorX;
     }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX)
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX) //Basic w/ int,int,float offset
     {
         targetNum = targetNumX;
         trans = transformX;
         offset = new Vector3(SX, SY, SZ);
         scaleFactor = scaleFactorX;
     }
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX)
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX) //custom w/ Vector3 offset
     {
         targetNum = targetNumX;
         trans = transformX;
@@ -336,7 +234,7 @@ public class Attacks
         scaleFactor = scaleFactorX;
         customCmd = customCmdX;
     }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX)
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX) //custom w/ int,int,float offset
     {
         targetNum = targetNumX;
         trans = transformX;
@@ -345,7 +243,7 @@ public class Attacks
         customCmd = customCmdX;
     }
 
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, Color overlayX)
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, Color overlayX) //custom w/ colour and Vector3 offset
     {
         targetNum = targetNumX;
         trans = transformX;
@@ -354,7 +252,7 @@ public class Attacks
         customCmd = customCmdX;
         overlay = overlayX;
     }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX)
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX) //custom w/ colour and int,int,float offset
     {
         targetNum = targetNumX;
         trans = transformX;

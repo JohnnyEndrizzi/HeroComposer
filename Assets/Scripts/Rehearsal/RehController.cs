@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
 public class RehController : MonoBehaviour {
+    //Main controller for Rehearsal scene
 
     //Gameobject locations
     [SerializeField]
-    private Button UnitDisplay1 = null; //TODO Buttons vs Gameobject
+    private Button UnitDisplay1 = null;  //Portraits
     [SerializeField]
     private Button UnitDisplay2 = null;
     [SerializeField]
@@ -24,7 +24,7 @@ public class RehController : MonoBehaviour {
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 
-    //Text Locations  //TODO add one per character? or attached to UnitDisplay
+    //Text Locations 
     [SerializeField]
     private Image HoverTxt = null;
     [SerializeField]
@@ -44,8 +44,9 @@ public class RehController : MonoBehaviour {
     private int HoldNum; //Save what is held
     private int[] unitsInPortraits = new int[4];
 
-    public void Starter()
+    public void Starter() //Start after values are loaded in
     {
+        //Pass information to menu
         UnitMenu.Units = Units;
         UnitMenu.AllItems = AllItems;
         UnitMenu.creator();
@@ -60,7 +61,7 @@ public class RehController : MonoBehaviour {
         txtBoxTitle.fontSize = titleFontSize;
         txtBoxDesc.fontSize = descFontSize;
 
-        //Equipted items buttons
+        //Add click listeners to Unit Displays
         UnitDisplay1.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay1, 1); });
         UnitDisplay2.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay2, 2); });
         UnitDisplay3.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay3, 3); });
@@ -75,28 +76,19 @@ public class RehController : MonoBehaviour {
         }
     }
 
-    void DropHeld(){
+    void DropHeld() //Drop held item
+    {
         Drag.SetIcon(null);
         HoldNum = 0;
         UnitMenu.lightsOut();
     }
 
-    private void passTeam(){
-        setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
-        //getTeam();
-    }
-
-    public void getTeam() //TODO Remove (testing)
+    private void passTeam() //set selected units to be used 
     {
-        Debug.Log("======");
-        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[0].name);
-        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[1].name);
-        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[2].name);
-        Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.characters[3].name);        
+        setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
     }
 
-
-    public void setTeam(string[] chars)
+    public void setTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
     {
         clearTeam();
 
@@ -105,7 +97,6 @@ public class RehController : MonoBehaviour {
         for (int i = 0; i < guids.Length; i++)
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            //a[i] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path);
 
             if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[0])
             { Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
@@ -118,7 +109,7 @@ public class RehController : MonoBehaviour {
         }
     }
 
-    public void clearTeam()
+    public void clearTeam() //Set team to null before setting new team
     {
         Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
         Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
@@ -126,8 +117,8 @@ public class RehController : MonoBehaviour {
         Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
     }
 
-    public void loadPortraits()
-    { //Loads last saved data and brings a selected Character to the front
+    public void loadPortraits() //Loads characters into portraits
+    { 
          for (int i=0; i < 4; i++)
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
@@ -139,15 +130,13 @@ public class RehController : MonoBehaviour {
                 unitsInPortraits[i] = -1;
             }
         }
-
-
         UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[0]].img);
         UnitDisplay2.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[1]].img);
         UnitDisplay3.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[2]].img);
         UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[3]].img);
     }
 
-    public int findKeyUnits(string name)
+    public int findKeyUnits(string name) //Find unit key from the unitName
     {
         foreach(int key in Units.Keys)
         {
@@ -158,37 +147,20 @@ public class RehController : MonoBehaviour {
         }
         return -1;
     }
-
-//    public void setPortrait(int SelName, int target)
-//    { 
-//        switch (target)
-//        {
-//            case 1: UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-//                break;
-//            case 2: UnitDisplay2.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-//                break;
-//            case 3: UnitDisplay3.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-//                break;
-//            case 4: UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[SelName].img);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
-    public void OnClickUnitMenu(int intID)
+    
+    public void OnClickUnitMenu(int intID) //Unit Menu was clicked - attach selected unit to mouse
     {
         Drag.SetIcon(Units[intID].img);
         HoldNum = intID;
     }
 
-    public void OnClickUnitDisp(Button origin, int item)
+    public void OnClickUnitDisp(Button origin, int item) //A portrait was clicked
     {
-        if (Drag.Dragging() == true){ //place
+        if (Drag.Dragging() == true){ //place held unit
             int Check = DoubleCheck();
-
+                        
             if (Check != item) {    
-                switch (Check) {
+                switch (Check) { //switch switches units if the selected unit is already present
                     case 0:
                         break;
                     case 1:                        
@@ -218,14 +190,15 @@ public class RehController : MonoBehaviour {
                 UnitMenu.lightsOut();
             }
         }
-        else {
+        else { //clear selected portrait
             origin.GetComponent<BtnUnit>().SetIcon(null);
             unitsInPortraits[item - 1] = -1;
         }
-        passTeam();
+        passTeam(); //commits team to load
     }
 
-    public int DoubleCheck(){ //check for doubles
+    public int DoubleCheck()  //better than a single check - finds if the held unit is already in a portrait
+    {
         if (UnitDisplay1.GetComponent<BtnUnit>().HasIcon() && UnitDisplay1.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
             return 1;
         }
@@ -247,6 +220,7 @@ public class RehController : MonoBehaviour {
 
 
 /*
+    TODO text stats
 
     //Text control  
     void reWriter(string title, string desc)

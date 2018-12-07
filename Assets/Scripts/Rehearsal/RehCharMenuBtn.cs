@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RehCharMenuBtn : MonoBehaviour {
+    //Menu cell for Units in Rehearsal
 
     //Gameobject locations
     [SerializeField]
@@ -15,10 +14,11 @@ public class RehCharMenuBtn : MonoBehaviour {
 
     private string btnTextTxt;
 
-    private int invID; //Location ID
+    private int invID;  //Location ID
     private int itemID; //Held item ID
 
-    void Start(){
+    void Start()
+    {
         this.GetComponent<Button>().onClick.AddListener(delegate {OnClick();});
 
         try{highlighter.enabled = false;}catch{}
@@ -27,35 +27,41 @@ public class RehCharMenuBtn : MonoBehaviour {
         btnText.fontSize = 16;
     }
 
-    public void SetText(string textString) { //Set Text
+    public void SetText(string textString) //Set Text
+    {
         btnText.text = textString; 
         btnTextTxt = textString;
     }
 
-    public void SetInvID(int ID){invID = ID;} //Set ID value   
-    public int GetInvID(){return invID; } //Get ID value
-    public void SetItemID(int ID){itemID = ID;} //Set ID value
-    public int GetItemID(){return itemID; } //Get ID value
+    public void SetInvID(int ID) {invID = ID;}   //Set invID value   
+    public int  GetInvID() {return invID;}       //Get invID value
+    public void SetItemID(int ID) {itemID = ID;} //Set itemID value
+    public int  GetItemID() {return itemID;}     //Get itemID value
 
-    public void SetImage(Sprite image){ //Set Sprite
+    public void SetImage(Sprite image) //Set Sprite
+    { 
         this.GetComponent<Image>().sprite = image;
     }
 
-    public void SetIcon(Sprite mySprite) { //Set Icon Sprite
+    public void SetIcon(Sprite mySprite) //Set Sprite on icon child object
+    { 
         if (mySprite == null){imgIcon.GetComponent<Image>().enabled = false;}
         else{imgIcon.GetComponent<Image>().enabled = true;} 
 
         imgIcon.sprite = mySprite; 
     }
-    public Sprite GetIcon() { //Get Sprite
+    public Sprite GetIcon() //Get Sprite from child object
+    { 
         return imgIcon.sprite;
     }
-    public bool HasIcon() { //Is spot filled?
+    public bool HasIcon() //Is child object icon spot filled?
+    { 
         if (imgIcon.sprite == true) {return true;}
         else{return false;}
     }
 
-    public void toggleHigh(){
+    public void toggleHigh() //Toggle Highlighting on/off
+    {
         if (highlighter.enabled) {
             highlighter.enabled = false;
         }
@@ -63,20 +69,25 @@ public class RehCharMenuBtn : MonoBehaviour {
             highlighter.enabled = true;
         }
     }
-    public void HighOff(){
+    public void HighOff() //Turn Highlight Off
+    {
         highlighter.enabled = false;
     }
-    public void HighOn(){
+    public void HighOn() //Turn Highlighting On
+    {
         highlighter.enabled = true;
     }
 
-    void OnClick(){ //Gets Clicked
+    void OnClick() //Gets clicked
+    { 
         //To find who called this sceipt (different parents use this child script)
-        if(GameObject.Find("InvController") != null){
+        if(GameObject.Find("InvController") != null)
+        {
             this.transform.parent.parent.parent.GetComponent<CharMenuCtrl>().ButtonClicked(invID);
 
         }
-        else if(GameObject.Find("RehController") != null){
+        else if(GameObject.Find("RehController") != null)
+        {
             this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
         }
     }

@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RehCharMenuCtrl : MonoBehaviour {
+    //Controls Unit menu in Rehearsal
 
     //Gameobject locations
     [SerializeField]
@@ -14,12 +13,12 @@ public class RehCharMenuCtrl : MonoBehaviour {
 
     private List<GameObject> buttons;
 
-    public void creator()
-    {//Start but triggered after information is passed in
+    public void creator() //Start but triggered after information is passed in
+    {
         buttons = new List<GameObject>();
 
-        if (buttons.Count > 0)
-        { //Destroy buttons to allow for reload //TODO needed?
+        if (buttons.Count > 0) //Destroy buttons to allow for reload
+        { 
             foreach (GameObject button in buttons)
             {
                 Destroy(button.gameObject);
@@ -27,7 +26,7 @@ public class RehCharMenuCtrl : MonoBehaviour {
             buttons.Clear();
         }
 
-        for (int i = 0; i < Units.Count-1; i++)
+        for (int i = 0; i < Units.Count-1; i++) //Create a button for each unit (excluding null)
         {
             if (Units[i].Unlocked == true)
             {
@@ -38,21 +37,21 @@ public class RehCharMenuCtrl : MonoBehaviour {
                 button.GetComponent<RehCharMenuBtn>().SetText(Units[i].unitName);
                 button.GetComponent<RehCharMenuBtn>().SetImage(Units[i].img);
                 button.GetComponent<RehCharMenuBtn>().SetInvID(i);
-                //button.GetComponent<RehCharMenuBtn>().SetItemID(Units[i].);
 
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
         }
     }
 
-    public void lightsOut(){
+    public void lightsOut() //Turns off highlighting on all child objects
+    {
         for(int i = 0; i< this.transform.GetChild(0).GetChild(0).childCount -1; i++){
             GameObject.Find("RehCharBtn #" + i).GetComponent<RehCharMenuBtn>().HighOff();    
         }
     }
 
-    public void ButtonClicked(int intID)
-    { //TODO clean up protections
+    public void ButtonClicked(int intID)  //sub button Clicked
+    { 
         lightsOut();
         GameObject.Find("RehCharBtn #" + intID).GetComponent<RehCharMenuBtn>().HighOn();    
         GameObject.Find("RehController").GetComponent<RehController>().OnClickUnitMenu(intID);

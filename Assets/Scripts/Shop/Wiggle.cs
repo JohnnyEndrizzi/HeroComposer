@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Wiggle : MonoBehaviour {
+    //wiggles things like signs
     
     float lerpTime = 3f;
     float currentLerpTime;
@@ -12,8 +11,8 @@ public class Wiggle : MonoBehaviour {
     private Quaternion Rotate_From;
     private Quaternion Rotate_To;
 	
-	void Update () {
-
+	void Update ()
+    {
         currentLerpTime += Time.deltaTime;
         if (currentLerpTime > lerpTime)
         {
@@ -21,7 +20,8 @@ public class Wiggle : MonoBehaviour {
         }
         float perc = currentLerpTime / lerpTime;
 
-        if(perc >= 1){
+        if(perc >= 1) //done wiggle
+        {
             moveLoc = moveSpeed*next(moveLoc/moveSpeed);
             currentLerpTime = 0;
         }
@@ -32,11 +32,12 @@ public class Wiggle : MonoBehaviour {
         transform.rotation = Quaternion.Lerp (Rotate_From, Rotate_To, Time.deltaTime*0.2f);
 	}
 
-    private int next(float last){
+    private int next(float last) //pick next angle to wiggle to
+    {
         int rnd = Random.Range(-2, 5);
 
         if (rnd > 2) {
-            return (int)last;
+            return (int)last;  //do nothing - makes the wiggle a little gentler and more random
         }
         else {
             return  rnd;

@@ -1,31 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 
 public class StoredValues : MonoBehaviour {
+    //Persistant script used to pass information to where it is needed
+    //Used to create Unit and Item Dictionaries
+    //Passes information to scene controllers
+    //Passes information to save files
+    //Keeps track of your money, inventory items, and shop lists
 
+    //Game Dictionaries for Units and Item
     Dictionary<int, UnitDict> Units = new Dictionary<int, UnitDict>();
     Dictionary<int, AllItemDict> AllItems = new Dictionary<int, AllItemDict>();
-
-
-    //Sprites
-    [SerializeField]
-    private Sprite[] UnitImg = null;
-    [SerializeField]
-    private Sprite[] ItemImg = null;
      
+    //Inventory 
     [SerializeField]
     private List<int> storedItems; 
 
-    [SerializeField] //TODO remove serialize
+    //Scene Controllers
     private ShopController ShopCtrl = null; 
-    [SerializeField]
     private InvController InvCtrl = null;
-    [SerializeField]
     private RehController RehCtrl = null;
 
+    //Shop lists
     private List<int> spcOffers = new List<int>();
     private List<int> normOffers = new List<int>();
 
@@ -34,31 +31,38 @@ public class StoredValues : MonoBehaviour {
     //Universal values
     private static int cash;
 
+    //Get/Set money
     public static int Cash{
         get{return cash;}
         set{cash = value;}
     } 
     
-    void Awake(){
-        if (!instance){
+    //PErsist and prevent multiple instances
+    void Awake()
+    {
+        if (!instance)
+        {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        else{
+        else
+        {
             Destroy(this.gameObject);
             return;
         }
         
     }
 
-    private void OnLevelWasLoaded() //TODO replace with new code
+    private void OnLevelWasLoaded() //To run Start on scene change //TODO replace with new code (why did they remove this?)
     {
         Starter();
     }
 
-    public void Starter(){
+    private void Starter() //Start
+    {  
         //load();
 
+        //Find if any scene controllers are present
         try
         { InvCtrl = GameObject.Find("InvController").GetComponent<InvController>(); }
         catch { }
@@ -69,18 +73,18 @@ public class StoredValues : MonoBehaviour {
         { RehCtrl = GameObject.Find("RehController").GetComponent<RehController>(); }
         catch { }
 
+        //Pass information and start any existing scene controllers
         if (ShopCtrl != null) {
             ShopCtrl.Units = Units;
             ShopCtrl.AllItems = AllItems;
             ShopCtrl.storedItems = storedItems;
 
-            findOffers();
+            findOffers(); 
 
             ShopCtrl.specialOffers = spcOffers;
             ShopCtrl.normalOffers = normOffers;
 
-            ShopCtrl.Starter();
-            
+            ShopCtrl.Starter();            
         }
         if (InvCtrl != null) {
             InvCtrl.Units = Units;
@@ -98,7 +102,7 @@ public class StoredValues : MonoBehaviour {
         }
     }
 
-    private void findOffers(){ //TODO tie into game
+    private void findOffers(){ //Temporary setting of shop lists //TODO
         spcOffers.Clear();
         spcOffers.Add(4);
         spcOffers.Add(4);
@@ -113,12 +117,13 @@ public class StoredValues : MonoBehaviour {
         }
     }
 
-    public void passUp(List<int> NewStoredItems){
+    public void passUp(List<int> NewStoredItems) //Allows subscripts to modify storedItems
+    {
         storedItems = NewStoredItems;
     }
-
-
-    public void backup(){
+    
+    public void backup() //Old Txt Backup //TODO Remove
+    {
         string pathR = "Assets/storedValues.txt";
         string pathW = "Assets/storedValuesBUP.txt";
         string temp;
@@ -134,20 +139,20 @@ public class StoredValues : MonoBehaviour {
         }
         reader.Close();
         writer.Close();
-    }
-
-
-    private void emptyTxt(){
+    } 
+    
+    private void emptyTxt() //Empty txt file for rewrite //TODO Remove
+    {
         string path = "Assets/storedValues.txt";
         using (var stream = new FileStream(path, FileMode.Truncate)){
             using (var writer = new StreamWriter(stream)){
                 writer.Write("");
             }
         }
-    }
-
-
-    public void save(){
+    }  
+    
+    public void save()//Old txt save //TODO Remove
+    {
         return;
         //backup(); //TODO Needed?
         emptyTxt();
@@ -202,54 +207,10 @@ public class StoredValues : MonoBehaviour {
          writer.WriteLine(temp);
 
          writer.Close();
-    }
+    } 
 
-
-    public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
+    public void load() //Old txt loading //TODO Remove
     {
-        if (!Units.ContainsKey(i))
-        {
-            //Debug.Log(i.ToString() + " " + unitName);
-            Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
-        }
-    }
-
-    public void importItems(int i, string itemName, string itemTitle, string itemDesc, string itemSprite, int itemCost)
-    {
-        if (!AllItems.ContainsKey(i))
-        {
-            AllItems.Add(i, new AllItemDict(itemName, itemTitle, itemDesc, Resources.Load<Sprite>(itemSprite), itemCost)); //TODO expand with stats        
-        }
-        else
-        {
-            //Debug.Log("AllItems KeyAlreadyExists " + i.ToString()); //TODO prevent on menu reload
-        }
-    }
-    public void importInventory(string[] inventoryLoad)
-    {
-        for (int i = 0; i < inventoryLoad.Length; i++){
-            storedItems.Add(int.Parse(inventoryLoad[i]));
-        }
-    }
-
-    public void nullItem()
-    {
-        if (!AllItems.ContainsKey(0))
-        {
-            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  //TODO make null -1???
-            AllItems[0].img = null;
-        }
-    }
-    public void nullUnit()  //TODO does it break menus?
-    {
-        if (!Units.ContainsKey(-1)) 
-        {
-            Units.Add(-1, new UnitDict("", "", false, null, null));  //TODO merge lines
-        }
-    }
-    
-
-    public void load(){
         Debug.Log("LOADING from TXT");
 
         string path = "Assets/storedValues.txt";
@@ -263,22 +224,10 @@ public class StoredValues : MonoBehaviour {
         temp = reader.ReadLine();
 
         //UNIT LIST
-        while (temp != "NEXT") {
+        while (temp != "NEXT")
+        {
             tempA = temp.Split(';');
-            Units.Add(i,new UnitDict(tempA[0], tempA[1], tempA[2], tempA[3], tempA[4], tempA[5], UnitImg[i]));
-
-            i++;
-            temp = reader.ReadLine();
-        }
-        i = 0;           
-
-        temp = reader.ReadLine();
-        temp = reader.ReadLine();
-
-        //ITEM LIST
-        while (temp != "NEXT") {
-            tempA = temp.Split(';'); 
-            AllItems.Add(i, new AllItemDict(tempA[0], tempA[1], tempA[2],ItemImg[i], tempA[3])); //TODO expand with stats
+            //Units.Add(i,new UnitDict(tempA[0], tempA[1], tempA[2], tempA[3], tempA[4], tempA[5], Units[i].img));
 
             i++;
             temp = reader.ReadLine();
@@ -286,13 +235,72 @@ public class StoredValues : MonoBehaviour {
         i = 0;
 
         temp = reader.ReadLine();
-        tempA = temp.Split(';'); 
+        temp = reader.ReadLine();
 
-        for(int j=0; j<tempA.Length-1; j++){           
+        //ITEM LIST
+        while (temp != "NEXT")
+        {
+            tempA = temp.Split(';');
+            //AllItems.Add(i, new AllItemDict(tempA[0], tempA[1], tempA[2],AllItems[i].img, tempA[3])); //TODO expand with stats
+
+            i++;
+            temp = reader.ReadLine();
+        }
+        i = 0;
+
+        temp = reader.ReadLine();
+        tempA = temp.Split(';');
+
+        for (int j = 0; j < tempA.Length - 1; j++)
+        {
             storedItems.Add(int.Parse(tempA[j]));
         }
         reader.Close();
+    } 
+
+    //Import Unit information from JSON Save files
+    public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
+    {
+        if (!Units.ContainsKey(i))
+        {
+            Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
+        }
     }
+
+    //Import Item information from JSON Save files
+    public void importItems(int i, string itemName, string itemTitle, string itemDesc, string itemSprite, int itemCost)
+    {
+        if (!AllItems.ContainsKey(i))
+        {
+            AllItems.Add(i, new AllItemDict(itemName, itemTitle, itemDesc, Resources.Load<Sprite>(itemSprite), itemCost)); //TODO expand with stats        
+        }
+    }
+    //Import Inventory information from JSON Save files
+    public void importInventory(string[] inventoryLoad)
+    {
+        for (int i = 0; i < inventoryLoad.Length; i++){
+            storedItems.Add(int.Parse(inventoryLoad[i]));
+        }
+    }
+
+    //Create an empty item for any item slot that contains nothing
+    public void nullItem()
+    {
+        if (!AllItems.ContainsKey(0))
+        {
+            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  
+            AllItems[0].img = null;
+        }
+    }
+
+    //Create an empty unit for any unit slot that contains nothing
+    public void nullUnit()  
+    {
+        if (!Units.ContainsKey(-1)) 
+        {
+            Units.Add(-1, new UnitDict("", "", false, null, null));  
+        }
+    }   
 }
             
  
@@ -300,13 +308,17 @@ public class UnitDict { //All Units Dictionary
     public string unitName;
     public string unitDesc;
 
+    //Is unit unlocked?
     public bool Unlocked;
 
     public int[] stats;
 
+    //Equipted items
     public int item1;
     public int item2;
     public int item3;
+
+    //Equipted magic skill
     public string mag_eqp;
 
     public Sprite img;
@@ -337,70 +349,31 @@ public class UnitDict { //All Units Dictionary
         img = imgX;
         sound = soundX;
     }
-    public UnitDict(string unitNameX, string unitDescX, bool unlockedX, int item1X, int item2X, int item3X) {
-        unitName = unitNameX;
-        unitDesc = unitDescX;
-
-        Unlocked = unlockedX;
-
-        item1 = item1X;
-        item2 = item2X;
-        item3 = item3X;
-    }
-
-    public UnitDict(string unitNameX, string unitDescX, string unlockedX, string item1X, string item2X, string item3X, Sprite imgX) {
-        unitName = unitNameX;
-        unitDesc = unitDescX;
-
-        Unlocked = unlockedX == "True";
-
-        item1 = int.Parse(item1X);
-        item2 = int.Parse(item2X);
-        item3 = int.Parse(item3X);
-
-        img = imgX;
-    }
-
-
-    public UnitDict(bool unlockedX, int item1X, int item2X, int item3X) {
-        Unlocked = unlockedX;
-        item1 = item1X;
-        item2 = item2X;
-        item3 = item3X;
-    }
-
-    public UnitDict(string UnitNameX, bool unlockedX) {
-        Unlocked = unlockedX;
-    }
-
-    public UnitDict(string UnitNameX, int item1X, int item2X, int item3X) {
-        item1 = item1X;
-        item2 = item2X;
-        item3 = item3X;
-    }
 }
 
 public class AllItemDict { //All game items Dictionary 
-    public string itemName;
-    public string Title;
-    public string Desc;
+    public string itemName; //keyName
+    public string Title;    //Display Name
+    public string Desc;     
     public int Cost;
     public Sprite img;
-    public int[] itemStats;
+    public int[] Stats;
 
-    public AllItemDict(string itemNameX, string TitleX, string DescX, string CostX) {
+    public AllItemDict(string itemNameX, string TitleX, string DescX, Sprite imgX, int CostX, int[] statsX)
+    {
+        itemName = itemNameX;
+        Title = TitleX;
+        Desc = DescX;
+        img = imgX;
+        Cost = CostX;
+        Stats = statsX;
+    }
+    public AllItemDict(string itemNameX, string TitleX, string DescX, string CostX) {  //nullItem
         itemName = itemNameX;
         Title = TitleX;
         Desc = DescX;
     }
-
-    public AllItemDict(string itemNameX, string TitleX, string DescX) { //TODO REMOVE
-        itemName = itemNameX;
-        Title = TitleX;
-        Desc = DescX;
-    }
-
-    public AllItemDict(string itemNameX, string TitleX, string DescX, Sprite imgX, string CostX) {
+    public AllItemDict(string itemNameX, string TitleX, string DescX, Sprite imgX, string CostX) { //Remove
         itemName = itemNameX;
         Title = TitleX;
         Desc = DescX;
@@ -414,9 +387,4 @@ public class AllItemDict { //All game items Dictionary
         img = imgX;
         Cost = CostX;
     }
-    public AllItemDict(string itemNameX, string TitleX, Sprite imgX) {
-        itemName = itemNameX;
-        Title = TitleX;
-        img = imgX;
-    }
-}
+}        

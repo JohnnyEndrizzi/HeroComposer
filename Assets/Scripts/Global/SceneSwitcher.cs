@@ -2,9 +2,12 @@
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour {
-    private string origin;
+    //Controls scene switching buttons - saves the last scene unless noted
 
-    public void sceneSwitch(string sceneNew){
+    private string origin; //temporary scene location
+
+    public void sceneSwitch(string sceneNew) //Swich scene
+    {
         if(sceneNew.Equals("Back")){
             origin = LastScene.instance.prevScene;
             LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
@@ -16,18 +19,22 @@ public class SceneSwitcher : MonoBehaviour {
             SceneManager.LoadScene(sceneNew, LoadSceneMode.Single);
         }
     }
-    public void sceneSwitchHidden(string sceneNew){
+
+    public void sceneSwitchHidden(string sceneNew) //switch scene w/o updating lastScene
+    {
        SceneManager.LoadScene(sceneNew, LoadSceneMode.Single);
     }
 
-    public void sceneSwitchCurtains(string sceneNew){
+    public void sceneSwitchCurtains(string sceneNew) //switch scene with curtains
+    {
         if(sceneNew.Equals("Back")){
             origin = LastScene.instance.prevScene;
         }
             LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
             GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains(origin);   
     }
-    public void sceneSwitchHiddenCurtains(string sceneNew){        
+    public void sceneSwitchHiddenCurtains(string sceneNew) //switch scene with curtains w/o updating lastScene
+    {        
         GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains(sceneNew);   
     }
 }
