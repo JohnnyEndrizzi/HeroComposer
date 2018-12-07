@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Assets.Scripts.MainMenu
 {
-    /* This class is used to persist information between scenes */
+    /* Functional Requirement 
+     * ID: 8.2-1
+     * Description: The player must be able to choose a level.
+     * 
+     * This class is used to persist information between scenes */
     public class ApplicationModel
     {
         static public string songPathName = "";

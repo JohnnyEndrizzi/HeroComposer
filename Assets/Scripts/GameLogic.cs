@@ -219,13 +219,21 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    /* This function will spawn notes in accordance to published messages from the metronome */
+    /* Functional Requirement 
+     * ID: 8.1-1
+     * Description: The player must be able to view incoming notes.
+     *
+     * This function will spawn notes in accordance to published messages from the metronome */
     void SpawnNote(object sender, Metronome.TickEventArgs e)
     {
         float endTime;
         float nextBeat;
 
-        /* The song and incoming notes have ended */
+        /* Functional Requirement
+         * ID: 8.1.1-5
+         * Description: The player must be able to complete a level.
+         * 
+         * The song and incoming notes have ended */
         if (noteIndex >= beatmap.HitObjects.Count)
         {
             notesDone = true;
@@ -261,7 +269,11 @@ public class GameLogic : MonoBehaviour
             hitIndex++;
         }
 
-        /* Spawn next note */
+        /* Functional Requirement 
+         * ID: 8.1-1
+         * Description: The player must be able to view incoming notes.
+         *
+         * Spawn next note */
         if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
         {
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
@@ -279,7 +291,11 @@ public class GameLogic : MonoBehaviour
             /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
 
-            /* This code will spawn the corresponding character's headshot on the notebar to represent a queued attack by the
+            /* Functional Requirement
+             * ID: 8.1.1-4
+             * Description: The system must allow the enemies to randomly attack the players throughout a song.
+             * 
+             * This code will spawn the corresponding character's headshot on the notebar to represent a queued attack by the
              * boss This code will either run when: 1) The boss has queued an attack; 2) They queued at the start of a hold note 
              * and the end note in the pair is next */
             if ((defendNote != -1 && firstNoteOfSlider == true) || (defenseState > -1 && firstNoteOfSlider == false))
@@ -326,7 +342,11 @@ public class GameLogic : MonoBehaviour
             metronome.Tick += beatSprite.GetComponent<CircleNote>().UpdateSongPosition;
             metronome.Tick += GetComponent<BossLogic>().Test;
 
-            /* Different logic is required if the incoming note is a part of a held note */
+            /* Functional Requirement 
+             * ID: 8.1-1
+             * Description: The player must be able to view incoming notes.
+             *
+             * Different logic is required if the incoming note is a part of a held note */
             if (inSliderRange)
             {
                 //Debug.Log(string.Format("Spawning slider note {0} at beat {1}.", noteIndex, e.positionInBeats));

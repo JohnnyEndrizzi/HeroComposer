@@ -2,7 +2,11 @@
 
 namespace OsuParser
 {
-    /* Class for generic hit object */
+    /* Functional Requirement 
+     * ID: 8.1-1
+     * Description: The player must be able to view incoming notes.
+     *
+     * Class for generic hit object */
     public abstract class HitObject
     {
         public struct Point

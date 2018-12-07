@@ -21,8 +21,12 @@ public class BossLogic : MonoBehaviour
     private List<int> weigthedValues = new List<int>();
 
     private Beatmap beatmap;
-    
-    /* This function is called by a circle note that has a boss attack queued to it */
+
+    /* Functional Requirement
+     * ID: 8.1.1-4
+     * Description: The system must allow the enemies to randomly attack the players throughout a song.
+     * 
+     * This function is called by a circle note that has a boss attack queued to it */
     public void BossAttack(int chosen)
     {
         /* Plays the boss attack animation towards the target character */
@@ -45,7 +49,11 @@ public class BossLogic : MonoBehaviour
         return new System.Random();
     }
 
-    /* This function randomly chooses a target from the weigthed array of target */
+    /* Functional Requirement
+     * ID: 8.1.1-4
+     * Description: The system must allow the enemies to randomly attack the players throughout a song.
+     * 
+     * This function randomly chooses a target from the weigthed array of target */
     public int chooseAttackTarget()
     {
         System.Random random = newRandomSeed();
@@ -54,7 +62,7 @@ public class BossLogic : MonoBehaviour
 
     void Start()
     {
-        /* Randomly generate the the boss' next queued attack (3 - 7 beats apart) */
+        /* Randomly generate the timing of the boss' next queued attack (3 - 7 beats apart) */
         System.Random random = newRandomSeed();
         bossFrequency = 5 + random.Next(-2, 3);
 
