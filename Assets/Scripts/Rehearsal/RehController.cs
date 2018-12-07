@@ -92,20 +92,35 @@ public class RehController : MonoBehaviour {
     {
         clearTeam();
 
-        string[] guids = AssetDatabase.FindAssets("t:CharacterScriptObject");
+        Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
 
-        for (int i = 0; i < guids.Length; i++)
+        Debug.Log(characters.Length.ToString());
+        Debug.Log(characters[0].name);
+        Debug.Log(characters[1].name);
+        Debug.Log(characters[2].name);
+
+        for (int i = 0; i < characters.Length; i++)
         {
-            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-
-            if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[0])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[0] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[1])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[1] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[2])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[2] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
-            else if (AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path).name == chars[3])
-            { Assets.Scripts.MainMenu.ApplicationModel.characters[3] = AssetDatabase.LoadAssetAtPath<CharacterScriptObject>(path); }
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
+            if (characters[i])
+            {
+                if (currentCharacterSO.name == chars[0])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[1])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[2])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[3])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
+                }
+            }
         }
     }
 
