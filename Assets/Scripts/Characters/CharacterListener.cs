@@ -35,7 +35,11 @@ public class CharacterListener : MonoBehaviour
         GameObject.Find("Note_Bar_Circle").GetComponent<SpriteRenderer>().color = c;
     }
 
-    /* This updates the user's runnign score for the current level */
+    /* Functional Requirement
+     * ID: 8.1.1-3
+     * Description: The system must be able to calculate the player’s score by the end of the song.
+     * 
+     * This updates the user's runnign score for the current level */
     public void UpdateScore(float value)
     {
         /* The logic for determining how scores will be caclulated will eb revisted, and will appear 
@@ -49,7 +53,11 @@ public class CharacterListener : MonoBehaviour
         songScoreText.GetComponent<UnityEngine.UI.Text>().text = "Score : " + songScore;
     }
 
-    /* This function will determine the accuracy of the entered note */
+    /* Functional Requirement
+     * ID: 8.1.1-1
+     * Description: The system must be able to calculate the accuracy of the player’s inputted command.
+     * 
+     * This function will determine the accuracy of the entered note */
     public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
     {
         decimal hitTime = currentHit * 1000;
@@ -123,7 +131,11 @@ public class CharacterListener : MonoBehaviour
         return Instantiate(shield, spawnPoint, Quaternion.identity);
     }
 
-    /* This coroutine is called on user input, instantiating the corresponding accuracy text in the scene */
+    /* Functional Requirement
+     * ID: 8.1.1-1
+     * Description: The system must be able to calculate the accuracy of the player’s inputted command.
+     * 
+     * This coroutine is called on user input, instantiating the corresponding accuracy text in the scene */
     public IEnumerator spawnNoteScore(Vector3 spawnPoint, float duration, SpriteRenderer noteSprite)
     {
         /* To avoid spam leading to lag, this coroutine can only be run once at any one time */
@@ -156,7 +168,11 @@ public class CharacterListener : MonoBehaviour
         noteLock = 0;
     }
 
-    /* This coroutine is called on a DEF input, instantiating the shield sprite on the corresponding character */
+    /* Functional Requirement
+     * ID: 8.1-2
+     * Description: The player’s battle commands must invoke the proper attack animations as a response.
+     * 
+     * This coroutine is called on a DEF input, instantiating the shield sprite on the corresponding character */
     IEnumerator spawnShield(Vector3 spawnPoint, float duration, int spriteLock)
     {
         /* To avoid spam leading to lag, this coroutine can only be run once at any one time for each character */
@@ -183,7 +199,11 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 0;
     }
 
-    /* This coroutine is called on an ATK input, lerping the corresponding character for the "attack" animation */
+    /* Functional Requirement
+     * ID: 8.1-2
+     * Description: The player’s battle commands must invoke the proper attack animations as a response.
+     * 
+     * This coroutine is called on an ATK input, lerping the corresponding character for the "attack" animation */
     IEnumerator attackMovement(Transform fromPosition, Vector3 toPosition, float duration, int spriteLock)
     {
         /* To avoid spam leading to lag, this coroutine can only be run once at any one time for each character */
@@ -220,7 +240,11 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 0;
     }
 
-    /* This coroutine is called on a MGC input, playing the corresponding magic animation set to the corresponding character */
+    /* Functional Requirement
+     * ID: 8.1-2
+     * Description: The player’s battle commands must invoke the proper attack animations as a response.
+     * 
+     * This coroutine is called on a MGC input, playing the corresponding magic animation set to the corresponding character */
     IEnumerator magicAnimation(GameObject toUseGO, float duration, int spriteLock)
     {
         /* To avoid spam leading to lag, this coroutine can only be run once at any one time for each character */
@@ -275,7 +299,19 @@ public class CharacterListener : MonoBehaviour
         /* Change the color of the note bar's region is necessary */
         ChangeNoteBarHighlight(color);
 
-        /* The current keyboard layout for choosing the character is IJKL. We believed this will provide a much more
+        /* Functional Requirement
+         * ID: 8.1-3
+         * Description: The player must be able to input battle commands.
+         * 
+         * Functional Requirement
+         * ID: 8.1-4
+         * Description: The player must be able to choose what character performs the selected battle command.
+         * 
+         * Functional Requirement
+         * ID: 8.1-5
+         * Description: The player must be able to choose to either hold or tap the note.
+         * 
+         * The current keyboard layout for choosing the character is IJKL. We believed this will provide a much more
          * intuitive mapping from keyboard to game space. This will reduce the amount of time the player will look at 
          * the keyboard while they're playing, allowing them to focus on the gameplay instead.
          * 
@@ -313,7 +349,11 @@ public class CharacterListener : MonoBehaviour
             StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
 
-        /* If a character GameObject was fetched, the command corresponding the current state of the menu will be started for that character */
+        /* Functional Requirement
+         * ID: 8.1-2
+         * Description: The player’s battle commands must invoke the proper attack animations as a response.
+         * 
+         * If a character GameObject was fetched, the animation corresponding the current state of the menu will be started for that character */
         if (toUseGO != null)
         {
             if (ClickListener.menu_state == ClickListener.state.ATK)

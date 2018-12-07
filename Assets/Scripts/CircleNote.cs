@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Functional Requirement
+ * ID: 8.1-1
+ * Description: The player must be able to view incoming notes. */
 public class CircleNote : MonoBehaviour
 {
     /* Variables used for spawning and killing the circle note */

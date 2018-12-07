@@ -25,8 +25,12 @@ public class ClickListener : MonoBehaviour
     {
         return menu_state;
     }
-    
-    /* This function will alter the current state of the menu (ATK, DEF, MGC, or ULT) */
+
+    /* Functional Requirement
+     * ID: 8.1-3
+     * Description: The player must be able to input battle commands.
+     * 
+     * This function will alter the current state of the menu (ATK, DEF, MGC, or ULT) */
     public void ChangeMenuState(Sprite s, state state)
     {
         GetComponent<SpriteRenderer>().sprite = s;
@@ -35,7 +39,11 @@ public class ClickListener : MonoBehaviour
 
     void OnGUI()
     {
-        /* The current keyboard layout for changing the menu input is WASD. We believed this will provide a much more
+        /* Functional Requirement
+         * ID: 8.1-3
+         * Description: The player must be able to input battle commands.
+         *
+         * The current keyboard layout for changing the menu input is WASD. We believed this will provide a much more
          * intuitive mapping from keyboard to game space. This will reduce the amount of time the player will look at 
          * the keyboard while they're playing, allowing them to focus on the gameplay instead.
          * 

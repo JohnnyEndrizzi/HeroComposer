@@ -16,7 +16,11 @@ public class Metronome {
     }
     public delegate void EventHandler(Metronome m, EventArgs e);
 
-    /* This is the constructor for Metronome 
+    /* Functional Requirement
+     * ID: 8.1-1
+     * Description: The player must be able to view incoming notes.
+     * 
+     * This is the constructor for Metronome 
      * The metronome object is how we get passed the innaccuracies of the Update function. Even when using FixedUpdate, the 
      * benchmark for its calls are inconsistent (you can specify 60 FPS, but that only ensures that the overall average of all
      * calls will be ~60 FPS). Our rhythm game requires consistent and accurate timing, and Metronome is what provides that. 

@@ -8,10 +8,13 @@ using UnityEngine;
 
 namespace OsuParser
 {
+    /* Functional Requirement 
+     * ID: 8.1-1
+     * Description: The player must be able to view incoming notes. */
     public class Beatmap
     {
         /* General */
-        public int? AudioLeadIn = null;
+    public int? AudioLeadIn = null;
 
         /* Metadata */
         public string Title;

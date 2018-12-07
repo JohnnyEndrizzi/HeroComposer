@@ -5,7 +5,11 @@ using System.Text;
 
 namespace OsuParser
 {
-    /* Class for slider/hold objetcs (inherited from generic hit object) */
+    /* Functional Requirement 
+     * ID: 8.1-1
+     * Description: The player must be able to view incoming notes.
+     *
+     * Class for slider/hold objetcs (inherited from generic hit object) */
     class SliderObject : HitObject
     {
         public float PixelLength { get; private set; }
