@@ -2,7 +2,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CurtainMovementQuick : MonoBehaviour {  //Open/Close curtains without fanciness (long applause, lights, delay)
+public class CurtainMovementQuick : MonoBehaviour
+{  
+    //Open/Close curtains without fanciness (long applause, lights, delay)
+
     public Animator curtainAnim;
     public AudioClip opening;
 

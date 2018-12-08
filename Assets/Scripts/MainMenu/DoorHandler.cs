@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
@@ -155,4 +152,3 @@ public class DoorHandler : MonoBehaviour
         SceneManager.LoadScene(sceneNew, LoadSceneMode.Single);
     }
 }
-

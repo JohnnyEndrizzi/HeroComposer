@@ -60,7 +60,7 @@ public class RehCharMenuBtn : MonoBehaviour {
         else{return false;}
     }
 
-    public void toggleHigh() //Toggle Highlighting on/off
+    public void ToggleHigh() //Toggle Highlighting on/off
     {
         if (highlighter.enabled) {
             highlighter.enabled = false;

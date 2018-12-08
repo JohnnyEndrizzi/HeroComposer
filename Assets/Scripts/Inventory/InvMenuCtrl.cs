@@ -27,26 +27,28 @@ public class InvMenuCtrl : MonoBehaviour {
         }
                 
         for (int i = 0; i<storedItems.Count; i++) //Fill inventory slots with owned items
-        { 
-            PlayerItem newItem = new PlayerItem();
-
-            newItem.iconSprite = AllItems[storedItems[i]].img;
-            newItem.itemID = storedItems[i];
+        {
+            PlayerItem newItem = new PlayerItem
+            {
+                iconSprite = AllItems[storedItems[i]].img,
+                itemID = storedItems[i]
+            };
 
             playerInventory.Add(newItem);
         }                
         for (int i = storedItems.Count; i<=maxBtns-1; i++) //Fill remaining inventory slots with empty items
-        {  
-            PlayerItem newItem = new PlayerItem();
-                          
-            newItem.itemID = 0;
+        {
+            PlayerItem newItem = new PlayerItem
+            {
+                itemID = 0
+            };
 
             playerInventory.Add(newItem);
         }
-        genInventory();
+        GenInventory();
     }
     
-    void genInventory() //Create Buttons and sets values
+    void GenInventory() //Create Buttons and sets values
     { 
         int i = 0;
         foreach (PlayerItem newItem in playerInventory) { 

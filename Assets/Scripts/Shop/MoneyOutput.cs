@@ -7,14 +7,14 @@ public class MoneyOutput : MonoBehaviour {
     public Text txtOut;
 
     void Start () {
-        txtOut.text = "Money\n" + "$" +  spliter(StoredValues.Cash);
+        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
     void Update () {
-        txtOut.text = "Money\n" + "$" +  spliter(StoredValues.Cash);
+        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
-    private string spliter(int bigNum) //Adds , ev,ery, 3 ,dig,its
+    private string CommaSpliter(int bigNum) //Adds , ev,ery, 3 ,dig,its
     {
         string output = "";
         string word = bigNum.ToString();

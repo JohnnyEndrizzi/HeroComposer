@@ -4,17 +4,24 @@ public class LoadData : MonoBehaviour
 {
 
     /* Functional Requirement 
-    * ID: 8.1 1-8
-    * Description: The system must display the inventory screen.
-    * 
-    * This class controls the Inventory screen, it does anything required for the scene to run including 
-    * deciding what to display, where to display and any movements of items*/
+   * ID: 8.2-9
+   * Description: The player must be able to save the game. 
+   * 
+   * This class controls the exporting of data to save files  */
 
+    /* Functional Requirement 
+    * ID: 8.2-10
+    * Description: The player must be able to load a saved game.
+    * 
+    * This class controls the loading of all data from to save files */
+
+    //Imported types from JSON
     Character[] characters;
+    Inventory[] inventory;
     Items[] items;
     Magic[] magic;
-    Inventory[] inventory;
 
+    // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
         string jsonString = LoadResourceTextfile("characters.json");
@@ -54,6 +61,7 @@ public class LoadData : MonoBehaviour
         }
     }
 
+    // Load inventory and team data from file
     public void LoadInv()
     {
         string jsonString = LoadResourceTextfile("inventory.json");
@@ -86,7 +94,8 @@ public class LoadData : MonoBehaviour
             }
         }   
     }
-    
+
+    // Load Item data from file to Item Dictionary
     public void LoadItems()
     {
         string jsonString = LoadResourceTextfile("items.json");
@@ -100,11 +109,13 @@ public class LoadData : MonoBehaviour
         }
     }
 
+    // Load Attack sprites and sound effects from file to AttackAnimator
     public void LoadMagic()
     {
        // TODO
     }
 
+    //Load file to string from path
     public static string LoadResourceTextfile(string path)
     {
         string filePath = "Metadata/" + path.Replace(".json", "");

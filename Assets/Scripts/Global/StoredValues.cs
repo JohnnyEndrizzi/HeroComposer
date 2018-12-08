@@ -49,7 +49,7 @@ public class StoredValues : MonoBehaviour {
         set{cash = value;}
     } 
     
-    //PErsist and prevent multiple instances
+    //Persist and prevent multiple instances
     void Awake()
     {
         if (!instance)
@@ -139,7 +139,51 @@ public class StoredValues : MonoBehaviour {
         storedItems = NewStoredItems;
     }
     
-    public void backup() //Old Txt Backup //TODO Remove
+    //Import Unit information from JSON Save files
+    public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
+    {
+        if (!Units.ContainsKey(i))
+        {
+            Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
+        }
+    }
+
+    //Import Item information from JSON Save files
+    public void importItems(int i, string itemName, string itemTitle, string itemDesc, string itemSprite, int itemCost)
+    {
+        if (!AllItems.ContainsKey(i))
+        {
+            AllItems.Add(i, new AllItemDict(itemName, itemTitle, itemDesc, Resources.Load<Sprite>(itemSprite), itemCost)); //TODO expand with stats        
+        }
+    }
+    //Import Inventory information from JSON Save files
+    public void importInventory(string[] inventoryLoad)
+    {
+        for (int i = 0; i < inventoryLoad.Length; i++){
+            storedItems.Add(int.Parse(inventoryLoad[i]));
+        }
+    }
+
+    //Create an empty item for any item slot that contains nothing
+    public void nullItem()
+    {
+        if (!AllItems.ContainsKey(0))
+        {
+            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  
+            AllItems[0].img = null;
+        }
+    }
+
+    //Create an empty unit for any unit slot that contains nothing
+    public void nullUnit()  
+    {
+        if (!Units.ContainsKey(-1)) 
+        {
+            Units.Add(-1, new UnitDict("", "", false, null, null));  
+        }
+    }
+
+    public void backup() //Old Txt Backup //TODO Remove once replacement code is implemented
     {
         string pathR = "Assets/storedValues.txt";
         string pathW = "Assets/storedValuesBUP.txt";
@@ -150,29 +194,32 @@ public class StoredValues : MonoBehaviour {
 
         temp = reader.ReadLine();
 
-        while (temp != null) {
+        while (temp != null)
+        {
             writer.WriteLine(temp);
             temp = reader.ReadLine();
         }
         reader.Close();
         writer.Close();
-    } 
-    
-    private void emptyTxt() //Empty txt file for rewrite //TODO Remove
+    }
+
+    private void EmptyTxt() //Empty txt file for rewrite //TODO Remove once replacement code is implemented
     {
         string path = "Assets/storedValues.txt";
-        using (var stream = new FileStream(path, FileMode.Truncate)){
-            using (var writer = new StreamWriter(stream)){
+        using (var stream = new FileStream(path, FileMode.Truncate))
+        {
+            using (var writer = new StreamWriter(stream))
+            {
                 writer.Write("");
             }
         }
-    }  
-    
-    public void save()//Old txt save //TODO Remove
+    }
+
+    public void save()//Old txt save //TODO Remove once replacement code is implemented
     {
         return;
         //backup(); //TODO Needed?
-        emptyTxt();
+        EmptyTxt();
 
         string path = "Assets/storedValues.txt";
         string temp;
@@ -180,8 +227,9 @@ public class StoredValues : MonoBehaviour {
 
         StreamWriter writer = new StreamWriter(path, true);
         writer.WriteLine("UNIT LIST");
-        for (int i = 0; i < Units.Count; i++) {
-            temp  = Units[i].unitName + ";";
+        for (int i = 0; i < Units.Count; i++)
+        {
+            temp = Units[i].unitName + ";";
             temp += Units[i].unitDesc + ";";
             temp += Units[i].Unlocked + ";";
             temp += Units[i].item1 + ";";
@@ -194,39 +242,44 @@ public class StoredValues : MonoBehaviour {
 
         writer.WriteLine("NEXT");
         writer.WriteLine("ITEM LIST");
-        for (int i = 0; i < AllItems.Count; i++) {
-            temp  = AllItems[i].itemName + ";";
+        for (int i = 0; i < AllItems.Count; i++)
+        {
+            temp = AllItems[i].itemName + ";";
             temp += AllItems[i].Title + ";";
             temp += AllItems[i].Desc + ";";
             temp += AllItems[i].Cost + ";";
-//            for (int j = 0; j < AllItems[i].itemStats.Length; j++) { //TODO Stats
-//                temp += AllItems[i].itemStats[j] + ";";
-//            }
+            //            for (int j = 0; j < AllItems[i].itemStats.Length; j++) { //TODO Stats
+            //                temp += AllItems[i].itemStats[j] + ";";
+            //            }
             writer.WriteLine(temp);
         }
         writer.WriteLine("NEXT");
 
         temp = "";
-        for (int i = 0; i < storedItems.Count; i++) {
-            if (storedItems[i] == 0) {
+        for (int i = 0; i < storedItems.Count; i++)
+        {
+            if (storedItems[i] == 0)
+            {
                 zeroes++;
             }
-            else {
-                for (int j = 0; j < zeroes; j++) {
+            else
+            {
+                for (int j = 0; j < zeroes; j++)
+                {
                     temp += 0 + ";";
                 }
                 temp += storedItems[i] + ";";
                 zeroes = 0;
             }
-           
-           
-         }
-         writer.WriteLine(temp);
 
-         writer.Close();
-    } 
 
-    public void load() //Old txt loading //TODO Remove
+        }
+        writer.WriteLine(temp);
+
+        writer.Close();
+    }
+
+    public void load() //Old txt loading //TODO Remove once replacement code is implemented
     {
         Debug.Log("LOADING from TXT");
 
@@ -273,51 +326,7 @@ public class StoredValues : MonoBehaviour {
             storedItems.Add(int.Parse(tempA[j]));
         }
         reader.Close();
-    } 
-
-    //Import Unit information from JSON Save files
-    public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
-    {
-        if (!Units.ContainsKey(i))
-        {
-            Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
-        }
     }
-
-    //Import Item information from JSON Save files
-    public void importItems(int i, string itemName, string itemTitle, string itemDesc, string itemSprite, int itemCost)
-    {
-        if (!AllItems.ContainsKey(i))
-        {
-            AllItems.Add(i, new AllItemDict(itemName, itemTitle, itemDesc, Resources.Load<Sprite>(itemSprite), itemCost)); //TODO expand with stats        
-        }
-    }
-    //Import Inventory information from JSON Save files
-    public void importInventory(string[] inventoryLoad)
-    {
-        for (int i = 0; i < inventoryLoad.Length; i++){
-            storedItems.Add(int.Parse(inventoryLoad[i]));
-        }
-    }
-
-    //Create an empty item for any item slot that contains nothing
-    public void nullItem()
-    {
-        if (!AllItems.ContainsKey(0))
-        {
-            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  
-            AllItems[0].img = null;
-        }
-    }
-
-    //Create an empty unit for any unit slot that contains nothing
-    public void nullUnit()  
-    {
-        if (!Units.ContainsKey(-1)) 
-        {
-            Units.Add(-1, new UnitDict("", "", false, null, null));  
-        }
-    }   
 }
             
  
