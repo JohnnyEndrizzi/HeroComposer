@@ -117,13 +117,14 @@ public class DoorHandler : MonoBehaviour
          * Description: The system must preserve insight about character and party customization between level completions and menu selections.
          * 
          * The scene corresponding to the door will be loaded, as long as its not the play door (which is covered in the function below) */
-        if (!tempName.Equals("Play"))
+
+        if (tempName.Equals("Audition")) //Temporary until Audition scene is completed
+        {
+            MenuSceneSwitch("Menu");
+        }
+        else if (!tempName.Equals("Play")) //Play button has a more complex function attached
         {
             MenuSceneSwitch(tempName);
-
-            /* TODO */
-            //close curtains here?
-            //MenuSceneSwitch(this.name.Replace("DoorClose",""));
         }
     }
 
@@ -141,14 +142,14 @@ public class DoorHandler : MonoBehaviour
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
         /* Preserves the main menu as the last scene */
-        LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("Scenes/main", LoadSceneMode.Single);
+        //LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
+        //SceneManager.LoadScene("Scenes/main", LoadSceneMode.Single);
+        MenuSceneSwitch("main");
     }
 
     /* Preserves the main menu as the last scene and loads the new one */
-    public void MenuSceneSwitch(string sceneNew)
+    private void MenuSceneSwitch(string sceneNew)
     {
-        LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneNew, LoadSceneMode.Single);
+        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
     }
 }
