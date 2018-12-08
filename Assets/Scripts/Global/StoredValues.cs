@@ -2,13 +2,14 @@
 using UnityEngine;
 using System.IO;
 
-public class StoredValues : MonoBehaviour {
-    //Persistant script used to pass information to where it is needed
-    //Used to create Unit and Item Dictionaries
-    //Passes information to scene controllers
-    //Passes information to save files
-    //Keeps track of your money, inventory items, and shop lists
-            
+public class StoredValues : MonoBehaviour
+{
+    /* Persistant script used to pass information to where it is needed
+     * Used to create Unit and Item Dictionaries
+     * Passes information to scene controllers
+     * Passes information to save files
+     * Keeps track of your money, inventory items, and shop lists */
+
     /* Functional Requirement 
     * ID: 8.2-9
     * Description: The player must be able to save the game. 
