@@ -43,10 +43,10 @@ public class SpcMenuCtrl : MonoBehaviour {
                 
             shopInventory.Add(newItem);
         }
-        genInventory();
+        GenInventory();
     }
 
-    void genInventory() //Create Buttons and sets values
+    void GenInventory() //Create Buttons and sets values
     {
         int i = 0;
         foreach (PlayerItem newItem in shopInventory) { 

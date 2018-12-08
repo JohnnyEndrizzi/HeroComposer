@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class ArtController2 : MonoBehaviour
 {
+    //Controls the scene used to demo Art assets
+
     //Art images and files to be shown
     public Sprite[] img;
     public string[] titles;
@@ -100,8 +102,8 @@ public class ArtController2 : MonoBehaviour
         textTitle = new GameObject();
         textDesc = new GameObject();
 
-        writer();
-        reWriter(titles[0], descriptions[0]);
+        Writer();
+        ReWriter(titles[0], descriptions[0]);
 
         //For text Lerping - can modify vector3 values
         posSave[0] = textTitle.transform.localPosition;
@@ -130,8 +132,8 @@ public class ArtController2 : MonoBehaviour
 
             for (int i = 0; i < numImages; i++) //Lerp Sprites
             { 
-                GameObject.Find("artPiece " + i).transform.position = Vector3.Lerp(Degree(spin(i + currLoc)), Degree(spin(i + currLoc + Sign(moveCmd))), perc);
-                GameObject.Find("artPieceBG " + i).transform.position = Vector3.Lerp(Degree(spin(i + currLoc)), Degree(spin(i + currLoc + Sign(moveCmd))), perc);
+                GameObject.Find("artPiece " + i).transform.position = Vector3.Lerp(Degree(Spin(i + currLoc)), Degree(Spin(i + currLoc + Sign(moveCmd))), perc);
+                GameObject.Find("artPieceBG " + i).transform.position = Vector3.Lerp(Degree(Spin(i + currLoc)), Degree(Spin(i + currLoc + Sign(moveCmd))), perc);
             }
 
             if (perc <= 0.5) //Lerp words
@@ -164,13 +166,13 @@ public class ArtController2 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) //Audio
             { 
                 AudioSource audio = GameObject.Find("Canvas").GetComponent<AudioSource>();
-                if (audio.isPlaying && audio.clip == music[spin(currLoc * -1)])
+                if (audio.isPlaying && audio.clip == music[Spin(currLoc * -1)])
                 {
                     audio.Stop();
                 }
                 else
                 {
-                    audio.clip = music[spin(currLoc * -1)];
+                    audio.clip = music[Spin(currLoc * -1)];
                     audio.Play();
                 }
             }
@@ -178,21 +180,21 @@ public class ArtController2 : MonoBehaviour
             //Attack Animations - grouped by time length/frequency
             if (anims == true && upCount >= 20 && upCount <= 40)
             {
-                if (spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 40 && upCount <= 60)
             {
-                if (spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 60 && upCount <= 80)
             {
-                if (spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 80)
             {
                 upCount = 0;
 
-                switch (spin(currLoc * -1))
+                switch (Spin(currLoc * -1))
                 {
                     case 0:
                         attacker.ATTACKdemo("heal", 1, 1);
@@ -236,11 +238,11 @@ public class ArtController2 : MonoBehaviour
             }
         }
 
-        reWriter(titles[spin(currLoc * -1)], descriptions[spin(currLoc * -1)]); //TODO move between text Lerps to change at top
+        ReWriter(titles[Spin(currLoc * -1)], descriptions[Spin(currLoc * -1)]); //TODO move between text Lerps to change at top
         upCount++;
     }
 
-    void fillWords() //Load text here
+    void FillWords() //Load text here
     { 
         for (int i = 0; i < numImages; i++)
         {
@@ -249,7 +251,7 @@ public class ArtController2 : MonoBehaviour
         }
     }
 
-    void writer() //Initial Write / create text locations
+    void Writer() //Initial Write / create text locations
     { 
         // Image 1 
         titleBG = new GameObject();
@@ -304,21 +306,21 @@ public class ArtController2 : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(400, 200);
     }
 
-    void reWriter(string title, string desc) //Update Text
+    void ReWriter(string title, string desc) //Update Text
     {
         textTitle.GetComponent<Text>().text = title;
         textDesc.GetComponent<Text>().text = desc;
 
         image = titleBG.GetComponent<Image>();
         rectTransform = image.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(stringLength(title, titleFontSize) + 10, 100);
+        rectTransform.sizeDelta = new Vector2(StringLength(title, titleFontSize) + 10, 100);
 
         image = descBG.GetComponent<Image>();
         rectTransform = image.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(stringLength(desc, descFontSize) + 10, 100);
+        rectTransform.sizeDelta = new Vector2(StringLength(desc, descFontSize) + 10, 100);
     }
 
-    int stringLength(string s, int size) //get the amount of size the string will take up using 
+    int StringLength(string s, int size) //get the amount of size the string will take up using 
     {
         int totalLength = 0;
         CharacterInfo characterInfo = new CharacterInfo();
@@ -334,10 +336,10 @@ public class ArtController2 : MonoBehaviour
         return totalLength;
     }
 
-    int spin(int i) //loops numbers to correct values
+    int Spin(int i) //loops numbers to correct values
     { 
-        if (i < 0) { i = spin(i + numImages); }
-        if (i >= numImages) { i = spin(i - numImages); }
+        if (i < 0) { i = Spin(i + numImages); }
+        if (i >= numImages) { i = Spin(i - numImages); }
         return i;
     }
 

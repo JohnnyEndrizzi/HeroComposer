@@ -68,7 +68,6 @@ public class AtkMove : MonoBehaviour {
             mask.localRotation = Quaternion.Euler(Vector3.right*counter);
         }
 
-
         if (perc >= 1) { //destroy When complete
             Destroy(this.gameObject);
         }

@@ -60,7 +60,7 @@ public class CharMenuBtn : MonoBehaviour {
         else{return false;}
     }
 
-    public void toggleHigh() //Toggle Highlighting on/off
+    public void ToggleHigh() //Toggle Highlighting on/off
     {
         Debug.Log(highlighter.enabled.ToString() + " High");
         if (highlighter.enabled) {

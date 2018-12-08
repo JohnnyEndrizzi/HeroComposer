@@ -65,7 +65,7 @@ public class RehController : MonoBehaviour {
         UnitMenu.AllItems = AllItems;
         UnitMenu.creator();
 
-        loadPortraits();
+        LoadPortraits();
     }
 
     void Start()
@@ -104,15 +104,10 @@ public class RehController : MonoBehaviour {
 
     public void setTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
     {
-        clearTeam();
+        ClearTeam();
 
         Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
-
-        Debug.Log(characters.Length.ToString());
-        Debug.Log(characters[0].name);
-        Debug.Log(characters[1].name);
-        Debug.Log(characters[2].name);
-
+        
         for (int i = 0; i < characters.Length; i++)
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
@@ -138,7 +133,7 @@ public class RehController : MonoBehaviour {
         }
     }
 
-    public void clearTeam() //Set team to null before setting new team
+    private void ClearTeam() //Set team to null before setting new team
     {
         Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
         Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
@@ -146,13 +141,13 @@ public class RehController : MonoBehaviour {
         Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
     }
 
-    public void loadPortraits() //Loads characters into portraits
+    private void LoadPortraits() //Loads characters into portraits
     { 
          for (int i=0; i < 4; i++)
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
-                unitsInPortraits[i] = findKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].name);
+                unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].name);
             }
             else
             {
@@ -165,7 +160,7 @@ public class RehController : MonoBehaviour {
         UnitDisplay4.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[3]].img);
     }
 
-    public int findKeyUnits(string name) //Find unit key from the unitName
+    private int FindKeyUnits(string name) //Find unit key from the unitName
     {
         foreach(int key in Units.Keys)
         {
@@ -226,7 +221,7 @@ public class RehController : MonoBehaviour {
         passTeam(); //commits team to load
     }
 
-    public int DoubleCheck()  //better than a single check - finds if the held unit is already in a portrait
+    private int DoubleCheck()  //better than a single check - finds if the held unit is already in a portrait
     {
         if (UnitDisplay1.GetComponent<BtnUnit>().HasIcon() && UnitDisplay1.GetComponent<BtnUnit>().GetIcon().name == Units[HoldNum].img.name) {
             return 1;

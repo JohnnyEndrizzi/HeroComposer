@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class DragImg : MonoBehaviour {
     //An image that follows the mouse
+    //Currently bugged sometimes?
+    //Computer 1 & 2: Follows mouse on normal view, Does not follow mouse on maximise, Does not follow mouse in build
+    //Computer 3: Does not follow mouse on normal view, Follow mouse on maximise, Follows mouse in build
 
     //Gameobject locations
     [SerializeField]

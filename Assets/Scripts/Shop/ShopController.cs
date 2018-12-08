@@ -87,8 +87,7 @@ public class ShopController : MonoBehaviour {
         if (itemID != 0) {txtBoxCurrent.text = "Already Owned: " + countItem(itemID).ToString();}
         else {txtBoxCurrent.text = "";}
     }
-
-
+    
     public void Buy() //Purchase button clicked
     {
         if (FrontAndCentreTile == 0) //No item selected
