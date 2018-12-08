@@ -18,21 +18,23 @@ public class DoorHandler : MonoBehaviour
 
     void Start()
     {
+        /* Deserializes all information from their corresponding JSON into local copies */
         if (GetComponent<LoadData>() != null && Done == false)
         {
             Done = true;
-            GetComponent<LoadData>().LoadCharacters();   //This code runs 5 times
+            GetComponent<LoadData>().LoadCharacters();
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
-            //GetComponent<LoadData>().LoadMagic(); //TODO
+
+            /* TODO */
+            //GetComponent<LoadData>().LoadMagic();
         }
 
         selectcanvas.enabled = false;
-
         StoredValues.Cash += 5000;
     }
 
-    // Update is called once per frame
+    /* Update is called once per frame */
     void Update()
     {
 		if (Input.GetMouseButtonDown (0) && doorstatus == 1 )
@@ -47,20 +49,18 @@ public class DoorHandler : MonoBehaviour
                     selectcanvas.enabled = true;                    
                     play.onClick.AddListener(PlaybuttonOnClick);
                 }
-                else
-                {
-                    //Debug.Log("canvas is enabled");
-                }
             }     
 		}
     }
 
+    /* This function is called when the mouse hovers over the doors on the main menu */
 	void OnMouseOver()
 	{	
 		if (selectcanvas.enabled == false)
         {
 			doorstatus = 1;
 
+            /* The corresponding door's open animation will play */
             if (this.name.Equals("InventoryDoorClose"))
             {
                 closeddoor.Play("SoundCheckOpen");
@@ -81,10 +81,12 @@ public class DoorHandler : MonoBehaviour
         }
 	}
 
+    /* This function is called when the mouse stops hovering over the doors on the main menu */
     void OnMouseExit()
     {
         doorstatus = 0;
 
+        /* The corresponding door's close animation will play */
         if (this.name.Equals("InventoryDoorClose"))
         {
             closeddoor.Play("SoundCheckClose");
@@ -104,31 +106,49 @@ public class DoorHandler : MonoBehaviour
         }
     }
 
+    /* This function is called when the mouse clicks on a door on the main menu */
     void OnClick()
     {
         string tempName = this.name.Replace("DoorClose", "");
 
+        /* Functional Requirement
+         * ID: 8.1.1-8
+         * Description: The system must display the inventory screen.
+         * 
+         * Functional Requirement
+         * ID: 8.1.1-20
+         * Description: The system must preserve insight about character and party customization between level completions and menu selections.
+         * 
+         * The scene corresponding to the door will be loaded, as long as its not the play door (which is covered in the function below) */
         if (!tempName.Equals("Play"))
         {
-            //TODO close curtains here?
-            //MenuSceneSwitch(this.name.Replace("DoorClose",""));
             MenuSceneSwitch(tempName);
+
+            /* TODO */
+            //close curtains here?
+            //MenuSceneSwitch(this.name.Replace("DoorClose",""));
         }
     }
 
-
-
-	void PlaybuttonOnClick()
+    /* This function is called when the mouse clicks on the play door on the main menu (for starting the gameplay) */
+    void PlaybuttonOnClick()
 	{
         string songTitle = GameObject.Find("Song Dropdown").GetComponent<Dropdown>().captionText.text;
         string songDifficulty = GameObject.Find("Difficulty Dropdown").GetComponent<Dropdown>().captionText.text;
 
+        /* Functional Requirement
+         * ID: 8.2-1
+         * Description: The player must be able to choose a level.
+         * 
+         * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
+        /* Preserves the main menu as the last scene */
         LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Scenes/main", LoadSceneMode.Single);
     }
 
+    /* Preserves the main menu as the last scene and loads the new one */
     public void MenuSceneSwitch(string sceneNew)
     {
         LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
