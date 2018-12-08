@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class BtnUnit : EventTrigger{
     //Independant Button containing a unit
     //Unity Bug - set imgIcon as Monobehaviour, then turn into EventTrigger keeps values but prevents editor changes
-    //changing to MonoBehaviour, IPointerEnterHandler, IPointerExitHandler should fix
+    //a more reliable solution will be applied
 
     //Gameobject locations
     [SerializeField]
