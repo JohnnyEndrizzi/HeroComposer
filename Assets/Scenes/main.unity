@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -440,6 +440,7 @@ MonoBehaviour:
   bossID: 
   bossPower: 0
   bossHP: 0
+  target: 0
 --- !u!1 &281954342 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1118650563425654, guid: 66f3158339ca3964d819fd0e574a66cf,
@@ -691,7 +692,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: 
+  sound: 
   hp: 0
+  currentHp: 0
   atk: 0
   def: 0
   rcv: 0
@@ -1498,7 +1501,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1062803907266300, guid: 11aee0653c8498c45bff43a390839817, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1062803907266300, guid: 11aee0653c8498c45bff43a390839817, type: 2}
       propertyPath: m_TagString
