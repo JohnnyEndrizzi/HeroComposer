@@ -1,16 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LastScene : MonoBehaviour {
+    //Persistant script to save the last loaded scene for use in back buttons
+
     public static LastScene instance = null;
+    public string prevScene = null;
 
-    public string prevScene = null; //TODO
-
-	void Awake () {
-        if (!instance) {
+    //Persist and prevent multiple instances
+    void Awake ()
+    {
+        if (!instance)
+        {
             instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(this.gameObject);
             return;
         }

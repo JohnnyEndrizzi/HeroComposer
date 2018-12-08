@@ -1,33 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MoneyOutput : MonoBehaviour {
+    //Controls Output of Money values
+
     public Text txtOut;
 
     void Start () {
-        txtOut.text = "Money\n" + "$" +  spliter(StoredValues.Cash);
-        //Debug.Log(StoredValues.Cash);
+        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
     void Update () {
-        txtOut.text = "Money\n" + "$" +  spliter(StoredValues.Cash);
+        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
-    private string spliter(int bigNum){
+    private string CommaSpliter(int bigNum) //Adds , ev,ery, 3 ,dig,its
+    {
         string output = "";
         string word = bigNum.ToString();
         char[] parsed = word.ToCharArray();
 
         for (int i = parsed.Length-1; i >= 0; i--) {
 
-            if(i % 3 == 2){
+            if(i % 3 == 2 && i!= parsed.Length - 1)
+            {
                 output += ",";
             }
-            output += parsed[i];
+            output += parsed[parsed.Length - 1 - i];
         }
-
         return output;
     }
 }

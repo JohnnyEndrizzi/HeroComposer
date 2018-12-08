@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu (menuName = "Character")]
+/* This ScriptableObject will be used to store all local representations of our characters while
+ * doing menu actions. It will be deserialized from the JSON file, and will be shallow copied
+ * before starting a level. */
 public class CharacterScriptObject : ScriptableObject
 {
     public string name;

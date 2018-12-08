@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ArtController2 : MonoBehaviour
 {
+    //Controls the scene used to demo Art assets
 
-    //Images
+    //Art images and files to be shown
     public Sprite[] img;
     public string[] titles;
     public string[] descriptions;
     public AudioClip[] music;
 
     public Sprite BG;
-    public bool anims = false;
+    public bool anims = false; //to enable/disable the use of animations on the ring
 
     //Image Configs
     public int dist = 50; //Radius of circle
     public int viewDist = 20; //Dist b/n edge of circle and camera
 
     public Transform showSprite; //Empty SpriteRender object
+    AttackAnimator attacker;
+
+    //Local Variables
     private int numImages;
     Vector3 centrePoint;
     private Vector3[] posSave = new Vector3[4];
@@ -29,11 +30,11 @@ public class ArtController2 : MonoBehaviour
     public float artLerpTime = 0.5f;
     float currentLerpTime = 0;
 
+    //To Track Ring position
     private int moveOrder = 0;
     private int moveCmd = 0;
     private int currLoc = 0;
-
-    GameObject attacker;
+    
     private int upCount = 0;
     private int dbCount = 0;
 
@@ -59,7 +60,7 @@ public class ArtController2 : MonoBehaviour
         //titles = new string[numImages];
         //descriptions = new string[numImages];
 
-        attacker = GameObject.Find("AttackAnimController");
+        attacker = GameObject.Find("AttackAnimController").GetComponent<AttackAnimator>();
         centrePoint = new Vector3(0, 16, dist + viewDist);
 
         //Create all art
@@ -101,8 +102,8 @@ public class ArtController2 : MonoBehaviour
         textTitle = new GameObject();
         textDesc = new GameObject();
 
-        writer();
-        reWriter(titles[0], descriptions[0]);
+        Writer();
+        ReWriter(titles[0], descriptions[0]);
 
         //For text Lerping - can modify vector3 values
         posSave[0] = textTitle.transform.localPosition;
@@ -110,9 +111,7 @@ public class ArtController2 : MonoBehaviour
         posSave[2] = posSave[0] + new Vector3(0, 1200, 0);
         posSave[3] = posSave[1] + new Vector3(0, -1200, 0);
     }
-
-
-
+       
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow)) { moveOrder += 1; }
@@ -131,21 +130,21 @@ public class ArtController2 : MonoBehaviour
 
             float perc = currentLerpTime / artLerpTime;
 
-            for (int i = 0; i < numImages; i++)
-            { //Lerp Sprites
-                GameObject.Find("artPiece " + i).transform.position = Vector3.Lerp(Degree(spin(i + currLoc)), Degree(spin(i + currLoc + Sign(moveCmd))), perc);
-                GameObject.Find("artPieceBG " + i).transform.position = Vector3.Lerp(Degree(spin(i + currLoc)), Degree(spin(i + currLoc + Sign(moveCmd))), perc);
+            for (int i = 0; i < numImages; i++) //Lerp Sprites
+            { 
+                GameObject.Find("artPiece " + i).transform.position = Vector3.Lerp(Degree(Spin(i + currLoc)), Degree(Spin(i + currLoc + Sign(moveCmd))), perc);
+                GameObject.Find("artPieceBG " + i).transform.position = Vector3.Lerp(Degree(Spin(i + currLoc)), Degree(Spin(i + currLoc + Sign(moveCmd))), perc);
             }
 
-            if (perc <= 0.5)
-            { //Lerp words
+            if (perc <= 0.5) //Lerp words
+            {
                 textTitle.transform.localPosition = Vector3.Lerp(posSave[0], posSave[2], perc);
                 textDesc.transform.localPosition = Vector3.Lerp(posSave[1], posSave[3], perc);
 
                 titleBG.transform.localPosition = Vector3.Lerp(posSave[0], posSave[2], perc);
                 descBG.transform.localPosition = Vector3.Lerp(posSave[1], posSave[3], perc);
             }
-            else
+            else //Lerp words back
             {
                 textTitle.transform.localPosition = Vector3.Lerp(posSave[2], posSave[0], perc);
                 textDesc.transform.localPosition = Vector3.Lerp(posSave[3], posSave[1], perc);
@@ -164,73 +163,74 @@ public class ArtController2 : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            { //Audio
+            if (Input.GetKeyDown(KeyCode.Space)) //Audio
+            { 
                 AudioSource audio = GameObject.Find("Canvas").GetComponent<AudioSource>();
-                if (audio.isPlaying && audio.clip == music[spin(currLoc * -1)])
+                if (audio.isPlaying && audio.clip == music[Spin(currLoc * -1)])
                 {
                     audio.Stop();
                 }
                 else
                 {
-                    audio.clip = music[spin(currLoc * -1)];
+                    audio.clip = music[Spin(currLoc * -1)];
                     audio.Play();
                 }
             }
 
+            //Attack Animations - grouped by time length/frequency
             if (anims == true && upCount >= 20 && upCount <= 40)
             {
-                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 40 && upCount <= 60)
             {
-                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 60 && upCount <= 80)
             {
-                if (spin(currLoc * -1) == 8) attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard", 1, 1);
+                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
             }
             if (anims == true && upCount >= 80)
             {
                 upCount = 0;
 
-                switch (spin(currLoc * -1))
+                switch (Spin(currLoc * -1))
                 {
                     case 0:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("heal", 1, 1);
+                        attacker.ATTACKdemo("heal", 1, 1);
                         break;
                     case 1:
                         if (dbCount == 0)
                         {
-                            attacker.GetComponent<AttackAnimator>().ATTACKdemo("slash1", 1, 1);
+                            attacker.ATTACKdemo("slash1", 1, 1);
                             dbCount = 1;
                         }
                         else
                         {
-                            attacker.GetComponent<AttackAnimator>().ATTACKdemo("slash2", 1, 1);
+                            attacker.ATTACKdemo("slash2", 1, 1);
                             dbCount = 0;
                         }
                         break;
                     case 2:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("fireball", 1, 1);
+                        attacker.ATTACKdemo("fireball", 1, 1);
                         break;
                     case 3:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("arrow", 1, 1);
+                        attacker.ATTACKdemo("arrow", 1, 1);
                         break;
                     case 4:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("healTeam", 1, 1);
+                        attacker.ATTACKdemo("healTeam", 1, 1);
                         break;
                     case 5:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("meteor", 1, 1);
+                        attacker.ATTACKdemo("meteor", 1, 1);
                         break;
                     case 6:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("arrowHail", 1, 1);
+                        attacker.ATTACKdemo("arrowHail", 1, 1);
                         break;
                     case 7:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("fire3", 1, 1);
+                        attacker.ATTACKdemo("fire3", 1, 1);
                         break;
                     case 8:
-                        attacker.GetComponent<AttackAnimator>().ATTACKdemo("blizzard", 1, 1);
+                        attacker.ATTACKdemo("blizzard", 1, 1);
                         break;
                     default:
                         break;
@@ -238,12 +238,12 @@ public class ArtController2 : MonoBehaviour
             }
         }
 
-        reWriter(titles[spin(currLoc * -1)], descriptions[spin(currLoc * -1)]); //TODO move between text Lerps to change at top
+        ReWriter(titles[Spin(currLoc * -1)], descriptions[Spin(currLoc * -1)]); //TODO move between text Lerps to change at top
         upCount++;
     }
 
-    void fillWords()
-    { //Load text here
+    void FillWords() //Load text here
+    { 
         for (int i = 0; i < numImages; i++)
         {
             titles[i] = "Art Piece #" + i.ToString();
@@ -251,9 +251,8 @@ public class ArtController2 : MonoBehaviour
         }
     }
 
-    void writer()
-    { //Initial Write / create text locations
-
+    void Writer() //Initial Write / create text locations
+    { 
         // Image 1 
         titleBG = new GameObject();
         titleBG.transform.parent = canvas.transform;
@@ -287,12 +286,10 @@ public class ArtController2 : MonoBehaviour
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.black;
 
-        // Title text position
         rectTransform = text.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(0, 150, 1);
         rectTransform.sizeDelta = new Vector2(1000, 200);
-
-        ////
+                
         // Text Description
         textDesc.transform.parent = canvas.transform;
         textDesc.name = "Desc";
@@ -304,27 +301,26 @@ public class ArtController2 : MonoBehaviour
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.black;
 
-        // Description text position
         rectTransform = text.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(0, -175, 0);
         rectTransform.sizeDelta = new Vector2(400, 200);
     }
 
-    void reWriter(string title, string desc)
-    { //Update Text
+    void ReWriter(string title, string desc) //Update Text
+    {
         textTitle.GetComponent<Text>().text = title;
         textDesc.GetComponent<Text>().text = desc;
 
         image = titleBG.GetComponent<Image>();
         rectTransform = image.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(stringLength(title, titleFontSize) + 10, 100);
+        rectTransform.sizeDelta = new Vector2(StringLength(title, titleFontSize) + 10, 100);
 
         image = descBG.GetComponent<Image>();
         rectTransform = image.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(stringLength(desc, descFontSize) + 10, 100);
+        rectTransform.sizeDelta = new Vector2(StringLength(desc, descFontSize) + 10, 100);
     }
 
-    int stringLength(string s, int size)
+    int StringLength(string s, int size) //get the amount of size the string will take up using 
     {
         int totalLength = 0;
         CharacterInfo characterInfo = new CharacterInfo();
@@ -333,22 +329,22 @@ public class ArtController2 : MonoBehaviour
 
         foreach (char c in chars)
         {
+            myFont.RequestCharactersInTexture(c.ToString(), size, textTitle.GetComponent<Text>().fontStyle); //TODO test w/o fontstyle
             myFont.GetCharacterInfo(c, out characterInfo, size);
-
             totalLength += characterInfo.advance;
         }
         return totalLength;
     }
 
-    int spin(int i)
-    { //loops numbers to correct values
-        if (i < 0) { i = spin(i + numImages); }
-        if (i >= numImages) { i = spin(i - numImages); }
+    int Spin(int i) //loops numbers to correct values
+    { 
+        if (i < 0) { i = Spin(i + numImages); }
+        if (i >= numImages) { i = Spin(i - numImages); }
         return i;
     }
 
-    Vector3 Degree(int i)
-    { //Calculate object location around circle
+    Vector3 Degree(int i) //Calculate object location around circle
+    { 
         Vector3 spot = new Vector3(0, 0, 0);
         float angleD = 360 / numImages * i;
         float angle = angleD * Mathf.PI / 180;
@@ -360,8 +356,8 @@ public class ArtController2 : MonoBehaviour
         return spot;
     }
 
-    public static int Sign(int i)
-    {//Math.Signf but int and with 0 (why does this not exist?)        
+    public static int Sign(int i) //Math.Signf but int and with 0 (why does this not exist?)   
+    {     
         if (i < 0) { return -1; }
         if (i > 0) { return 1; }
         return 0;

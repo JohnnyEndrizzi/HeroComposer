@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InvMenuCtrl : MonoBehaviour { //TODO rework
+public class InvMenuCtrl : MonoBehaviour { 
+    //Controls Item menu in Invantory
 
     //Gameobject locations
     [SerializeField]
@@ -12,41 +12,44 @@ public class InvMenuCtrl : MonoBehaviour { //TODO rework
     private GridLayoutGroup gridGroup;
 
     private List<PlayerItem> playerInventory;
-    public List<int> storedItems;
     private int maxBtns = 98;
-
-
-    public Dictionary<int, AllItemDict> AllItems;
-
-    public void creator(){ //Generate/Regenerate List 
-        playerInventory = new List<PlayerItem>();
-        
-        if (GameObject.Find("InvBtn #0") != null) { //Destroy buttons to allow for reload
-            DestroyerOfLists();
-        }     
     
+    public Dictionary<int, AllItemDict> AllItems;
+    public List<int> storedItems;
 
-        for (int i = 0; i<storedItems.Count; i++){ 
-            PlayerItem newItem = new PlayerItem();
+    public void creator() //Generate/Regenerate List 
+    {
+        playerInventory = new List<PlayerItem>();
+                
+        if (GameObject.Find("InvBtn #0") != null) //Destroy existing buttons to allow for reload
+        { 
+            DestroyerOfLists();
+        }
+                
+        for (int i = 0; i<storedItems.Count; i++) //Fill inventory slots with owned items
+        {
+            PlayerItem newItem = new PlayerItem
+            {
+                iconSprite = AllItems[storedItems[i]].img,
+                itemID = storedItems[i]
+            };
 
-            newItem.iconSprite = AllItems[storedItems[i]].img;// img[stored[i]];   
-            newItem.itemID = storedItems[i];
+            playerInventory.Add(newItem);
+        }                
+        for (int i = storedItems.Count; i<=maxBtns-1; i++) //Fill remaining inventory slots with empty items
+        {
+            PlayerItem newItem = new PlayerItem
+            {
+                itemID = 0
+            };
 
             playerInventory.Add(newItem);
         }
-        for (int i = storedItems.Count; i<=maxBtns-1; i++){ 
-            PlayerItem newItem = new PlayerItem();
-
-            //newItem.iconSprite = AllItems[0].img;   
-            newItem.itemID = 0;
-
-            playerInventory.Add(newItem);
-        }
-        genInventory();
+        GenInventory();
     }
-
-
-    void genInventory(){ //Create Buttons and sets values
+    
+    void GenInventory() //Create Buttons and sets values
+    { 
         int i = 0;
         foreach (PlayerItem newItem in playerInventory) { 
             GameObject button = Instantiate(buttonTemplate) as GameObject;
@@ -62,22 +65,27 @@ public class InvMenuCtrl : MonoBehaviour { //TODO rework
         }
     }
 
-    public List<int> GetStoredItems(){ //returns all item values
-        List<int> realValues  = new List<int>();         
+    public List<int> GetStoredItems() //returns all item values
+    { 
+        List<int> realValues = new List<int>();         
 
-        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++) {
+        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++)
+        {
             realValues.Add(GameObject.Find("InvBtn #" + i).GetComponent<InvMenuBtn>().GetItemID());            
         }
         return realValues;
     }
 
-    void DestroyerOfLists(){ //Boom
-        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++) {
+    void DestroyerOfLists() //Destroys existing objects
+    {
+        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++)
+        {
             Destroy(GameObject.Find("InvBtn #" + i)); 
         }
     }
 
-    public void ButtonClicked(int invID, int itemID){ 
+    public void ButtonClicked(int invID, int itemID) //sub button Clicked
+    { 
         GameObject.Find("InvController").GetComponent<InvController>().GridOnClick(invID, itemID);      
     }
 
