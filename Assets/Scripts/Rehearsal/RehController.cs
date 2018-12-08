@@ -12,8 +12,8 @@ public class RehController : MonoBehaviour {
     * This class controls the selection of team members */
 
     /* Functional Requirement 
-    * ID: 8.1 1-15
-    * Description: The system must be able to calculate the players current stats. //will be here before 19th
+    * ID: 8.1 1-19
+    * Description: The system must be able to calculate the players current stats. 
     * 
     * This class allows players to view all stats including their equipted items */
 
