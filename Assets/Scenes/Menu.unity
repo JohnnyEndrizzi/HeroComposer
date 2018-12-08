@@ -3180,32 +3180,32 @@ Prefab:
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1029
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 579
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
@@ -3217,29 +3217,19 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1860371619491214, guid: 99121d6520edbb043807429fa258188f, type: 2}
+      propertyPath: m_Name
+      value: CurtainsOpenTransition
+      objectReference: {fileID: 0}
     - target: {fileID: 212617938107007508, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114410577681220752, guid: 99121d6520edbb043807429fa258188f,
+    - target: {fileID: 114131041608636378, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1860371619491214, guid: 99121d6520edbb043807429fa258188f, type: 2}
-      propertyPath: m_Name
-      value: CurtainsOpenTransition
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99121d6520edbb043807429fa258188f, type: 2}
