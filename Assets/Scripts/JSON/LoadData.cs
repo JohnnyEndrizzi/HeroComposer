@@ -125,6 +125,9 @@ public class LoadData : MonoBehaviour
     }
 }
 
+/* The following is a wrapper class used for JSON (de)serialization.
+ * Unity's JsonUtility doesn't support JSON arrays properly, so the wrapper
+ * is required to make things easier. */
 public class JsonHelper
 {
     public static T[] getJsonArray<T>(string json)
