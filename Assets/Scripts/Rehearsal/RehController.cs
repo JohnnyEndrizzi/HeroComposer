@@ -32,6 +32,9 @@ public class RehController : MonoBehaviour {
     [SerializeField]
     private RehCharMenuCtrl UnitMenu = null;
 
+    /*Dictionary lists are passed in from the StoredVariables class on load,
+    * they contain all information about all Units, what is equipt to who and all Items present in the game 
+    * Items are required to calculate the affect on the character */
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 

@@ -10,13 +10,4 @@ public class Magic {
     public string prefab;
     public string Sound;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

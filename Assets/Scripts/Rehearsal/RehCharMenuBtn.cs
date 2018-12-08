@@ -80,11 +80,10 @@ public class RehCharMenuBtn : MonoBehaviour {
 
     void OnClick() //Gets clicked
     { 
-        //To find who called this sceipt (different parents use this child script)
+        //To find who called this script (different parents use this child script)
         if(GameObject.Find("InvController") != null)
         {
             this.transform.parent.parent.parent.GetComponent<CharMenuCtrl>().ButtonClicked(invID);
-
         }
         else if(GameObject.Find("RehController") != null)
         {
@@ -92,6 +91,3 @@ public class RehCharMenuBtn : MonoBehaviour {
         }
     }
 }
-
-
-

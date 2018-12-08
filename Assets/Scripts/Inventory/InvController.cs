@@ -6,16 +6,25 @@ using UnityEngine.UI;
 public class InvController : MonoBehaviour {
     //Main controller for Inventory scene
 
-    // 8.1 1-8 The system must display the inventory screen.
 
-    // 8.1 1-10 The player must be able to customise individual characters. //partially done
+    /* Functional Requirement 
+    * ID: 8.1 1-8
+    * Description: The system must display the inventory screen.
+    * 
+    * This class controls the Inventory screen, it does anything required for the scene to run including 
+    * deciding what to display, where to display and any movements of items*/
 
-    // 8.1 1-11 The system must display the current equipment that each character has.
+    /* Functional Requirement 
+    * ID: 8.1 1-10
+    * Description: The player must be able to customise individual characters.
+    * 
+    * This class allows players to apply items to their individual characters as desired */
 
-    // 8.1 1-12 The player must be able view a character’s skill tree. //will be here someday
-    // 8.1 1-13 The system must be able to update a character’s skill tree.
-
-
+    /* Functional Requirement 
+    * ID: 8.1 1-11
+    * Description: The system must display the current equipment that each character has.
+    * 
+    * This class allows players to see what items their characters have equipt */
 
     //Gameobject locations
     [SerializeField]
@@ -29,9 +38,12 @@ public class InvController : MonoBehaviour {
     [SerializeField]
     private CharMenuCtrl UnitMenu = null;
 
+    //Item list is passed in from the StoredVariables class on load
     [HideInInspector]
     public List<int> storedItems;  //Inventory Storage
 
+    /*Dictionary lists are passed in from the StoredVariables class on load,
+    * they contain all information about all Units, what is equipt to who and all Items present in the game */
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 
@@ -64,7 +76,9 @@ public class InvController : MonoBehaviour {
     private int[] it = new int[]{ 0, 0, 0, 0 }; //Save what is in front
     private int HoldNum; //Save what is held
 
-    public void Starter() //Start delayed until information is passed in
+    /* Behaves similar to a start function but will only act after needed information has been passed in from above.
+     * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
+    public void Starter() 
     {
         //Pass information to menus
         InventoryMenu.AllItems = AllItems;
@@ -79,7 +93,9 @@ public class InvController : MonoBehaviour {
         setImage(Units[0].img);
     }
 
-	void Start () {        
+
+	void Start ()
+    {        
         //Font
         myFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         txtBoxTitle.fontSize = titleFontSize;
@@ -93,7 +109,8 @@ public class InvController : MonoBehaviour {
 
     void Update()
     {        
-        if (Input.GetMouseButtonUp(1)) {
+        if (Input.GetMouseButtonUp(1))
+        {
             loadInv(FrontAndCentre);  //Drop held item and reload menus
         }
     }
@@ -145,14 +162,16 @@ public class InvController : MonoBehaviour {
 
     public void GridOnClick(int intID, int itemID)  //Grid of Inventory items clicked
     {
-        if (Drag.Dragging() == false){ //pick up           
+        if (Drag.Dragging() == false) //pick up item 
+        {          
             Drag.SetIcon(GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon());
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(null);
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(0);
 
             HoldNum = itemID;
 
-        }else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false){ //place
+        }else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
+        {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldNum);
             Drag.SetIcon(null);
@@ -160,7 +179,8 @@ public class InvController : MonoBehaviour {
             HoldNum = 0;
             saveInv();
         }  
-        else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == true) { //switch
+        else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == true) //switch item
+        { 
             Sprite tempS = GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon();
 
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
@@ -172,8 +192,10 @@ public class InvController : MonoBehaviour {
         }         
     }
 
-    void EqpOnClick(Button origin, int item){ //One of Equipt buttons clicked
-        if (Drag.Dragging() == false) { //pick up           
+    void EqpOnClick(Button origin, int item) //One of Equipt buttons clicked
+    {
+        if (Drag.Dragging() == false) //pick up item    
+        {      
             Drag.SetIcon(origin.GetComponent<BtnEquipt>().GetIcon());
             origin.GetComponent<BtnEquipt>().SetIcon(null);  
 
@@ -181,7 +203,8 @@ public class InvController : MonoBehaviour {
             it[item] = 0;
 
         }
-        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == false) { //place
+        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == false) //place item
+        {
             origin.GetComponent<BtnEquipt>().SetIcon(Drag.GetIcon());
             Drag.SetIcon(null);
 
@@ -189,7 +212,8 @@ public class InvController : MonoBehaviour {
             HoldNum = 0;
             saveInv();
         }
-        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true) { //switch
+        else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true) //switch item
+        {
             Sprite tempS = origin.GetComponent<BtnEquipt>().GetIcon();
             int tempN = HoldNum;
 
@@ -198,25 +222,25 @@ public class InvController : MonoBehaviour {
 
             HoldNum = it[item];
             it[item] = tempN;
-
             saveInv();
         }
     }
 
     //Text control  
-    void reWriter(string title, string desc){ //Update Text
+    void ReWriter(string title, string desc) //Update Text
+    {
         txtBoxTitle.text = title;
         txtBoxDesc.text = desc;             
 
         rectTransform = HoverTxt.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(170, 200);
 
-        if (stringLength(desc, descFontSize) == 0 && stringLength(title, titleFontSize) == 0) { 
+        if (StringLength(desc, descFontSize) == 0 && StringLength(title, titleFontSize) == 0){ 
             rectTransform.sizeDelta = new Vector2(0, 200);
         }        
     }
 
-    int stringLength(string s, int size) //get the amount of size the string will take up using 
+    int StringLength(string s, int size) //get the amount of size the string will take up using 
     {
         int totalLength = 0;
         CharacterInfo characterInfo = new CharacterInfo();
@@ -239,19 +263,19 @@ public class InvController : MonoBehaviour {
         if (origin > 0) //hoverEnter - fade in
         {    
             origin--;
-            reWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(textFader(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
+            ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
+            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
         }
         else if (origin < 0) //hoverExit - fade out
         {
             origin = Mathf.Abs(origin) - 1;
-            reWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
+            ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
             HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(textFader(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
+            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
         }
         else //catch
         {
-            reWriter(AllItems[origin].Title, AllItems[origin].Desc);
+            ReWriter(AllItems[origin].Title, AllItems[origin].Desc);
         }
     }
 
@@ -260,24 +284,24 @@ public class InvController : MonoBehaviour {
         HoverTxt.gameObject.SetActive(true); //starts disabled
 
         //Sets text to item in origin button
-        if (origin.Equals("ButtonTop")){       reWriter(AllItems[it[1]].Title, AllItems[it[1]].Desc);}
-        else if(origin.Equals("ButtonMid")){   reWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
-        else if(origin.Equals("ButtonBottom")){reWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
+        if (origin.Equals("ButtonTop")){       ReWriter(AllItems[it[1]].Title, AllItems[it[1]].Desc);}
+        else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
+        else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
         else {Debug.Log("ERROR, hover origin unknown");}
 
 
         if (check > 0) //hoverEnter - fade in
         {           
-            StartCoroutine(textFader(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
+            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
         }
         else if (check < 0) //hoverEnter - fade out
         {
             HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(textFader(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
+            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
         }
     }
 
-    IEnumerator textFader(float t, Text i, Text i2, float fader, float fader2) //Controls the text fading in or out for 2 text objects
+    IEnumerator TextFader(float t, Text i, Text i2, float fader, float fader2) //Controls the text fading in or out for 2 text objects
     { //0 to invisible, 1 to visible - fader2 is opposite of fader
         i.color = new Color(i.color.r, i.color.g, i.color.b, fader);
         i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, fader);

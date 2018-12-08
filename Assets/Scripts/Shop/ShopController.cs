@@ -9,7 +9,8 @@ public class ShopController : MonoBehaviour {
     * ID: 8.1 1-9
     * Description: The player must be able to purchase new equipment
     * 
-    * This class controls all purchasing of items and equipment */
+    * This class controls all purchasing of items and equipment, it then adds them to the global
+    * owned items list */
 
     //Gameobject locations
     [SerializeField]
@@ -19,6 +20,7 @@ public class ShopController : MonoBehaviour {
     [SerializeField]
     private StoredValues storedValues = null;
 
+    //Item lists are passed in from the StoredVariables class on load
     [HideInInspector]
     public List<int> storedItems;  //Inventory Storage
     [HideInInspector]
@@ -26,19 +28,21 @@ public class ShopController : MonoBehaviour {
     [HideInInspector]
     public List<int> normalOffers; //Normal Store List
 
+    /*Dictionary lists are passed in from the StoredVariables class on load,
+     * they contain all information about all Units and Items present in the game */ 
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 
-    //Text locations
+    //Text gameobject locations
     public Image HoverTxt;
     public Text txtBoxTitle;
     public Text txtBoxDesc;
     public Text txtBoxCurrent;
     public Text txtBoxStats;
 
-    //TODO?
-    //int titleFontSize = 16;
-    //int descFontSize = 12;
+    //Font size 
+    int titleFontSize = 16;
+    int descFontSize = 12;
 
     RectTransform rectTransform;
     Image image;
@@ -46,14 +50,14 @@ public class ShopController : MonoBehaviour {
 
     //Local Values
     private int FrontAndCentre; //Save who is in front
-    private int FrontAndCentreTile;
+    private int FrontAndCentreTile; //Save where the front item comes from
     [SerializeField]
-    private GameObject ItemDisplay; //TODO show item
+    private GameObject ItemDisplay; //Shown item image display location
 
-
-    public void Starter() //Start delayed until information is passed in
+    /* Behaves similar to a start function but will only act after needed information has been passed in from above.
+     * It passes any needed information to its sub-menus and tells them to start upon recieving their information */ 
+    public void Starter() 
     {
-        //Pass information to menus
         shopMenuCtrl.Dict = AllItems;
         shopMenuCtrl.shopItems = normalOffers;
         shopMenuCtrl.creator();
@@ -79,6 +83,7 @@ public class ShopController : MonoBehaviour {
         txtBoxDesc.text = AllItems[itemID].Desc;
         //txtBoxStats
 
+        //Display how many of that item the player currently owns
         if (itemID != 0) {txtBoxCurrent.text = "Already Owned: " + countItem(itemID).ToString();}
         else {txtBoxCurrent.text = "";}
     }

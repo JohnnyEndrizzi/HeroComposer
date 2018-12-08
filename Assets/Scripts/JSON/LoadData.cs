@@ -1,10 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 
 public class LoadData : MonoBehaviour
 {
+
+    /* Functional Requirement 
+    * ID: 8.1 1-8
+    * Description: The system must display the inventory screen.
+    * 
+    * This class controls the Inventory screen, it does anything required for the scene to run including 
+    * deciding what to display, where to display and any movements of items*/
+
     Character[] characters;
     Items[] items;
     Magic[] magic;

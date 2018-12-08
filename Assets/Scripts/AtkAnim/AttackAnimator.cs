@@ -1,10 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class AttackAnimator : MonoBehaviour
-{
-    //Prefab Sprites
+{ //This class recieves, creates animations as required.
+    
+
+    /* Functional Requirement 
+    * ID: 8.1-2
+    * Description: The player’s battle commands must invoke the proper attack animations as a response.
+    * 
+    * This class recieves, creates animations as required */
+
+    //Prefab Sprites 
     public Transform arrow;
     public Transform fireball;
     public Transform slash;
@@ -16,15 +23,15 @@ public class AttackAnimator : MonoBehaviour
     public float fastshot = 0.2f;
     public float slowshot = 1.0f;
 
-    //Temp for manual input;
-    int[] InputCounter = new int[] { 0, -1, -1, -1 };  //inputNum, caster, spell, target   
-
+    //Dictionary lists to store all attack and location information
     Dictionary<string, Locations> LocationMap = new Dictionary<string, Locations>();
     Dictionary<string, Attacks> AttackMap = new Dictionary<string, Attacks>();
 
     void Start()
     {
-        //List of all targetable locations
+        /* List of all targetable locations on the field.  
+         * These can be referenced to from elsewhere whenever a location is required. 
+         * It also provides a central location from which locations can be efficiently added or modified if needed. */                
         LocationMap.Add("P1", new Locations(3.29f, 1.75f, -4.8f));   //P1
         LocationMap.Add("P2", new Locations(1.02f, 0.33f, -5.1f)); //P2
         LocationMap.Add("P3", new Locations(2.94f, -0.82f, -5.5f)); //P3
@@ -49,9 +56,13 @@ public class AttackAnimator : MonoBehaviour
         LocationMap.Add("ADB1", new Locations(-4, 1, 1));  //Boss
         LocationMap.Add("ADHL", new Locations(-6, 6, 1));   //High Left
 
-
-        //List of all attacks and specs
-        //AttackMap.Add("name", new Attacks(int targetNum, Transform prefab, Vector3 SpawnOffset, int scaleFactor, int customCmd));
+        /* List of all attacks
+         * This contains all the information required to launch any magical or ranged attack
+         * This includes sprites, behaviour, offsets, number of attacks and timing
+         * Ideally new attacks can be implemented in a single line.
+         * Below is a guide legend of the various behavior types and special actions so all relevent information 
+         * is located here for ease of use. */        
+        //AttackMap.Add("name", new Attacks(int attackCode, Transform prefab, Vector3 SpawnOffset, int scaleFactor, int customCmd));
         AttackMap.Add("heal", new Attacks(0, heal, 0, 0, 0.0f, 3, 4));
         AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
         AttackMap.Add("slash1", new Attacks(1, slash, -1, 0, 0.0f, 1, 52));
@@ -86,7 +97,15 @@ public class AttackAnimator : MonoBehaviour
         //53 - mask Down
     }
 
-    public void ATTACK(string AtkName, int summoner, int target) //Calls an attack 
+    /* This function is used to call a magical attack from anywhere.
+     * All information needed to launch an attack is located here, the only outside input required
+     * is 'what is the attack?', 'where did it come from?' and 'where is it going?'
+     * The selector will use the behaviour type of the attack to calculate which set of positions will be used. 
+     * It then plugs in the source and target numbers and applies those to the preset locations to determing the 
+     * coordinates to start and finish the animation at.
+     * 
+     * It will then apply the first level of special attacks which control number of items and timing of attacks. */     
+    public void ATTACK(string AtkName, int summoner, int target) 
     { 
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return; }
@@ -110,7 +129,9 @@ public class AttackAnimator : MonoBehaviour
         else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
     }
 
-    public void ATTACKdemo(string AtkName, int summoner, int target) //Calls an attack for artShow - identical but uses different mapped locations //TODO rename demo->art
+    /* Functionally identical to ATTACK() but uses a different coordinate set for attacks.
+     * This is only to be used on the artShow demo where characters are always centred instead of off to either side. */ 
+    public void ATTACKdemo(string AtkName, int summoner, int target) 
     { 
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary" + AtkName); return; }
@@ -134,6 +155,9 @@ public class AttackAnimator : MonoBehaviour
         else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
     }
 
+    /* This function spawns the desired attack animation, and passes in relevant data.
+     * This includes start and end positions, timing information, scale changes, 
+     * and optionally a special attack identifier. */ 
     private void BOOM(string AtkName, Vector3 Pos1, Vector3 Pos2, float lerpTime)  //Basic Attack spawner
     {
         //Creation of attack
@@ -152,20 +176,11 @@ public class AttackAnimator : MonoBehaviour
         obj.gameObject.SetActive(true);
     }
 
-    private void BOOMRandomizer(string AtkName, Vector3 pos1, Vector3 pos2, int num, float speed) //Creates num attacks with random spread
+    /* This function is used to creates multiple attacks in a single animation, each with their own randomized path 
+     * to produce a spread centred on the target. */
+    private void BOOMRandomizer(string AtkName, Vector3 pos1, Vector3 pos2, int num, float speed) 
     {
-        //Vector3[] pos2s = new Vector3[num];  //TODO Test if the same
         Vector3 pos2new = new Vector3();
-
-        //for (int i = 0; i < num; i++)
-        //{
-        //    pos2s[i].x = pos2.x + Random.Range(-5f, 5f);
-        //    pos2s[i].y = pos2.y + Random.Range(-5f, 5f);
-        //}
-        //for (int j = 0; j < num; j++)
-        //{
-        //    BOOM(AtkName, pos1, pos2s[j], speed);
-        //}
 
         for (int i = 0; i < num; i++)
         {
@@ -210,7 +225,7 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
     public Vector3 offset;
     public float scaleFactor;
     public int customCmd;
-    public Color overlay;  //TODO remove/move (also remove Dict Add)
+    public Color overlay;  
 
     public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX) //Basic w/ Vector3 offset
     {

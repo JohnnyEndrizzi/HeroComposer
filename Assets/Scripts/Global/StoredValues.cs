@@ -8,9 +8,7 @@ public class StoredValues : MonoBehaviour {
     //Passes information to scene controllers
     //Passes information to save files
     //Keeps track of your money, inventory items, and shop lists
-
-
-
+            
     /* Functional Requirement 
     * ID: 8.2-9
     * Description: The player must be able to save the game. 
@@ -67,11 +65,16 @@ public class StoredValues : MonoBehaviour {
         
     }
 
-    private void OnLevelWasLoaded() //To run Start on scene change //TODO replace with new code (why did they remove this?)
+    /* Currently using depreciated code, this will be replaced by current code in future
+     * Acts the same as Start(), but runs whenever a new scene is loaded
+     * Both start and awake will only run once for a persistant object */ 
+    private void OnLevelWasLoaded() 
     {
         Starter();
     }
 
+    /* Finds any sceneControllers present in a scene and passes information 
+     * into them and calling their start functions */
     private void Starter() //Start
     {  
         //load();
