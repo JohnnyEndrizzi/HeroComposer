@@ -5,7 +5,11 @@ using UnityEngine.UI;
 public class ShopController : MonoBehaviour {
     //Main controller for Music Shop scene
 
-    // 8.1 1-9 he player must be able to purchase new equipment.
+    /* Functional Requirement 
+    * ID: 8.1 1-9
+    * Description: The player must be able to purchase new equipment
+    * 
+    * This class controls all purchasing of items and equipment */
 
     //Gameobject locations
     [SerializeField]

@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 
 public class RehController : MonoBehaviour {
     //Main controller for Rehearsal scene
 
-    // 8.1 1-15 The player must be able to customise their team.
+    /* Functional Requirement 
+    * ID: 8.1 1-15
+    * Description: The player must be able to customise their team.
+    * 
+    * This class controls the selection of team members */
 
-    // 8.1 1-19 The system must be able to calculate the players current stats. //will be here before 19th
-
+    /* Functional Requirement 
+    * ID: 8.1 1-15
+    * Description: The system must be able to calculate the players current stats. //will be here before 19th
+    * 
+    * This class allows players to view all stats including their equipted items */
 
     //Gameobject locations
     [SerializeField]
