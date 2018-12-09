@@ -24,9 +24,9 @@ public class DoorHandler : MonoBehaviour
         if (GetComponent<LoadData>() != null && Done == false)
         {
             Done = true;
-            GetComponent<LoadData>().LoadCharacters();
-            GetComponent<LoadData>().LoadItems();
-            GetComponent<LoadData>().LoadInv();
+            //GetComponent<LoadData>().LoadCharacters();
+            //GetComponent<LoadData>().LoadItems();
+            //GetComponent<LoadData>().LoadInv();
 
             /* TODO */
             //GetComponent<LoadData>().LoadMagic();

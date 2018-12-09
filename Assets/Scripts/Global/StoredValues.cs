@@ -66,9 +66,16 @@ public class StoredValues : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        GetComponent<LoadData>().LoadCharacters();
+        GetComponent<LoadData>().LoadItems();
+        GetComponent<LoadData>().LoadInv();
+    }
+
     /* Currently using depreciated code, this will be replaced by current code in future
      * Acts the same as Start(), but runs whenever a new scene is loaded
-     * Both start and awake will only run once for a persistant object */ 
+     * Both start and awake will only run once for a persistant object */
     private void OnLevelWasLoaded() 
     {
         Starter();

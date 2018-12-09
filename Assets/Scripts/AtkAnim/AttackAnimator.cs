@@ -23,7 +23,7 @@ public class AttackAnimator : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip arrowSound;
     private AudioClip bigArrowSound;
-    private AudioClip fireSound;
+    public AudioClip fireSound;
     private AudioClip iceSound;
     private AudioClip healSound;
 
@@ -108,19 +108,19 @@ public class AttackAnimator : MonoBehaviour
 }
 
     private void LoadResources() //Load assets 
-    {
+    {     
         //Setting Source and paths
         audioSource = GetComponent<AudioSource>();
-        string soundPath = "SoundEffects/Attacks";
+        string soundPath = "SoundEffects/Attacks/";
         string spritePath = "Prefab/Attacks/";
 
         //Prefab transforms
-        arrow = Resources.Load(spritePath + "arrow1") as Transform;
-        fireball = Resources.Load(spritePath + "fireball1") as Transform;
-        slash = Resources.Load(spritePath + "slash1") as Transform;
-        shield = Resources.Load(spritePath + "shield1") as Transform;
-        heal = Resources.Load(spritePath + "heal1") as Transform;
-        snow = Resources.Load(spritePath + "Blizzard") as Transform;
+        arrow = Resources.Load<Transform>(spritePath + "arrow1");
+        fireball = Resources.Load<Transform>(spritePath + "fireball1");
+        slash = Resources.Load<Transform>(spritePath + "slash1");
+        shield = Resources.Load<Transform>(spritePath + "shield1");
+        heal = Resources.Load<Transform>(spritePath + "heal1");
+        snow = Resources.Load<Transform>(spritePath + "Blizzard");
 
         //Sound effect clips
         arrowSound = (AudioClip)Resources.Load(soundPath + "magic_arrow_edit");
@@ -198,6 +198,7 @@ public class AttackAnimator : MonoBehaviour
         var obj = Instantiate(AttackMap[AtkName].trans, Pos1 + AttackMap[AtkName].offset, transform.rotation);
         obj.gameObject.SetActive(false);
         obj.gameObject.AddComponent<AtkMove>();
+                
 
         //Passing in attack values
         var tempScript = obj.gameObject.GetComponent<AtkMove>();
@@ -207,7 +208,10 @@ public class AttackAnimator : MonoBehaviour
        
         tempScript.EndSize = obj.localScale * AttackMap[AtkName].scaleFactor;
         tempScript.custCmd = AttackMap[AtkName].customCmd;
+        tempScript.name = AtkName;
         obj.gameObject.SetActive(true);
+
+        PewPew(AtkName);        
     }
 
     /* This function is used to creates multiple attacks in a single animation, each with their own randomized path 
@@ -222,6 +226,11 @@ public class AttackAnimator : MonoBehaviour
             pos2new.y = pos2.y + Random.Range(-5f, 5f);
             BOOM(AtkName, pos1, pos2new, speed);
         }
+    }
+
+    public void PewPew(string AtkName)
+    {
+        try { audioSource.PlayOneShot(AttackMap[AtkName].sound, 0.7f); } catch { Debug.Log(AtkName + " no sound"); }
     }
 }
 

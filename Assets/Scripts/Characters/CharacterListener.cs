@@ -255,9 +255,9 @@ public class CharacterListener : MonoBehaviour
 
         lockCoroutine[spriteLock - 1] = 1;
 
-        /* Plays the corresponding animation for the selected character, as well as its sound effect */
+        /* Plays the corresponding animation for the selected character */
         toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
-        GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
+        //GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         /* Unlock the coroutine */
         lockCoroutine[spriteLock - 1] = 0;

@@ -131,7 +131,9 @@ public class RehController : MonoBehaviour {
         
         for (int i = 0; i < characters.Length; i++)
         {
+            
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
+            //Debug.Log("SO " + currentCharacterSO.name);
             if (characters[i])
             {
                 if (currentCharacterSO.name == chars[0])
