@@ -40,6 +40,13 @@ public class ShopController : MonoBehaviour {
     public Text txtBoxCurrent;
     public Text txtBoxStats;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip error;
+    private AudioClip normalPurchase;
+    private AudioClip specialPurchase;
+    private AudioClip pickUp;
+
     //Font size 
     int titleFontSize = 16;
     int descFontSize = 12;
@@ -67,13 +74,34 @@ public class ShopController : MonoBehaviour {
         spcMenuCtrl.creator();
     }
 
+    void Update()
+    {
+         if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LastScene.instance.prevScene = "shop";
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+        }
+    }
+
     void Start() //Start with nothing selected
     {
         OnClick(0, 0);
+
+        //Import Audio
+        audioSource = GetComponent<AudioSource>();
+        error = (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
+        normalPurchase = (AudioClip)Resources.Load("SoundEffects/shop_purchase_regular_item");
+        specialPurchase = (AudioClip)Resources.Load("SoundEffects/shop_purchase_special_item");
+        pickUp = (AudioClip)Resources.Load("SoundEffects/inventory_pick_up_item");
     }
 
     public void OnClick(int invID, int itemID) //Sale item clicked
     {
+        if (FrontAndCentreTile != invID)
+        {
+            audioSource.PlayOneShot(pickUp, 0.7F);
+        }
+
         //Set item text to show
         FrontAndCentre = itemID;
         FrontAndCentreTile = invID;
@@ -93,6 +121,7 @@ public class ShopController : MonoBehaviour {
         if (FrontAndCentreTile == 0) //No item selected
         {
             //play audio error
+            audioSource.PlayOneShot(error, 0.7F);
         }
         else if (FrontAndCentreTile > 0) //Item is selected from normal shop display
         {
@@ -100,6 +129,7 @@ public class ShopController : MonoBehaviour {
             if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
             {
                 //play audio error
+                audioSource.PlayOneShot(error, 0.7F);
             }
             else //you can buy!
             {
@@ -110,8 +140,9 @@ public class ShopController : MonoBehaviour {
                 GameObject.Find("ShopBtn #" + FrontAndCentreTile).GetComponent<ShopMenuItem>().SetIcon(null);
                 GameObject.Find("ShopBtn #" + FrontAndCentreTile).GetComponent<ShopMenuItem>().SetItemID(0);
                 GameObject.Find("ShopBtn #" + FrontAndCentreTile).GetComponent<ShopMenuItem>().SetText("0");
-                
+
                 //play audio success
+                audioSource.PlayOneShot(normalPurchase, 0.7F);
 
                 //remove bought item from display
                 OnClick(0, 0);
@@ -128,6 +159,7 @@ public class ShopController : MonoBehaviour {
             if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
             {
                 //play audio error
+                audioSource.PlayOneShot(error, 0.7F);
             }
             else //you can buy!
             {
@@ -140,6 +172,7 @@ public class ShopController : MonoBehaviour {
                 GameObject.Find("SpcBtn #" + FrontAndCentreTile).GetComponent<SpcMenuItem>().SetText("0");
 
                 //play audio success
+                audioSource.PlayOneShot(specialPurchase, 0.7F);
 
                 //remove bought item from display
                 OnClick(0, 0);

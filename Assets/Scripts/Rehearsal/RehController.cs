@@ -38,6 +38,12 @@ public class RehController : MonoBehaviour {
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip addChar;
+    private AudioClip remChar;
+    private AudioClip pickUpChar;
+
     //Text Locations 
     [SerializeField]
     private Image HoverTxt = null;
@@ -80,6 +86,12 @@ public class RehController : MonoBehaviour {
         UnitDisplay2.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay2, 2); });
         UnitDisplay3.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay3, 3); });
         UnitDisplay4.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay4, 4); });
+
+        //Import Audio
+        audioSource = GetComponent<AudioSource>();
+        addChar = (AudioClip)Resources.Load("SoundEffects/rehersal_add_character_to_team");
+        remChar = (AudioClip)Resources.Load("SoundEffects/rehersal_remove_character_from_team");
+        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
     }
 
     void Update()
@@ -88,10 +100,19 @@ public class RehController : MonoBehaviour {
         {
             DropHeld();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LastScene.instance.prevScene = "Rehersal";
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+        }
     }
 
     void DropHeld() //Drop held item
     {
+        if (Drag.Dragging())
+        {
+            audioSource.PlayOneShot(remChar, 0.7F);
+        }
         Drag.SetIcon(null);
         HoldNum = 0;
         UnitMenu.lightsOut();
@@ -174,6 +195,10 @@ public class RehController : MonoBehaviour {
     
     public void OnClickUnitMenu(int intID) //Unit Menu was clicked - attach selected unit to mouse
     {
+        if (!Drag.Dragging() || HoldNum != intID)
+        {
+            audioSource.PlayOneShot(pickUpChar, 0.5F);
+        }
         Drag.SetIcon(Units[intID].img);
         HoldNum = intID;
     }
@@ -212,11 +237,13 @@ public class RehController : MonoBehaviour {
                 unitsInPortraits[item - 1] = HoldNum;
                 HoldNum = 0;
                 UnitMenu.lightsOut();
+                audioSource.PlayOneShot(addChar, 0.7F);
             }
         }
         else { //clear selected portrait
             origin.GetComponent<BtnUnit>().SetIcon(null);
             unitsInPortraits[item - 1] = -1;
+            audioSource.PlayOneShot(remChar, 0.7F);
         }
         passTeam(); //commits team to load
     }

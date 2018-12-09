@@ -8,7 +8,8 @@ public class CurtainMovementQuick : MonoBehaviour
     //Open/Close curtains without fanciness (long applause, lights, delay)
 
     public Animator curtainAnim;
-    public AudioClip opening;
+    private AudioClip opening;
+    private AudioClip closing;
 
     private SpriteRenderer MenuRender;
     private Image MenuRender2;
@@ -24,7 +25,10 @@ public class CurtainMovementQuick : MonoBehaviour
              
         curtainAnim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        GetComponent<AudioSource>().PlayOneShot(opening, 0.7F);
+        opening = (AudioClip)Resources.Load("SoundEffects/menu_curtain_open");
+        closing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");
+        audioSource.PlayOneShot(opening, 0.7F);
+
 
         MenuRender = GetComponent<SpriteRenderer>();
         MenuRender2 = GetComponent<Image>();
@@ -63,7 +67,7 @@ public class CurtainMovementQuick : MonoBehaviour
         isAnim = true;
 
         audioSource.volume = 1;
-        GetComponent<AudioSource>().PlayOneShot(opening, 0.7F);
+        GetComponent<AudioSource>().PlayOneShot(closing, 0.7F);
 
         curtainAnim.Play("CurtainsClose");
 

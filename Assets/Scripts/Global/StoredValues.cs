@@ -40,7 +40,7 @@ public class StoredValues : MonoBehaviour
     private List<int> normOffers = new List<int>();
 
     public static StoredValues instance = null;
-
+        
     //Universal values
     private static int cash;
 
@@ -119,7 +119,7 @@ public class StoredValues : MonoBehaviour
             RehCtrl.Starter();
         }
     }
-
+    
     private void findOffers(){ //Temporary setting of shop lists //TODO
         spcOffers.Clear();
         spcOffers.Add(4);

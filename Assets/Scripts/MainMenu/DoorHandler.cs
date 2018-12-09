@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class DoorHandler : MonoBehaviour
@@ -11,6 +11,11 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip opening;
+    private AudioClip closing;
+    
     private bool Done = false;
 
     void Start()
@@ -27,8 +32,15 @@ public class DoorHandler : MonoBehaviour
             //GetComponent<LoadData>().LoadMagic();
         }
 
+        audioSource = GetComponent<AudioSource>();
+        opening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
+        closing = (AudioClip)Resources.Load("SoundEffects/menu_door_close");
+        audioSource.mute = true;
+
         selectcanvas.enabled = false;
         StoredValues.Cash += 5000;
+
+        StartCoroutine(WaitForCurtains());
     }
 
     /* Update is called once per frame */
@@ -40,27 +52,45 @@ public class DoorHandler : MonoBehaviour
 
             if (play != null)
             {
-                
+
                 if (!selectcanvas.enabled)
                 {
-                    selectcanvas.enabled = true;                    
-                    play.onClick.AddListener(PlaybuttonOnClick);
-                }
+                    mute();
+                    selectcanvas.enabled = true;
+                    play.onClick.AddListener(PlaybuttonOnClick);                    
+                } 
             }     
 		}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (selectcanvas.enabled && play != null)
+            {
+                unMute();
+                selectcanvas.enabled = false;
+                play.onClick.RemoveListener(PlaybuttonOnClick);
+            }
+            else if (!selectcanvas.enabled)
+            {
+                //TODO open pause menu
+            }
+        }        
     }
 
     /* This function is called when the mouse hovers over the doors on the main menu */
-	void OnMouseOver()
+	void OnMouseEnter()
 	{	
 		if (selectcanvas.enabled == false)
         {
 			doorstatus = 1;
 
+            audioSource.Pause();
+            audioSource.PlayOneShot(opening, 0.7F);
+
             /* The corresponding door's open animation will play */
             if (this.name.Equals("InventoryDoorClose"))
             {
-                closeddoor.Play("SoundCheckOpen");
+                closeddoor.Play("SoundCheckOpen");                
             }
             else if (this.name.Equals("ShopDoorClose"))
             {
@@ -82,6 +112,9 @@ public class DoorHandler : MonoBehaviour
     void OnMouseExit()
     {
         doorstatus = 0;
+
+        audioSource.Pause();
+        audioSource.PlayOneShot(closing, 0.7F);
 
         /* The corresponding door's close animation will play */
         if (this.name.Equals("InventoryDoorClose"))
@@ -120,17 +153,19 @@ public class DoorHandler : MonoBehaviour
 
         if (tempName.Equals("Audition")) //Temporary until Audition scene is completed
         {
+
             MenuSceneSwitch("Menu");
         }
         else if (!tempName.Equals("Play")) //Play button has a more complex function attached
         {
+            mute();
             MenuSceneSwitch(tempName);
         }
     }
 
     /* This function is called when the mouse clicks on the play door on the main menu (for starting the gameplay) */
     void PlaybuttonOnClick()
-	{
+	{        
         string songTitle = GameObject.Find("Song Dropdown").GetComponent<Dropdown>().captionText.text;
         string songDifficulty = GameObject.Find("Difficulty Dropdown").GetComponent<Dropdown>().captionText.text;
 
@@ -152,4 +187,30 @@ public class DoorHandler : MonoBehaviour
     {
         GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
     }
+
+    public void mute()
+    {
+        GameObject.Find("PlayDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("InventoryDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("AuditionDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = true;
+    }
+
+    public void unMute()
+    {
+        GameObject.Find("PlayDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("InventoryDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("AuditionDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = false;
+    }
+
+
+    private IEnumerator WaitForCurtains()
+    {
+        yield return new WaitForSeconds(1.0f);
+        audioSource.mute = false;
+        yield return null;
+    }    
 }

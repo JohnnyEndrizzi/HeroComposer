@@ -1,23 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CurtainMovement : MonoBehaviour
 {
     public Animator curtainAnim;
     public AudioClip applauseSFX;
-
+    public SpriteRenderer MenuRender;
     public bool end = false;
-    private bool delayLock = false;
 
     public GameObject spotlight1;
     public GameObject spotlight2;
 
-    private SpriteRenderer MenuRender;
-    private Image MenuRender2;
     private AudioSource audioSource;
-
+    private bool delayLock = false;
 
     /* The following coroutine plays the opening animation for the curtains upon starting a level */
     private IEnumerator delayedOpenAnimation()
@@ -43,11 +39,9 @@ public class CurtainMovement : MonoBehaviour
         }
 
         /* Hide the opened curtains after the animation */
-        //MenuRender.enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
 
         delayLock = false;
-
-        //TODO expand inwards?
     }
 
     /* The following coroutine plays the closing animation for the curtains upon finishing a level */
@@ -55,11 +49,11 @@ public class CurtainMovement : MonoBehaviour
     {
         delayLock = true;
 
-        //MenuRender.enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
 
         /* Plays the apllause sound during the closing animation */
         audioSource.volume = 1;
-        audioSource.PlayOneShot(applauseSFX, 0.7F);
+        GetComponent<AudioSource>().PlayOneShot(applauseSFX, 0.7F);
 
         /* Closes the curtains */
         curtainAnim.Play("CurtainsClose");
@@ -71,23 +65,21 @@ public class CurtainMovement : MonoBehaviour
     }
 
     /* Use this for initialization */
-    void Start()
+    void Start ()
     {
-        RectTransform rectTransform = this.GetComponent<RectTransform>();
-        RectTransform rectTransformCanvas = GameObject.Find("Healthbar").GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
+        //Vector3 scaleTransform = this.GetComponent<RectTransform>();
+
+        //RectTransform rectTransformCanvas = GameObject.Find("Healthbar").GetComponent<RectTransform>();
+        //rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
 
         delayLock = false;
         curtainAnim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(applauseSFX, 0.7F);
-
-        MenuRender = GetComponent<SpriteRenderer>();
-        MenuRender2 = GetComponent<Image>();
+        GetComponent<AudioSource>().PlayOneShot(applauseSFX, 0.7F);
     }
 
     /* Update is called once per frame */
-    void Update()
+    void Update ()
     {
         if (!delayLock && !end)
         {
@@ -100,10 +92,6 @@ public class CurtainMovement : MonoBehaviour
             {
                 StartCoroutine(delayedOpenAnimation());
             }
-        }
-        if (delayLock)
-        {
-            MenuRender2.sprite = MenuRender.sprite;
         }
     }
 }

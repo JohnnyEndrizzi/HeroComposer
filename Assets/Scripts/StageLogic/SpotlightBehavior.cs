@@ -31,6 +31,10 @@ public class SpotlightBehavior : MonoBehaviour {
 
         Vector3 start = this.transform.localPosition;
 
+        /* Parameters for phase 0 */
+        Vector3 intro = converter(new Vector3(1f,-1f,0f));
+        intro.x += right_side ? intro.x : -intro.x;       
+
         /* Parameters for phase 1 and 4 */
         Vector3 firstPhase = start;
         firstPhase.x += right_side ? -slideDistX : slideDistX;
@@ -45,8 +49,17 @@ public class SpotlightBehavior : MonoBehaviour {
         thirdPhase.x += right_side ? -slideDistX : slideDistX;
         thirdPhase.y -= slideDistY;
 
-        /* Phase 1 (upward diagonal movement) */
+        /* Phase 0 (bring light in) */
         float counter = 0;
+        while (counter < 1.0f)
+        {
+            counter += Time.deltaTime;
+            spotlightSprite.transform.position = Vector3.Lerp(intro, start, counter / 1.0f);
+            yield return null;
+        }
+
+        /* Phase 1 (upward diagonal movement) */
+        counter = 0;
         while (counter < 1.0f)
         {
             counter += Time.deltaTime;
@@ -81,7 +94,7 @@ public class SpotlightBehavior : MonoBehaviour {
             yield return null;
         }
 
-        isMoving = false;
+        //isMoving = false;        
     }       
 
     /* Use this for initialization */
