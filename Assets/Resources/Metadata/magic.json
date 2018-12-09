@@ -1,30 +1,32 @@
-[{
-	"Name":"arrow",
-	"prefab":"arrow1",
-	"sound": "arrow_sound", 
-},
-{
-	"Name":"fireball",
-	"prefab":"fireball1",
-	"sound": "fireball_sound", 
-},
-{
-	"Name":"slash",
-	"prefab":"slash1",
-	"sound": "slash_sound", 
-},
-{
-	"Name":"shield",
-	"prefab":"shield1",
-	"sound": "shield_sound", 
-},
-{
-	"Name":"heal",
-	"prefab":"heal1",
-	"sound": "heal_sound", 
-},
-{
-	"Name":"snow",
-	"prefab":"Blizzard",
-	"sound": "snow_sound", 
-}]
+[
+  {
+    "Name": "arrow",
+    "prefab": "arrow1",
+    "sound": "magic_arrow_edit"
+  },
+  {
+    "Name": "fireball",
+    "prefab": "fireball1",
+    "sound": "magic_fire_edit"
+  },
+  {
+    "Name": "slash",
+    "prefab": "slash1",
+    "sound": "slash_sound"
+  },
+  {
+    "Name": "shield",
+    "prefab": "shield1",
+    "sound": "shield_sound"
+  },
+  {
+    "Name": "heal",
+    "prefab": "heal1",
+    "sound": "heal_sound"
+  },
+  {
+    "Name": "snow",
+    "prefab": "Blizzard",
+    "sound": "magic_ice_edit"
+  }
+]

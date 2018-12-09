@@ -12,12 +12,20 @@ public class AttackAnimator : MonoBehaviour
     * This class recieves, creates animations as required */
 
     //Prefab Sprites 
-    public Transform arrow;
-    public Transform fireball;
-    public Transform slash;
-    public Transform shield;
-    public Transform heal;
-    public Transform snow;
+    private Transform arrow;
+    private Transform fireball;
+    private Transform slash;
+    private Transform shield;
+    private Transform heal;
+    private Transform snow;
+
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip arrowSound;
+    private AudioClip bigArrowSound;
+    private AudioClip fireSound;
+    private AudioClip iceSound;
+    private AudioClip healSound;
 
     //Animation Times
     public float fastshot = 0.2f;
@@ -29,9 +37,11 @@ public class AttackAnimator : MonoBehaviour
 
     void Start()
     {
+        LoadResources();
+
         /* List of all targetable locations on the field.  
          * These can be referenced to from elsewhere whenever a location is required. 
-         * It also provides a central location from which locations can be efficiently added or modified if needed. */                
+         * It also provides a central location from which locations can be efficiently added or modified if needed. */
         LocationMap.Add("P1", new Locations(3.29f, 1.75f, -4.8f));   //P1
         LocationMap.Add("P2", new Locations(1.02f, 0.33f, -5.1f)); //P2
         LocationMap.Add("P3", new Locations(2.94f, -0.82f, -5.5f)); //P3
@@ -67,14 +77,14 @@ public class AttackAnimator : MonoBehaviour
         AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
         AttackMap.Add("slash1", new Attacks(1, slash, -1, 0, 0.0f, 1, 52));
         AttackMap.Add("slash2", new Attacks(1, slash, -1, 0, 0.0f, 1, 53));
-        AttackMap.Add("fireball", new Attacks(3, fireball, 0, 0, 0.0f, 5));
-        AttackMap.Add("arrow", new Attacks(3, arrow, 0, 0, 0.0f, 1));
-        AttackMap.Add("healTeam", new Attacks(4, heal, 0, 0, 0.0f, 7, 4));
-        AttackMap.Add("arrowHail", new Attacks(6, arrow, 0, 0, 0.0f, 0.25f, 11));
-        AttackMap.Add("meteor", new Attacks(6, fireball, 0, 0, 0.0f, 10, 2));
-        AttackMap.Add("fire3", new Attacks(2, fireball, 0, 0, 0.0f, 2, 3));
-        AttackMap.Add("blizzard", new Attacks(2, snow, 0, 0, 0.0f, 1, 12));
-        
+        AttackMap.Add("fireball", new Attacks(3, fireball, 0, 0, 0.0f, 5, fireSound));
+        AttackMap.Add("arrow", new Attacks(3, arrow, 0, 0, 0.0f, 1, arrowSound));
+        AttackMap.Add("healTeam", new Attacks(4, heal, 0, 0, 0.0f, 7, 4, healSound));
+        AttackMap.Add("arrowHail", new Attacks(6, arrow, 0, 0, 0.0f, 0.25f, 11, bigArrowSound));
+        AttackMap.Add("meteor", new Attacks(6, fireball, 0, 0, 0.0f, 10, 2, fireSound));
+        AttackMap.Add("fire3", new Attacks(2, fireball, 0, 0, 0.0f, 2, 3, fireSound));
+        AttackMap.Add("blizzard", new Attacks(2, snow, 0, 0, 0.0f, 1, 12, iceSound));
+
         // Attack Code List //
         //0 - Single Character
         //1 - Single Char Wave
@@ -95,6 +105,30 @@ public class AttackAnimator : MonoBehaviour
         //51 - mask Lelt
         //52 - mask Up
         //53 - mask Down
+}
+
+    private void LoadResources() //Load assets 
+    {
+        //Setting Source and paths
+        audioSource = GetComponent<AudioSource>();
+        string soundPath = "SoundEffects/Attacks";
+        string spritePath = "Prefab/Attacks/";
+
+        //Prefab transforms
+        arrow = Resources.Load(spritePath + "arrow1") as Transform;
+        fireball = Resources.Load(spritePath + "fireball1") as Transform;
+        slash = Resources.Load(spritePath + "slash1") as Transform;
+        shield = Resources.Load(spritePath + "shield1") as Transform;
+        heal = Resources.Load(spritePath + "heal1") as Transform;
+        snow = Resources.Load(spritePath + "Blizzard") as Transform;
+
+        //Sound effect clips
+        arrowSound = (AudioClip)Resources.Load(soundPath + "magic_arrow_edit");
+        fireSound = (AudioClip)Resources.Load(soundPath + "magic_fire_edit");
+        iceSound = (AudioClip)Resources.Load(soundPath + "magic_ice_edit");
+        healSound = (AudioClip)Resources.Load(soundPath + "magic_heal_edit");
+        bigArrowSound = (AudioClip)Resources.Load(soundPath + "boss_arrow_volley");
+
     }
 
     /* This function is used to call a magical attack from anywhere.
@@ -225,7 +259,8 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
     public Vector3 offset;
     public float scaleFactor;
     public int customCmd;
-    public Color overlay;  
+    public Color overlay;
+    public AudioClip sound;
 
     public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX) //Basic w/ Vector3 offset
     {
@@ -275,5 +310,62 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
         scaleFactor = scaleFactorX;
         customCmd = customCmdX;
         overlay = overlayX;
+    }
+
+    //With sounds
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, AudioClip soundX) //Basic w/ Vector3 offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = offsetX;
+        scaleFactor = scaleFactorX;
+        sound = soundX;
+    }
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, AudioClip soundX) //Basic w/ int,int,float offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = new Vector3(SX, SY, SZ);
+        scaleFactor = scaleFactorX;
+        sound = soundX;
+    }
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, AudioClip soundX) //custom w/ Vector3 offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = offsetX;
+        scaleFactor = scaleFactorX;
+        customCmd = customCmdX;
+        sound = soundX;
+    }
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX) //custom w/ int,int,float offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = new Vector3(SX, SY, SZ);
+        scaleFactor = scaleFactorX;
+        customCmd = customCmdX;
+        sound = soundX;
+    }
+
+    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, Color overlayX, AudioClip soundX) //custom w/ colour and Vector3 offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = offsetX;
+        scaleFactor = scaleFactorX;
+        customCmd = customCmdX;
+        overlay = overlayX;
+        sound = soundX;
+    }
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX, AudioClip soundX) //custom w/ colour and int,int,float offset
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = new Vector3(SX, SY, SZ);
+        scaleFactor = scaleFactorX;
+        customCmd = customCmdX;
+        overlay = overlayX;
+        sound = soundX;
     }
 }
