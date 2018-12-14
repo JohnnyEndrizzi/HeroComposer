@@ -136,6 +136,7 @@ public class DoorHandler : MonoBehaviour
          * Description: The player must be able to choose a level.
          * 
          * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
+        Assets.Scripts.MainMenu.ApplicationModel.songName = Regex.Replace(songTitle, @"\s+", "");
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
         /* Preserves the main menu as the last scene */

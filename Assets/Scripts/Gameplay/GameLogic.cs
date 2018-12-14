@@ -162,12 +162,16 @@ public class GameLogic : MonoBehaviour
             /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
             beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
+            Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.songName);
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
         }
         else
         {
             /* This is the default song in case of an error */
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
             beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
+
         }
 
         /* The spawn and kill points for incoming notes */
