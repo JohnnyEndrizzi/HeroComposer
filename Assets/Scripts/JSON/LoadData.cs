@@ -24,6 +24,8 @@ public class LoadData : MonoBehaviour
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
+        Debug.Log("GAY");
+
         string jsonString = LoadResourceTextfile("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
@@ -51,6 +53,12 @@ public class LoadData : MonoBehaviour
                 currentCharacterSO.eqp2 = characters[i].eqp2;
                 currentCharacterSO.eqp3 = characters[i].eqp3;
                 currentCharacterSO.mag_Eqp = characters[i].mag_Eqp;
+
+                UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
+            }
+            else
+            {
+                Debug.Log("FALSE");
             }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};

@@ -11,18 +11,15 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    private bool Done = false;
-
     void Start()
     {
         /* Deserializes all information from their corresponding JSON into local copies */
-        if (GetComponent<LoadData>() != null && Done == false)
+        if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
         {
-            Done = true;
+            Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters = true;
             GetComponent<LoadData>().LoadCharacters();
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
-
             /* TODO */
             //GetComponent<LoadData>().LoadMagic();
         }
