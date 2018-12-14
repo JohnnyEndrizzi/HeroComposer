@@ -62,12 +62,12 @@ public class GameLogic : MonoBehaviour
 
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
             {
-                if (i == 0)
+                if (i == 1)
                 {
                     characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
                     healthPos = new Vector3(187.7f, 97.2f, 0.0f);
                 }
-                else if (i == 1)
+                else if (i == 0)
                 {
                     characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
                     healthPos = new Vector3(74.3f, -103.2f, 0.0f);
