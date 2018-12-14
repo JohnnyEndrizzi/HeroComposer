@@ -24,8 +24,6 @@ public class LoadData : MonoBehaviour
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
-        Debug.Log("GAY");
-
         string jsonString = LoadResourceTextfile("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
