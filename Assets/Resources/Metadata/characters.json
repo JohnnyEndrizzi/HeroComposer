@@ -52,8 +52,8 @@
 },{
     "name": "Taiko",
     "desc": "I am Taiko",
-    "sprite": "Characters/Taiko_sprite",
-    "headshot": "Headshots/",
+    "sprite": "Characters/taiko_sprite",
+    "headshot": "Headshots/taiko_headshot",
     "sound": "SoundEffects/acoustic_sound",
     "unlocked": true,
     "level": 1,
