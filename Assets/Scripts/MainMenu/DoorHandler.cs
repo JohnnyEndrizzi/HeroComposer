@@ -11,18 +11,15 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    private bool Done = false;
-
     void Start()
     {
         /* Deserializes all information from their corresponding JSON into local copies */
-        if (GetComponent<LoadData>() != null && Done == false)
+        if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
         {
-            Done = true;
+            Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters = true;
             GetComponent<LoadData>().LoadCharacters();
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
-
             /* TODO */
             //GetComponent<LoadData>().LoadMagic();
         }
@@ -131,6 +128,11 @@ public class DoorHandler : MonoBehaviour
     /* This function is called when the mouse clicks on the play door on the main menu (for starting the gameplay) */
     void PlaybuttonOnClick()
 	{
+        /* Sample code for serialized ScriptableObjects (saving) 
+        ((CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/Acoustic")).name = "Patrick";
+        GetComponent<LoadData>().SaveCharacters();
+        */
+
         string songTitle = GameObject.Find("Song Dropdown").GetComponent<Dropdown>().captionText.text;
         string songDifficulty = GameObject.Find("Difficulty Dropdown").GetComponent<Dropdown>().captionText.text;
 
@@ -139,6 +141,7 @@ public class DoorHandler : MonoBehaviour
          * Description: The player must be able to choose a level.
          * 
          * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
+        Assets.Scripts.MainMenu.ApplicationModel.songName = Regex.Replace(songTitle, @"\s+", "");
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
         /* Preserves the main menu as the last scene */

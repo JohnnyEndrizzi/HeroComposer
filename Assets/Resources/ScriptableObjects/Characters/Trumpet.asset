@@ -14,6 +14,7 @@ MonoBehaviour:
   name: Trumpet
   desc: 
   sprite: 
+  headshot: 
   sound: 
   unlocked: 0
   level: 0
