@@ -128,6 +128,11 @@ public class DoorHandler : MonoBehaviour
     /* This function is called when the mouse clicks on the play door on the main menu (for starting the gameplay) */
     void PlaybuttonOnClick()
 	{
+        /* Sample code for serialized ScriptableObjects (saving) 
+        ((CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/Acoustic")).name = "Patrick";
+        GetComponent<LoadData>().SaveCharacters();
+        */
+
         string songTitle = GameObject.Find("Song Dropdown").GetComponent<Dropdown>().captionText.text;
         string songDifficulty = GameObject.Find("Difficulty Dropdown").GetComponent<Dropdown>().captionText.text;
 

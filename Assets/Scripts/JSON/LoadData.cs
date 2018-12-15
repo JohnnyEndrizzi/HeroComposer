@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.IO;
 
 public class LoadData : MonoBehaviour
 {
@@ -27,16 +28,19 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
+        Debug.Log("TEST: " + jsonString);
+
         for (int i = 0; i < characters.Length; i++)         
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
             if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
             {
+                Debug.Log(characters[i].name);
                 currentCharacterSO.name = characters[i].name;
                 currentCharacterSO.desc = characters[i].desc;
-                currentCharacterSO.sprite = "Characters/" + characters[i].sprite;
-                currentCharacterSO.headshot = "Headshots/" + characters[i].headshot;
-                currentCharacterSO.sound = "SoundEffects/" + characters[i].sound;
+                currentCharacterSO.sprite = characters[i].sprite;
+                currentCharacterSO.headshot = characters[i].headshot;
+                currentCharacterSO.sound = characters[i].sound;
 
                 currentCharacterSO.unlocked = characters[i].unlocked;
 
@@ -56,15 +60,30 @@ public class LoadData : MonoBehaviour
             }
             else
             {
-                Debug.Log("FALSE");
+                Debug.Log("HEY " + characters[i].name);
             }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, "Characters/" + characters[i].sprite, "SoundEffects/" + characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
             GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
         }
+    }
+
+    public void SaveCharacters()
+    {
+        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
+
+        string data = "[";
+        for (int i = 0; i < characters.Length; i++)
+        {
+            data += JsonUtility.ToJson(characters[i], true);
+            if (i < characters.Length - 1) data += ",";
+        }
+        data += "]";
+
+        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
     }
 
     // Load inventory and team data from file
@@ -76,7 +95,7 @@ public class LoadData : MonoBehaviour
         GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characters.Length - 1; i++)
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
             if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
@@ -143,11 +162,11 @@ public class JsonHelper
         return wrapper.array;
     }
 
-    public static string ToJson<T>(T[] array)
+    public static string ToJson<T>(T[] array, bool prettyPrint)
     {
         Wrapper<T> wrapper = new Wrapper<T>();
         wrapper.array = array;
-        return JsonUtility.ToJson(wrapper);
+        return JsonUtility.ToJson(wrapper, prettyPrint);
     }
 
     [System.Serializable]
