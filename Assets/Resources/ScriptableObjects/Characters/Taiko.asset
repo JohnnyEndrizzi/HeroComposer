@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: Taiko
   m_EditorClassIdentifier: 
   name: Taiko
-  desc: 
-  sprite: 
-  sound: 
-  unlocked: 0
-  level: 0
-  hp: 0
-  atk: 0
-  def: 0
-  rcv: 0
-  mgc: 0
-  eqp1: 0
-  eqp2: 0
-  eqp3: 0
-  mag_Eqp: 
+  desc: I am Taiko
+  sprite: Characters/taiko_sprite
+  headshot: Headshots/taiko_headshot
+  sound: SoundEffects/acoustic_sound
+  unlocked: 1
+  level: 1
+  hp: 100
+  atk: 5
+  def: 5
+  rcv: 2
+  mgc: 2
+  eqp1: 2
+  eqp2: 3
+  eqp3: 3
+  mag_Eqp: arrow
