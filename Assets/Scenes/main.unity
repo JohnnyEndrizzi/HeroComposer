@@ -618,7 +618,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9b64aba4954e445a997cbbe80e7169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSound: {fileID: 8300000, guid: 41f6b1a1547d1dd4da08f1777e1134eb, type: 3}
+  arrow: {fileID: 0}
+  fireball: {fileID: 0}
+  slash: {fileID: 0}
+  shield: {fileID: 0}
+  heal: {fileID: 0}
+  snow: {fileID: 0}
   fastshot: 0.2
   slowshot: 1
 --- !u!114 &612959187
@@ -1095,7 +1100,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1504,6 +1509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curtainAnim: {fileID: 1054930184}
   applauseSFX: {fileID: 8300000, guid: f9f3adc03f4d44d44932aeb1a3a2e427, type: 3}
+  MenuRender: {fileID: 0}
   end: 0
   spotlight1: {fileID: 707070425}
   spotlight2: {fileID: 1716640647}
@@ -1818,7 +1824,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9b64aba4954e445a997cbbe80e7169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSound: {fileID: 0}
+  arrow: {fileID: 0}
+  fireball: {fileID: 0}
+  slash: {fileID: 0}
+  shield: {fileID: 0}
+  heal: {fileID: 0}
+  snow: {fileID: 0}
   fastshot: 0.2
   slowshot: 1
 --- !u!1 &1716640647
@@ -2039,7 +2050,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
