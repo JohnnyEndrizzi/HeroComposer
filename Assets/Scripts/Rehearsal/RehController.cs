@@ -118,12 +118,12 @@ public class RehController : MonoBehaviour {
         UnitMenu.lightsOut();
     }
 
-    private void passTeam() //set selected units to be used 
+    private void PassTeam() //set selected units to be used 
     {
-        setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
+        SetTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
     }
 
-    public void setTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
+    public void SetTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
     {
         ClearTeam();
 
@@ -153,8 +153,14 @@ public class RehController : MonoBehaviour {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }
             }
-        }
+        }        
+        GameObject.Find("Values").GetComponent<SaveData>().SaveInv(false, true);
     }
+
+    /* Sample code for serialized ScriptableObjects (saving) 
+        ((CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/Acoustic")).name = "Patrick";
+        GetComponent<LoadData>().SaveCharacters();
+        */
 
     private void ClearTeam() //Set team to null before setting new team
     {
@@ -247,7 +253,7 @@ public class RehController : MonoBehaviour {
             unitsInPortraits[item - 1] = -1;
             audioSource.PlayOneShot(remChar, 0.7F);
         }
-        passTeam(); //commits team to load
+        PassTeam(); //commits team to load
     }
 
     private int DoubleCheck()  //better than a single check - finds if the held unit is already in a portrait

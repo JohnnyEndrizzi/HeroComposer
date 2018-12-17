@@ -25,6 +25,7 @@ public class DoorHandler : MonoBehaviour
             GetComponent<LoadData>().LoadCharacters();
             GetComponent<LoadData>().LoadItems();
             GetComponent<LoadData>().LoadInv();
+            GetComponent<LoadData>().LoadLevels();
             /* TODO */
             //GetComponent<LoadData>().LoadMagic();
         }

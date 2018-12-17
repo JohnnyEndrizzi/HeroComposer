@@ -68,9 +68,9 @@ public class StoredValues : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<LoadData>().LoadCharacters();
-        GetComponent<LoadData>().LoadItems();
-        GetComponent<LoadData>().LoadInv();
+        //GetComponent<LoadData>().LoadCharacters();
+        //GetComponent<LoadData>().LoadItems();
+        // GetComponent<LoadData>().LoadInv();
     }
 
     /* Currently using depreciated code, this will be replaced by current code in future
@@ -146,14 +146,18 @@ public class StoredValues : MonoBehaviour
     {
         storedItems = NewStoredItems;
     }
-    
+    public int[] GetStoredItems() //Allows save script to save inventory
+    {
+        return storedItems.ToArray();
+    }
+
     //Import Unit information from JSON Save files
     public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
     {
         if (!Units.ContainsKey(i))
-        {
+        {         
             Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
-        }
+        }        
     }
 
     //Import Item information from JSON Save files
@@ -191,6 +195,12 @@ public class StoredValues : MonoBehaviour
         }
     }
 
+    public void saveInv()
+    {        
+        GetComponent<SaveData>().SaveInv(true, false);
+    }
+
+    /*
     public void backup() //Old Txt Backup //TODO Remove once replacement code is implemented
     {
         string pathR = "Assets/storedValues.txt";
@@ -222,7 +232,7 @@ public class StoredValues : MonoBehaviour
             }
         }
     }
-
+        
     public void save()//Old txt save //TODO Remove once replacement code is implemented
     {
         return;
@@ -335,9 +345,10 @@ public class StoredValues : MonoBehaviour
         }
         reader.Close();
     }
+    */
 }
-            
- 
+
+
 public class UnitDict { //All Units Dictionary 
     public string unitName;
     public string unitDesc;

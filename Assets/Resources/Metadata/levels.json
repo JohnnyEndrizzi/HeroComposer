@@ -1,0 +1,29 @@
+[
+  {
+    "LevelName": "ALiVE",
+    "LevelSong": "Songs/ALiVE",
+    "Enemy": "boss",
+    "Terrain": "main",
+    "scoreNormal": [ 0, 0, 0, 0, 0 ],
+    "scoreHard": [ 0, 0, 0, 0, 0 ],
+    "scoreExpert": [ 0, 0, 0, 0, 0 ]
+  },
+  {
+    "LevelName": "dancing-dollz",
+    "LevelSong": "Songs/dancing-dollz",
+    "Enemy": "boss",
+    "Terrain": "main",
+    "scoreNormal": [ 0, 0, 0, 0, 0 ],
+    "scoreHard": [ 0, 0, 0, 0, 0 ],
+    "scoreExpert": [ 0, 0, 0, 0, 0 ]
+  },
+  {
+    "LevelName": "TriggerHappy",
+    "LevelSong": "Songs/TriggerHappy",
+    "Enemy": "boss",
+    "Terrain": "main",
+    "scoreNormal": [ 0, 0, 0, 0, 0 ],
+    "scoreHard": [ 0, 0, 0, 0, 0 ],
+    "scoreExpert": [ 0, 0, 0, 0, 0 ]
+  }
+]

@@ -169,9 +169,9 @@ public class InvController : MonoBehaviour {
         //Save inventory items
         storedItems = InventoryMenu.GetStoredItems();
         storedValues.passUp(storedItems);
-        storedValues.save();
+        storedValues.saveInv();
     }
-
+    
     void DropHeld() // Drop held item
     {
         if (HoldNum != 0)

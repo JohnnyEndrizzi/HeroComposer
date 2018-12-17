@@ -148,8 +148,8 @@ public class ShopController : MonoBehaviour {
                 OnClick(0, 0);
 
                 //Save Inventory
-                storedValues.passUp(storedItems); 
-                storedValues.save();
+                storedValues.passUp(storedItems);
+                storedValues.saveInv();
             }
         }
         else //item is selected from special shop display
@@ -179,7 +179,7 @@ public class ShopController : MonoBehaviour {
 
                 //Save Inventory
                 storedValues.passUp(storedItems);
-                storedValues.save();
+                storedValues.saveInv();
             }
         }
     }
