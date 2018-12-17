@@ -15,7 +15,7 @@ public class DoorHandler : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip opening;
     private AudioClip closing;
-   
+
     void Start()
     {
         /* Deserializes all information from their corresponding JSON into local copies */
