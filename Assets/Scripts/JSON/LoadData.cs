@@ -151,7 +151,7 @@ public class LoadData : MonoBehaviour
 
         for (int i = 0; i < levels.Length; i++)
         {
-            Lvls.Add(i, new LevelDict(levels[i].LevelName, levels[i].LevelSong, levels[i].Enemy, levels[i].Terrain, levels[i].scoreNormal, levels[i].scoreHard, levels[i].scoreExpert));
+            Lvls.Add(i, new LevelDict(levels[i].LevelName, levels[i].LevelSong, levels[i].Enemy, levels[i].Terrain, levels[i].scoreNormal, levels[i].scoreHard, levels[i].scoreExpert, levels[i].nameNormal, levels[i].nameHard, levels[i].nameExpert));
         }
     }
 
@@ -200,17 +200,23 @@ public class LevelDict
     public string Terrain;
 
     public int[] scoreNormal = new int[5];
+    public string[] nameNormal = new string[5];
     public int[] scoreHard = new int[5];
+    public string[] nameHard = new string[5];
     public int[] scoreExpert = new int[5];
+    public string[] nameExpert = new string[5];
 
-    public LevelDict(string LevelNameX, string LevelSongX, string EnemyX, string TerrainX, int[] scoreNormalX, int[] scoreHardX, int[] scoreExpertX)
+    public LevelDict(string LevelNameX, string LevelSongX, string EnemyX, string TerrainX, int[] scoreNormalX, int[] scoreHardX, int[] scoreExpertX, string[] nameNormalX, string[] nameHardX, string[] nameExpertX)
     {
         LevelName = LevelNameX;
         LevelSong = LevelSongX;
         Enemy = EnemyX;
         Terrain = TerrainX;
         scoreNormal = scoreNormalX;
+        nameNormal = nameNormalX;
         scoreHard = scoreHardX;
+        nameHard = nameHardX;
         scoreExpert = scoreExpertX;
+        nameExpert = nameExpertX;
     }
 }

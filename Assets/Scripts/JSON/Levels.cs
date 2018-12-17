@@ -9,6 +9,9 @@ public class Levels
     public string Terrain;
     
     public int[] scoreNormal;
+    public string[] nameNormal;    
     public int[] scoreHard;
+    public string[] nameHard;
     public int[] scoreExpert;
+    public string[] nameExpert;
 }
