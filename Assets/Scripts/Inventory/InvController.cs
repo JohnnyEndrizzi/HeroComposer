@@ -55,6 +55,13 @@ public class InvController : MonoBehaviour {
     [SerializeField]
     private Button BtnBottom = null;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip equip;
+    private AudioClip pickUp;
+    private AudioClip place;
+    private AudioClip pickUpChar;
+
     //Text Locations
     [SerializeField]
     private Image HoverTxt = null;
@@ -105,7 +112,14 @@ public class InvController : MonoBehaviour {
         BtnTop.onClick.AddListener(delegate {EqpOnClick(BtnTop, 1);});	
         BtnMid.onClick.AddListener(delegate {EqpOnClick(BtnMid, 2);});
         BtnBottom.onClick.AddListener(delegate {EqpOnClick(BtnBottom, 3);});
-	}
+
+        //Import Audio
+        audioSource = GetComponent<AudioSource>();
+        equip = (AudioClip)Resources.Load("SoundEffects/inventory_equip_item");
+        pickUp = (AudioClip)Resources.Load("SoundEffects/inventory_pick_up_item");
+        place = (AudioClip)Resources.Load("SoundEffects/inventory_place_item_back");
+        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
+    }
 
     void Update()
     {        
@@ -113,10 +127,20 @@ public class InvController : MonoBehaviour {
         {
             loadInv(FrontAndCentre);  //Drop held item and reload menus
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LastScene.instance.prevScene = "Inventory";
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+        }
     }
         
     public void loadInv(int SelName) //Loads last saved data and brings a selected Character to the front
-    {
+    {        
+        if (FrontAndCentre != SelName)
+        {
+            audioSource.PlayOneShot(pickUpChar, 0.5F);
+        }
+
         FrontAndCentre = SelName;
         DropHeld();
 
@@ -145,13 +169,17 @@ public class InvController : MonoBehaviour {
         //Save inventory items
         storedItems = InventoryMenu.GetStoredItems();
         storedValues.passUp(storedItems);
-        storedValues.save();
+        storedValues.saveInv();
     }
-
+    
     void DropHeld() // Drop held item
     {
+        if (HoldNum != 0)
+        {
+            audioSource.PlayOneShot(place, 0.7F);
+        }
         Drag.SetIcon(null);
-        HoldNum = 0;
+        HoldNum = 0;        
     }
 
     public void setImage(Sprite img) //Sets portrait image
@@ -169,14 +197,17 @@ public class InvController : MonoBehaviour {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(0);
 
             HoldNum = itemID;
+            audioSource.PlayOneShot(pickUp, 0.7F);
 
-        }else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
+        }
+        else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
         {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldNum);
             Drag.SetIcon(null);
 
             HoldNum = 0;
+            audioSource.PlayOneShot(place, 0.7F);
             saveInv();
         }  
         else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == true) //switch item
@@ -188,6 +219,7 @@ public class InvController : MonoBehaviour {
             Drag.SetIcon(tempS);
 
             HoldNum = itemID;
+            audioSource.PlayOneShot(place, 0.7F);
             saveInv();
         }         
     }
@@ -200,6 +232,7 @@ public class InvController : MonoBehaviour {
             origin.GetComponent<BtnEquipt>().SetIcon(null);  
 
             HoldNum = it[item];
+            audioSource.PlayOneShot(pickUp, 0.7F);
             it[item] = 0;
 
         }
@@ -210,6 +243,7 @@ public class InvController : MonoBehaviour {
 
             it[item] = HoldNum;
             HoldNum = 0;
+            audioSource.PlayOneShot(equip, 0.7F);
             saveInv();
         }
         else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true) //switch item
@@ -222,6 +256,7 @@ public class InvController : MonoBehaviour {
 
             HoldNum = it[item];
             it[item] = tempN;
+            audioSource.PlayOneShot(equip, 0.7F);
             saveInv();
         }
     }

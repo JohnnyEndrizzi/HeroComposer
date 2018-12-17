@@ -185,7 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curtainAnim: {fileID: 95421887508348326}
-  opening: {fileID: 8300000, guid: f9f3adc03f4d44d44932aeb1a3a2e427, type: 3}
+  opening: {fileID: 8300000, guid: 83cc38fbd862b0c4db3618d9b388e3de, type: 3}
+  closing: {fileID: 8300000, guid: e0900b81d50fc214f910c10d9e39ce69, type: 3}
 --- !u!114 &114855071076690118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,8 +257,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1860371619491214}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -266,5 +267,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 994, y: 580}
+  m_SizeDelta: {x: 800, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}

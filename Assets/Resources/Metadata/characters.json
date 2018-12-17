@@ -1,4 +1,5 @@
-[{
+[
+  {
     "name": "Acoustic",
     "desc": "I am Acoustic",
     "sprite": "Characters/acoustic_sprite",
@@ -15,7 +16,8 @@
     "eqp2": 2,
     "eqp3": 3,
     "mag_Eqp": "blizzard"
-},{
+  },
+  {
     "name": "Luke",
     "desc": "I am Error",
     "sprite": "Characters/Luke_sprite",
@@ -32,7 +34,8 @@
     "eqp2": 4,
     "eqp3": 4,
     "mag_Eqp": "fireball3"
-},{
+  },
+  {
     "name": "Sitar",
     "desc": "I am Sitar",
     "sprite": "Characters/sitar_sprite",
@@ -49,7 +52,8 @@
     "eqp2": 2,
     "eqp3": 1,
     "mag_Eqp": "fireball"
-},{
+  },
+  {
     "name": "Taiko",
     "desc": "I am Taiko",
     "sprite": "Characters/taiko_sprite",
@@ -66,7 +70,7 @@
     "eqp2": 3,
     "eqp3": 3,
     "mag_Eqp": "arrow"
-},{
+  },{
     "name": "Trumpet",
     "desc": "",
     "sprite": "",

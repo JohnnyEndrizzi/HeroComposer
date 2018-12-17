@@ -221,6 +221,20 @@ public class GameLogic : MonoBehaviour
             /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
             metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //if (!pauseMenu.enabled) //TODO
+            //{
+            //    //Unpause game
+            //    //close pause menu
+            //}
+            //if (pauseMenu.enabled)
+            //{
+            //    //Pause game
+            //    //open pause menu
+            //}
+        }
     }
 
     /* Functional Requirement 

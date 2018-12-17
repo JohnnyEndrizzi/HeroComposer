@@ -40,7 +40,7 @@ public class StoredValues : MonoBehaviour
     private List<int> normOffers = new List<int>();
 
     public static StoredValues instance = null;
-
+        
     //Universal values
     private static int cash;
 
@@ -66,9 +66,16 @@ public class StoredValues : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        //GetComponent<LoadData>().LoadCharacters();
+        //GetComponent<LoadData>().LoadItems();
+        // GetComponent<LoadData>().LoadInv();
+    }
+
     /* Currently using depreciated code, this will be replaced by current code in future
      * Acts the same as Start(), but runs whenever a new scene is loaded
-     * Both start and awake will only run once for a persistant object */ 
+     * Both start and awake will only run once for a persistant object */
     private void OnLevelWasLoaded() 
     {
         Starter();
@@ -119,7 +126,7 @@ public class StoredValues : MonoBehaviour
             RehCtrl.Starter();
         }
     }
-
+    
     private void findOffers(){ //Temporary setting of shop lists //TODO
         spcOffers.Clear();
         spcOffers.Add(4);
@@ -139,14 +146,18 @@ public class StoredValues : MonoBehaviour
     {
         storedItems = NewStoredItems;
     }
-    
+    public int[] GetStoredItems() //Allows save script to save inventory
+    {
+        return storedItems.ToArray();
+    }
+
     //Import Unit information from JSON Save files
     public void importUnits(int i, string unitName, string unitDesc, string unitSprite, string unitSound, int[] eqp, bool unlock, int[] stats, string mag)
     {
         if (!Units.ContainsKey(i))
-        {
+        {         
             Units.Add(i, new UnitDict(unitName, unitDesc, unlock, eqp[0], eqp[1], eqp[2], Resources.Load<Sprite>(unitSprite), Resources.Load<AudioClip>(unitSound), stats, mag));
-        }
+        }        
     }
 
     //Import Item information from JSON Save files
@@ -184,6 +195,12 @@ public class StoredValues : MonoBehaviour
         }
     }
 
+    public void saveInv()
+    {        
+        GetComponent<SaveData>().SaveInv(true, false);
+    }
+
+    /*
     public void backup() //Old Txt Backup //TODO Remove once replacement code is implemented
     {
         string pathR = "Assets/storedValues.txt";
@@ -215,7 +232,7 @@ public class StoredValues : MonoBehaviour
             }
         }
     }
-
+        
     public void save()//Old txt save //TODO Remove once replacement code is implemented
     {
         return;
@@ -328,9 +345,10 @@ public class StoredValues : MonoBehaviour
         }
         reader.Close();
     }
+    */
 }
-            
- 
+
+
 public class UnitDict { //All Units Dictionary 
     public string unitName;
     public string unitDesc;

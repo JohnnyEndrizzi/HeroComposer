@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.IO;
 
 public class LoadData : MonoBehaviour
@@ -21,6 +22,9 @@ public class LoadData : MonoBehaviour
     Inventory[] inventory;
     Items[] items;
     Magic[] magic;
+    Levels[] levels;
+
+    Dictionary<int, LevelDict> Lvls = new Dictionary<int, LevelDict>();
 
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
@@ -118,7 +122,7 @@ public class LoadData : MonoBehaviour
                 }
             }
         }   
-    }
+    }       
 
     // Load Item data from file to Item Dictionary
     public void LoadItems()
@@ -138,6 +142,17 @@ public class LoadData : MonoBehaviour
     public void LoadMagic()
     {
        // TODO
+    }
+
+    public void LoadLevels()
+    {
+        string jsonString = LoadResourceTextfile("levels.json");
+        levels = JsonHelper.getJsonArray<Levels>(jsonString);
+
+        for (int i = 0; i < levels.Length; i++)
+        {
+            Lvls.Add(i, new LevelDict(levels[i].LevelName, levels[i].LevelSong, levels[i].Enemy, levels[i].Terrain, levels[i].scoreNormal, levels[i].scoreHard, levels[i].scoreExpert, levels[i].nameNormal, levels[i].nameHard, levels[i].nameExpert));
+        }
     }
 
     //Load file to string from path
@@ -173,5 +188,35 @@ public class JsonHelper
     private class Wrapper<T>
     {
         public T[] array;
+    }
+}
+
+
+public class LevelDict
+{ //All level and scores Dictionary 
+    public string LevelName; 
+    public string LevelSong;    
+    public string Enemy;
+    public string Terrain;
+
+    public int[] scoreNormal = new int[5];
+    public string[] nameNormal = new string[5];
+    public int[] scoreHard = new int[5];
+    public string[] nameHard = new string[5];
+    public int[] scoreExpert = new int[5];
+    public string[] nameExpert = new string[5];
+
+    public LevelDict(string LevelNameX, string LevelSongX, string EnemyX, string TerrainX, int[] scoreNormalX, int[] scoreHardX, int[] scoreExpertX, string[] nameNormalX, string[] nameHardX, string[] nameExpertX)
+    {
+        LevelName = LevelNameX;
+        LevelSong = LevelSongX;
+        Enemy = EnemyX;
+        Terrain = TerrainX;
+        scoreNormal = scoreNormalX;
+        nameNormal = nameNormalX;
+        scoreHard = scoreHardX;
+        nameHard = nameHardX;
+        scoreExpert = scoreExpertX;
+        nameExpert = nameExpertX;
     }
 }
