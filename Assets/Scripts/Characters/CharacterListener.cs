@@ -377,15 +377,15 @@ public class CharacterListener : MonoBehaviour
                 /* Since MGC commands are much stronger than ATK commands, we want to give the user an incentive to still use the ATK
                  * command. Our way around that was reqguiring MGC commands 2 stages for input: 1) queuing the command; 2) performing
                  * the command. This means these stronger commands may not be smart to go for due to taking too long to issue. */
-                if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
-                {
+                //if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
+                //{
                     StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
-                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
-                }
-                else
-                {
-                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
-                }
+                //    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
+                //}
+                //else
+                //{
+                //    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
+                //}
             }
         }
     }
