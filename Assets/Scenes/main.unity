@@ -368,6 +368,10 @@ Prefab:
       propertyPath: boss
       value: 
       objectReference: {fileID: 1809397615}
+    - target: {fileID: 4421946663855978, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0
