@@ -299,14 +299,14 @@ public class InvController : MonoBehaviour {
         {    
             origin--;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
         }
         else if (origin < 0) //hoverExit - fade out
         {
             origin = Mathf.Abs(origin) - 1;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
             HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
+            StartCoroutine(TextFader2(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
         }
         else //catch
         {
@@ -327,22 +327,27 @@ public class InvController : MonoBehaviour {
 
         if (check > 0) //hoverEnter - fade in
         {           
-            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
         }
         else if (check < 0) //hoverEnter - fade out
         {
             HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
+            StartCoroutine(TextFader2(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
         }
     }
 
-    IEnumerator TextFader(float t, Text i, Text i2, float fader, float fader2) //Controls the text fading in or out for 2 text objects
-    { //0 to invisible, 1 to visible - fader2 is opposite of fader
-        i.color = new Color(i.color.r, i.color.g, i.color.b, fader);
-        i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, fader);
-        while (i.color.a < 1.0f && i.color.a > 0.0f) {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t)*fader + (Time.deltaTime / t)*fader);
-            i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, i2.color.a - (Time.deltaTime / t)*fader + (Time.deltaTime / t)*fader);
+    IEnumerator TextFader2(float t, Text i, Text i2, float fade1, float fade2) //Controls the text fading in or out for 2 text objects
+    {
+        //0 to invisible, 1 to visible - fader2 is opposite of fader
+        //fade1 = start alpha, fade2 = end alpha
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, fade1);
+
+        while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, i2.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
             yield return null;
         }
     }

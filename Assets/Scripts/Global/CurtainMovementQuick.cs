@@ -16,6 +16,7 @@ public class CurtainMovementQuick : MonoBehaviour
     private AudioSource audioSource;
 
     private bool isAnim = false;
+    
 
     void Start()
     {
@@ -24,16 +25,25 @@ public class CurtainMovementQuick : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
              
         curtainAnim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         opening = (AudioClip)Resources.Load("SoundEffects/menu_curtain_open");
         closing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");
-        audioSource.PlayOneShot(opening, 0.7F);
 
+        
 
         MenuRender = GetComponent<SpriteRenderer>();
         MenuRender2 = GetComponent<Image>();
 
-        StartCoroutine(OpenAnimation());
+        
+        
+         if (LastScene.instance.prevScene.Equals("-1")) //Game Load
+        {
+            StartCoroutine(SplashScreen());
+        }
+        else
+        {
+            StartCoroutine(OpenAnimation());            
+        }        
     }
 
     /* Update is called once per frame */
@@ -43,11 +53,92 @@ public class CurtainMovementQuick : MonoBehaviour
         {
             MenuRender2.sprite = MenuRender.sprite;
         }
+        
+    }
+
+    private IEnumerator SplashScreen() //Splash Screen
+    {
+        Image Logo = this.transform.GetChild(0).GetComponentInChildren<Image>(); //Why does GetComponentInChildren search the parent first??
+        Text txt = GetComponentInChildren<Text>();
+
+        yield return new WaitForSeconds(1.0f);
+               
+        //fade in logo
+        Logo.enabled = true;
+        yield return StartCoroutine(ImageFader(1f, Logo, 0,1));
+
+        yield return new WaitForSeconds(1.0f);
+
+        //fade out logo
+        yield return StartCoroutine(ImageFader(1f, Logo, 1,0));
+
+        yield return new WaitForSeconds(0.1f);
+
+        //pulse "Press to Continue" Text       
+        txt.enabled = true;
+
+        StartCoroutine(FadePulse(txt));
+        yield return StartCoroutine(WaitForKeyDown()); //Wait for Input
+          
+        //End text pulse
+        txt.enabled = false;
+
+        yield return StartCoroutine(OpenAnimation());       
+        UnFreezeDoors(); //Enable Buttons
+        yield return null;
+    }
+
+    IEnumerator FadePulse(Text txt)
+    {
+        while (txt.IsActive())
+        {
+            yield return StartCoroutine(TextFader(1f, txt, 0, 1));
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(TextFader(1f, txt, 1, 0));
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield return null;
+    }
+
+    IEnumerator ImageFader(float t, Image i, float fade1, float fade2) //Controls the Image fading in or out for Image 
+    { 
+        //0 to invisible, 1 to visible
+        //fade1 = start alpha, fade2 = end alpha   
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        while (i.color.a < fade1+0.1 && i.color.a > fade2-0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            yield return null;
+        }
+    }
+
+    IEnumerator TextFader(float t, Text i, float fade1, float fade2) //Controls the text fading in or out for text 
+    {
+        //0 to invisible, 1 to visible - fader2 is opposite of fader
+        //fade1 = start alpha, fade2 = end alpha
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        
+        while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);            
+            yield return null;
+        }
+    }
+
+    IEnumerator WaitForKeyDown()
+    {
+        while (!Input.anyKeyDown)
+            yield return null;
     }
 
     private IEnumerator OpenAnimation() //Open curtains
     {
         isAnim = true;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(opening, 0.7F);
 
         curtainAnim.Play("CurtainsOpen");
         
@@ -89,5 +180,20 @@ public class CurtainMovementQuick : MonoBehaviour
     public void closeCurtains(string sceneNew)  //Run close curtains animation
     {        
         StartCoroutine(closeAnimation(sceneNew));
-    }        
+    }
+
+    private void UnFreezeDoors()
+    {
+        GameObject.Find("PlayDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("InventoryDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("AuditionDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = false;
+
+        GameObject.Find("PlayDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+        GameObject.Find("InventoryDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+        GameObject.Find("AuditionDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+        GameObject.Find("ShopDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+        GameObject.Find("RehersalDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+    }
 }

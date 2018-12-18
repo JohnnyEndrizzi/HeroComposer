@@ -42,7 +42,7 @@ public class BGmusic : MonoBehaviour
     {
         if (!audioSource.isPlaying && soundScene) //move to separate sound file
         {
-            audioSource.PlayOneShot(menuBG1, 0.5f);
+            audioSource.PlayOneShot(menuBG1, 0.3f);
         }
     }
 
