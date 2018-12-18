@@ -18,11 +18,11 @@
     "mag_Eqp": "blizzard"
   },
   {
-    "name": "Luke",
-    "desc": "I am Error",
-    "sprite": "Characters/Luke_sprite",
-    "headshot": "Headshots/",
-    "sound": "SoundEffects/acoustic_sound",
+    "name": "Trumpet",
+    "desc": "I am Trumpet",
+    "sprite": "Characters/trumpet_sprite",
+    "headshot": "Headshots/trumpet_headshot",
+    "sound": "SoundEffects/trumpet_sound",
     "unlocked": true,
     "level": 99,
     "hp": 100,
@@ -70,21 +70,4 @@
     "eqp2": 3,
     "eqp3": 3,
     "mag_Eqp": "arrow"
-  },{
-    "name": "Trumpet",
-    "desc": "",
-    "sprite": "",
-    "headshot": "",
-    "sound": "",
-    "unlocked": false,
-    "level": 0,
-    "hp": 0,
-    "atk": 0,
-    "def": 0,
-    "rcv": 0,
-    "mgc": 0,
-    "eqp1": 0,
-    "eqp2": 0,
-    "eqp3": 0,
-    "mag_Eqp": ""
 }]
