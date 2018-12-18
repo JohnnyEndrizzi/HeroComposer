@@ -20,7 +20,6 @@ public class DoorHandler : MonoBehaviour
 
     void Start()
     {
-
         if (AudioListener.volume == 0)
         {
             AudioListener.volume = 1;
@@ -77,6 +76,7 @@ public class DoorHandler : MonoBehaviour
             else if (!selectcanvas.enabled)
             {
                 //TODO open pause menu
+                MenuSceneSwitch("StartMenu");
             }
         }        
     }
