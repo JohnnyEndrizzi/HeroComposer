@@ -113,7 +113,7 @@ public class DoorHandler : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Doors2()
+    IEnumerator Doors2() //WIP
     {
         yield return StartCoroutine(D1());
         yield return StartCoroutine(D2());
@@ -121,7 +121,7 @@ public class DoorHandler : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator D1()
+    IEnumerator D1() //WIP
     {
         if (doorstatus != 0)
         {
@@ -130,7 +130,7 @@ public class DoorHandler : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator D2()
+    IEnumerator D2() //WIP
     {       
         yield return new WaitForSeconds(0.5f);
         yield return null;
