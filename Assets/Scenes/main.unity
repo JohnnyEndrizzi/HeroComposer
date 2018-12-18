@@ -363,6 +363,11 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: -0.47
       objectReference: {fileID: 0}
+    - target: {fileID: 114776331401034802, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 1809397615}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0
@@ -2037,9 +2042,19 @@ Prefab:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 114411856711807752, guid: f1ccf88db8c56314d92bb13167a65b24,
+        type: 2}
+      propertyPath: fireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d19abaf725e1244f918a1365d34fb67, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1ccf88db8c56314d92bb13167a65b24, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1809397615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1508917920095160, guid: f1ccf88db8c56314d92bb13167a65b24,
+    type: 2}
+  m_PrefabInternal: {fileID: 1809397614}
 --- !u!1 &1848591341
 GameObject:
   m_ObjectHideFlags: 0

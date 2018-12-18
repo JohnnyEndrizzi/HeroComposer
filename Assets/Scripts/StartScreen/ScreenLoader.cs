@@ -38,7 +38,8 @@ public class ScreenLoader : MonoBehaviour
     IEnumerator Next2()
     {
         yield return StartCoroutine(AudioFadeOut()); //fade out audio before transition
-               
+
+        SceneManager.LoadScene("Menu");
         MenuSceneSwitch("Menu"); //switch scenes
     }
 
