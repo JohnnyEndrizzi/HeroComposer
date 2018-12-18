@@ -32,7 +32,12 @@ public class CurtainMovement : MonoBehaviour
         Destroy(spotlight1);
         Destroy(spotlight2);
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
+
+        /* Hide the opened curtains after the animation */  
+        yield return StartCoroutine(Grow(2));
+        
+        //yield return new WaitForSeconds(1.0f);
 
         /* After 3 seconds, start playing the applause sound */
         float startVolume = audioSource.volume;
@@ -42,20 +47,16 @@ public class CurtainMovement : MonoBehaviour
             yield return null;
         }
 
-        /* Hide the opened curtains after the animation */
-        //MenuRender.enabled = false;
-
         delayLock = false;
-
-        //TODO expand inwards?
     }
-
+    
     /* The following coroutine plays the closing animation for the curtains upon finishing a level */
     private IEnumerator closeAnimation()
     {
         delayLock = true;
 
-        //MenuRender.enabled = true;
+        /* Show the opened curtains before the animation */
+        yield return StartCoroutine(Grow(0.5f));
 
         /* Plays the apllause sound during the closing animation */
         audioSource.volume = 1;
@@ -68,6 +69,20 @@ public class CurtainMovement : MonoBehaviour
         delayLock = false;
 
         yield return null;
+    }
+
+    private IEnumerator Grow(float scale)
+    {
+        float LerpTime = 3f;
+        float currentLerpTime = 0;
+        Vector3 local = transform.localScale;
+
+        while (currentLerpTime < LerpTime)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, local * scale, (currentLerpTime / LerpTime));
+            currentLerpTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     /* Use this for initialization */

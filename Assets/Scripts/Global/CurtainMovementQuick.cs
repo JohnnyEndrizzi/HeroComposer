@@ -45,15 +45,14 @@ public class CurtainMovementQuick : MonoBehaviour
             StartCoroutine(OpenAnimation());            
         }        
     }
-
+    
     /* Update is called once per frame */
     void Update()
     {
         if (isAnim) //converts animation sprites to UI images during animation to make use of canvas ordering
         {
             MenuRender2.sprite = MenuRender.sprite;
-        }
-        
+        }        
     }
 
     private IEnumerator SplashScreen() //Splash Screen
@@ -83,8 +82,11 @@ public class CurtainMovementQuick : MonoBehaviour
         //End text pulse
         txt.enabled = false;
 
-        yield return StartCoroutine(OpenAnimation());       
-        UnFreezeDoors(); //Enable Buttons
+        yield return StartCoroutine(OpenAnimation());
+
+        try { GameObject.Find("ScreenLoader").GetComponent<ScreenLoader>().activation(); } catch { }
+        try { GameObject.Find("GObtn").transform.SetAsLastSibling(); } catch { }
+
         yield return null;
     }
 
@@ -150,6 +152,8 @@ public class CurtainMovementQuick : MonoBehaviour
             yield return null;
         }
         isAnim = false;
+
+        try { UnFreezeDoors(); } catch { } //Enable Buttons
         yield return null;
     }
 
