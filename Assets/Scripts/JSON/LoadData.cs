@@ -41,6 +41,7 @@ public class LoadData : MonoBehaviour
             {
                 Debug.Log(characters[i].name);
                 currentCharacterSO.name = characters[i].name;
+                Debug.Log(currentCharacterSO.name);
                 currentCharacterSO.desc = characters[i].desc;
                 currentCharacterSO.sprite = characters[i].sprite;
                 currentCharacterSO.headshot = characters[i].headshot;

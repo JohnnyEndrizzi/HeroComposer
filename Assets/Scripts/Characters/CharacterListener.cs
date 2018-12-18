@@ -13,6 +13,10 @@ public class CharacterListener : MonoBehaviour
     /* Used for keeping score */
     public float songScore;
     public GameObject songScoreText;
+    public int perfectCount = 0;
+    public int greatCount = 0;
+    public int goodCount = 0;
+    public int missCount = 0;
 
     public GameObject boss;
     public SpriteRenderer shield;
@@ -76,21 +80,25 @@ public class CharacterListener : MonoBehaviour
          */
         if (errorDifference <= 25)
         {
+            perfectCount++;
             UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
+            greatCount++;
             UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
+            goodCount++;
             UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
+            //missCount++;
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
@@ -369,15 +377,15 @@ public class CharacterListener : MonoBehaviour
                 /* Since MGC commands are much stronger than ATK commands, we want to give the user an incentive to still use the ATK
                  * command. Our way around that was reqguiring MGC commands 2 stages for input: 1) queuing the command; 2) performing
                  * the command. This means these stronger commands may not be smart to go for due to taking too long to issue. */
-                if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
-                {
+                //if (toUseGO.GetComponent<CharacterLogic>().magicQueue == 1)
+                //{
                     StartCoroutine(magicAnimation(toUseGO, 0.3f, currentSprite));
-                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
-                }
-                else
-                {
-                    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
-                }
+                //    toUseGO.GetComponent<CharacterLogic>().magicQueue = 0;
+                //}
+                //else
+                //{
+                //    toUseGO.GetComponent<CharacterLogic>().magicQueue = 1;
+                //}
             }
         }
     }
