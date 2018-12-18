@@ -98,7 +98,7 @@ public class CharacterListener : MonoBehaviour
         }
         else
         {
-            missCount++;
+            //missCount++;
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
