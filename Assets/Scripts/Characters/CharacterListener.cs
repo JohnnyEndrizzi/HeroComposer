@@ -13,6 +13,10 @@ public class CharacterListener : MonoBehaviour
     /* Used for keeping score */
     public float songScore;
     public GameObject songScoreText;
+    public int perfectCount = 0;
+    public int greatCount = 0;
+    public int goodCount = 0;
+    public int missCount = 0;
 
     public GameObject boss;
     public SpriteRenderer shield;
@@ -76,21 +80,25 @@ public class CharacterListener : MonoBehaviour
          */
         if (errorDifference <= 25)
         {
+            perfectCount++;
             UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
+            greatCount++;
             UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
+            goodCount++;
             UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
+            missCount++;
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }

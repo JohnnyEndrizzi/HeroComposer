@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Game;
 using OsuParser;
+using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class GameLogic : MonoBehaviour
     /* Variables used for song completion logic */
     private bool notesDone = false;
     public static bool songDone = false;
+    private static bool scoringDone = false;
+    [SerializeField]
+    private Button returnButton;
 
     /* Variables used for note movement */
     public Beatmap beatmap;
@@ -151,6 +155,106 @@ public class GameLogic : MonoBehaviour
         yield return null;
     }
 
+    public void tempLoadMenu()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+
+    IEnumerator updateScoreCanvas(Canvas scoreCanvas, string grade)
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.text.Contains("Perfect"))
+            {
+                text.text += GetComponent<CharacterListener>().perfectCount;
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.text.Contains("Great"))
+            {
+                text.text += GetComponent<CharacterListener>().greatCount;
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.text.Contains("Good"))
+            {
+                text.text += GetComponent<CharacterListener>().goodCount;
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.text.Contains("Miss"))
+            {
+                text.text += GetComponent<CharacterListener>().missCount;
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.text.Contains("Final Score"))
+            {
+                text.text += GetComponent<CharacterListener>().songScore;
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.name == "Grade")
+            {
+                text.text = grade;
+            }
+        }
+
+        returnButton.gameObject.SetActive(true);
+
+        yield return null;
+    }
+
+    private string CaclulateSongGrade()
+    {
+        if (beatmap.HitObjects.Count * 300.0f == GetComponent<CharacterListener>().songScore)
+        {
+            return "S";
+        }
+        else if (GetComponent<CharacterListener>().songScore > beatmap.HitObjects.Count * 300.0f * 0.85f)
+        {
+            return "A";
+        }
+        else if (GetComponent<CharacterListener>().songScore > beatmap.HitObjects.Count * 300.0f * 0.75f)
+        {
+            return "B";
+        }
+        else if (GetComponent<CharacterListener>().songScore > beatmap.HitObjects.Count * 300.0f * 0.60f)
+        {
+            return "C";
+        }
+        else if (GetComponent<CharacterListener>().songScore > beatmap.HitObjects.Count * 300.0f * 0.50f)
+        {
+            return "D";
+        }
+        else
+        {
+            return "F";
+        }
+    }
+
     /* Used for initialization */
     void Start ()
     {
@@ -171,7 +275,6 @@ public class GameLogic : MonoBehaviour
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
             beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
-
         }
 
         /* The spawn and kill points for incoming notes */
@@ -188,6 +291,15 @@ public class GameLogic : MonoBehaviour
     /* Update is called once per frame */
     void Update()
     {
+        if (songDone && !scoringDone)
+        {
+            Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
+
+            scoreCanvas.enabled = true;
+            StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
+            scoringDone = true;
+        }
+
         if (delayLock == false)
         {
             /* There are 4 states of a song:
@@ -283,6 +395,7 @@ public class GameLogic : MonoBehaviour
         /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
         if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
         {
+            GetComponent<CharacterListener>().missCount++;
             StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
             hitIndex++;
         }
