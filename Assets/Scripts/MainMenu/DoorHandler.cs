@@ -18,6 +18,12 @@ public class DoorHandler : MonoBehaviour
 
     void Start()
     {
+
+        if (AudioListener.volume == 0)
+        {
+            AudioListener.volume = 1;
+        }
+     
         /* Deserializes all information from their corresponding JSON into local copies */
         if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
         {
