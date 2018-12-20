@@ -185,18 +185,20 @@ public class SaveData : MonoBehaviour
         {
             data += "\t\"StoredItems\":\"";
             data += inventory[0].StoredItems;
+            data += "\"";
         }
         else if (row == 1)
         {
             data += "\t\"SelUnits\":\"";
             data += inventory[0].SelUnits;
+            data += "\"";
         }
         else if (row == 2)
         {
             data += "\t\"Money\":";
             data += inventory[0].Money;
         }
-        data += "\"";
+        
         return data;
     }
 
