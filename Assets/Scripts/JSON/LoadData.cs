@@ -61,7 +61,7 @@ public class LoadData : MonoBehaviour
                 currentCharacterSO.eqp3 = characters[i].eqp3;
                 currentCharacterSO.mag_Eqp = characters[i].mag_Eqp;
 
-                UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
+                //UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
             }
             else
             {

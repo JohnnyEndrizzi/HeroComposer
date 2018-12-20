@@ -191,6 +191,11 @@ public class SaveData : MonoBehaviour
             data += "\t\"SelUnits\":\"";
             data += inventory[0].SelUnits;
         }
+        else if (row == 2)
+        {
+            data += "\t\"Money\":";
+            data += inventory[0].Money;
+        }
         data += "\"";
         return data;
     }

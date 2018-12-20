@@ -77,6 +77,8 @@ public class StoredValues : MonoBehaviour
 
     private void Start()
     {
+        cash += 100000;
+
         /* Deserializes all information from their corresponding JSON into local copies */
         if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
         {
@@ -230,6 +232,10 @@ public class StoredValues : MonoBehaviour
     public void saveInv()
     {        
         GetComponent<SaveData>().SaveInv(true, false, true);
+    }
+    public void saveChar()
+    {
+        GetComponent<SaveData>().SaveCharacters();
     }
 
     /*

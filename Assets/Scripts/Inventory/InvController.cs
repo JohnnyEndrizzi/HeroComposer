@@ -168,12 +168,32 @@ public class InvController : MonoBehaviour {
         Units[FrontAndCentre].item2 = it[2];
         Units[FrontAndCentre].item3 = it[3];
 
+        /*
+        for (int i = 0; i < Units.Count; i++)
+        {
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName);
+            if (Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName))
+            {
+                currentCharacterSO.eqp1 = Units[i].item1;
+                currentCharacterSO.eqp2 = Units[i].item2;
+                currentCharacterSO.eqp3 = Units[i].item3;
+            }
+            else
+            {
+                // Debug.Log("HEY " + characters[i].name);
+            }
+        }
+        */
+
         //Save inventory items
         storedItems = InventoryMenu.GetStoredItems();
         storedValues.passUp(storedItems);
         storedValues.saveInv();
+        storedValues.saveChar();
     }
-    
+
+
+
     void DropHeld() // Drop held item
     {
         if (HoldNum != 0)
