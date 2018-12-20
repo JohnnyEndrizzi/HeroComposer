@@ -36,11 +36,11 @@ public class LoadData : MonoBehaviour
 
         for (int i = 0; i < characters.Length; i++)         
         {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
-            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
+            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
             {
                 //Debug.Log(characters[i].name);
-                currentCharacterSO.name = characters[i].name;
+                currentCharacterSO.charName = characters[i].charName;
                 //Debug.Log(currentCharacterSO.name);
                 currentCharacterSO.desc = characters[i].desc;
                 currentCharacterSO.sprite = characters[i].sprite;
@@ -65,13 +65,13 @@ public class LoadData : MonoBehaviour
             }
             else
             {
-                Debug.Log("HEY " + characters[i].name);
+                Debug.Log("HEY " + characters[i].charName);
             }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
             GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
         }
     }
@@ -106,22 +106,22 @@ public class LoadData : MonoBehaviour
 
         for (int i = 0; i < characters.Length - 1; i++)
         {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
-            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
+            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
             {
-                if (currentCharacterSO.name == tempNames[0])
+                if (currentCharacterSO.charName == tempNames[0])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[1])
+                else if (currentCharacterSO.charName == tempNames[1])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[2])
+                else if (currentCharacterSO.charName == tempNames[2])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[3])
+                else if (currentCharacterSO.charName == tempNames[3])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }

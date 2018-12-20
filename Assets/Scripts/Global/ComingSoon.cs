@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ComingSoon : MonoBehaviour {
     [SerializeField]
-    Text comingSoonTxt;
+    Text comingSoonTxt = null;
 
 
 	// Use this for initialization

@@ -164,7 +164,7 @@ public class SaveData : MonoBehaviour
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
-                data += Assets.Scripts.MainMenu.ApplicationModel.characters[i].name;
+                data += Assets.Scripts.MainMenu.ApplicationModel.characters[i].charName;
             }
             else
             {

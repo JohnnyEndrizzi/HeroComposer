@@ -123,32 +123,36 @@ public class RehController : MonoBehaviour {
         SetTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
     }
 
-    public void SetTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
+    public void SetTeam(string[] teamSet) //Takes unit names - locates characterScripts - sets those to load on play
     {
         ClearTeam();
 
-        Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
-        
+        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
+        //Debug.Log(characters.Length + characters[0].name);
+
+        Debug.Log("======");
         for (int i = 0; i < characters.Length; i++)
         {
             
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
-            //Debug.Log("SO " + currentCharacterSO.name);
+            CharacterScriptObject currentCharacterSO = characters[i];
+            Debug.Log("SO " + currentCharacterSO.charName);
             if (characters[i])
             {
-                if (currentCharacterSO.name == chars[0])
+                if (currentCharacterSO.charName == teamSet[0])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
+                    Debug.Log("Set0" + Assets.Scripts.MainMenu.ApplicationModel.characters[0].charName);
                 }
-                else if (currentCharacterSO.name == chars[1])
+                else if (currentCharacterSO.charName == teamSet[1])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
+                    Debug.Log("Set1" + Assets.Scripts.MainMenu.ApplicationModel.characters[1].charName);
                 }
-                else if (currentCharacterSO.name == chars[2])
+                else if (currentCharacterSO.charName == teamSet[2])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == chars[3])
+                else if (currentCharacterSO.charName == teamSet[3])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }
@@ -176,7 +180,7 @@ public class RehController : MonoBehaviour {
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
-                unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].name);
+                unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].charName);
             }
             else
             {

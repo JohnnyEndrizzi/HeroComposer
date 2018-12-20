@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5a8399747dd664d90cfa7e381d606d, type: 3}
   m_Name: Acoustic
   m_EditorClassIdentifier: 
-  name: Acoustic
+  charName: Acoustic
   desc: I am Acoustic
   sprite: Characters/acoustic_sprite
   headshot: Headshots/acoustic_headshot
