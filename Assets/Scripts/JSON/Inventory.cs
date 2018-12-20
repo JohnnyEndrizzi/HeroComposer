@@ -4,4 +4,5 @@
 public class Inventory {
     public string StoredItems;
     public string SelUnits;
+    public int Money;
 }

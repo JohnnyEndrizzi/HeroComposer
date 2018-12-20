@@ -25,25 +25,14 @@ public class DoorHandler : MonoBehaviour
             AudioListener.volume = 1;
         }
      
-        /* Deserializes all information from their corresponding JSON into local copies */
-        if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
-        {
-            Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters = true;
-            GetComponent<LoadData>().LoadCharacters();
-            GetComponent<LoadData>().LoadItems();
-            GetComponent<LoadData>().LoadInv();
-            GetComponent<LoadData>().LoadLevels();
-            /* TODO */
-            //GetComponent<LoadData>().LoadMagic();
-        }
+
 
         audioSource = GetComponent<AudioSource>();
         opening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
         closing = (AudioClip)Resources.Load("SoundEffects/menu_door_close");
         audioSource.mute = true;
 
-        selectcanvas.enabled = false;
-        StoredValues.Cash += 5000;        
+        selectcanvas.enabled = false;    
     }
 
     /* Update is called once per frame */
@@ -159,8 +148,7 @@ public class DoorHandler : MonoBehaviour
 
         if (tempName.Equals("Audition")) //Temporary until Audition scene is completed
         {
-            //TODO show/hide "coming soon!"
-            MenuSceneSwitch("Menu");
+            this.transform.GetComponent<ComingSoon>().clicked();
         }
         else if (!tempName.Equals("Play")) //Play button has a more complex function attached
         {

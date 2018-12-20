@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CurtainMovement : MonoBehaviour
 {
@@ -50,6 +51,12 @@ public class CurtainMovement : MonoBehaviour
         delayLock = false;
     }
     
+    public void ClosingTime()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        //StartCoroutine(closeAnimation());
+    }
+
     /* The following coroutine plays the closing animation for the curtains upon finishing a level */
     private IEnumerator closeAnimation()
     {
@@ -67,6 +74,10 @@ public class CurtainMovement : MonoBehaviour
 
         end = true;
         delayLock = false;
+
+        yield return StartCoroutine(Grow(1.0f));
+
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
 
         yield return null;
     }
@@ -109,7 +120,7 @@ public class CurtainMovement : MonoBehaviour
             /* Depending if the song is done or not, the corresponding coroutine will be called */
             if (GameLogic.songDone)
             {
-                StartCoroutine(closeAnimation());
+                //StartCoroutine(closeAnimation());
             }
             else
             {

@@ -12,7 +12,11 @@ public class Wiggle : MonoBehaviour {
     private float moveLoc;
     private Quaternion Rotate_From;
     private Quaternion Rotate_To;
-	
+
+    //creak with wiggle
+    AudioSource audioSource;
+    AudioClip clip;
+
 	void Update ()
     {
         //wiggler
@@ -37,6 +41,12 @@ public class Wiggle : MonoBehaviour {
         transform.rotation = Quaternion.Lerp (Rotate_From, Rotate_To, Time.deltaTime*0.2f);
 	}
 
+    void Start()
+    {
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        clip = (AudioClip)Resources.Load("SoundEffects/creak");
+    }
+
     private int next(float last) //pick where to wiggle to
     {
         int rnd = Random.Range(-2, 5);
@@ -45,6 +55,7 @@ public class Wiggle : MonoBehaviour {
             return (int)last;  //don't wiggle - makes the wiggle a little gentler and more random
         }
         else {
+            //audioSource.PlayOneShot(clip, 0.1f);
             return  rnd;
         }
     }

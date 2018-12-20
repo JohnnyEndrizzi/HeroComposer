@@ -155,13 +155,10 @@ public class GameLogic : MonoBehaviour
         yield return null;
     }
 
-    public void tempLoadMenu()
-    {
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-    }
-
     IEnumerator updateScoreCanvas(Canvas scoreCanvas, string grade)
     {
+        AudioSource cashAudioSource = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<AudioSource>();
+
         yield return new WaitForSeconds(1.0f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
@@ -210,7 +207,7 @@ public class GameLogic : MonoBehaviour
             {
                 text.text += GetComponent<CharacterListener>().songScore;
             }
-        }
+        }              
 
         yield return new WaitForSeconds(1.0f);
 
@@ -219,12 +216,66 @@ public class GameLogic : MonoBehaviour
             if (text.name == "Grade")
             {
                 text.text = grade;
+                text.color = GradeColor(grade);
+            }
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
+        {
+            if (text.name == ("Money"))
+            {
+                text.text += "$ " + VictoryCoin(grade);
+                cashAudioSource.PlayOneShot(moneyClip(grade), 1.0f);
             }
         }
 
         returnButton.gameObject.SetActive(true);
 
         yield return null;
+    }
+
+    private Color GradeColor(string grade)
+    {
+        switch (grade)
+        {
+            case "S": return new Color(0, 255, 0);
+            case "A": return new Color(0, 0, 255);
+            case "B": return new Color(128, 128, 128);
+            case "C": return new Color(255, 255, 0);
+            case "D": return new Color(255, 165, 1);
+            case "F": return new Color(255, 0, 0);
+            default:  return new Color(128, 128, 128);                
+        }        
+    }
+    
+    private int VictoryCoin(string grade)
+    {
+        switch (grade)
+        {
+            case "S": return 3000;
+            case "A": return 2500;
+            case "B": return 2000;
+            case "C": return 1500;
+            case "D": return 1000;
+            case "F": return 500;
+            default: return 0;
+        }
+    }
+
+    private AudioClip moneyClip(string grade)
+    {
+        switch (grade)
+        {
+            case "S": return (AudioClip)Resources.Load("SoundEffects/shop_purchase_special_item");
+            case "A": return (AudioClip)Resources.Load("SoundEffects/shop_purchase_regular_item");
+            case "B": return (AudioClip)Resources.Load("SoundEffects/shop_purchase_regular_item");
+            case "C": return (AudioClip)Resources.Load("SoundEffects/shop_purchase_regular_item");
+            case "D": return (AudioClip)Resources.Load("SoundEffects/shop_purchase_regular_item");
+            case "F": return (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
+            default:  return (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
+        }
     }
 
     private string CaclulateSongGrade()
@@ -286,6 +337,8 @@ public class GameLogic : MonoBehaviour
 
         /* Plays the opening curtain animation */
         StartCoroutine(introDelay());
+
+
     }
 
     /* Update is called once per frame */

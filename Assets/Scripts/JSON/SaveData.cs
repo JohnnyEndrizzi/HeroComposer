@@ -18,9 +18,8 @@ public class SaveData : MonoBehaviour
     public void SaveAll()
     {
         SaveCharacters();
-        SaveInv(true, true);
+        SaveInv(true, true, true);
         //SaveScore();
-        //SaveMoney?();
     }
 
     public void SaveCharacters()
@@ -102,7 +101,7 @@ public class SaveData : MonoBehaviour
     }
     
     //Callable For Inventory Saving
-    public void SaveInv(bool Item, bool Team)
+    public void SaveInv(bool Item, bool Team, bool money)
     {
         string data = "[{\n"; //file start
 
@@ -112,10 +111,24 @@ public class SaveData : MonoBehaviour
 
         if (Team) { data = SaveInvTeamJSON(data); }
         else      { data = SaveInvExceptRowJSON(data, 1); }
+        data += ",\n";
+
+        if (money) { data = SaveInvCashJSON(data); }
+        else { data = SaveInvExceptRowJSON(data, 2); }
         data += "\n}]"; //file end
 
         File.WriteAllText("Assets/Resources/Metadata/inventory.json", data);
     }
+    
+    
+    private string SaveInvCashJSON(string data) //Save money
+    {
+        data += "\t\"Money\": ";
+        data += GetComponent<StoredValues>().CashS().ToString();  
+        
+        return data;
+    }
+
 
     private string SaveInvItemsJSON(string data) //Saved stored inventory
     {

@@ -32,16 +32,16 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
-        Debug.Log("TEST: " + jsonString);
+        //Debug.Log("TEST: " + jsonString);
 
         for (int i = 0; i < characters.Length; i++)         
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
             if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
             {
-                Debug.Log(characters[i].name);
+                //Debug.Log(characters[i].name);
                 currentCharacterSO.name = characters[i].name;
-                Debug.Log(currentCharacterSO.name);
+                //Debug.Log(currentCharacterSO.name);
                 currentCharacterSO.desc = characters[i].desc;
                 currentCharacterSO.sprite = characters[i].sprite;
                 currentCharacterSO.headshot = characters[i].headshot;
@@ -78,6 +78,8 @@ public class LoadData : MonoBehaviour
 
     public void SaveCharacters()
     {
+        Debug.Log("DEPRECIATED: SAVE MOVED TO SAVEDATA");
+
         CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
 
         string data = "[";
@@ -98,6 +100,8 @@ public class LoadData : MonoBehaviour
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
         GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        GameObject.Find("Values").GetComponent<StoredValues>().CashL(inventory[0].Money);
+
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
         for (int i = 0; i < characters.Length - 1; i++)

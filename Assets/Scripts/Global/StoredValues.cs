@@ -48,8 +48,17 @@ public class StoredValues : MonoBehaviour
     public static int Cash{
         get{return cash;}
         set{cash = value;}
-    } 
-    
+    }
+
+    public void CashL(int value)
+    {       
+        cash = value;
+    }
+    public int CashS()
+    {
+        return cash;
+    }
+
     //Persist and prevent multiple instances
     void Awake()
     {
@@ -68,9 +77,17 @@ public class StoredValues : MonoBehaviour
 
     private void Start()
     {
-        //GetComponent<LoadData>().LoadCharacters();
-        //GetComponent<LoadData>().LoadItems();
-        // GetComponent<LoadData>().LoadInv();
+        /* Deserializes all information from their corresponding JSON into local copies */
+        if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
+        {
+            Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters = true;
+            GetComponent<LoadData>().LoadCharacters();
+            GetComponent<LoadData>().LoadItems();
+            GetComponent<LoadData>().LoadInv();
+            GetComponent<LoadData>().LoadLevels();
+            /* TODO */
+            //GetComponent<LoadData>().LoadMagic();
+        }
     }
 
     /* Currently using depreciated code, this will be replaced by current code in future
@@ -129,17 +146,32 @@ public class StoredValues : MonoBehaviour
     
     private void findOffers(){ //Temporary setting of shop lists //TODO
         spcOffers.Clear();
-        spcOffers.Add(4);
-        spcOffers.Add(4);
-        spcOffers.Add(3);
-        spcOffers.Add(2);
+        spcOffers.Add(9);
         spcOffers.Add(0);
+        spcOffers.Add(10);
+        spcOffers.Add(0);
+        spcOffers.Add(11);
         spcOffers.Add(0);
 
         normOffers.Clear();
-        for (int i = 0; i < 16; i++) {
+        normOffers.Add(1);
+        normOffers.Add(1);
+        normOffers.Add(2);
+        normOffers.Add(2);
+        normOffers.Add(3);
+        normOffers.Add(3);
+        normOffers.Add(4);
+        normOffers.Add(4);
+        normOffers.Add(5);
+        normOffers.Add(5);
+        normOffers.Add(6);
+        normOffers.Add(6);
+        normOffers.Add(0);
+        normOffers.Add(0);
+
+        /*for (int i = 0; i < 16; i++) {
             normOffers.Add(Random.Range(0,5));
-        }
+        }*/
     }
 
     public void passUp(List<int> NewStoredItems) //Allows subscripts to modify storedItems
@@ -197,7 +229,7 @@ public class StoredValues : MonoBehaviour
 
     public void saveInv()
     {        
-        GetComponent<SaveData>().SaveInv(true, false);
+        GetComponent<SaveData>().SaveInv(true, false, true);
     }
 
     /*

@@ -124,7 +124,16 @@ public class CurtainMovementQuick : MonoBehaviour
         
         while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
         {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);            
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            try {
+                Outline O1 = i.transform.GetComponents<Outline>()[0];
+                O1.effectColor = new Color(O1.effectColor.r, O1.effectColor.g, O1.effectColor.b, i.color.a);
+                try{
+                    Outline O2 = i.transform.GetComponents<Outline>()[1];
+                    O2.effectColor = new Color(O2.effectColor.r, O2.effectColor.g, O2.effectColor.b, i.color.a);
+                }
+            catch { }
+        } catch { }           
             yield return null;
         }
     }

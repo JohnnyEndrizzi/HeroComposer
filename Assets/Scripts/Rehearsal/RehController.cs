@@ -154,7 +154,7 @@ public class RehController : MonoBehaviour {
                 }
             }
         }        
-        GameObject.Find("Values").GetComponent<SaveData>().SaveInv(false, true);
+        GameObject.Find("Values").GetComponent<SaveData>().SaveInv(false, true, false);
     }
 
     /* Sample code for serialized ScriptableObjects (saving) 

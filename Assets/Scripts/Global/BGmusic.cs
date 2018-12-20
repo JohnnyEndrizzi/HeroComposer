@@ -51,6 +51,7 @@ public class BGmusic : MonoBehaviour
     * Both start and awake will only run once for a persistant object */
     private void OnLevelWasLoaded()
     {
+        //Debug.Log("loaded BGMusic");
         if (SceneManager.GetActiveScene().name.Equals("main"))
         {
             soundScene = false;
@@ -75,6 +76,7 @@ public class BGmusic : MonoBehaviour
             yield return null;
         }
         audioSource.Pause();
+        audioSource.volume = startVolume;
         isFade = false;
         yield return null;
     }

@@ -87,6 +87,8 @@ public class InvController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
     public void Starter() 
     {
+        storedValues = GameObject.Find("Values").GetComponent<StoredValues>();
+
         //Pass information to menus
         InventoryMenu.AllItems = AllItems;
         InventoryMenu.storedItems = storedItems;
@@ -295,22 +297,25 @@ public class InvController : MonoBehaviour {
     {
         HoverTxt.gameObject.SetActive(true); //starts disabled
 
+        if (itemID == 0) { origin = 0; }
+
         if (origin > 0) //hoverEnter - fade in
-        {    
+        {
             origin--;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
+            StartCoroutine(ImageFader(0.1f, HoverTxt, 0f, 0.75f));
+            StartCoroutine(TextFader2(0.1f, txtBoxTitle, txtBoxDesc, 0f, 1f)); 
         }
         else if (origin < 0) //hoverExit - fade out
         {
             origin = Mathf.Abs(origin) - 1;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader2(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
+            StartCoroutine(ImageFader(1f, HoverTxt, 0.75f, 0f));
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f, 0f));
         }
         else //catch
         {
-            ReWriter(AllItems[origin].Title, AllItems[origin].Desc);
+            
         }
     }
 
@@ -323,16 +328,16 @@ public class InvController : MonoBehaviour {
         else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
         else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
         else {Debug.Log("ERROR, hover origin unknown");}
-
-
+        
         if (check > 0) //hoverEnter - fade in
-        {           
-            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
+        {
+            StartCoroutine(ImageFader(0.2f, HoverTxt, 0f, 0.75f));
+            StartCoroutine(TextFader2(0.2f, txtBoxTitle, txtBoxDesc, 0f,1f)); 
         }
         else if (check < 0) //hoverEnter - fade out
         {
-            HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader2(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
+            StartCoroutine(ImageFader(1f, HoverTxt, 0.75f, 0f));
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f,0f));
         }
     }
 
@@ -348,6 +353,18 @@ public class InvController : MonoBehaviour {
         {
             i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
             i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, i2.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            yield return null;
+        }
+    }
+    IEnumerator ImageFader(float t, Image i, float fade1, float fade2) //Controls the Image fading in or out for Image 
+    {
+        //0 to invisible, 1 to visible
+        //fade1 = start alpha, fade2 = end alpha   
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
             yield return null;
         }
     }

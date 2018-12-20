@@ -65,6 +65,8 @@ public class ShopController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */ 
     public void Starter() 
     {
+        storedValues = GameObject.Find("Values").GetComponent<StoredValues>();
+
         shopMenuCtrl.Dict = AllItems;
         shopMenuCtrl.shopItems = normalOffers;
         shopMenuCtrl.creator();
