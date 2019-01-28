@@ -43,6 +43,7 @@ public class RehController : MonoBehaviour {
     private AudioClip addChar;
     private AudioClip remChar;
     private AudioClip pickUpChar;
+    private AudioClip error;
 
     //Text Locations 
     [SerializeField]
@@ -92,6 +93,7 @@ public class RehController : MonoBehaviour {
         addChar = (AudioClip)Resources.Load("SoundEffects/rehersal_add_character_to_team");
         remChar = (AudioClip)Resources.Load("SoundEffects/rehersal_remove_character_from_team");
         pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
+        error = (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
     }
 
     void Update()
@@ -219,30 +221,32 @@ public class RehController : MonoBehaviour {
     {
         if (Drag.Dragging() == true){ //place held unit
             int Check = DoubleCheck();
-                        
-            if (Check != item) {    
-                switch (Check) { //switch switches units if the selected unit is already present
+
+            if (Check != item)
+            {
+                switch (Check)
+                { //switch switches units if the selected unit is already present
                     case 0:
                         break;
-                    case 1:                        
+                    case 1:
                         UnitDisplay1.GetComponent<BtnUnit>().SetIcon(null);
                         unitsInPortraits[0] = -1;
                         break;
-                    case 2:                        
+                    case 2:
                         UnitDisplay2.GetComponent<BtnUnit>().SetIcon(null);
                         unitsInPortraits[1] = -1;
                         break;
-                    case 3:                        
+                    case 3:
                         UnitDisplay3.GetComponent<BtnUnit>().SetIcon(null);
                         unitsInPortraits[2] = -1;
                         break;
-                    case 4:                        
+                    case 4:
                         UnitDisplay4.GetComponent<BtnUnit>().SetIcon(null);
                         unitsInPortraits[3] = -1;
                         break;
 
                     default:
-                        break;                     
+                        break;
                 }
                 origin.GetComponent<BtnUnit>().SetIcon(Drag.GetIcon());
                 Drag.SetIcon(null);
@@ -250,6 +254,11 @@ public class RehController : MonoBehaviour {
                 HoldNum = 0;
                 UnitMenu.lightsOut();
                 audioSource.PlayOneShot(addChar, 0.7F);
+            }
+            else {
+                //placing on own unit
+                audioSource.PlayOneShot(error, 0.5F);
+
             }
         }
         else { //clear selected portrait

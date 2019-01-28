@@ -28,6 +28,20 @@ public class ScreenLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(TextFader(1f, loadingText, 1, 0));
+        StartCoroutine(TimerNext());
+    }
+
+    IEnumerator TimerNext()
+    {
+        yield return StartCoroutine(LoadNewScene());
+        yield return new WaitForSeconds(1.0f);
+        yield return StartCoroutine(AudioFadeOut());
+        yield return StartCoroutine(TextFader(0.5f, loadingText, 1, 0));
+
+        async.allowSceneActivation = true;
+        MenuSceneSwitch("Menu");
+
+        yield return null;
     }
 
     IEnumerator LoadNewScene()
@@ -42,12 +56,7 @@ public class ScreenLoader : MonoBehaviour
 
         yield return null;
     }
-
-    private void MenuSceneSwitch(string sceneNew)
-    {
-        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
-    }
-
+    
     IEnumerator AudioFadeOut()
     {
         float elapsedTime = 0;
@@ -75,22 +84,8 @@ public class ScreenLoader : MonoBehaviour
         }
     }
 
-    IEnumerator Next()
+    private void MenuSceneSwitch(string sceneNew)
     {
-        startBtn.gameObject.SetActive(false);
-
-        yield return StartCoroutine(LoadNewScene());
-        yield return StartCoroutine(AudioFadeOut());
-        yield return StartCoroutine(TextFader(0.5f, loadingText, 1, 0));
-
-        async.allowSceneActivation = true;
-        MenuSceneSwitch("Menu");
-
-        yield return null;
-    }
-
-    public void Test()
-    {
-        StartCoroutine(Next());  
-    } 
+        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
+    }    
 }

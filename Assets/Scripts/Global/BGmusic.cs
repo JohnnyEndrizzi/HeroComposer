@@ -52,7 +52,7 @@ public class BGmusic : MonoBehaviour
     private void OnLevelWasLoaded()
     {
         //Debug.Log("loaded BGMusic");
-        if (SceneManager.GetActiveScene().name.Equals("main"))
+        if (SceneManager.GetActiveScene().name.Equals("main") || SceneManager.GetActiveScene().name.Equals("StartMenu"))
         {
             soundScene = false;
             StartCoroutine(fadeOut());            

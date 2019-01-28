@@ -54,7 +54,7 @@ public class DoorHandler : MonoBehaviour
             }     
 		}
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && this.name.Equals("PlayDoorClose"))
         {
             if (selectcanvas.enabled && play != null)
             {
