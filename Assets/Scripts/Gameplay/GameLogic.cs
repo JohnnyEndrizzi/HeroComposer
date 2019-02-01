@@ -317,7 +317,6 @@ public class GameLogic : MonoBehaviour
             /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
             beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
-            Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.songName);
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
         }
         else
@@ -424,7 +423,7 @@ public class GameLogic : MonoBehaviour
         }
 
         /* The following is the logic that defines how held notes spawn, which sets appropriate 'SecondaryNote' and 
-         * 'PrimaryNote' labels to each GameObject */ 
+         * 'PrimaryNote' labels to each GameObject */
         if (iterationsLeft == 2 || firstNoteOfSlider == false)
         {
             noteTag = "SecondaryNote";
@@ -443,8 +442,6 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
-        //Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
-
         /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
         if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
         {
@@ -458,8 +455,10 @@ public class GameLogic : MonoBehaviour
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
+        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
+            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
