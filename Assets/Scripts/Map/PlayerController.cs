@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour {
 
             if(Physics.Raycast(ray, out hit))
             {
+                Debug.Log("Hit: "+hit.collider.name);
                 motor.MoveToPoint(hit.point);
-                //Stop focusing any objects 
             }
         }
         if (Input.GetMouseButtonDown(1))
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit))
             {
+                Debug.Log("Hit: " + hit.collider.name);
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
                 if(interactable != null)
                 {
