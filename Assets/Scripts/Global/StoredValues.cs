@@ -238,6 +238,46 @@ public class StoredValues : MonoBehaviour
         GetComponent<SaveData>().SaveCharacters();
     }
 
+    public void SetTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
+    {
+        ClearTeam();
+
+        Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
+        for (int i = 0; i < characters.Length; i++)
+        {
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
+            if (characters[i])
+            {
+                if (currentCharacterSO.name == chars[0])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[1])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[2])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
+                }
+                else if (currentCharacterSO.name == chars[3])
+                {
+                    Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
+                }
+            }
+        }
+        GetComponent<SaveData>().SaveInv(false, true, false);
+    }
+
+    private void ClearTeam() //Set team to null before setting new team
+    {
+        Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[2] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
+    }
+
+
     /*
     public void backup() //Old Txt Backup //TODO Remove once replacement code is implemented
     {

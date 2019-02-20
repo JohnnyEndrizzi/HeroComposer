@@ -120,52 +120,13 @@ public class RehController : MonoBehaviour {
 
     private void PassTeam() //set selected units to be used 
     {
-        SetTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
-    }
-
-    public void SetTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
-    {
-        ClearTeam();
-        Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
-        for (int i = 0; i < characters.Length; i++)
-        {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
-            //Debug.Log("SO " + currentCharacterSO.name);
-            if (characters[i])
-            {
-                if (currentCharacterSO.name == chars[0])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
-                }
-                else if (currentCharacterSO.name == chars[1])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
-                }
-                else if (currentCharacterSO.name == chars[2])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
-                }
-                else if (currentCharacterSO.name == chars[3])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
-                }
-            }
-        }
-        GameObject.Find("__app").GetComponent<SaveData>().SaveInv(false, true, false);
+        GameObject.Find("__app").GetComponent<StoredValues>().SetTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
     }
 
     /* Sample code for serialized ScriptableObjects (saving) 
         ((CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/Acoustic")).name = "Patrick";
         GetComponent<LoadData>().SaveCharacters();
         */
-
-    private void ClearTeam() //Set team to null before setting new team
-    {
-        Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
-        Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
-        Assets.Scripts.MainMenu.ApplicationModel.characters[2] = null;
-        Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
-    }
 
     private void LoadPortraits() //Loads characters into portraits
     {

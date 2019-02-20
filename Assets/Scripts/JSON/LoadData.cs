@@ -137,10 +137,10 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("items.json");
         items = JsonHelper.getJsonArray<Items>(jsonString);
 
-        //GameObject.Find("Values").GetComponent<StoredValues>().nullItem();
+        //GameObject.Find("_app").GetComponent<StoredValues>().nullItem();
         for (int j = 0; j < items.Length; j++)
         {
-            //GameObject.Find("Values").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
+            //GameObject.Find("_app").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
             //"SoundEffects/" + items[j].sound                
         }
     }
