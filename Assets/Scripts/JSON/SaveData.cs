@@ -106,7 +106,7 @@ public class SaveData : MonoBehaviour
         string data = "[{\n"; //file start
 
         if (Item) { data = SaveInvItemsJSON(data); }
-        else      { data = SaveInvExceptRowJSON(data, 0); }
+        else      { data = SaveInvExceptRowJSON(data, 0);}
         data += ",\n";
 
         if (Team) { data = SaveInvTeamJSON(data); }
@@ -117,7 +117,19 @@ public class SaveData : MonoBehaviour
         else { data = SaveInvExceptRowJSON(data, 2); }
         data += "\n}]"; //file end
 
-        File.WriteAllText("Assets/Resources/Metadata/inventory.json", data);
+        Debug.Log("TEST = " + data);
+        Resources.Load("Assets/Resources/Metadata/inventory.json");
+        string[] week = new string[3];
+        week[0] = SaveInvExceptRowJSON("", 0);
+        week[1] = SaveInvTeamJSON(""); ;
+        week[2] = SaveInvExceptRowJSON("", 2);
+        string please = JsonUtility.ToJson(week, false);
+        Debug.Log("TEST 1 = " + please);
+        Debug.Log("WEEK 1 = " + week[0]);
+        Debug.Log("WEEK 2 = " + week[1]);
+        Debug.Log("WEEK 3 = " + week[2]);
+        File.WriteAllText(Application.dataPath + "/Resources/Metadata/inventory.json", data);
+        Debug.Log("TEST 2");
     }
     
     
@@ -209,5 +221,28 @@ public class SaveData : MonoBehaviour
         TextAsset targetFile = Resources.Load<TextAsset>(filePath);
 
         return targetFile.text;
+    }
+
+    public class JsonHelper
+    {
+        public static T[] getJsonArray<T>(string json)
+        {
+            string newJson = "{ \"array\": " + json + "}";
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
+            return wrapper.array;
+        }
+
+        public static string ToJson<T>(T[] array, bool prettyPrint)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.array = array;
+            return JsonUtility.ToJson(wrapper, prettyPrint);
+        }
+
+        [System.Serializable]
+        private class Wrapper<T>
+        {
+            public T[] array;
+        }
     }
 }

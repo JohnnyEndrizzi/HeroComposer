@@ -126,12 +126,9 @@ public class RehController : MonoBehaviour {
     public void SetTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
     {
         ClearTeam();
-
         Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
-        
         for (int i = 0; i < characters.Length; i++)
         {
-            
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
             //Debug.Log("SO " + currentCharacterSO.name);
             if (characters[i])
@@ -153,8 +150,8 @@ public class RehController : MonoBehaviour {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }
             }
-        }        
-        GameObject.Find("Values").GetComponent<SaveData>().SaveInv(false, true, false);
+        }
+        GameObject.Find("__app").GetComponent<SaveData>().SaveInv(false, true, false);
     }
 
     /* Sample code for serialized ScriptableObjects (saving) 
@@ -171,12 +168,13 @@ public class RehController : MonoBehaviour {
     }
 
     private void LoadPortraits() //Loads characters into portraits
-    { 
-         for (int i=0; i < 4; i++)
+    {
+        for (int i=0; i < 4; i++)
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
                 unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].name);
+                //UnitDisplay1.GetComponent<BtnUnit>().SetIcon(Units[unitsInPortraits[i]].img);
             }
             else
             {
@@ -191,8 +189,10 @@ public class RehController : MonoBehaviour {
 
     private int FindKeyUnits(string name) //Find unit key from the unitName
     {
+        Debug.Log(Units.Keys);
         foreach(int key in Units.Keys)
         {
+            Debug.Log(key);
             if (name.Equals(Units[key].unitName))
             {
                 return key;

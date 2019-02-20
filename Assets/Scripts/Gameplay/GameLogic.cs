@@ -328,6 +328,8 @@ public class GameLogic : MonoBehaviour
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
         }
 
+        GetComponent<BossLogic>().setupBoss();
+
         /* The spawn and kill points for incoming notes */
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
@@ -337,8 +339,6 @@ public class GameLogic : MonoBehaviour
 
         /* Plays the opening curtain animation */
         StartCoroutine(introDelay());
-
-
     }
 
     /* Update is called once per frame */
