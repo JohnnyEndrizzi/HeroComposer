@@ -63,16 +63,12 @@ public class LoadData : MonoBehaviour
 
                 //UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
             }
-            else
-            {
-                Debug.Log("HEY " + characters[i].charName);
-            }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
-            GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
+            gameObject.GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            gameObject.GetComponent<StoredValues>().nullUnit();
         }
     }
 
@@ -99,12 +95,17 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
-        GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
-        GameObject.Find("Values").GetComponent<StoredValues>().CashL(inventory[0].Money);
+        gameObject.GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        gameObject.GetComponent<StoredValues>().CashL(inventory[0].Money);
 
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
-        for (int i = 0; i < characters.Length - 1; i++)
+        Debug.Log(tempNames[0]);
+        Debug.Log(tempNames[1]);
+        Debug.Log(tempNames[2]);
+        Debug.Log(tempNames[3]);
+
+        for (int i = 0; i < tempNames.Length; i++)
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
             if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
@@ -135,10 +136,10 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("items.json");
         items = JsonHelper.getJsonArray<Items>(jsonString);
 
-        GameObject.Find("Values").GetComponent<StoredValues>().nullItem();
+        //GameObject.Find("Values").GetComponent<StoredValues>().nullItem();
         for (int j = 0; j < items.Length; j++)
         {
-            GameObject.Find("Values").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
+            //GameObject.Find("Values").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
             //"SoundEffects/" + items[j].sound                
         }
     }
