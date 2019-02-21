@@ -152,8 +152,7 @@ public class RehController : MonoBehaviour {
     {
         Debug.Log(Units.Keys);
         foreach(int key in Units.Keys)
-        {
-            Debug.Log(key);
+        {            
             if (name.Equals(Units[key].unitName))
             {
                 return key;

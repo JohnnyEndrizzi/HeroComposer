@@ -118,20 +118,8 @@ public class SaveData : MonoBehaviour
         if (money) { data = SaveInvCashJSON(data); }
         else { data = SaveInvExceptRowJSON(data, 2); }
         data += "\n}]"; //file end
-
-        //Debug.Log("TEST = " + data);
-        Resources.Load(Application.dataPath + "/StreamingAssets/inventory.json");
-        //string[] week = new string[3];
-        //week[0] = SaveInvExceptRowJSON("", 0);
-        //week[1] = SaveInvTeamJSON(""); ;
-        //week[2] = SaveInvExceptRowJSON("", 2);
-        //string please = JsonUtility.ToJson(week, false);
-        //Debug.Log("TEST 1 = " + please);
-        //Debug.Log("WEEK 1 = " + week[0]);
-        //Debug.Log("WEEK 2 = " + week[1]);
-        //Debug.Log("WEEK 3 = " + week[2]);
+               
         File.WriteAllText(Application.dataPath + "/StreamingAssets/inventory.json", data);
-        //Debug.Log("TEST 2");
     }
     
     
@@ -142,8 +130,7 @@ public class SaveData : MonoBehaviour
         
         return data;
     }
-
-
+    
     private string SaveInvItemsJSON(string data) //Saved stored inventory
     {
         int[] storedItems = GetComponent<StoredValues>().GetStoredItems();
