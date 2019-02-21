@@ -34,7 +34,9 @@ public class SaveData : MonoBehaviour
         }
         data += "]";
 
-        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
+        //File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
+        File.WriteAllText(Application.dataPath + "/StreamingAssets/characters.json", data);
+
     }
 
     public void SaveScores() //Save scores to JSON  //mostly UNTESTED
@@ -117,19 +119,19 @@ public class SaveData : MonoBehaviour
         else { data = SaveInvExceptRowJSON(data, 2); }
         data += "\n}]"; //file end
 
-        Debug.Log("TEST = " + data);
-        Resources.Load("Assets/Resources/Metadata/inventory.json");
-        string[] week = new string[3];
-        week[0] = SaveInvExceptRowJSON("", 0);
-        week[1] = SaveInvTeamJSON(""); ;
-        week[2] = SaveInvExceptRowJSON("", 2);
-        string please = JsonUtility.ToJson(week, false);
-        Debug.Log("TEST 1 = " + please);
-        Debug.Log("WEEK 1 = " + week[0]);
-        Debug.Log("WEEK 2 = " + week[1]);
-        Debug.Log("WEEK 3 = " + week[2]);
-        File.WriteAllText(Application.dataPath + "/Resources/Metadata/inventory.json", data);
-        Debug.Log("TEST 2");
+        //Debug.Log("TEST = " + data);
+        Resources.Load(Application.dataPath + "/StreamingAssets/inventory.json");
+        //string[] week = new string[3];
+        //week[0] = SaveInvExceptRowJSON("", 0);
+        //week[1] = SaveInvTeamJSON(""); ;
+        //week[2] = SaveInvExceptRowJSON("", 2);
+        //string please = JsonUtility.ToJson(week, false);
+        //Debug.Log("TEST 1 = " + please);
+        //Debug.Log("WEEK 1 = " + week[0]);
+        //Debug.Log("WEEK 2 = " + week[1]);
+        //Debug.Log("WEEK 3 = " + week[2]);
+        File.WriteAllText(Application.dataPath + "/StreamingAssets/inventory.json", data);
+        //Debug.Log("TEST 2");
     }
     
     
@@ -217,10 +219,8 @@ public class SaveData : MonoBehaviour
     //Load file to string from path
     public static string LoadResourceTextfile(string path)
     {
-        string filePath = "Metadata/" + path.Replace(".json", "");
-        TextAsset targetFile = Resources.Load<TextAsset>(filePath);
-
-        return targetFile.text;
+        string fileText = File.ReadAllText(Application.streamingAssetsPath + "/" + path);
+        return fileText;
     }
 
     public class JsonHelper
