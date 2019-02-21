@@ -29,7 +29,7 @@ public class LoadData : MonoBehaviour
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
-        string jsonString = LoadResourceTextfile("characters.json");
+        string jsonString = LoadResourceTextfileStreaming("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
         //Debug.Log("TEST: " + jsonString);
@@ -72,27 +72,10 @@ public class LoadData : MonoBehaviour
         }
     }
 
-    public void SaveCharacters()
-    {
-        Debug.Log("DEPRECIATED: SAVE MOVED TO SAVEDATA");
-
-        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
-
-        string data = "[";
-        for (int i = 0; i < characters.Length; i++)
-        {
-            data += JsonUtility.ToJson(characters[i], true);
-            if (i < characters.Length - 1) data += ",";
-        }
-        data += "]";
-
-        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
-    }
-
     // Load inventory and team data from file
     public void LoadInv()
     {
-        string jsonString = LoadResourceTextfile("inventory.json");
+        string jsonString = LoadResourceTextfileStreaming("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
         gameObject.GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
@@ -152,7 +135,7 @@ public class LoadData : MonoBehaviour
 
     public void LoadLevels()
     {
-        string jsonString = LoadResourceTextfile("levels.json");
+        string jsonString = LoadResourceTextfileStreaming("levels.json");
         levels = JsonHelper.getJsonArray<Levels>(jsonString);
 
         for (int i = 0; i < levels.Length; i++)
@@ -165,9 +148,16 @@ public class LoadData : MonoBehaviour
     public static string LoadResourceTextfile(string path)
     {
         string filePath = "Metadata/" + path.Replace(".json", "");
+        
         TextAsset targetFile = Resources.Load<TextAsset>(filePath);
 
         return targetFile.text;
+    }
+
+    public static string LoadResourceTextfileStreaming(string path)
+    {    
+        string fileText = File.ReadAllText(Application.streamingAssetsPath + "/" + path);        
+        return fileText;
     }
 }
 
