@@ -316,7 +316,7 @@ public class GameLogic : MonoBehaviour
         {
             /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
-            beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
         }
         else
@@ -364,7 +364,6 @@ public class GameLogic : MonoBehaviour
                 /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
                 nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
                 nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
-
                 /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
                 if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
                 {

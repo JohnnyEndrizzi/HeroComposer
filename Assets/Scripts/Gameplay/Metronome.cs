@@ -28,7 +28,7 @@ public class Metronome {
     public Metronome(decimal startTime, decimal tickLength)
     {    
         /* Converts ms to s and divide tick length by the number of divisions in a beat */
-        this.tickLength = tickLength/1000m/(decimal)this.beatDivisions; 
+        this.tickLength = tickLength/1000m/(decimal)this.beatDivisions;
         nextTickTime = startTime + this.tickLength;
         Debug.Log(string.Format("Created metronome at start time {0} with tick length {1} and beat divisions {2}.\nNext tick time {3}",startTime,this.tickLength,beatDivisions,nextTickTime));
     }    

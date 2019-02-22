@@ -37,10 +37,11 @@ namespace OsuParser
         {
             if (beatmapFile != "")
             {
-                if (File.Exists(beatmapFile))
-                {
-                    Parse(beatmapFile);
-                }
+                Parse(beatmapFile);
+            }
+            else
+            {
+                Debug.Log("Error: Failed to find beatmap file: '" + beatmapFile + "'");
             }
         }
 
