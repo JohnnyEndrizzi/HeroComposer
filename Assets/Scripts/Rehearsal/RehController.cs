@@ -38,6 +38,12 @@ public class RehController : MonoBehaviour {
     public Dictionary<int, UnitDict> Units;
     public Dictionary<int, AllItemDict> AllItems;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip addChar;
+    private AudioClip remChar;
+    private AudioClip pickUpChar;
+
     //Text Locations 
     [SerializeField]
     private Image HoverTxt = null;
@@ -80,6 +86,12 @@ public class RehController : MonoBehaviour {
         UnitDisplay2.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay2, 2); });
         UnitDisplay3.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay3, 3); });
         UnitDisplay4.onClick.AddListener(delegate { OnClickUnitDisp(UnitDisplay4, 4); });
+
+        //Import Audio
+        audioSource = GetComponent<AudioSource>();
+        addChar = (AudioClip)Resources.Load("SoundEffects/rehersal_add_character_to_team");
+        remChar = (AudioClip)Resources.Load("SoundEffects/rehersal_remove_character_from_team");
+        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
     }
 
     void Update()
@@ -88,50 +100,71 @@ public class RehController : MonoBehaviour {
         {
             DropHeld();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LastScene.instance.prevScene = "Rehersal";
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+        }
     }
 
     void DropHeld() //Drop held item
     {
+        if (Drag.Dragging())
+        {
+            audioSource.PlayOneShot(remChar, 0.7F);
+        }
         Drag.SetIcon(null);
         HoldNum = 0;
         UnitMenu.lightsOut();
     }
 
-    private void passTeam() //set selected units to be used 
+    private void PassTeam() //set selected units to be used 
     {
-        setTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
+        SetTeam(new string[] {Units[unitsInPortraits[0]].unitName, Units[unitsInPortraits[1]].unitName, Units[unitsInPortraits[2]].unitName, Units[unitsInPortraits[3]].unitName});
     }
 
-    public void setTeam(string[] chars) //Takes unit names - locates characterScripts - sets those to load on play
+    public void SetTeam(string[] teamSet) //Takes unit names - locates characterScripts - sets those to load on play
     {
         ClearTeam();
 
-        Object[] characters = Resources.LoadAll("ScriptableObjects/Characters/", typeof(CharacterScriptObject));
-        
+        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
+        //Debug.Log(characters.Length + characters[0].name);
+
+        Debug.Log("======");
         for (int i = 0; i < characters.Length; i++)
         {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)characters[i];
+            
+            CharacterScriptObject currentCharacterSO = characters[i];
+            Debug.Log("SO " + currentCharacterSO.charName);
             if (characters[i])
             {
-                if (currentCharacterSO.name == chars[0])
+                if (currentCharacterSO.charName == teamSet[0])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
+                    Debug.Log("Set0" + Assets.Scripts.MainMenu.ApplicationModel.characters[0].charName);
                 }
-                else if (currentCharacterSO.name == chars[1])
+                else if (currentCharacterSO.charName == teamSet[1])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
+                    Debug.Log("Set1" + Assets.Scripts.MainMenu.ApplicationModel.characters[1].charName);
                 }
-                else if (currentCharacterSO.name == chars[2])
+                else if (currentCharacterSO.charName == teamSet[2])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == chars[3])
+                else if (currentCharacterSO.charName == teamSet[3])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }
             }
-        }
+        }        
+        GameObject.Find("Values").GetComponent<SaveData>().SaveInv(false, true, false);
     }
+
+    /* Sample code for serialized ScriptableObjects (saving) 
+        ((CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/Acoustic")).name = "Patrick";
+        GetComponent<LoadData>().SaveCharacters();
+        */
 
     private void ClearTeam() //Set team to null before setting new team
     {
@@ -147,7 +180,7 @@ public class RehController : MonoBehaviour {
         {
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i])
             {
-                unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].name);
+                unitsInPortraits[i] = FindKeyUnits(Assets.Scripts.MainMenu.ApplicationModel.characters[i].charName);
             }
             else
             {
@@ -174,6 +207,10 @@ public class RehController : MonoBehaviour {
     
     public void OnClickUnitMenu(int intID) //Unit Menu was clicked - attach selected unit to mouse
     {
+        if (!Drag.Dragging() || HoldNum != intID)
+        {
+            audioSource.PlayOneShot(pickUpChar, 0.5F);
+        }
         Drag.SetIcon(Units[intID].img);
         HoldNum = intID;
     }
@@ -212,13 +249,15 @@ public class RehController : MonoBehaviour {
                 unitsInPortraits[item - 1] = HoldNum;
                 HoldNum = 0;
                 UnitMenu.lightsOut();
+                audioSource.PlayOneShot(addChar, 0.7F);
             }
         }
         else { //clear selected portrait
             origin.GetComponent<BtnUnit>().SetIcon(null);
             unitsInPortraits[item - 1] = -1;
+            audioSource.PlayOneShot(remChar, 0.7F);
         }
-        passTeam(); //commits team to load
+        PassTeam(); //commits team to load
     }
 
     private int DoubleCheck()  //better than a single check - finds if the held unit is already in a portrait

@@ -11,13 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5a8399747dd664d90cfa7e381d606d, type: 3}
   m_Name: Sitar
   m_EditorClassIdentifier: 
-  name: Sitar
-  unlocked: 0
-  sprite: 
-  level: 0
-  hp: 0
-  atk: 0
-  def: 0
-  rcv: 0
-  mgc: 0
-  mgc_animation: 
+  charName: Sitar
+  desc: I am Sitar
+  sprite: Characters/sitar_sprite
+  headshot: Headshots/sitar_headshot
+  sound: SoundEffects/sitar_sound
+  unlocked: 1
+  level: 1
+  hp: 100
+  atk: 5
+  def: 5
+  rcv: 2
+  mgc: 2
+  eqp1: 0
+  eqp2: 0
+  eqp3: 0
+  mag_Eqp: fireball

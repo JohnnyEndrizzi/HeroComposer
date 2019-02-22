@@ -55,6 +55,13 @@ public class InvController : MonoBehaviour {
     [SerializeField]
     private Button BtnBottom = null;
 
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip equip;
+    private AudioClip pickUp;
+    private AudioClip place;
+    private AudioClip pickUpChar;
+
     //Text Locations
     [SerializeField]
     private Image HoverTxt = null;
@@ -80,6 +87,8 @@ public class InvController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
     public void Starter() 
     {
+        storedValues = GameObject.Find("Values").GetComponent<StoredValues>();
+
         //Pass information to menus
         InventoryMenu.AllItems = AllItems;
         InventoryMenu.storedItems = storedItems;
@@ -105,7 +114,14 @@ public class InvController : MonoBehaviour {
         BtnTop.onClick.AddListener(delegate {EqpOnClick(BtnTop, 1);});	
         BtnMid.onClick.AddListener(delegate {EqpOnClick(BtnMid, 2);});
         BtnBottom.onClick.AddListener(delegate {EqpOnClick(BtnBottom, 3);});
-	}
+
+        //Import Audio
+        audioSource = GetComponent<AudioSource>();
+        equip = (AudioClip)Resources.Load("SoundEffects/inventory_equip_item");
+        pickUp = (AudioClip)Resources.Load("SoundEffects/inventory_pick_up_item");
+        place = (AudioClip)Resources.Load("SoundEffects/inventory_place_item_back");
+        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
+    }
 
     void Update()
     {        
@@ -113,10 +129,20 @@ public class InvController : MonoBehaviour {
         {
             loadInv(FrontAndCentre);  //Drop held item and reload menus
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            LastScene.instance.prevScene = "Inventory";
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+        }
     }
         
     public void loadInv(int SelName) //Loads last saved data and brings a selected Character to the front
-    {
+    {        
+        if (FrontAndCentre != SelName)
+        {
+            audioSource.PlayOneShot(pickUpChar, 0.5F);
+        }
+
         FrontAndCentre = SelName;
         DropHeld();
 
@@ -142,16 +168,40 @@ public class InvController : MonoBehaviour {
         Units[FrontAndCentre].item2 = it[2];
         Units[FrontAndCentre].item3 = it[3];
 
+        /*
+        for (int i = 0; i < Units.Count; i++)
+        {
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName);
+            if (Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName))
+            {
+                currentCharacterSO.eqp1 = Units[i].item1;
+                currentCharacterSO.eqp2 = Units[i].item2;
+                currentCharacterSO.eqp3 = Units[i].item3;
+            }
+            else
+            {
+                // Debug.Log("HEY " + characters[i].name);
+            }
+        }
+        */
+
         //Save inventory items
         storedItems = InventoryMenu.GetStoredItems();
         storedValues.passUp(storedItems);
-        storedValues.save();
+        storedValues.saveInv();
+        storedValues.saveChar();
     }
+
+
 
     void DropHeld() // Drop held item
     {
+        if (HoldNum != 0)
+        {
+            audioSource.PlayOneShot(place, 0.7F);
+        }
         Drag.SetIcon(null);
-        HoldNum = 0;
+        HoldNum = 0;        
     }
 
     public void setImage(Sprite img) //Sets portrait image
@@ -169,14 +219,17 @@ public class InvController : MonoBehaviour {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(0);
 
             HoldNum = itemID;
+            audioSource.PlayOneShot(pickUp, 0.7F);
 
-        }else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
+        }
+        else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
         {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldNum);
             Drag.SetIcon(null);
 
             HoldNum = 0;
+            audioSource.PlayOneShot(place, 0.7F);
             saveInv();
         }  
         else if (Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == true) //switch item
@@ -188,6 +241,7 @@ public class InvController : MonoBehaviour {
             Drag.SetIcon(tempS);
 
             HoldNum = itemID;
+            audioSource.PlayOneShot(place, 0.7F);
             saveInv();
         }         
     }
@@ -200,6 +254,7 @@ public class InvController : MonoBehaviour {
             origin.GetComponent<BtnEquipt>().SetIcon(null);  
 
             HoldNum = it[item];
+            audioSource.PlayOneShot(pickUp, 0.7F);
             it[item] = 0;
 
         }
@@ -210,6 +265,7 @@ public class InvController : MonoBehaviour {
 
             it[item] = HoldNum;
             HoldNum = 0;
+            audioSource.PlayOneShot(equip, 0.7F);
             saveInv();
         }
         else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true) //switch item
@@ -222,6 +278,7 @@ public class InvController : MonoBehaviour {
 
             HoldNum = it[item];
             it[item] = tempN;
+            audioSource.PlayOneShot(equip, 0.7F);
             saveInv();
         }
     }
@@ -260,22 +317,25 @@ public class InvController : MonoBehaviour {
     {
         HoverTxt.gameObject.SetActive(true); //starts disabled
 
+        if (itemID == 0) { origin = 0; }
+
         if (origin > 0) //hoverEnter - fade in
-        {    
+        {
             origin--;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f, 0f)); 
+            StartCoroutine(ImageFader(0.1f, HoverTxt, 0f, 0.75f));
+            StartCoroutine(TextFader2(0.1f, txtBoxTitle, txtBoxDesc, 0f, 1f)); 
         }
         else if (origin < 0) //hoverExit - fade out
         {
             origin = Mathf.Abs(origin) - 1;
             ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f, 1f));
+            StartCoroutine(ImageFader(1f, HoverTxt, 0.75f, 0f));
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f, 0f));
         }
         else //catch
         {
-            ReWriter(AllItems[origin].Title, AllItems[origin].Desc);
+            
         }
     }
 
@@ -288,26 +348,43 @@ public class InvController : MonoBehaviour {
         else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
         else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
         else {Debug.Log("ERROR, hover origin unknown");}
-
-
+        
         if (check > 0) //hoverEnter - fade in
-        {           
-            StartCoroutine(TextFader(1f, txtBoxTitle, txtBoxDesc, 1f,0f)); 
+        {
+            StartCoroutine(ImageFader(0.2f, HoverTxt, 0f, 0.75f));
+            StartCoroutine(TextFader2(0.2f, txtBoxTitle, txtBoxDesc, 0f,1f)); 
         }
         else if (check < 0) //hoverEnter - fade out
         {
-            HoverTxt.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200);
-            StartCoroutine(TextFader(3f, txtBoxTitle, txtBoxDesc, 0f,1f));
+            StartCoroutine(ImageFader(1f, HoverTxt, 0.75f, 0f));
+            StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f,0f));
         }
     }
 
-    IEnumerator TextFader(float t, Text i, Text i2, float fader, float fader2) //Controls the text fading in or out for 2 text objects
-    { //0 to invisible, 1 to visible - fader2 is opposite of fader
-        i.color = new Color(i.color.r, i.color.g, i.color.b, fader);
-        i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, fader);
-        while (i.color.a < 1.0f && i.color.a > 0.0f) {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t)*fader + (Time.deltaTime / t)*fader);
-            i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, i2.color.a - (Time.deltaTime / t)*fader + (Time.deltaTime / t)*fader);
+    IEnumerator TextFader2(float t, Text i, Text i2, float fade1, float fade2) //Controls the text fading in or out for 2 text objects
+    {
+        //0 to invisible, 1 to visible - fader2 is opposite of fader
+        //fade1 = start alpha, fade2 = end alpha
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, fade1);
+
+        while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            i2.color = new Color(i2.color.r, i2.color.g, i2.color.b, i2.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
+            yield return null;
+        }
+    }
+    IEnumerator ImageFader(float t, Image i, float fade1, float fade2) //Controls the Image fading in or out for Image 
+    {
+        //0 to invisible, 1 to visible
+        //fade1 = start alpha, fade2 = end alpha   
+
+        i.color = new Color(i.color.r, i.color.g, i.color.b, fade1);
+        while (i.color.a < fade1 + 0.1 && i.color.a > fade2 - 0.1 || i.color.a < fade2 + 0.1 && i.color.a > fade1 - 0.1)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t) * fade1 + (Time.deltaTime / t) * fade2);
             yield return null;
         }
     }

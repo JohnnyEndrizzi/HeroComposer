@@ -1,4 +1,5 @@
 [{
-	"StoredItems":"3;0;4;2;4;0;2;0;4;0;4;4;1;1;1;2;4;2;1;1;1;2;2;4;2;2;3;3;1;2;4;0",
-	"SelUnits":"Sitar;Acoustic;0;0"
+	"StoredItems":"1;2;3;4;5",
+	"SelUnits":"Sitar;Taiko;Acoustic;Trumpet",
+	"Money":100000
 }]

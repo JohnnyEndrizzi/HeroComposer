@@ -24,8 +24,8 @@ public class ShopMenuCtrl : MonoBehaviour {
         if (GameObject.Find("ShopBtn #0") != null) //Destroy buttons to allow for reload
         { 
             DestroyerOfLists();
-        }     
-        
+        }
+
         for (int i = 0; i<shopItems.Count; i++)  //Create a button for each item in sell list (excluding null)
         { 
             PlayerItem newItem = new PlayerItem();
@@ -43,6 +43,7 @@ public class ShopMenuCtrl : MonoBehaviour {
 
             shopInventory.Add(newItem);
         }
+
         GenInventory();
     }
 
@@ -52,12 +53,12 @@ public class ShopMenuCtrl : MonoBehaviour {
         foreach (PlayerItem newItem in shopInventory) { 
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             button.SetActive(true);
-
+             
             button.name = ("ShopBtn #" + i);
             button.GetComponent<ShopMenuItem>().SetIcon(newItem.iconSprite);
             button.GetComponent<ShopMenuItem>().SetInvID(i);
             button.GetComponent<ShopMenuItem>().SetItemID(newItem.itemID);
-            button.GetComponent<ShopMenuItem>().SetText(Dict[shopItems[i]].Cost.ToString());
+            button.GetComponent<ShopMenuItem>().SetText(Dict[newItem.itemID].Cost.ToString());
             button.transform.SetParent(buttonTemplate.transform.parent,false);
 
             i++;

@@ -55,6 +55,6 @@ public class InvMenuBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData data) //Turns on text on hoverExit
     {
-        GameObject.Find("InvController").GetComponent<InvController>().HoverText(-(invID+1), itemID);   
+        GameObject.Find("InvController").GetComponent<InvController>().HoverText(-(invID+1), itemID);
     }
 }

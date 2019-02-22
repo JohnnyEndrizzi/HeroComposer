@@ -57,7 +57,7 @@ public class SpcMenuCtrl : MonoBehaviour {
             button.GetComponent<SpcMenuItem>().SetIcon(newItem.iconSprite);
             button.GetComponent<SpcMenuItem>().SetInvID(i);
             button.GetComponent<SpcMenuItem>().SetItemID(newItem.itemID);
-            button.GetComponent<SpcMenuItem>().SetText(Dict[shopItems[i]].Cost.ToString());
+            button.GetComponent<SpcMenuItem>().SetText(Dict[newItem.itemID].Cost.ToString());
             button.transform.SetParent(buttonTemplate.transform.parent,false);
 
             i++;

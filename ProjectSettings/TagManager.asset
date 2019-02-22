@@ -20,6 +20,9 @@ TagManager:
   - Spotlight
   - Background
   - Health Bar
+  - ShopBtn
+  - SpcBtn
+  - ScoreLayer
   layers:
   - Default
   - TransparentFX

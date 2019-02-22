@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class DoorHandler : MonoBehaviour
@@ -11,24 +11,28 @@ public class DoorHandler : MonoBehaviour
 	public Canvas selectcanvas;
 	public Button play;
 
-    private bool Done = false;
+    //Audio
+    private AudioSource audioSource;
+    private AudioClip opening;
+    private AudioClip closing;
+
+    public bool clearToProceed = false;
 
     void Start()
     {
-        /* Deserializes all information from their corresponding JSON into local copies */
-        if (GetComponent<LoadData>() != null && Done == false)
+        if (AudioListener.volume == 0)
         {
-            Done = true;
-            GetComponent<LoadData>().LoadCharacters();
-            GetComponent<LoadData>().LoadItems();
-            GetComponent<LoadData>().LoadInv();
-
-            /* TODO */
-            //GetComponent<LoadData>().LoadMagic();
+            AudioListener.volume = 1;
         }
+     
 
-        selectcanvas.enabled = false;
-        StoredValues.Cash += 5000;
+
+        audioSource = GetComponent<AudioSource>();
+        opening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
+        closing = (AudioClip)Resources.Load("SoundEffects/menu_door_close");
+        audioSource.mute = true;
+
+        selectcanvas.enabled = false;    
     }
 
     /* Update is called once per frame */
@@ -40,41 +44,40 @@ public class DoorHandler : MonoBehaviour
 
             if (play != null)
             {
-                
+
                 if (!selectcanvas.enabled)
                 {
-                    selectcanvas.enabled = true;                    
-                    play.onClick.AddListener(PlaybuttonOnClick);
-                }
+                    mute();
+                    selectcanvas.enabled = true;
+                    play.onClick.AddListener(PlaybuttonOnClick);                    
+                } 
             }     
 		}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (selectcanvas.enabled && play != null)
+            {
+                unMute();
+                selectcanvas.enabled = false;
+                play.onClick.RemoveListener(PlaybuttonOnClick);
+            }
+            else if (!selectcanvas.enabled)
+            {
+                //TODO open pause menu
+                MenuSceneSwitch("StartMenu");
+            }
+        }        
     }
 
     /* This function is called when the mouse hovers over the doors on the main menu */
-	void OnMouseOver()
+	void OnMouseEnter()
 	{	
-		if (selectcanvas.enabled == false)
+		if (selectcanvas.enabled == false && clearToProceed == true)
         {
-			doorstatus = 1;
-
-            /* The corresponding door's open animation will play */
-            if (this.name.Equals("InventoryDoorClose"))
-            {
-                closeddoor.Play("SoundCheckOpen");
-            }
-            else if (this.name.Equals("ShopDoorClose"))
-            {
-                closeddoor.Play("MusicShopOpen");
-            }
-            else if (this.name.Equals("PlayDoorClose"))
-            {
-                closeddoor.Play("door_open");
-            }
-            else
-            {
-                string tempName = this.name.Replace("DoorClose", "");
-                closeddoor.Play(tempName + "Open");
-            }            
+            doorstatus = 1;
+            StartCoroutine(Doors());
+            //StartCoroutine(DoorOpen()); //The old code
         }
 	}
 
@@ -82,25 +85,50 @@ public class DoorHandler : MonoBehaviour
     void OnMouseExit()
     {
         doorstatus = 0;
+        //StartCoroutine(DoorClose()); //The old code
+    }
 
-        /* The corresponding door's close animation will play */
-        if (this.name.Equals("InventoryDoorClose"))
+
+    IEnumerator Doors()
+    {
+        StartCoroutine(DoorOpen());
+
+        if (doorstatus != 0)
         {
-            closeddoor.Play("SoundCheckClose");
+            yield return null;
         }
-        else if (this.name.Equals("ShopDoorClose"))
+
+        yield return new WaitForSeconds(0.5f);
+        
+        yield return StartCoroutine(IsDoorClosed());
+
+
+        StartCoroutine(DoorClose());
+
+        yield return null;
+    }
+
+    IEnumerator Doors2() //WIP
+    {
+        yield return StartCoroutine(D1());
+        yield return StartCoroutine(D2());
+
+        yield return null;
+    }
+
+    IEnumerator D1() //WIP
+    {
+        if (doorstatus != 0)
         {
-            closeddoor.Play("MusicShopClose");
+            yield return null;
         }
-        else if (this.name.Equals("PlayDoorClose"))
-        {
-            closeddoor.Play("door_animation");
-        }
-        else
-        {
-            string tempName = this.name.Replace("DoorClose", "");
-            closeddoor.Play(tempName + "Close");
-        }
+        yield return null;
+    }
+
+    IEnumerator D2() //WIP
+    {       
+        yield return new WaitForSeconds(0.5f);
+        yield return null;
     }
 
     /* This function is called when the mouse clicks on a door on the main menu */
@@ -120,10 +148,11 @@ public class DoorHandler : MonoBehaviour
 
         if (tempName.Equals("Audition")) //Temporary until Audition scene is completed
         {
-            MenuSceneSwitch("Menu");
+            this.transform.GetComponent<ComingSoon>().clicked();
         }
         else if (!tempName.Equals("Play")) //Play button has a more complex function attached
         {
+            mute();
             MenuSceneSwitch(tempName);
         }
     }
@@ -139,11 +168,9 @@ public class DoorHandler : MonoBehaviour
          * Description: The player must be able to choose a level.
          * 
          * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
+        Assets.Scripts.MainMenu.ApplicationModel.songName = Regex.Replace(songTitle, @"\s+", "");
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
-        /* Preserves the main menu as the last scene */
-        //LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        //SceneManager.LoadScene("Scenes/main", LoadSceneMode.Single);
         MenuSceneSwitch("main");
     }
 
@@ -151,5 +178,83 @@ public class DoorHandler : MonoBehaviour
     private void MenuSceneSwitch(string sceneNew)
     {
         GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
+    }
+
+    public void mute()
+    {
+        GameObject.Find("PlayDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("InventoryDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("AuditionDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = true;
+        GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = true;
+    }
+
+    public void unMute()
+    {
+        GameObject.Find("PlayDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("InventoryDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("AuditionDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = false;
+        GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = false;
+    }
+
+    IEnumerator IsDoorClosed() //OnHoverExit
+    {
+        while (doorstatus != 0)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator DoorOpen() //Plays Door Opening Animation
+    {
+        audioSource.Pause();
+        audioSource.PlayOneShot(opening, 0.7F);
+
+        /* The corresponding door's open animation will play */
+        if (this.name.Equals("InventoryDoorClose"))
+        {
+            closeddoor.Play("SoundCheckOpen");
+        }
+        else if (this.name.Equals("ShopDoorClose"))
+        {
+            closeddoor.Play("MusicShopOpen");
+        }
+        else if (this.name.Equals("PlayDoorClose"))
+        {
+            closeddoor.Play("door_open");
+        }
+        else
+        {
+            string tempName = this.name.Replace("DoorClose", "");
+            closeddoor.Play(tempName + "Open");
+        }
+        yield return null;
+    }
+
+    IEnumerator DoorClose() //Plays Door Closing Animation
+    {
+        audioSource.Pause();
+        audioSource.PlayOneShot(closing, 0.7F);
+
+        /* The corresponding door's close animation will play */
+        if (this.name.Equals("InventoryDoorClose"))
+        {
+            closeddoor.Play("SoundCheckClose");
+        }
+        else if (this.name.Equals("ShopDoorClose"))
+        {
+            closeddoor.Play("MusicShopClose");
+        }
+        else if (this.name.Equals("PlayDoorClose"))
+        {
+            closeddoor.Play("door_animation");
+        }
+        else
+        {
+            string tempName = this.name.Replace("DoorClose", "");
+            closeddoor.Play(tempName + "Close");
+        }
+        yield return null;
     }
 }

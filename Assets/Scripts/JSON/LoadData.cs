@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
 
 public class LoadData : MonoBehaviour
 {
@@ -20,6 +22,9 @@ public class LoadData : MonoBehaviour
     Inventory[] inventory;
     Items[] items;
     Magic[] magic;
+    Levels[] levels;
+
+    Dictionary<int, LevelDict> Lvls = new Dictionary<int, LevelDict>();
 
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
@@ -27,16 +32,20 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
+        //Debug.Log("TEST: " + jsonString);
+
         for (int i = 0; i < characters.Length; i++)         
         {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
-            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
+            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
             {
-                currentCharacterSO.name = characters[i].name;
+                //Debug.Log(characters[i].name);
+                currentCharacterSO.charName = characters[i].charName;
+                //Debug.Log(currentCharacterSO.name);
                 currentCharacterSO.desc = characters[i].desc;
-                currentCharacterSO.sprite = "Characters/" + characters[i].sprite;
-                currentCharacterSO.headshot = "Headshots/" + characters[i].headshot;
-                currentCharacterSO.sound = "SoundEffects/" + characters[i].sound;
+                currentCharacterSO.sprite = characters[i].sprite;
+                currentCharacterSO.headshot = characters[i].headshot;
+                currentCharacterSO.sound = characters[i].sound;
 
                 currentCharacterSO.unlocked = characters[i].unlocked;
 
@@ -51,14 +60,37 @@ public class LoadData : MonoBehaviour
                 currentCharacterSO.eqp2 = characters[i].eqp2;
                 currentCharacterSO.eqp3 = characters[i].eqp3;
                 currentCharacterSO.mag_Eqp = characters[i].mag_Eqp;
+
+                //UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
+            }
+            else
+            {
+                Debug.Log("HEY " + characters[i].charName);
             }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, "Characters/" + characters[i].sprite, "SoundEffects/" + characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
             GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
         }
+    }
+
+    public void SaveCharacters()
+    {
+        Debug.Log("DEPRECIATED: SAVE MOVED TO SAVEDATA");
+
+        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
+
+        string data = "[";
+        for (int i = 0; i < characters.Length; i++)
+        {
+            data += JsonUtility.ToJson(characters[i], true);
+            if (i < characters.Length - 1) data += ",";
+        }
+        data += "]";
+
+        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
     }
 
     // Load inventory and team data from file
@@ -68,32 +100,34 @@ public class LoadData : MonoBehaviour
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
         GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        GameObject.Find("Values").GetComponent<StoredValues>().CashL(inventory[0].Money);
+
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characters.Length - 1; i++)
         {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].name);
-            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].name))
+            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
+            if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
             {
-                if (currentCharacterSO.name == tempNames[0])
+                if (currentCharacterSO.charName == tempNames[0])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[1])
+                else if (currentCharacterSO.charName == tempNames[1])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[2])
+                else if (currentCharacterSO.charName == tempNames[2])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
                 }
-                else if (currentCharacterSO.name == tempNames[3])
+                else if (currentCharacterSO.charName == tempNames[3])
                 {
                     Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
                 }
             }
         }   
-    }
+    }       
 
     // Load Item data from file to Item Dictionary
     public void LoadItems()
@@ -113,6 +147,17 @@ public class LoadData : MonoBehaviour
     public void LoadMagic()
     {
        // TODO
+    }
+
+    public void LoadLevels()
+    {
+        string jsonString = LoadResourceTextfile("levels.json");
+        levels = JsonHelper.getJsonArray<Levels>(jsonString);
+
+        for (int i = 0; i < levels.Length; i++)
+        {
+            Lvls.Add(i, new LevelDict(levels[i].LevelName, levels[i].LevelSong, levels[i].Enemy, levels[i].Terrain, levels[i].scoreNormal, levels[i].scoreHard, levels[i].scoreExpert, levels[i].nameNormal, levels[i].nameHard, levels[i].nameExpert));
+        }
     }
 
     //Load file to string from path
@@ -137,16 +182,46 @@ public class JsonHelper
         return wrapper.array;
     }
 
-    public static string ToJson<T>(T[] array)
+    public static string ToJson<T>(T[] array, bool prettyPrint)
     {
         Wrapper<T> wrapper = new Wrapper<T>();
         wrapper.array = array;
-        return JsonUtility.ToJson(wrapper);
+        return JsonUtility.ToJson(wrapper, prettyPrint);
     }
 
     [System.Serializable]
     private class Wrapper<T>
     {
         public T[] array;
+    }
+}
+
+
+public class LevelDict
+{ //All level and scores Dictionary 
+    public string LevelName; 
+    public string LevelSong;    
+    public string Enemy;
+    public string Terrain;
+
+    public int[] scoreNormal = new int[5];
+    public string[] nameNormal = new string[5];
+    public int[] scoreHard = new int[5];
+    public string[] nameHard = new string[5];
+    public int[] scoreExpert = new int[5];
+    public string[] nameExpert = new string[5];
+
+    public LevelDict(string LevelNameX, string LevelSongX, string EnemyX, string TerrainX, int[] scoreNormalX, int[] scoreHardX, int[] scoreExpertX, string[] nameNormalX, string[] nameHardX, string[] nameExpertX)
+    {
+        LevelName = LevelNameX;
+        LevelSong = LevelSongX;
+        Enemy = EnemyX;
+        Terrain = TerrainX;
+        scoreNormal = scoreNormalX;
+        nameNormal = nameNormalX;
+        scoreHard = scoreHardX;
+        nameHard = nameHardX;
+        scoreExpert = scoreExpertX;
+        nameExpert = nameExpertX;
     }
 }

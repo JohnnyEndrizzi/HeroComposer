@@ -5,7 +5,7 @@ using System.Collections;
 [System.Serializable]
 public class Character
 {
-    public string name;
+    public string charName;
     public string desc;
     public string sprite;
     public string headshot;

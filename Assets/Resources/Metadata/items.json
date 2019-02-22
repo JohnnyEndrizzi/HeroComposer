@@ -3,86 +3,86 @@
 	"NameTitle":"Amp",
 	"Desc":"Amplifies attacks",
 	"cost":2500,
-	"sprite": "greenPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "greenPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"tuner",
 	"NameTitle":"Tuner",
 	"Desc":"Tunes Defences",
 	"cost":1500,
-	"sprite": "potion", 
-	"sound": "acoustic_sound" 
+	"sprite": "potion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"speaker",
 	"NameTitle":"Speakers",
 	"Desc":"Makes a wall of sound upping HP",
 	"cost":2000,
-	"sprite": "redPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "redPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"mixer",
 	"NameTitle":"Mixer",
 	"Desc":"Boosts magical attacks",
 	"cost":1500,
-	"sprite": "yellowPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "yellowPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"strings",
 	"NameTitle":"Spare Strings",
 	"Desc":"Increases HP",
 	"cost":1000,
-	"sprite": "greenPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "greenPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"metronome",
 	"NameTitle":"Metronome",
 	"Desc":"Adds some recovery",
 	"cost":4000,
-	"sprite": "potion", 
-	"sound": "acoustic_sound" 
+	"sprite": "potion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"Item1",
 	"NameTitle":"Item 1",
 	"Desc":"Does something",
 	"cost":400,
-	"sprite": "redPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "redPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"Item2",
 	"NameTitle":"Item 1",
 	"Desc":"Does something else",
 	"cost":500,
-	"sprite": "yellowPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "yellowPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"cymbol",
 	"NameTitle":"Cymbol",
 	"Desc":"Increases a drummers HP",
 	"cost":5000,
-	"sprite": "redPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "redPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"guitarString",
 	"NameTitle":"Spare Guitar Strings",
 	"Desc":"Increases Guitarists HP",
 	"cost":5000,
-	"sprite": "greenPotion", 
-	"sound": "acoustic_sound" 
+	"sprite": "greenPotion",
+	"sound": "acoustic_sound"
 },
 {
 	"NameKey":"trumpetStand",
 	"NameTitle":"Trumpet Stand",
 	"Desc":"Increases a trumpeters Ranged Attack power",
 	"cost":5000,
-	"sprite": "potion", 
-	"sound": "acoustic_sound" 
+	"sprite": "potion",
+	"sound": "acoustic_sound"
 }]
