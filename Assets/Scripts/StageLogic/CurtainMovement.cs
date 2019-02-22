@@ -110,6 +110,8 @@ public class CurtainMovement : MonoBehaviour
 
         MenuRender = GetComponent<SpriteRenderer>();
         MenuRender2 = GetComponent<Image>();
+
+        //end = true;
     }
 
     /* Update is called once per frame */
