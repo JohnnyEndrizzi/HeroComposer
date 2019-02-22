@@ -67,7 +67,7 @@ public class LoadData : MonoBehaviour
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            gameObject.GetComponent<StoredValues>().importUnits(i, characters[i].name, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            gameObject.GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
             gameObject.GetComponent<StoredValues>().nullUnit();
         }
     }

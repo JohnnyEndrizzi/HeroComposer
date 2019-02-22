@@ -168,6 +168,14 @@ public class RehController : MonoBehaviour {
         GetComponent<LoadData>().SaveCharacters();
         */
 
+    private void ClearTeam() //Set team to null before setting new team
+    {
+        Assets.Scripts.MainMenu.ApplicationModel.characters[0] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[1] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[2] = null;
+        Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
+    }
+
     private void LoadPortraits() //Loads characters into portraits
     {
         for (int i=0; i < 4; i++)
