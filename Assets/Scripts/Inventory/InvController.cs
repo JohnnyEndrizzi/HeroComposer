@@ -87,7 +87,7 @@ public class InvController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
     public void Starter() 
     {
-        storedValues = GameObject.Find("Values").GetComponent<StoredValues>();
+        storedValues = GameObject.Find("_app").GetComponent<StoredValues>();
 
         //Pass information to menus
         InventoryMenu.AllItems = AllItems;

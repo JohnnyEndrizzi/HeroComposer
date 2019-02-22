@@ -316,8 +316,7 @@ public class GameLogic : MonoBehaviour
         {
             /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
-            beatmap = new Beatmap("Assets/Resources/Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
-            Debug.Log(Assets.Scripts.MainMenu.ApplicationModel.songName);
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
         }
         else
@@ -328,6 +327,8 @@ public class GameLogic : MonoBehaviour
             GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
         }
 
+        GetComponent<BossLogic>().setupBoss();
+
         /* The spawn and kill points for incoming notes */
         startPos = new Vector2(-372f, 134.2F);
         endPos = new Vector2(322.37F, 134.2F);
@@ -337,8 +338,6 @@ public class GameLogic : MonoBehaviour
 
         /* Plays the opening curtain animation */
         StartCoroutine(introDelay());
-
-
     }
 
     /* Update is called once per frame */
@@ -365,7 +364,6 @@ public class GameLogic : MonoBehaviour
                 /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
                 nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
                 nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
-
                 /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
                 if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
                 {
@@ -424,7 +422,7 @@ public class GameLogic : MonoBehaviour
         }
 
         /* The following is the logic that defines how held notes spawn, which sets appropriate 'SecondaryNote' and 
-         * 'PrimaryNote' labels to each GameObject */ 
+         * 'PrimaryNote' labels to each GameObject */
         if (iterationsLeft == 2 || firstNoteOfSlider == false)
         {
             noteTag = "SecondaryNote";
@@ -443,8 +441,6 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
-        //Debug.Log(beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat) + " == " + e.positionInBeats);
-
         /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
         if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
         {
@@ -458,8 +454,10 @@ public class GameLogic : MonoBehaviour
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        if (e.positionInBeats == (nextBeat - beatmap.GetApproachRate()))
+        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
+            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;

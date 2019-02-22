@@ -60,7 +60,7 @@ public class BossLogic : MonoBehaviour
         return weigthedValues[random.Next(0, weigthedValues.Count)];
     }
 
-    void Start()
+    public void setupBoss()
     {
         /* Randomly generate the timing of the boss' next queued attack (3 - 7 beats apart) */
         System.Random random = newRandomSeed();

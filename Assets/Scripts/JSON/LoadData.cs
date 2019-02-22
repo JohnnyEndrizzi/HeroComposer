@@ -29,7 +29,7 @@ public class LoadData : MonoBehaviour
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
-        string jsonString = LoadResourceTextfile("characters.json");
+        string jsonString = LoadResourceTextfileStreaming("characters.json");
         characters = JsonHelper.getJsonArray<Character>(jsonString);
 
         //Debug.Log("TEST: " + jsonString);
@@ -63,48 +63,32 @@ public class LoadData : MonoBehaviour
 
                 //UnityEditor.EditorUtility.SetDirty(currentCharacterSO);
             }
-            else
-            {
-                Debug.Log("HEY " + characters[i].charName);
-            }
 
             int[] eqp = {characters[i].eqp1, characters[i].eqp2, characters[i].eqp3};
             int[] stats = { characters[i].level, characters[i].hp, characters[i].atk, characters[i].def, characters[i].mgc, characters[i].rcv};
 
-            GameObject.Find("Values").GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
-            GameObject.Find("Values").GetComponent<StoredValues>().nullUnit();
+            gameObject.GetComponent<StoredValues>().importUnits(i, characters[i].charName, characters[i].desc, characters[i].sprite, characters[i].sound, eqp, characters[i].unlocked, stats, characters[i].mag_Eqp);
+            gameObject.GetComponent<StoredValues>().nullUnit();
         }
-    }
-
-    public void SaveCharacters()
-    {
-        Debug.Log("DEPRECIATED: SAVE MOVED TO SAVEDATA");
-
-        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
-
-        string data = "[";
-        for (int i = 0; i < characters.Length; i++)
-        {
-            data += JsonUtility.ToJson(characters[i], true);
-            if (i < characters.Length - 1) data += ",";
-        }
-        data += "]";
-
-        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
     }
 
     // Load inventory and team data from file
     public void LoadInv()
     {
-        string jsonString = LoadResourceTextfile("inventory.json");
+        string jsonString = LoadResourceTextfileStreaming("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
-        GameObject.Find("Values").GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
-        GameObject.Find("Values").GetComponent<StoredValues>().CashL(inventory[0].Money);
+        gameObject.GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
+        gameObject.GetComponent<StoredValues>().CashL(inventory[0].Money);
 
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
-        for (int i = 0; i < characters.Length - 1; i++)
+        Debug.Log(tempNames[0]);
+        Debug.Log(tempNames[1]);
+        Debug.Log(tempNames[2]);
+        Debug.Log(tempNames[3]);
+
+        for (int i = 0; i < tempNames.Length; i++)
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
             if (Resources.Load("ScriptableObjects/Characters/" + characters[i].charName))
@@ -135,10 +119,10 @@ public class LoadData : MonoBehaviour
         string jsonString = LoadResourceTextfile("items.json");
         items = JsonHelper.getJsonArray<Items>(jsonString);
 
-        GameObject.Find("Values").GetComponent<StoredValues>().nullItem();
+        //GameObject.Find("_app").GetComponent<StoredValues>().nullItem();
         for (int j = 0; j < items.Length; j++)
         {
-            GameObject.Find("Values").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
+            //GameObject.Find("_app").GetComponent<StoredValues>().importItems(j+1, items[j].NameKey, items[j].NameTitle, items[j].Desc, "Items/" + items[j].sprite, items[j].cost);
             //"SoundEffects/" + items[j].sound                
         }
     }
@@ -151,7 +135,7 @@ public class LoadData : MonoBehaviour
 
     public void LoadLevels()
     {
-        string jsonString = LoadResourceTextfile("levels.json");
+        string jsonString = LoadResourceTextfileStreaming("levels.json");
         levels = JsonHelper.getJsonArray<Levels>(jsonString);
 
         for (int i = 0; i < levels.Length; i++)
@@ -164,9 +148,16 @@ public class LoadData : MonoBehaviour
     public static string LoadResourceTextfile(string path)
     {
         string filePath = "Metadata/" + path.Replace(".json", "");
+        
         TextAsset targetFile = Resources.Load<TextAsset>(filePath);
 
         return targetFile.text;
+    }
+
+    public static string LoadResourceTextfileStreaming(string path)
+    {    
+        string fileText = File.ReadAllText(Application.streamingAssetsPath + "/" + path);        
+        return fileText;
     }
 }
 

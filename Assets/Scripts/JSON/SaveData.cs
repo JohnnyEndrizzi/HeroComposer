@@ -34,7 +34,9 @@ public class SaveData : MonoBehaviour
         }
         data += "]";
 
-        File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
+        //File.WriteAllText("Assets/Resources/Metadata/characters.json", data);
+        File.WriteAllText(Application.dataPath + "/StreamingAssets/characters.json", data);
+
     }
 
     public void SaveScores() //Save scores to JSON  //mostly UNTESTED
@@ -106,7 +108,7 @@ public class SaveData : MonoBehaviour
         string data = "[{\n"; //file start
 
         if (Item) { data = SaveInvItemsJSON(data); }
-        else      { data = SaveInvExceptRowJSON(data, 0); }
+        else      { data = SaveInvExceptRowJSON(data, 0);}
         data += ",\n";
 
         if (Team) { data = SaveInvTeamJSON(data); }
@@ -116,8 +118,8 @@ public class SaveData : MonoBehaviour
         if (money) { data = SaveInvCashJSON(data); }
         else { data = SaveInvExceptRowJSON(data, 2); }
         data += "\n}]"; //file end
-
-        File.WriteAllText("Assets/Resources/Metadata/inventory.json", data);
+               
+        File.WriteAllText(Application.dataPath + "/StreamingAssets/inventory.json", data);
     }
     
     
@@ -128,8 +130,7 @@ public class SaveData : MonoBehaviour
         
         return data;
     }
-
-
+    
     private string SaveInvItemsJSON(string data) //Saved stored inventory
     {
         int[] storedItems = GetComponent<StoredValues>().GetStoredItems();
@@ -205,9 +206,30 @@ public class SaveData : MonoBehaviour
     //Load file to string from path
     public static string LoadResourceTextfile(string path)
     {
-        string filePath = "Metadata/" + path.Replace(".json", "");
-        TextAsset targetFile = Resources.Load<TextAsset>(filePath);
+        string fileText = File.ReadAllText(Application.streamingAssetsPath + "/" + path);
+        return fileText;
+    }
 
-        return targetFile.text;
+    public class JsonHelper
+    {
+        public static T[] getJsonArray<T>(string json)
+        {
+            string newJson = "{ \"array\": " + json + "}";
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
+            return wrapper.array;
+        }
+
+        public static string ToJson<T>(T[] array, bool prettyPrint)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.array = array;
+            return JsonUtility.ToJson(wrapper, prettyPrint);
+        }
+
+        [System.Serializable]
+        private class Wrapper<T>
+        {
+            public T[] array;
+        }
     }
 }
