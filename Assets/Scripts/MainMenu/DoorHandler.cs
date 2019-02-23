@@ -42,6 +42,9 @@ public class DoorHandler : MonoBehaviour
         {
             OnClick();
 
+            GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitch("Map");
+
+            /*
             if (play != null)
             {
 
@@ -51,7 +54,7 @@ public class DoorHandler : MonoBehaviour
                     selectcanvas.enabled = true;
                     play.onClick.AddListener(PlaybuttonOnClick);                    
                 } 
-            }     
+            }*/     
 		}
 
         if (Input.GetKeyDown(KeyCode.Escape) && this.name.Equals("PlayDoorClose"))
