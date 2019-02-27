@@ -19,17 +19,11 @@ public class CurtainMovementQuick : MonoBehaviour
     
 
     void Start()
-    {
-        RectTransform rectTransform = this.GetComponent<RectTransform>();
-        RectTransform rectTransformCanvas = this.transform.parent.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
-             
+    {             
         curtainAnim = GetComponent<Animator>();
-        //audioSource = GetComponent<AudioSource>();
-        opening = (AudioClip)Resources.Load("SoundEffects/menu_curtain_open");
-        closing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");
-
         
+        opening = (AudioClip)Resources.Load("SoundEffects/menu_curtain_open");
+        closing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");              
 
         MenuRender = GetComponent<SpriteRenderer>();
         MenuRender2 = GetComponent<Image>();

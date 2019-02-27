@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1686,7 +1686,7 @@ Prefab:
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
@@ -1716,22 +1716,22 @@ Prefab:
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -3.1036987
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -3.288086
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: -7.0024
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 6.9971
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
@@ -3210,32 +3210,32 @@ Prefab:
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 994
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 580
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}

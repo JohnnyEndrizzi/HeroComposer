@@ -16,7 +16,7 @@ public class ScreenLoader : MonoBehaviour
 
     private bool activated = false; //is button enabled (enables once curtains open)
 
-    AsyncOperation async;
+    //AsyncOperation async;
 
     public void activation()
     {
@@ -38,7 +38,7 @@ public class ScreenLoader : MonoBehaviour
         yield return StartCoroutine(AudioFadeOut());
         yield return StartCoroutine(TextFader(0.5f, loadingText, 1, 0));
 
-        async.allowSceneActivation = true;
+        //async.allowSceneActivation = true;
         MenuSceneSwitch("Menu");
 
         yield return null;
@@ -46,6 +46,7 @@ public class ScreenLoader : MonoBehaviour
 
     IEnumerator LoadNewScene()
     {
+        /*
         async = SceneManager.LoadSceneAsync("Menu");
         async.allowSceneActivation = false;
 
@@ -54,6 +55,7 @@ public class ScreenLoader : MonoBehaviour
             yield return null;
         }
 
+        */
         yield return null;
     }
     

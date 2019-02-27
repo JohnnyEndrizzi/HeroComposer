@@ -2237,11 +2237,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114772598042136666, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
-        type: 2}
-      propertyPath: m_PreserveAspect
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd325bdf34685cd4f8aaf480e3d3a11e, type: 2}
   m_IsPrefabAsset: 0
@@ -2401,7 +2396,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762131436}
   m_HandleRect: {fileID: 762131435}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3228,42 +3223,42 @@ Prefab:
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000044823
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00000023842
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1007.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 566.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
@@ -3278,11 +3273,6 @@ Prefab:
     - target: {fileID: 1860371619491214, guid: 99121d6520edbb043807429fa258188f, type: 2}
       propertyPath: m_Name
       value: CurtainsOpenTransition
-      objectReference: {fileID: 0}
-    - target: {fileID: 114131041608636378, guid: 99121d6520edbb043807429fa258188f,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99121d6520edbb043807429fa258188f, type: 2}
@@ -3813,7 +3803,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 27168303}
   m_HandleRect: {fileID: 27168302}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

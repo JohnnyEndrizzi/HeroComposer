@@ -98,11 +98,7 @@ public class CurtainMovement : MonoBehaviour
 
     /* Use this for initialization */
     void Start()
-    {
-        RectTransform rectTransform = this.GetComponent<RectTransform>();
-        RectTransform rectTransformCanvas = GameObject.Find("Healthbar").GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
-
+    {        
         delayLock = false;
         curtainAnim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
