@@ -18,14 +18,19 @@ public class DoorHandler : MonoBehaviour
 
     public bool clearToProceed = false;
 
+    /* TEMP MESSAGE
+     * To change b/n map and game on click 
+     * 
+     * change comments on:
+     * ~ line 171 in PlaybuttonOnClick()
+     */
+
     void Start()
     {
         if (AudioListener.volume == 0)
         {
             AudioListener.volume = 1;
         }
-     
-
 
         audioSource = GetComponent<AudioSource>();
         opening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
@@ -34,27 +39,22 @@ public class DoorHandler : MonoBehaviour
 
         selectcanvas.enabled = false;    
     }
-
-    /* Update is called once per frame */
+        
     void Update()
     {
 		if (Input.GetMouseButtonDown (0) && doorstatus == 1 )
         {
             OnClick();
-
-            GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitch("Map");
-
-            /*
+           
             if (play != null)
             {
-
                 if (!selectcanvas.enabled)
                 {
                     mute();
                     selectcanvas.enabled = true;
                     play.onClick.AddListener(PlaybuttonOnClick);                    
                 } 
-            }*/     
+            }     
 		}
 
         if (Input.GetKeyDown(KeyCode.Escape) && this.name.Equals("PlayDoorClose"))
@@ -175,6 +175,7 @@ public class DoorHandler : MonoBehaviour
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
         MenuSceneSwitch("main");
+        //MenuSceneSwitch("map");
     }
 
     /* Preserves the main menu as the last scene and loads the new one */
