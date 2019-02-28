@@ -16,7 +16,8 @@ public class DoorHandler : MonoBehaviour
     private AudioClip opening;
     private AudioClip closing;
 
-    public bool clearToProceed = false;
+    private bool clearToProceed = false;
+    private bool doorsUnlocked = false;
 
     /* TEMP MESSAGE
      * To change b/n map and game on click 
@@ -91,6 +92,22 @@ public class DoorHandler : MonoBehaviour
         //StartCoroutine(DoorClose()); //The old code
     }
 
+    /*Single check for if the mouse is already hovering over a door when the doors are unlocked*/
+    void OnMouseOver()
+    {
+        if(doorsUnlocked == true)
+        {
+            doorsUnlocked = false;
+            doorstatus = 1;
+            StartCoroutine(Doors());
+        }        
+    }  
+    
+    public void DoorUnlocker()
+    {
+        clearToProceed = true;
+        doorsUnlocked = true;
+    }
 
     IEnumerator Doors()
     {

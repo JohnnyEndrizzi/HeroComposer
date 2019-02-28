@@ -197,10 +197,10 @@ public class CurtainMovementQuick : MonoBehaviour
         GameObject.Find("ShopDoorClose").GetComponent<AudioSource>().mute = false;
         GameObject.Find("RehersalDoorClose").GetComponent<AudioSource>().mute = false;
 
-        GameObject.Find("PlayDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
-        GameObject.Find("InventoryDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
-        GameObject.Find("AuditionDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
-        GameObject.Find("ShopDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
-        GameObject.Find("RehersalDoorClose").GetComponent<DoorHandler>().clearToProceed = true;
+        GameObject.Find("PlayDoorClose").GetComponent<DoorHandler>().DoorUnlocker();
+        GameObject.Find("InventoryDoorClose").GetComponent<DoorHandler>().DoorUnlocker();
+        GameObject.Find("AuditionDoorClose").GetComponent<DoorHandler>().DoorUnlocker();
+        GameObject.Find("ShopDoorClose").GetComponent<DoorHandler>().DoorUnlocker();
+        GameObject.Find("RehersalDoorClose").GetComponent<DoorHandler>().DoorUnlocker();
     }
 }
