@@ -31,8 +31,8 @@ public class BossLogic : MonoBehaviour
     {
         /* Plays the boss attack animation towards the target character */
         GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
-        GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
-        GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
+        //GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
+        //GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
 
         /* These variables and calculations are tentative as we develop a better logic */
         int bossPower = 200;

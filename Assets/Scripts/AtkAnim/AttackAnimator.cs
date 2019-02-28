@@ -20,10 +20,9 @@ public class AttackAnimator : MonoBehaviour
 
     //Audio
     private AudioSource audioSource;
-    [SerializeField]
     private AudioClip arrowSound;
     private AudioClip bigArrowSound;
-    public AudioClip fireSound;
+    private AudioClip fireSound;
     private AudioClip iceSound;
     private AudioClip healSound;
 
@@ -34,7 +33,7 @@ public class AttackAnimator : MonoBehaviour
     //Dictionary lists to store all attack and location information
     Dictionary<string, Locations> LocationMap = new Dictionary<string, Locations>();
     Dictionary<string, Attacks> AttackMap = new Dictionary<string, Attacks>();
-
+       
     void Start()
     {
         LoadResources();
@@ -66,7 +65,7 @@ public class AttackAnimator : MonoBehaviour
          * Ideally new attacks can be implemented in a single line.
          * Below is a guide legend of the various behavior types and special actions so all relevent information 
          * is located here for ease of use. */
-        //AttackMap.Add("name", new Attacks(int attackCode, Transform prefab, Vector3 SpawnOffset, int scaleFactor, int customCmd));
+        //AttackMap.Add("name", new Attacks(int attackCode, Transform prefab, intintfloat SpawnOffset, int scaleFactor, int customCmd, audioClip sound));
         AttackMap.Add("heal", new Attacks(0, heal, 0, 0, 0.0f, 3, 4));
         AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
         AttackMap.Add("slash1", new Attacks(1, slash, -1, 0, 0.0f, 1, 52));
@@ -79,6 +78,9 @@ public class AttackAnimator : MonoBehaviour
         AttackMap.Add("fire3", new Attacks(2, fireball, 0, 0, 0.0f, 2, 3, fireSound));
         AttackMap.Add("blizzard", new Attacks(2, snow, 0, 0, 0.0f, 1, 12, iceSound));
 
+        AttackMap["arrow"].sound = arrowSound;
+        AttackMap["fireball"].sound = fireSound;
+        
         // Attack Code List //
         //0 - Single Character
         //1 - Single Char Wave
@@ -162,21 +164,23 @@ public class AttackAnimator : MonoBehaviour
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return; }
 
-        Debug.Log("new TargetedAtk: " + AtkName);
-        //Debug.Log("Tran: " + triggeredAttack.trans.name.ToString());
-        Debug.Log("Soun: " + arrowSound.ToString());
-        Debug.Log("Soun: " + AttackMap[AtkName].sound.ToString());
-        
-
+        //Debug.Log("new TargetedAtk: " + AtkName);        //works
+        //Debug.Log("Soun: " + bigArrowSound.ToString()); //works
+        //Debug.Log("Soun: " + AttackMap[AtkName].trans.ToString()); //works
+        //Debug.Log("Soun: " + AttackMap["arrowHail"].sound.ToString()); //doesnt work
+        //Debug.Log("Soun: " + AttackMap[AtkName].sound.name); //doesnt work
+                        
         Attacks triggeredAttack = AttackMap[AtkName];
-        //triggeredAttack.sound = AttackMap[AtkName].sound;
+        //triggeredAttack.sound = AttackMap[AtkName].sound; //doesnt work
 
-        Debug.Log("Soun: " + triggeredAttack.sound.ToString());
+        //Debug.Log("Tran: " + triggeredAttack.trans.name.ToString()); 
+        //Debug.Log("Soun: " + triggeredAttack.sound.ToString()); //doesnt work
 
-        //try { audioSource.PlayOneShot(arrowSound, 0.7f); } catch { Debug.Log("no sound"); }
-
-
-
+        //try { audioSource.PlayOneShot(bigArrowSound, 0.7f); } catch { Debug.Log("no sound1"); } //works
+        //try { audioSource.PlayOneShot(AttackMap["arrow"].sound, 0.7f); } catch { Debug.Log("no sound2"); } //works
+        //try { audioSource.PlayOneShot(triggeredAttack.sound, 0.7f); } catch { Debug.Log("no sound3"); } //works
+        
+        
         //Position Selector using attack codes
         switch (triggeredAttack.targetNum)
         {
@@ -260,9 +264,9 @@ public class AttackAnimator : MonoBehaviour
         obj.gameObject.SetActive(true);
         
         if (triggeredAttack.sound && triggeredAttack.customCmd != 11 && triggeredAttack.customCmd != 12)
-        {
+        {//Block multishot audio from playing rapidly
             PewPew(triggeredAttack);
-        }      //TODO: block multishot audio
+        }      
     }
 
     /* This function is used to creates multiple attacks in a single animation, each with their own randomized path 
@@ -277,12 +281,13 @@ public class AttackAnimator : MonoBehaviour
             pos2new.y = pos2.y + Random.Range(-5f, 5f);
             BOOM(AtkName, triggeredAttack, pos1, pos2new, speed);
         }
+        PewPew(triggeredAttack);
     }
 
-    public void PewPew(Attacks triggeredAttack)
+    public void PewPew(Attacks triggeredAttackB)
     {
         //Debug.Log("Pew1: " + triggeredAttack.sound.ToString());
-        try { audioSource.PlayOneShot(triggeredAttack.sound, 0.7f); } catch { Debug.Log(triggeredAttack.trans.name + " no sound"); }
+        try { audioSource.PlayOneShot(triggeredAttackB.sound, 0.7f); } catch { Debug.Log(triggeredAttackB.trans.name + " no sound"); }
     }
     public void PewPew(string AtkName) //calls from AtkMove children; children do not know their sound or lookup number. Only currently used with tripleshot
     {

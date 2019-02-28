@@ -40,7 +40,7 @@ public class StoredValues : MonoBehaviour
     private List<int> normOffers = new List<int>();
 
     public static StoredValues instance = null;
-        
+
     //Universal values
     private static int cash;
 
