@@ -454,7 +454,7 @@ public class GameLogic : MonoBehaviour
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        //Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
         if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
             Debug.Log(string.Format("Spawned note {0}!", hitIndex));

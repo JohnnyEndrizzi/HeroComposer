@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
- 
+
 public class AttackAnimator : MonoBehaviour
 { //This class recieves, creates animations as required.
     
-
     /* Functional Requirement 
     * ID: 8.1-2
     * Description: The player’s battle commands must invoke the proper attack animations as a response.
@@ -59,19 +58,13 @@ public class AttackAnimator : MonoBehaviour
 
         LocationMap.Add("HL", new Locations(-5f, 20, 1)); //High Left
         LocationMap.Add("HR", new Locations(2.5f, 10, 1)); //High Right
-
-        //Art Demo Locations
-        LocationMap.Add("AD1", new Locations(0, 0.5f, 1));   //P1
-        LocationMap.Add("ADC1", new Locations(4, 0, 1));   //Centrepoint
-        LocationMap.Add("ADB1", new Locations(-4, 1, 1));  //Boss
-        LocationMap.Add("ADHL", new Locations(-6, 6, 1));   //High Left
-
+        
         /* List of all attacks
          * This contains all the information required to launch any magical or ranged attack
          * This includes sprites, behaviour, offsets, number of attacks and timing
          * Ideally new attacks can be implemented in a single line.
          * Below is a guide legend of the various behavior types and special actions so all relevent information 
-         * is located here for ease of use. */        
+         * is located here for ease of use. */
         //AttackMap.Add("name", new Attacks(int attackCode, Transform prefab, Vector3 SpawnOffset, int scaleFactor, int customCmd));
         AttackMap.Add("heal", new Attacks(0, heal, 0, 0, 0.0f, 3, 4));
         AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
@@ -102,13 +95,38 @@ public class AttackAnimator : MonoBehaviour
         //2 - slow shot   
         //3 - triple shot              
         //4 - revert              
-        //51 - mask Lelt
+        //51 - mask Left
         //52 - mask Up
         //53 - mask Down
-}
+    }
+
+    public enum CmdCode //WIP
+    {
+        ColorOverlay = 0, //plus vector4(r,g,b,a)
+        multishot10 = 11,
+        multishotSpin20 = 12,
+        slowShotAtk = 2,
+        tripleShotAtk = 3,
+        revertMove = 4,
+        maskL = 51,
+        maskU = 52,
+        maskD = 53
+    }
+
+    public enum AtkCode //WIP
+    {
+        SingleChar = 0,
+        SingleCharWave = 1,
+        AtoB = 2,
+        AtoBLong = 3,
+        WholeTeam = 4,
+        AtoBTeam = 5,
+        AerialBossAtk = 6,
+        AerialPlayerAtk = 7
+    }
 
     private void LoadResources() //Load assets 
-    {     
+    {
         //Setting Source and paths
         audioSource = GetComponent<AudioSource>();
         string soundPath = "SoundEffects/Attacks/";
@@ -128,7 +146,6 @@ public class AttackAnimator : MonoBehaviour
         iceSound = (AudioClip)Resources.Load(soundPath + "magic_ice_edit");
         healSound = (AudioClip)Resources.Load(soundPath + "magic_heal_edit");
         bigArrowSound = (AudioClip)Resources.Load(soundPath + "boss_arrow_volley");
-
     }
 
     /* This function is used to call a magical attack from anywhere.
@@ -138,85 +155,104 @@ public class AttackAnimator : MonoBehaviour
      * It then plugs in the source and target numbers and applies those to the preset locations to determing the 
      * coordinates to start and finish the animation at.
      * 
-     * It will then apply the first level of special attacks which control number of items and timing of attacks. */     
-    public void ATTACK(string AtkName, int summoner, int target) 
-    { 
+     * It will then apply the first level of special attacks which control number of items and timing of attacks. */
+    public void ATTACK(string AtkName, int summoner, int target)
+    {
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return; }
-        
-        //Position Selector using attack codes
-        if      (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + summoner].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 1) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + summoner].Spawn + AttackMap[AtkName].offset; }
-        else if (AttackMap[AtkName].targetNum == 2) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 3) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["CP"].Spawn;           Pos2 = LocationMap["CP"].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 5) { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["P" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["HL"].Spawn;           Pos2 = LocationMap["P" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["HR"].Spawn;           Pos2 = LocationMap["E" + target].Spawn; }
 
-        else { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist"); }
-
-        //Uses Custom Commands to control timing/randomizers/number spawned etc.
-        if (AttackMap[AtkName].customCmd == 11) { BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot); }//multishot w/ random
-        else if (AttackMap[AtkName].customCmd == 12) { BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot); }//multishot w/ spin random
-        else if (AttackMap[AtkName].customCmd == 2) { BOOM(AtkName, Pos1, Pos2, slowshot); }//slowshot
-        else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
-    }
-
-    /* Functionally identical to ATTACK() but uses a different coordinate set for attacks.
-     * This is only to be used on the artShow demo where characters are always centred instead of off to either side. */ 
-    public void ATTACKdemo(string AtkName, int summoner, int target) 
-    { 
-        Vector3 Pos1, Pos2;
-        if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary" + AtkName); return; }
+        Attacks triggeredAttack = AttackMap[AtkName];
 
         //Position Selector using attack codes
-        if      (AttackMap[AtkName].targetNum == 0) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 1) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["AD" + summoner].Spawn + AttackMap[AtkName].offset; }
-        else if (AttackMap[AtkName].targetNum == 2) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 3) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 4) { Pos1 = LocationMap["AD1"].Spawn;           Pos2 = LocationMap["AD1"].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 5) { Pos1 = LocationMap["AD" + summoner].Spawn; Pos2 = LocationMap["ADB" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 6) { Pos1 = LocationMap["ADHL"].Spawn;          Pos2 = LocationMap["ADC" + target].Spawn; }
-        else if (AttackMap[AtkName].targetNum == 7) { Pos1 = LocationMap["ADHR"].Spawn;          Pos2 = LocationMap["ADB" + target].Spawn; }
-
-        else { Pos1 = LocationMap["P" + summoner].Spawn; Pos2 = LocationMap["E" + target].Spawn; Debug.Log("ERROR, Attack, Attack does not exist"); }
+        switch (triggeredAttack.targetNum)
+        {
+            case 0:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = Pos1;
+                break;
+            case 1:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = Pos1 + AttackMap[AtkName].offset;
+                break;
+            case 2:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = LocationMap["E" + target].Spawn;
+                break;
+            case 3:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = LocationMap["E" + target].Spawn;
+                break;
+            case 4:
+                Pos1 = LocationMap["CP"].Spawn;
+                Pos2 = Pos1;
+                break;
+            case 5:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = LocationMap["P" + target].Spawn;
+                break;
+            case 6:
+                Pos1 = LocationMap["HL"].Spawn;
+                Pos2 = LocationMap["P" + target].Spawn;
+                break;
+            case 7:
+                Pos1 = LocationMap["HR"].Spawn;
+                Pos2 = LocationMap["E" + target].Spawn;
+                break;
+            default:
+                Pos1 = LocationMap["P" + summoner].Spawn;
+                Pos2 = LocationMap["E" + target].Spawn;
+                Debug.Log("ERROR, ATTACK, Attack does not exist");
+                break;
+        }
 
         //Uses Custom Commands to control timing/randomizers/number spawned etc.
-        if (AttackMap[AtkName].customCmd == 11) { BOOMRandomizer(AtkName, Pos1, Pos2, 10, fastshot); }//multishot w/ random
-        else if (AttackMap[AtkName].customCmd == 12) { BOOMRandomizer(AtkName, Pos1, Pos2, 20, slowshot); }//multishot w/ spin random
-        else if (AttackMap[AtkName].customCmd == 2) { BOOM(AtkName, Pos1, Pos2, slowshot); }//slowshot
-        else { BOOM(AtkName, Pos1, Pos2, fastshot); }//default
+        switch (triggeredAttack.customCmd)
+        {
+            case 11: //multishot w/ random
+                BOOMRandomizer(AtkName, triggeredAttack, Pos1, Pos2, 10, fastshot);
+                break;
+            case 12: //multishot w/ spin random
+                BOOMRandomizer(AtkName, triggeredAttack, Pos1, Pos2, 20, slowshot);
+                break;
+            case 2: //slowshot
+                BOOM(AtkName, triggeredAttack, Pos1, Pos2, slowshot);
+                break;
+            default: //default
+                BOOM(AtkName, triggeredAttack, Pos1, Pos2, fastshot);
+                break;
+        }
     }
 
     /* This function spawns the desired attack animation, and passes in relevant data.
      * This includes start and end positions, timing information, scale changes, 
-     * and optionally a special attack identifier. */ 
-    private void BOOM(string AtkName, Vector3 Pos1, Vector3 Pos2, float lerpTime)  //Basic Attack spawner
+     * and optionally a special attack identifier. */
+    private void BOOM(string AtkName, Attacks triggeredAttack, Vector3 Pos1, Vector3 Pos2, float lerpTime)  //Basic Attack spawner
     {
         //Creation of attack
-        var obj = Instantiate(AttackMap[AtkName].trans, Pos1 + AttackMap[AtkName].offset, transform.rotation);
+        var obj = Instantiate(triggeredAttack.trans, Pos1 + triggeredAttack.offset, transform.rotation);
         obj.gameObject.SetActive(false);
         obj.gameObject.AddComponent<AtkMove>();
-                
 
         //Passing in attack values
         var tempScript = obj.gameObject.GetComponent<AtkMove>();
-        tempScript.StartPos = Pos1 + AttackMap[AtkName].offset;
-        tempScript.EndPos = Pos2 + AttackMap[AtkName].offset;
-        tempScript.atkLerpTime = 0.2f;
-       
-        tempScript.EndSize = obj.localScale * AttackMap[AtkName].scaleFactor;
-        tempScript.custCmd = AttackMap[AtkName].customCmd;
-        tempScript.name = AtkName;
+        tempScript.StartPos = Pos1 + triggeredAttack.offset;
+        tempScript.EndPos = Pos2 + triggeredAttack.offset;
+        tempScript.atkLerpTime = 0.2f;       
+        tempScript.EndSize = obj.localScale * triggeredAttack.scaleFactor;
+        tempScript.custCmd = triggeredAttack.customCmd;
+        tempScript.name = AtkName;        
         obj.gameObject.SetActive(true);
 
-        PewPew(AtkName);        
+        if (triggeredAttack.sound && triggeredAttack.customCmd != 11 && triggeredAttack.customCmd != 12)
+        {
+            PewPew(triggeredAttack);
+        }        //TODO: block multishot audio
+
     }
 
     /* This function is used to creates multiple attacks in a single animation, each with their own randomized path 
      * to produce a spread centred on the target. */
-    private void BOOMRandomizer(string AtkName, Vector3 pos1, Vector3 pos2, int num, float speed) 
+    private void BOOMRandomizer(string AtkName, Attacks triggeredAttack, Vector3 pos1, Vector3 pos2, int num, float speed)
     {
         Vector3 pos2new = new Vector3();
 
@@ -224,21 +260,25 @@ public class AttackAnimator : MonoBehaviour
         {
             pos2new.x = pos2.x + Random.Range(-5f, 5f);
             pos2new.y = pos2.y + Random.Range(-5f, 5f);
-            BOOM(AtkName, pos1, pos2new, speed);
+            BOOM(AtkName, triggeredAttack, pos1, pos2new, speed);
         }
     }
 
-    public void PewPew(string AtkName)
+    public void PewPew(Attacks triggeredAttack)
     {
-        try { audioSource.PlayOneShot(AttackMap[AtkName].sound, 0.7f); } catch { Debug.Log(AtkName + " no sound"); }
+        try { audioSource.PlayOneShot(triggeredAttack.sound, 0.7f); } catch { Debug.Log(triggeredAttack.trans.name + " no sound"); }
+    }
+    public void PewPew(string AtkName) //calls from AtkMove children; children do not know their sound or lookup number. Only currently used with tripleshot
+    {
+        try { audioSource.PlayOneShot(AttackMap[AtkName].sound, 0.7f); } catch { Debug.Log(AtkName + " no sound"); }        
     }
 }
 
-
 public class Locations //Location Dictionary 
-{ 
+{
     public Vector3 Spawn;
 
+    //Overloads accept input from Vector3, integer or float values
     public Locations(Vector3 SpawnX)
     {
         Spawn = SpawnX;
@@ -262,7 +302,7 @@ public class Locations //Location Dictionary
 }
 
 public class Attacks //Dictionary for all magical, special and ranged attacks
-{ 
+{
     public int targetNum;
     public Transform trans;
     public Vector3 offset;
@@ -271,29 +311,11 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
     public Color overlay;
     public AudioClip sound;
 
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX) //Basic w/ Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX) //Basic w/ int,int,float offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = new Vector3(SX, SY, SZ);
-        scaleFactor = scaleFactorX;
-    }
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX) //custom w/ Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX) //custom w/ int,int,float offset
+    //Attacks do not need a customCmd but may have one
+    //Not all attacks have a sound yet.
+    //Colour is not yet implemented; when it it commented functions will replace the uncommented ones
+        
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX) //custom
     {
         targetNum = targetNumX;
         trans = transformX;
@@ -301,53 +323,23 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
         scaleFactor = scaleFactorX;
         customCmd = customCmdX;
     }
-
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, Color overlayX) //custom w/ colour and Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        overlay = overlayX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX) //custom w/ colour and int,int,float offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = new Vector3(SX, SY, SZ);
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        overlay = overlayX;
-    }
-
-    //With sounds
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, AudioClip soundX) //Basic w/ Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-        sound = soundX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, AudioClip soundX) //Basic w/ int,int,float offset
+    //public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX) //custom, colour 
+    //{
+    //    targetNum = targetNumX;
+    //    trans = transformX;
+    //    offset = new Vector3(SX, SY, SZ);
+    //    scaleFactor = scaleFactorX;
+    //    customCmd = customCmdX;
+    //    overlay = overlayX;
+    //}
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, AudioClip soundX) //sound
     {
         targetNum = targetNumX;
         trans = transformX;
         offset = new Vector3(SX, SY, SZ);
         scaleFactor = scaleFactorX;
-        sound = soundX;
     }
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, AudioClip soundX) //custom w/ Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        sound = soundX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX) //custom w/ int,int,float offset
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX) //custom, sound
     {
         targetNum = targetNumX;
         trans = transformX;
@@ -356,25 +348,14 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
         customCmd = customCmdX;
         sound = soundX;
     }
-
-    public Attacks(int targetNumX, Transform transformX, Vector3 offsetX, float scaleFactorX, int customCmdX, Color overlayX, AudioClip soundX) //custom w/ colour and Vector3 offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = offsetX;
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        overlay = overlayX;
-        sound = soundX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX, AudioClip soundX) //custom w/ colour and int,int,float offset
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = new Vector3(SX, SY, SZ);
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        overlay = overlayX;
-        sound = soundX;
-    }
+    //public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX, Color overlayX) //custom, sound, colour
+    //{
+    //    targetNum = targetNumX;
+    //    trans = transformX;
+    //    offset = new Vector3(SX, SY, SZ);
+    //    scaleFactor = scaleFactorX;
+    //    customCmd = customCmdX;
+    //    overlay = overlayX;
+    //    sound = soundX;
+    //}
 }
