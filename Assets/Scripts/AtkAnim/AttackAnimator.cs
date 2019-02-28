@@ -238,16 +238,21 @@ public class AttackAnimator : MonoBehaviour
         tempScript.StartPos = Pos1 + triggeredAttack.offset;
         tempScript.EndPos = Pos2 + triggeredAttack.offset;
         tempScript.atkLerpTime = 0.2f;       
+
         tempScript.EndSize = obj.localScale * triggeredAttack.scaleFactor;
         tempScript.custCmd = triggeredAttack.customCmd;
-        tempScript.name = AtkName;        
+        tempScript.name = AtkName;
+        //tempScript.transform.SetParent(this.transform);
         obj.gameObject.SetActive(true);
 
+
+        //TODO: Not triggering on all attacks???
+        PewPew(triggeredAttack);
+        
         if (triggeredAttack.sound && triggeredAttack.customCmd != 11 && triggeredAttack.customCmd != 12)
         {
             PewPew(triggeredAttack);
-        }        //TODO: block multishot audio
-
+        }      //TODO: block multishot audio
     }
 
     /* This function is used to creates multiple attacks in a single animation, each with their own randomized path 

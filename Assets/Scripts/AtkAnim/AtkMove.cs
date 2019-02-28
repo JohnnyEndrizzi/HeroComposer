@@ -82,7 +82,11 @@ public class AtkMove : MonoBehaviour {
             transform.localScale = StartSize;
             EndPos.x = EndPos.x + Random.Range(-2f, 2f);
             EndPos.y = EndPos.y + Random.Range(-2f, 2f);
-            this.transform.parent.GetComponent<AttackAnimator>().PewPew(this.name);
+            
+            //GameObject.Find
+            //this.transform.parent.GetComponent<AttackAnimator>().PewPew(this.name);
+            //this.transform.parent.GetChild(this.transform.GetSiblingIndex() + 2).GetComponent<AttackAnimator>().PewPew(this.name); 
+            //todo Optimize (setting obj as child changes scale settings), will play sound from wrong character
         }
         else if (custCmd == 12) {//spin child object
             mask.localRotation = Quaternion.Euler(Vector3.right*counter);
