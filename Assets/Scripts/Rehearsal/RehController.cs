@@ -105,7 +105,7 @@ public class RehController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             LastScene.instance.prevScene = "Rehersal";
-            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains("Menu");
         }
     }
 
@@ -117,7 +117,7 @@ public class RehController : MonoBehaviour {
         }
         Drag.SetIcon(null);
         HoldNum = 0;
-        UnitMenu.lightsOut();
+        UnitMenu.LightsOut();
     }
 
     private void PassTeam() //set selected units to be used 
@@ -253,7 +253,7 @@ public class RehController : MonoBehaviour {
                 Drag.SetIcon(null);
                 unitsInPortraits[item - 1] = HoldNum;
                 HoldNum = 0;
-                UnitMenu.lightsOut();
+                UnitMenu.LightsOut();
                 audioSource.PlayOneShot(addChar, 0.7F);
             }
             else {

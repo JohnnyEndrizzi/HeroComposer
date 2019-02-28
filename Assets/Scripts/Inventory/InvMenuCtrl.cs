@@ -17,7 +17,7 @@ public class InvMenuCtrl : MonoBehaviour {
     public Dictionary<int, AllItemDict> AllItems;
     public List<int> storedItems;
 
-    public void creator() //Generate/Regenerate List 
+    public void Creator() //Generate/Regenerate List 
     {
         playerInventory = new List<PlayerItem>();
                 

@@ -160,7 +160,7 @@ public class CurtainMovementQuick : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator closeAnimation(string sceneNew) //Close curtains and switch scene once complete
+    private IEnumerator CloseAnimation(string sceneNew) //Close curtains and switch scene once complete
     {
         isAnim = true;
 
@@ -184,9 +184,9 @@ public class CurtainMovementQuick : MonoBehaviour
         yield return null;
     }    
     
-    public void closeCurtains(string sceneNew)  //Run close curtains animation
+    public void CloseCurtains(string sceneNew)  //Run close curtains animation
     {        
-        StartCoroutine(closeAnimation(sceneNew));
+        StartCoroutine(CloseAnimation(sceneNew));
     }
 
     private void UnFreezeDoors()

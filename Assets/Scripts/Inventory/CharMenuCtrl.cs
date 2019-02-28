@@ -12,7 +12,7 @@ public class CharMenuCtrl : MonoBehaviour {
 
     private List<GameObject> buttons;   
 
-    public void creator() //Start but triggered after information is passed in
+    public void Creator() //Start but triggered after information is passed in
     {
         buttons = new List<GameObject>();
 

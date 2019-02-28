@@ -58,7 +58,7 @@ public class CurtainMovement : MonoBehaviour
     }
 
     /* The following coroutine plays the closing animation for the curtains upon finishing a level */
-    private IEnumerator closeAnimation()
+    private IEnumerator CloseAnimation()
     {
         delayLock = true;
 

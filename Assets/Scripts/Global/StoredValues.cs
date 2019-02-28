@@ -77,7 +77,7 @@ public class StoredValues : MonoBehaviour
 
     private void Start()
     {
-        cash += 100000;
+        cash += 100000; //TODO remove free money :(
 
         /* Deserializes all information from their corresponding JSON into local copies */
         if (GetComponent<LoadData>() != null && Assets.Scripts.MainMenu.ApplicationModel.loadedCharacters == false)
@@ -130,14 +130,14 @@ public class StoredValues : MonoBehaviour
 
             ShopCtrl.Starter();            
         }
-        if (InvCtrl != null) {
+        else if (InvCtrl != null) {
             InvCtrl.Units = Units;
             InvCtrl.AllItems = AllItems;
             InvCtrl.storedItems = storedItems;
 
             InvCtrl.Starter();
         }
-        if (RehCtrl != null)
+        else if (RehCtrl != null)
         {
             RehCtrl.Units = Units;
             RehCtrl.AllItems = AllItems;
@@ -215,8 +215,7 @@ public class StoredValues : MonoBehaviour
     {
         if (!AllItems.ContainsKey(0))
         {
-            AllItems.Add(0, new AllItemDict("", "", "", "0"));  //TODO merge lines  
-            AllItems[0].img = null;
+            AllItems.Add(0, new AllItemDict("", "", "", "0", null));             
         }
     }
 
@@ -276,154 +275,6 @@ public class StoredValues : MonoBehaviour
         Assets.Scripts.MainMenu.ApplicationModel.characters[2] = null;
         Assets.Scripts.MainMenu.ApplicationModel.characters[3] = null;
     }
-
-
-    /*
-    public void backup() //Old Txt Backup //TODO Remove once replacement code is implemented
-    {
-        string pathR = "Assets/storedValues.txt";
-        string pathW = "Assets/storedValuesBUP.txt";
-        string temp;
-
-        StreamReader reader = new StreamReader(pathR, true);
-        StreamWriter writer = new StreamWriter(pathW, true);
-
-        temp = reader.ReadLine();
-
-        while (temp != null)
-        {
-            writer.WriteLine(temp);
-            temp = reader.ReadLine();
-        }
-        reader.Close();
-        writer.Close();
-    }
-
-    private void EmptyTxt() //Empty txt file for rewrite //TODO Remove once replacement code is implemented
-    {
-        string path = "Assets/storedValues.txt";
-        using (var stream = new FileStream(path, FileMode.Truncate))
-        {
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.Write("");
-            }
-        }
-    }
-        
-    public void save()//Old txt save //TODO Remove once replacement code is implemented
-    {
-        return;
-        //backup(); //TODO Needed?
-        EmptyTxt();
-
-        string path = "Assets/storedValues.txt";
-        string temp;
-        int zeroes = 0;
-
-        StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine("UNIT LIST");
-        for (int i = 0; i < Units.Count; i++)
-        {
-            temp = Units[i].unitName + ";";
-            temp += Units[i].unitDesc + ";";
-            temp += Units[i].Unlocked + ";";
-            temp += Units[i].item1 + ";";
-            temp += Units[i].item2 + ";";
-            temp += Units[i].item3 + ";";
-            //stats;
-
-            writer.WriteLine(temp);
-        }
-
-        writer.WriteLine("NEXT");
-        writer.WriteLine("ITEM LIST");
-        for (int i = 0; i < AllItems.Count; i++)
-        {
-            temp = AllItems[i].itemName + ";";
-            temp += AllItems[i].Title + ";";
-            temp += AllItems[i].Desc + ";";
-            temp += AllItems[i].Cost + ";";
-            //            for (int j = 0; j < AllItems[i].itemStats.Length; j++) { //TODO Stats
-            //                temp += AllItems[i].itemStats[j] + ";";
-            //            }
-            writer.WriteLine(temp);
-        }
-        writer.WriteLine("NEXT");
-
-        temp = "";
-        for (int i = 0; i < storedItems.Count; i++)
-        {
-            if (storedItems[i] == 0)
-            {
-                zeroes++;
-            }
-            else
-            {
-                for (int j = 0; j < zeroes; j++)
-                {
-                    temp += 0 + ";";
-                }
-                temp += storedItems[i] + ";";
-                zeroes = 0;
-            }
-
-
-        }
-        writer.WriteLine(temp);
-
-        writer.Close();
-    }
-
-    public void load() //Old txt loading //TODO Remove once replacement code is implemented
-    {
-        Debug.Log("LOADING from TXT");
-
-        string path = "Assets/storedValues.txt";
-        string temp;
-        string[] tempA;
-        int i = 0;
-
-        StreamReader reader = new StreamReader(path, true);
-
-        temp = reader.ReadLine();
-        temp = reader.ReadLine();
-
-        //UNIT LIST
-        while (temp != "NEXT")
-        {
-            tempA = temp.Split(';');
-            //Units.Add(i,new UnitDict(tempA[0], tempA[1], tempA[2], tempA[3], tempA[4], tempA[5], Units[i].img));
-
-            i++;
-            temp = reader.ReadLine();
-        }
-        i = 0;
-
-        temp = reader.ReadLine();
-        temp = reader.ReadLine();
-
-        //ITEM LIST
-        while (temp != "NEXT")
-        {
-            tempA = temp.Split(';');
-            //AllItems.Add(i, new AllItemDict(tempA[0], tempA[1], tempA[2],AllItems[i].img, tempA[3])); //TODO expand with stats
-
-            i++;
-            temp = reader.ReadLine();
-        }
-        i = 0;
-
-        temp = reader.ReadLine();
-        tempA = temp.Split(';');
-
-        for (int j = 0; j < tempA.Length - 1; j++)
-        {
-            storedItems.Add(int.Parse(tempA[j]));
-        }
-        reader.Close();
-    }
-    */
 }
 
 
@@ -491,10 +342,11 @@ public class AllItemDict { //All game items Dictionary
         Cost = CostX;
         Stats = statsX;
     }
-    public AllItemDict(string itemNameX, string TitleX, string DescX, string CostX) {  //nullItem
+    public AllItemDict(string itemNameX, string TitleX, string DescX, string CostX, Sprite imgX) {  //nullItem
         itemName = itemNameX;
         Title = TitleX;
         Desc = DescX;
+        img = imgX;
     }
     public AllItemDict(string itemNameX, string TitleX, string DescX, Sprite imgX, string CostX) { //Remove
         itemName = itemNameX;

@@ -43,7 +43,7 @@ public class RehCharMenuCtrl : MonoBehaviour {
         }
     }
 
-    public void lightsOut() //Turns off highlighting on all child objects
+    public void LightsOut() //Turns off highlighting on all child objects
     {
         for(int i = 0; i< this.transform.GetChild(0).GetChild(0).childCount -1; i++){
             GameObject.Find("RehCharBtn #" + i).GetComponent<RehCharMenuBtn>().HighOff();    
@@ -52,7 +52,7 @@ public class RehCharMenuCtrl : MonoBehaviour {
 
     public void ButtonClicked(int intID)  //sub button Clicked
     { 
-        lightsOut();
+        LightsOut();
         GameObject.Find("RehCharBtn #" + intID).GetComponent<RehCharMenuBtn>().HighOn();    
         GameObject.Find("RehController").GetComponent<RehController>().OnClickUnitMenu(intID);
     }

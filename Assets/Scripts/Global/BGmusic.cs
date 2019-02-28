@@ -55,7 +55,7 @@ public class BGmusic : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Equals("main") || SceneManager.GetActiveScene().name.Equals("StartMenu"))
         {
             soundScene = false;
-            StartCoroutine(fadeOut());            
+            StartCoroutine(FadeOut());            
         }
         else
         {
@@ -64,7 +64,7 @@ public class BGmusic : MonoBehaviour
     }
 
 
-    private IEnumerator fadeOut() 
+    private IEnumerator FadeOut() 
     {
         isFade = true;
                 

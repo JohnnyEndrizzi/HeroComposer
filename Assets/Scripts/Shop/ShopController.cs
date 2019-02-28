@@ -69,11 +69,11 @@ public class ShopController : MonoBehaviour {
 
         shopMenuCtrl.Dict = AllItems;
         shopMenuCtrl.shopItems = normalOffers;
-        shopMenuCtrl.creator();
+        shopMenuCtrl.Creator();
 
         spcMenuCtrl.Dict = AllItems;
         spcMenuCtrl.shopItems = specialOffers;
-        spcMenuCtrl.creator();
+        spcMenuCtrl.Creator();
     }
 
     void Update()
@@ -81,7 +81,7 @@ public class ShopController : MonoBehaviour {
          if (Input.GetKeyDown(KeyCode.Escape))
         {
             LastScene.instance.prevScene = "shop";
-            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains("Menu");
         }
     }
 

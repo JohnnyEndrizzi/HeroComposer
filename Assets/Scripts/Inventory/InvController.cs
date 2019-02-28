@@ -92,10 +92,10 @@ public class InvController : MonoBehaviour {
         //Pass information to menus
         InventoryMenu.AllItems = AllItems;
         InventoryMenu.storedItems = storedItems;
-        InventoryMenu.creator();
+        InventoryMenu.Creator();
 
         UnitMenu.Units = Units;
-        UnitMenu.creator();
+        UnitMenu.Creator();
 
         //place first unit into centre portrait
         loadInv(0);
@@ -132,7 +132,7 @@ public class InvController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             LastScene.instance.prevScene = "Inventory";
-            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains("Menu");
+            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains("Menu");
         }
     }
         
@@ -158,7 +158,7 @@ public class InvController : MonoBehaviour {
 
         //Pass and regenerate inventory menu
         InventoryMenu.storedItems = storedItems;
-        InventoryMenu.creator();
+        InventoryMenu.Creator();
     }
 
     public void saveInv() //takes currently displayed items and saves to global

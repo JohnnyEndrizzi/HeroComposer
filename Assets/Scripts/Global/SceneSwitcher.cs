@@ -35,10 +35,10 @@ public class SceneSwitcher : MonoBehaviour {
             origin = sceneNew;
         }
         LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains(origin);   
+        GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains(origin);   
     }
     public void sceneSwitchHiddenCurtains(string sceneNew) //switch scene with curtains w/o updating lastScene
     {        
-        GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().closeCurtains(sceneNew);   
+        GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains(sceneNew);   
     }
 }

@@ -29,7 +29,7 @@ public class Wiggle : MonoBehaviour {
 
         if(perc >= 1) //wiggled
         {
-            moveLoc = moveSpeed*next(moveLoc/moveSpeed);
+            moveLoc = moveSpeed*Next(moveLoc/moveSpeed);
             currentLerpTime = 0;
         }
 
@@ -47,7 +47,7 @@ public class Wiggle : MonoBehaviour {
         clip = (AudioClip)Resources.Load("SoundEffects/creak");
     }
 
-    private int next(float last) //pick where to wiggle to
+    private int Next(float last) //pick where to wiggle to
     {
         int rnd = Random.Range(-2, 5);
 

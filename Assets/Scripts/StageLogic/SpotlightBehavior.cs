@@ -20,7 +20,7 @@ public class SpotlightBehavior : MonoBehaviour {
 
     /* This coroutine controls the spotlight movement during the opening animation. There are
      * 4 phases for a full spotlight movement. */
-    IEnumerator spotlightLerp()
+    IEnumerator SpotlightLerp()
     {
         if (isMoving)
         {
@@ -121,7 +121,7 @@ public class SpotlightBehavior : MonoBehaviour {
 	void Update ()
     {
         /* Upon spawning the spotlight GameObject it will call this movement coroutine */
-        StartCoroutine(spotlightLerp());
+        StartCoroutine(SpotlightLerp());
 
         spotlightImage.sprite = spotlightSprite.sprite;
     }

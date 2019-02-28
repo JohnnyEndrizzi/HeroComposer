@@ -17,7 +17,7 @@ public class ShopMenuCtrl : MonoBehaviour {
     public List<int> shopItems;
     public Dictionary<int, AllItemDict> Dict;
 
-    public void creator() //Generate/Regenerate List 
+    public void Creator() //Generate/Regenerate List 
     { 
         shopInventory = new List<PlayerItem>();
 
