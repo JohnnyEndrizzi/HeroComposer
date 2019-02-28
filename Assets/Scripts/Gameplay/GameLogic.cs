@@ -312,7 +312,7 @@ public class GameLogic : MonoBehaviour
         /* Spawns the current team */
         spawnCharacters();
 
-        if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "")
+        if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "" && false)
         {
             /* Creates a beatmap object from the selected song */
             Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
@@ -323,8 +323,8 @@ public class GameLogic : MonoBehaviour
         {
             /* This is the default song in case of an error */
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
-            beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/Silhouette_Easy.osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/Silhouette");
         }
 
         GetComponent<BossLogic>().setupBoss();
