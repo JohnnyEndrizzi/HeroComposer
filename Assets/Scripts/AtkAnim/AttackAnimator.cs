@@ -20,6 +20,7 @@ public class AttackAnimator : MonoBehaviour
 
     //Audio
     private AudioSource audioSource;
+    [SerializeField]
     private AudioClip arrowSound;
     private AudioClip bigArrowSound;
     public AudioClip fireSound;
@@ -161,7 +162,20 @@ public class AttackAnimator : MonoBehaviour
         Vector3 Pos1, Pos2;
         if (!AttackMap.ContainsKey(AtkName)) { Debug.Log("ERROR, ATTACK, Attack not in Dictionary " + AtkName); return; }
 
+        Debug.Log("new TargetedAtk: " + AtkName);
+        //Debug.Log("Tran: " + triggeredAttack.trans.name.ToString());
+        Debug.Log("Soun: " + arrowSound.ToString());
+        Debug.Log("Soun: " + AttackMap[AtkName].sound.ToString());
+        
+
         Attacks triggeredAttack = AttackMap[AtkName];
+        //triggeredAttack.sound = AttackMap[AtkName].sound;
+
+        Debug.Log("Soun: " + triggeredAttack.sound.ToString());
+
+        //try { audioSource.PlayOneShot(arrowSound, 0.7f); } catch { Debug.Log("no sound"); }
+
+
 
         //Position Selector using attack codes
         switch (triggeredAttack.targetNum)
@@ -244,10 +258,6 @@ public class AttackAnimator : MonoBehaviour
         tempScript.name = AtkName;
         //tempScript.transform.SetParent(this.transform);
         obj.gameObject.SetActive(true);
-
-
-        //TODO: Not triggering on all attacks???
-        PewPew(triggeredAttack);
         
         if (triggeredAttack.sound && triggeredAttack.customCmd != 11 && triggeredAttack.customCmd != 12)
         {
@@ -271,10 +281,12 @@ public class AttackAnimator : MonoBehaviour
 
     public void PewPew(Attacks triggeredAttack)
     {
+        //Debug.Log("Pew1: " + triggeredAttack.sound.ToString());
         try { audioSource.PlayOneShot(triggeredAttack.sound, 0.7f); } catch { Debug.Log(triggeredAttack.trans.name + " no sound"); }
     }
     public void PewPew(string AtkName) //calls from AtkMove children; children do not know their sound or lookup number. Only currently used with tripleshot
     {
+        //Debug.Log("Pew2: " + AtkName);
         try { audioSource.PlayOneShot(AttackMap[AtkName].sound, 0.7f); } catch { Debug.Log(AtkName + " no sound"); }        
     }
 }
@@ -318,8 +330,7 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
 
     //Attacks do not need a customCmd but may have one
     //Not all attacks have a sound yet.
-    //Colour is not yet implemented; when it it commented functions will replace the uncommented ones
-        
+    //Colour is not yet implemented; when it it commented functions will replace the uncommented ones    
     public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX) //custom
     {
         targetNum = targetNumX;
@@ -327,6 +338,15 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
         offset = new Vector3(SX, SY, SZ);
         scaleFactor = scaleFactorX;
         customCmd = customCmdX;
+    }
+    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX) //custom, sound
+    {
+        targetNum = targetNumX;
+        trans = transformX;
+        offset = new Vector3(SX, SY, SZ);
+        scaleFactor = scaleFactorX;
+        customCmd = customCmdX;
+        sound = soundX;
     }
     //public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, Color overlayX) //custom, colour 
     //{
@@ -343,15 +363,6 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
         trans = transformX;
         offset = new Vector3(SX, SY, SZ);
         scaleFactor = scaleFactorX;
-    }
-    public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX) //custom, sound
-    {
-        targetNum = targetNumX;
-        trans = transformX;
-        offset = new Vector3(SX, SY, SZ);
-        scaleFactor = scaleFactorX;
-        customCmd = customCmdX;
-        sound = soundX;
     }
     //public Attacks(int targetNumX, Transform transformX, int SX, int SY, float SZ, float scaleFactorX, int customCmdX, AudioClip soundX, Color overlayX) //custom, sound, colour
     //{

@@ -457,7 +457,7 @@ public class GameLogic : MonoBehaviour
         //Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
         if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
-            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
+            //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;

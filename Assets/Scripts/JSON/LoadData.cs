@@ -83,10 +83,12 @@ public class LoadData : MonoBehaviour
 
         string[] tempNames = inventory[0].SelUnits.Split(';');
 
+        /*
         Debug.Log(tempNames[0]);
         Debug.Log(tempNames[1]);
         Debug.Log(tempNames[2]);
         Debug.Log(tempNames[3]);
+        */
 
         for (int i = 0; i < tempNames.Length; i++)
         {
