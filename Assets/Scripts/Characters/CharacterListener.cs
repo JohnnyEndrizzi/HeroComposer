@@ -328,19 +328,19 @@ public class CharacterListener : MonoBehaviour
          * K - character_3
          * L - character_4 
          */
-        if (Input.GetKeyUp("i"))
+        if (Input.GetKeyDown("i"))
         {
             currentSprite = 1;
         }
-        else if (Input.GetKeyUp("j"))
+        else if (Input.GetKeyDown("j"))
         {
             currentSprite = 2;
         }
-        else if (Input.GetKeyUp("k"))
+        else if (Input.GetKeyDown("k"))
         {
             currentSprite = 3;
         }
-        else if (Input.GetKeyUp("l"))
+        else if (Input.GetKeyDown("l"))
         {
             currentSprite = 4;
         }

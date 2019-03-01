@@ -68,7 +68,7 @@ public class GameLogic : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
+                    characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
                     healthPos = new Vector3(187.7f, 97.2f, 0.0f);
                 }
                 else if (i == 1)
@@ -78,12 +78,12 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (i == 2)
                 {
-                    characterSpawnPosition = new Vector3(2.94f, -0.82f, -5.5f);
+                    characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
                     healthPos = new Vector3(198.6f, -166.4f, 0.0f);
                 }
                 else
                 {
-                    characterSpawnPosition = new Vector3(5.31f, 0.32f, -5.1f);
+                    characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
                     healthPos = new Vector3(337.0f, -103.2f, 0.0f);
                 }
 
@@ -323,15 +323,15 @@ public class GameLogic : MonoBehaviour
         {
             /* This is the default song in case of an error */
             Debug.Log("Loading beatmap file for ALiVE_Normal...");
-            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/Silhouette_Easy.osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/Silhouette");
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
         }
 
         GetComponent<BossLogic>().setupBoss();
 
         /* The spawn and kill points for incoming notes */
-        startPos = new Vector2(-372f, 134.2F);
-        endPos = new Vector2(322.37F, 134.2F);
+        startPos = new Vector2(-355.4f, 170.54F);
+        endPos = new Vector2(352.0F, 170.54F);
 
         /* Tentative: Set boss' health tothe duration of the selected song */
         maxHealth = GetComponent<AudioSource>().clip.length;
@@ -454,10 +454,10 @@ public class GameLogic : MonoBehaviour
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        //Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
         if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
-            //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
+            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;

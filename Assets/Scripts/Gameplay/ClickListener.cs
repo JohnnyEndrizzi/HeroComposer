@@ -8,9 +8,8 @@ public class ClickListener : MonoBehaviour
     public Sprite ATK_sprite;
     public Sprite DEF_sprite;
     public Sprite MGC_sprite;
-    public Sprite ULT_sprite;
 
-    public enum state {ATK, DEF, MGC, ULT};
+    public enum state {ATK, DEF, MGC};
     public static state menu_state;
     public int test;
 
@@ -20,7 +19,7 @@ public class ClickListener : MonoBehaviour
         test = 0;
     }
 
-    /* This function will return the current state of the menu (ATK, DEF, MGC, or ULT) */
+    /* This function will return the current state of the menu (ATK, DEF, or MGC) */
     public state GetMenuState()
     {
         return menu_state;
@@ -30,9 +29,33 @@ public class ClickListener : MonoBehaviour
      * ID: 8.1-3
      * Description: The player must be able to input battle commands.
      * 
-     * This function will alter the current state of the menu (ATK, DEF, MGC, or ULT) */
+     * This function will alter the current state of the menu (ATK, DEF, or MGC) */
     public void ChangeMenuState(Sprite s, state state)
     {
+        
+        if (state == state.ATK)
+        {
+            GameObject.Find("SwordSymbol").GetComponent<SpriteRenderer>().enabled = true;
+
+            GameObject.Find("ShieldSymbol").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("MagicSymbol").GetComponent<SpriteRenderer>().enabled = false;
+        }
+        
+        else if (state == state.DEF)
+        {
+            GameObject.Find("ShieldSymbol").GetComponent<SpriteRenderer>().enabled = true;
+
+            GameObject.Find("SwordSymbol").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("MagicSymbol").GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else
+        {
+            GameObject.Find("MagicSymbol").GetComponent<SpriteRenderer>().enabled = true;
+
+            GameObject.Find("SwordSymbol").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("ShieldSymbol").GetComponent<SpriteRenderer>().enabled = false;
+        }
+        
         GetComponent<SpriteRenderer>().sprite = s;
         menu_state = state;
     }
@@ -49,23 +72,18 @@ public class ClickListener : MonoBehaviour
          * 
          * W - ATK
          * A - DEF
-         * S - ULT
-         * D - MGC */
-        if (Event.current.Equals(Event.KeyboardEvent("w")))
-        {
-            ChangeMenuState(ATK_sprite, state.ATK);
-        }
-        else if (Event.current.Equals(Event.KeyboardEvent("a")))
+         * S - MGC */
+        if (Input.GetKey(KeyCode.A))
         {
             ChangeMenuState(DEF_sprite, state.DEF);
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("d")))
+        else if (Input.GetKey(KeyCode.S))
         {
             ChangeMenuState(MGC_sprite, state.MGC);
         }
-        else if (Event.current.Equals(Event.KeyboardEvent("s")))
+        else
         {
-            ChangeMenuState(ULT_sprite, state.ULT);
+            ChangeMenuState(ATK_sprite, state.ATK);
         }
     }
 }

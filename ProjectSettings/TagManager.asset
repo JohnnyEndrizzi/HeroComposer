@@ -23,6 +23,7 @@ TagManager:
   - ShopBtn
   - SpcBtn
   - ScoreLayer
+  - NoteBarCircle
   layers:
   - Default
   - TransparentFX
