@@ -3,16 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerWrapper : DDOL {
 
-    private Scene previousScene; 
+    private string previousScene; 
 
     public void SwitchScene(string scene)
     {
-        previousScene = SceneManager.GetActiveScene();
+        previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(scene);
     }
 
     public void LoadPreviousScene()
     {
-        SwitchScene(previousScene.name);
+        SwitchScene(previousScene);
     }
 }
