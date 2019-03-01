@@ -31,7 +31,7 @@ public class LevelStart : Interactable {
         Assets.Scripts.MainMenu.ApplicationModel.songName = songName;
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = songName + "_" + difficulty;
 
-        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchHidden("main");
+        GameObject.Find("sceneSwitcher").GetComponent<SceneManagerWrapper>().sceneSwitchHidden("main");
     }
 
     IEnumerator DisplayCutscene()

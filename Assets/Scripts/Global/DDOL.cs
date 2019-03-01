@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class DDOL : MonoBehaviour {
 
@@ -10,9 +7,4 @@ public class DDOL : MonoBehaviour {
     {
         DontDestroyOnLoad(gameObject);	
 	}
-
-    public void Start()
-    {
-        SceneManager.LoadScene("StartMenu");
-    }
 }

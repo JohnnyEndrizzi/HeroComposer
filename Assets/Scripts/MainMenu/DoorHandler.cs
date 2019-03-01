@@ -181,7 +181,7 @@ public class DoorHandler : MonoBehaviour
     /* Preserves the main menu as the last scene and loads the new one */
     private void MenuSceneSwitch(string sceneNew)
     {
-        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
+        GameObject.Find("sceneSwitcher").GetComponent<SceneManagerWrapper>().sceneSwitchCurtains(sceneNew);
     }
 
     public void mute()

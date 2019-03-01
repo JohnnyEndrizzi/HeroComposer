@@ -105,7 +105,7 @@ public class RehController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             LastScene.instance.prevScene = "Rehersal";
-            GameObject.Find("CurtainsOpenTransition").GetComponent<CurtainMovementQuick>().CloseCurtains("Menu");
+            GameObject.Find("CurtainsOpenTransition").GetComponent<Curtain>().Close();
         }
     }
 

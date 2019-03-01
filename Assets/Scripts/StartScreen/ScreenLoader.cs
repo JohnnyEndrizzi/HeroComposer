@@ -88,6 +88,6 @@ public class ScreenLoader : MonoBehaviour
 
     private void MenuSceneSwitch(string sceneNew)
     {
-        GameObject.Find("sceneSwitcher").GetComponent<SceneSwitcher>().sceneSwitchCurtains(sceneNew);
+        GameObject.Find("sceneSwitcher").GetComponent<SceneManagerWrapper>().sceneSwitchCurtains(sceneNew);
     }    
 }
