@@ -9,6 +9,8 @@ public class GameLogic : MonoBehaviour
 {
     /* GameObjects that will appear on the Canvas*/
     public GameObject healthBar;
+    public GameObject specialBar;
+    public GameObject characterSpecialBar;
     public GameObject characterHealthBar;
     public GameObject holdNote;
     public GameObject test;
@@ -63,34 +65,44 @@ public class GameLogic : MonoBehaviour
         {
             Vector3 characterSpawnPosition;
             Vector3 healthPos;
+            Vector3 specialPos;
 
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
             {
                 if (i == 0)
                 {
                     characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
-                    healthPos = new Vector3(187.7f, 97.2f, 0.0f);
+                    healthPos = new Vector3(216.3f, 107.34f, 0.0f);
+                    specialPos = new Vector3(216.3f, 105.34f, 0.0f);
                 }
                 else if (i == 1)
                 {
                     characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                    healthPos = new Vector3(74.3f, -103.2f, 0.0f);
+                    healthPos = new Vector3(92.6f, -134.4f, 0.0f);
+                    specialPos = new Vector3(92.6f, -136.4f, 0.0f);
                 }
                 else if (i == 2)
                 {
                     characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
-                    healthPos = new Vector3(198.6f, -166.4f, 0.0f);
+                    healthPos = new Vector3(216.3f, -210.0f, 0.0f);
+                    specialPos = new Vector3(216.3f, -212.0f, 0.0f);
                 }
                 else
                 {
                     characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
-                    healthPos = new Vector3(337.0f, -103.2f, 0.0f);
+                    healthPos = new Vector3(350.6f, -134.4f, 0.0f);
+                    specialPos = new Vector3(350.6f, -136.4f, 0.0f);
                 }
 
                 /* Health Bars */
                 GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
                 healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
                 healthBar.name = "character_health_" + (i + 1);
+
+                /* Special Bars */
+                GameObject specialBar = Instantiate(characterSpecialBar, specialPos, Quaternion.identity);
+                specialBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+                specialBar.name = "character_special_" + (i + 1);
 
                 characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
                 GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;

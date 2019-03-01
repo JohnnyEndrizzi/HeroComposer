@@ -467,6 +467,18 @@ Prefab:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114510844959590258, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: specialBar
+      value: 
+      objectReference: {fileID: 1148034385794686, guid: 70b9d1d5ec3cf51489ad33d076b860fa,
+        type: 2}
+    - target: {fileID: 114510844959590258, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: characterSpecialBar
+      value: 
+      objectReference: {fileID: 1455535214251232, guid: 70b9d1d5ec3cf51489ad33d076b860fa,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0
@@ -2056,7 +2068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1054930184
 Animator:
   serializedVersion: 3
