@@ -1,10 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : DDOL {
-    public void Update()
+    new void Awake()
+    {
+        //Destroy MainMenuHandler if one already exists
+        if (GameObject.FindObjectsOfType<MainMenuHandler>().Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }           
+    }
+
+    void Update()
     {
         //Escape key pressed 
         if (Input.GetKeyUp(KeyCode.Escape))
