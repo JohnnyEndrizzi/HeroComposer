@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour {
@@ -8,7 +7,7 @@ public class Door : MonoBehaviour {
     public string doorName;
 
     //Animator
-    public Animator animator;
+    private Animator animator;
 
     //Audio
     private AudioSource audioSource;
@@ -17,20 +16,17 @@ public class Door : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //Load audio files
+        animator = GetComponent<Animator>();
+        
         AudioListener.volume = 1;
         audioSource = GetComponent<AudioSource>();
         audioSource.mute = true;
         doorOpening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
         doorClosing = (AudioClip)Resources.Load("SoundEffects/menu_door_close");
     }
-	
-	// Update is called once per frame
-	void Update () {
-    }
 
     //This function is called when the user clicks on a door
-    void OnClick()
+    protected void OnMouseDown()
     {
         /* Functional Requirement
         * ID: 8.1.1-8
@@ -41,14 +37,7 @@ public class Door : MonoBehaviour {
         * Description: The system must preserve insight about character and party customization between level completions and menu selections.
         * 
         * The scene corresponding to the door will be loaded, as long as its not the play door (which is covered in the function below) */
-        if(doorName != "Play")
-        {
-            
-        }
-        else
-        {
-
-        }
+        GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene(doorName);
     }
 
     //This function is called when the mouse hovers over a door

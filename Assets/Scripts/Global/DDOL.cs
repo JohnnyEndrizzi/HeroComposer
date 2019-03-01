@@ -5,6 +5,6 @@ public class DDOL : MonoBehaviour {
 	// Use this for initialization
 	public void Awake ()
     {
-        DontDestroyOnLoad(gameObject);	
+        DontDestroyOnLoad(this.gameObject);	
 	}
 }

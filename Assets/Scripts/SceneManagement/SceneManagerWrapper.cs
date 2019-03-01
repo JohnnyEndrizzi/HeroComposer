@@ -3,48 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerWrapper : DDOL {
 
+    private Scene previousScene; 
+
     public void SwitchScene(string scene)
     {
+        previousScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene);
     }
 
-    //Controls scene switching buttons - saves the last scene unless noted
-
-    private string origin; //temporary scene location
-
-    public void sceneSwitch(string sceneNew) //Swich scene
+    public void LoadPreviousScene()
     {
-        if(sceneNew.Equals("Back")){
-            origin = LastScene.instance.prevScene;            
-        }
-        else
-        {
-            origin = sceneNew;
-        }
-
-        LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(origin, LoadSceneMode.Single);
-    }
-
-    public void sceneSwitchHidden(string sceneNew) //switch scene w/o updating lastScene
-    {
-       SceneManager.LoadScene(sceneNew, LoadSceneMode.Single);
-    }
-
-    public void sceneSwitchCurtains(string sceneNew) //switch scene with curtains
-    {
-        if(sceneNew.Equals("Back")){        
-            origin = LastScene.instance.prevScene;
-        }
-        else
-        {
-            origin = sceneNew;
-        }
-        LastScene.instance.prevScene = SceneManager.GetActiveScene().name;
-        GameObject.Find("CurtainsOpenTransition").GetComponent<Curtain>().Close();   
-    }
-    public void sceneSwitchHiddenCurtains(string sceneNew) //switch scene with curtains w/o updating lastScene
-    {        
-        GameObject.Find("CurtainsOpenTransition").GetComponent<Curtain>().Close();   
+        SwitchScene(previousScene.name);
     }
 }
