@@ -40,8 +40,11 @@ public class StartScreen : MonoBehaviour {
         yield return new WaitUntil(() => Input.anyKeyDown == true);
         StopCoroutine(pulseCoroutine);
         HideGraphic(continueText);
+        //Close curtain
+        curtain.Close();
         //Fade audio
-        yield return StartCoroutine(FadeAudio());
+        StartCoroutine(FadeAudio());
+        yield return new WaitForSeconds(2.0f);
         //Switch to main menu
         GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene("MainMenu");
     }

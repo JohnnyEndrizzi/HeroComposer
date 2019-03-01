@@ -1,20 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuHandler : DDOL {
-    new void Awake()
+
+    //This is for initialization
+    private void Start()
     {
-        //Destroy MainMenuHandler if one already exists
-        if (GameObject.FindObjectsOfType<MainMenuHandler>().Length > 1)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }           
+        GameObject.Find("Curtain").GetComponent<Curtain>().Open(); 
     }
 
+    //This is called every frame
     void Update()
     {
         //Escape key pressed 
