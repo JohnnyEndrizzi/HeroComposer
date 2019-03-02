@@ -38,6 +38,7 @@ public class SongSelectionHandler : MonoBehaviour {
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
         GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene("main");
+        HideSongSelectUI();
     }
 
     public void OpenSongSelectionMenu()

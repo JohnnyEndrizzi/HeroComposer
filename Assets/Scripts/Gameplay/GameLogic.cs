@@ -4,12 +4,14 @@ using System.Collections;
 using Game;
 using OsuParser;
 using UnityEngine.SceneManagement;
+/* This is used for debugging */
+using System.IO;
 
 public class GameLogic : MonoBehaviour
 {
     /* GameObjects that will appear on the Canvas*/
-    public GameObject healthBar;
-    public GameObject specialBar;
+    public GameObject healthBarBoss;
+    private GameObject specialBar;
     public GameObject characterSpecialBar;
     public GameObject characterHealthBar;
     public GameObject holdNote;
@@ -67,31 +69,40 @@ public class GameLogic : MonoBehaviour
             Vector3 healthPos;
             Vector3 specialPos;
 
+            /* Uncomment this to debug Main without first the two menus ------------------------------------------------------------------- */
+            string jsonString = File.ReadAllText(Application.streamingAssetsPath + "/characters.json");
+            Character[] characters = JsonHelper.getJsonArray<Character>(jsonString);
+            Assets.Scripts.MainMenu.ApplicationModel.characters[0] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[0].charName);
+            Assets.Scripts.MainMenu.ApplicationModel.characters[1] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[1].charName);
+            Assets.Scripts.MainMenu.ApplicationModel.characters[2] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[2].charName);
+            Assets.Scripts.MainMenu.ApplicationModel.characters[3] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[3].charName);
+            /* Code ends here -------------------------------------------------------------------------------------------------------------- */
+
             if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
             {
                 if (i == 0)
                 {
                     characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
                     healthPos = new Vector3(216.3f, 107.34f, 0.0f);
-                    specialPos = new Vector3(216.3f, 105.34f, 0.0f);
+                    specialPos = new Vector3(203.77f, 99.6f, 0.0f);
                 }
                 else if (i == 1)
                 {
                     characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
                     healthPos = new Vector3(92.6f, -134.4f, 0.0f);
-                    specialPos = new Vector3(92.6f, -136.4f, 0.0f);
+                    specialPos = new Vector3(80f, -142f, 0.0f);
                 }
                 else if (i == 2)
                 {
                     characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
                     healthPos = new Vector3(216.3f, -210.0f, 0.0f);
-                    specialPos = new Vector3(216.3f, -212.0f, 0.0f);
+                    specialPos = new Vector3(203.77f, -217.5f, 0.0f);
                 }
                 else
                 {
                     characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
                     healthPos = new Vector3(350.6f, -134.4f, 0.0f);
-                    specialPos = new Vector3(350.6f, -136.4f, 0.0f);
+                    specialPos = new Vector3(338f, -142f, 0.0f);
                 }
 
                 /* Health Bars */
@@ -391,7 +402,7 @@ public class GameLogic : MonoBehaviour
 
             /* Updates the boss' health as the song plays out */
             float currHealth = GetComponent<AudioSource>().time;
-            healthBar.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+            healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
 
             /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
             metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);

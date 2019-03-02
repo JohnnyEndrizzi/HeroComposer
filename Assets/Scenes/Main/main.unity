@@ -477,8 +477,13 @@ Prefab:
         type: 2}
       propertyPath: characterSpecialBar
       value: 
-      objectReference: {fileID: 1455535214251232, guid: 70b9d1d5ec3cf51489ad33d076b860fa,
+      objectReference: {fileID: 1336059896309304, guid: b5fe758f3d659b340a1d2e4eab73e5f2,
         type: 2}
+    - target: {fileID: 114510844959590258, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: healthBarBoss
+      value: 
+      objectReference: {fileID: 945568078}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0
@@ -1892,6 +1897,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224005691831763700, guid: 66f3158339ca3964d819fd0e574a66cf,
     type: 2}
   m_PrefabInternal: {fileID: 945568076}
+--- !u!1 &945568078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1015227461412100, guid: 66f3158339ca3964d819fd0e574a66cf,
+    type: 2}
+  m_PrefabInternal: {fileID: 945568076}
 --- !u!1 &1002392162
 GameObject:
   m_ObjectHideFlags: 0
@@ -2068,7 +2078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1054930184
 Animator:
   serializedVersion: 3
