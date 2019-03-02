@@ -5,17 +5,20 @@ using UnityEngine.UI;
 public class StartScreen : MonoBehaviour {
 
     //Studio logo and press to continue text
-    public Image studioLogo;
-    public Text continueText;
+    private Image studioLogo;
+    private Text continueText;
 
     //Curtain
-    public Curtain curtain;
+    private Curtain curtain;
 
     //Background audio
     private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
+        studioLogo = GameObject.Find("StudioLogo").GetComponent<Image>();
+        continueText = GameObject.Find("ContinueText").GetComponent<Text>();
+        curtain = GameObject.Find("Curtain").GetComponent<Curtain>();
         audioSource = GetComponent<AudioSource>();
         HideGraphic(studioLogo);
         HideGraphic(continueText);
@@ -38,15 +41,13 @@ public class StartScreen : MonoBehaviour {
         //Pulse "Press to Continue" text until button is pressed       
         Coroutine pulseCoroutine = StartCoroutine(Pulse(continueText));
         yield return new WaitUntil(() => Input.anyKeyDown == true);
-        StopCoroutine(pulseCoroutine);
+        StopAllCoroutines();
+        //Hide continue text
         HideGraphic(continueText);
-        //Close curtain
-        curtain.Close();
         //Fade audio
         StartCoroutine(FadeAudio());
-        yield return new WaitForSeconds(2.0f);
         //Switch to main menu
-        GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene("MainMenu");
+        SceneManagerWrapper.Instance.SwitchSceneWithCurtains("MainMenu",true);
     }
 
     //Pulse (fade in/out) graphic

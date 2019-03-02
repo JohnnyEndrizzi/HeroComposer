@@ -6,22 +6,22 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: 
+    path: Assets/Scenes/preload.unity
     guid: e35de3c93ca3e0a44a73cc04983c76aa
   - enabled: 1
-    path: Assets/Scenes/Start/Start.unity
+    path: Assets/Scenes/StartScreen/StartScreen.unity
     guid: 56a60c9c05737d2428a1738f9f76a919
   - enabled: 1
-    path: Assets/Scenes/Menu/MainMenu.unity
+    path: Assets/Scenes/Menus/MainMenu.unity
     guid: 2c64d8f544bc043a2a037642aa71c43e
   - enabled: 1
-    path: Assets/Scenes/Menu/Rehearsal.unity
+    path: Assets/Scenes/Menus/Rehearsal.unity
     guid: 280be9de411adc940a5169dbc20b2183
   - enabled: 1
-    path: Assets/Scenes/Menu/MusicShop.unity
+    path: Assets/Scenes/Menus/MusicShop.unity
     guid: 946a02d5826a0434e8e61a5c1ac99bc3
   - enabled: 1
-    path: Assets/Scenes/Menu/Soundcheck.unity
+    path: Assets/Scenes/Menus/Soundcheck.unity
     guid: 5186b3ec1b6370f4fb06797a35092cd5
   - enabled: 1
     path: Assets/Scenes/Main/main.unity
@@ -30,6 +30,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Map/Map.unity
     guid: e1b793c40df980747b159fd6e9176269
   - enabled: 1
-    path: Assets/Scenes/Menu/Audition.unity
+    path: Assets/Scenes/Menus/Audition.unity
     guid: 0ab067256dc3ff54794406492dfd0120
   m_configObjects: {}

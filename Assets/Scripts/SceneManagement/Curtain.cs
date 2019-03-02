@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
-public class Curtain : DDOL
+
+public class Curtain : MonoBehaviour
 { 
     //Animator
     private Animator animator;
@@ -12,7 +10,26 @@ public class Curtain : DDOL
     private AudioSource audioSource;
     private AudioClip curtainOpening;
     private AudioClip curtainClosing;
-    
+
+    //Singleton instance
+    public static Curtain Instance { get; private set; }
+
+    //Called before start
+    void Awake()
+    {
+        // Check if instance already exists
+        if (Instance == null)
+        {
+            //Save singleton instance
+            Instance = this;
+            //Dont destroy between scenes
+            DontDestroyOnLoad(gameObject);
+        //Destroy this instance
+        }else{
+            Destroy(this.gameObject);
+        }
+    }
+
     //Use this for initialization 
     void Start()
     {

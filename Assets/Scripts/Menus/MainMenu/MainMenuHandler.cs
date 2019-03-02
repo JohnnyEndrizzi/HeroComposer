@@ -2,12 +2,26 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuHandler : DDOL {
+public class MainMenuHandler : MonoBehaviour {
+    //Singleton instance
+    public static MainMenuHandler Instance { get; private set; }
 
-    //This is for initialization
-    private void Start()
+    //Called before start
+    void Awake()
     {
-        GameObject.Find("Curtain").GetComponent<Curtain>().Open(); 
+        // Check if instance already exists
+        if (Instance == null)
+        {
+            //Save singleton instance
+            Instance = this;
+
+            //Dont destroy between scenes
+            DontDestroyOnLoad(gameObject);
+        //Destroy this instance
+        }else{
+            Destroy(this.gameObject);
+        }
+
     }
 
     //This is called every frame
@@ -16,13 +30,18 @@ public class MainMenuHandler : DDOL {
         //Escape key pressed 
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            //Delete main menue handler if returning to title screen
+            //If at the main menu
             if (SceneManager.GetActiveScene().name == "MainMenu")
             {
+                //Return to title screen 
                 Destroy(this.gameObject);
+                SceneManagerWrapper.Instance.SwitchSceneWithCurtains("StartScreen", false);
             }
-            //Return to previous scene
-            GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().LoadPreviousScene();
+            else
+            {
+                //Return to previous scene
+                SceneManagerWrapper.Instance.LoadPreviousScene();
+            }
         }
     }
 }
