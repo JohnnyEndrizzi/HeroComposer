@@ -1,17 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SongSelectionHandler : MonoBehaviour {
     //Song selection canvas
-    public Canvas songSelectionCanvas;
+    public UILayer songSelectUI;
 
     //This is for initilization
     public void Start()
     {
-        songSelectionCanvas.enabled = false;
+        HideSongSelectUI();
+    }
+
+    //Show the song selection UI
+    public void ShowSongSelectUI()
+    {
+        songSelectUI.Show();
+    }
+
+    //Hide the song selection UI
+    public void HideSongSelectUI()
+    {
+        songSelectUI.Hide();
     }
 
     //Start the song that was selected
@@ -32,6 +42,14 @@ public class SongSelectionHandler : MonoBehaviour {
 
     public void OpenSongSelectionMenu()
     {
-        songSelectionCanvas.enabled = true;
+        MainMenuHandler.DisableDoors();
+        ShowSongSelectUI();
+    }
+
+    public void CloseSongSelectionMenu()
+    {
+        HideSongSelectUI();
+        GameObject.Find("PlayDoor").GetComponent<PlayDoor>().CloseDoor();
+        MainMenuHandler.EnableDoors();
     }
 }

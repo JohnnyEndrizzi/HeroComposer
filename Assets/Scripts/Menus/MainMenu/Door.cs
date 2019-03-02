@@ -14,13 +14,25 @@ public class Door : MonoBehaviour {
     private AudioClip doorOpening;
     private AudioClip doorClosing;
 
+    //Used to enable/disable a door
+    public bool doorEnabled { get; set; }
+
+    //Called every frame
+    void Update()
+    {
+               
+    }
+
     // Use this for initialization
     void Start () {
+        //Enable door
+        doorEnabled = true;
+
+        //Get animator
         animator = GetComponent<Animator>();
         
-        AudioListener.volume = 1;
+        //Get sound effects
         audioSource = GetComponent<AudioSource>();
-        audioSource.mute = true;
         doorOpening = (AudioClip)Resources.Load("SoundEffects/menu_door_open");
         doorClosing = (AudioClip)Resources.Load("SoundEffects/menu_door_close");
     }
@@ -37,23 +49,40 @@ public class Door : MonoBehaviour {
         * Description: The system must preserve insight about character and party customization between level completions and menu selections.
         * 
         * The scene corresponding to the door will be loaded, as long as its not the play door (which is covered in the function below) */
-        GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene(doorName);
+        if (doorEnabled) { 
+           SceneManagerWrapper.Instance.SwitchScene(doorName);
+        }
     }
 
     //This function is called when the mouse hovers over a door
     void OnMouseEnter()
     {
-        StartCoroutine(OpenDoor());
+        if (doorEnabled)
+        {
+            OpenDoor();
+        }
+    }
+
+    //This function is called while the mouse hovers over a door
+    private void OnMouseOver()
+    {
+        if (doorEnabled == true && animator.GetBool("IsOpen")==false)
+        {
+            OpenDoor();
+        }
     }
 
     //This function is called when the mouse stops hovering over a door
     void OnMouseExit()
     {
-        StartCoroutine(CloseDoor());
+        if (doorEnabled)
+        {
+            CloseDoor();
+        }
     }
 
     //Play door opening animation
-    IEnumerator OpenDoor() 
+    public void OpenDoor() 
     {
         //Play sound effect
         audioSource.Pause();
@@ -61,12 +90,10 @@ public class Door : MonoBehaviour {
 
         //Play animation
         animator.SetBool("IsOpen", true);
-
-        yield return null;
     }
 
     //Play door closing animation
-    IEnumerator CloseDoor()
+    public void CloseDoor()
     {
         //Play sound effect
         audioSource.Pause();
@@ -74,7 +101,5 @@ public class Door : MonoBehaviour {
 
         //Play animation
         animator.SetBool("IsOpen", false);
-
-        yield return null;
     }
 }

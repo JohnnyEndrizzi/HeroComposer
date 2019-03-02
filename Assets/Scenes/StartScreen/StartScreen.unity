@@ -216,9 +216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2a75793c6e6f24aa8893d93af5ac49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  studioLogo: {fileID: 1318963031}
-  continueText: {fileID: 1614279941}
-  curtain: {fileID: 1502788863}
 --- !u!4 &161932629
 Transform:
   m_ObjectHideFlags: 0
@@ -762,9 +759,9 @@ GameObject:
   - component: {fileID: 1338457272}
   - component: {fileID: 1338457271}
   - component: {fileID: 1338457270}
-  - component: {fileID: 1338457274}
+  - component: {fileID: 1338457275}
   m_Layer: 5
-  m_Name: Curtain Canvas
+  m_Name: UIContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,7 +845,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1338457274
+--- !u!114 &1338457275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -856,7 +853,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1338457269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73aae9f1e1f800948828dda763e2ae76, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c434f93ccd702d4ab51ba5f65ec6452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1390865508

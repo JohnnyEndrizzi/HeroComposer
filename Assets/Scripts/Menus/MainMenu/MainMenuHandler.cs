@@ -44,4 +44,20 @@ public class MainMenuHandler : MonoBehaviour {
             }
         }
     }
+
+    public static void EnableDoors()
+    {
+        foreach (Door d in GameObject.FindObjectsOfType<Door>())
+        {
+            d.doorEnabled = true;
+        }
+    }
+
+    public static void DisableDoors()
+    {
+        foreach (Door d in GameObject.FindObjectsOfType<Door>())
+        {
+            d.doorEnabled = false;
+        }
+    }
 }
