@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class Curtain : MonoBehaviour
+public class Curtain : UILayer
 { 
     //Animator
     private Animator animator;
@@ -37,12 +37,6 @@ public class Curtain : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         curtainOpening = (AudioClip)Resources.Load("SoundEffects/menu_curtain_open");
         curtainClosing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");                
-    }
-
-    //Hide curtain
-    public void Hide()
-    {
-        //Scale the curtain so its off screen.
     }
 
     //Open curtain

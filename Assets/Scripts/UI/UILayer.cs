@@ -14,7 +14,10 @@ public class UILayer : MonoBehaviour {
         {
             child.gameObject.SetActive(true);
         }
-        UIEventSystem.gameObject.SetActive(true);
+        if (UIEventSystem != null)
+        {
+            UIEventSystem.gameObject.SetActive(true);
+        }
     }
 
     //Hide the UI
@@ -24,6 +27,9 @@ public class UILayer : MonoBehaviour {
         {
             child.gameObject.SetActive(false);
         }
-        UIEventSystem.gameObject.SetActive(false);
+        if (UIEventSystem != null)
+        {
+            UIEventSystem.gameObject.SetActive(false);
+        }
     }
 }
