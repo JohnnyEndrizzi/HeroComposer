@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* Functional Requirement
  * ID: 8.1-1
@@ -118,7 +119,7 @@ public class SliderNote : MonoBehaviour
         /* Step 9 from above: The middle bar will decrease its scale until SecondaryNote catches up PrimaryNote at the kill point */
         else if (doneScaleLerp2 == false && (doneScaleLerp1 && donelerp))
         {
-            if (secondaryNote != null)
+            if (secondaryNote.GetComponent<Image>().enabled != false)
             {
                 /* Caclulate distance between secondary note and set point (in world space) */
                 barSize.x = Mathf.Abs(secondaryNote.GetComponent<RectTransform>().anchoredPosition.x - 328);

@@ -29,7 +29,8 @@ public class GameLogic : MonoBehaviour
     public static float nextHit;
     public static float nextBeat;
     public static float nextHitEnd = 0;
-    public static int hitIndex = 0;
+    public static bool nextHitHold = false;
+    public int hitIndex = 0;
     public bool introFinished;
 
     /* Variables used for defending against attacks and health logic*/
@@ -132,9 +133,16 @@ public class GameLogic : MonoBehaviour
     }
 
     /* Returns the next note's beat in the song */
-    public float getNextHit()
+    public static float getNextHit()
     {
-        return nextHit;
+        if (nextHitHold)
+        {
+            return nextHitEnd;
+        }
+        else
+        {
+            return nextHit;
+        }
     }
 
     /* Sets the next noteas a defend note */
@@ -390,7 +398,12 @@ public class GameLogic : MonoBehaviour
                 /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
                 if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
                 {
+                    nextHitHold = true;
                     nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
+                }
+                else
+                {
+                    nextHitHold = false;
                 }
             }
             else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
@@ -399,27 +412,13 @@ public class GameLogic : MonoBehaviour
                 songDone = true;
                 Debug.Log("Song ended.");
             }
-
+            
             /* Updates the boss' health as the song plays out */
             float currHealth = GetComponent<AudioSource>().time;
             healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
 
             /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
             metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //if (!pauseMenu.enabled) //TODO
-            //{
-            //    //Unpause game
-            //    //close pause menu
-            //}
-            //if (pauseMenu.enabled)
-            //{
-            //    //Pause game
-            //    //open pause menu
-            //}
         }
     }
 
@@ -443,7 +442,7 @@ public class GameLogic : MonoBehaviour
             notesDone = true;
             return;
         }
-
+        
         /* The following is the logic that defines how held notes spawn, which sets appropriate 'SecondaryNote' and 
          * 'PrimaryNote' labels to each GameObject */
         if (iterationsLeft == 2 || firstNoteOfSlider == false)
@@ -464,23 +463,15 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
-        /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
-        if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
-        {
-            GetComponent<CharacterListener>().missCount++;
-            StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
-            hitIndex++;
-        }
-
         /* Functional Requirement 
          * ID: 8.1-1
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        //Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
         if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
-            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
+            //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
@@ -489,9 +480,10 @@ public class GameLogic : MonoBehaviour
                 iterationsLeft = 2;
             }
 
-            /* Instantiates the notes on the cavas, to avoid Z-fighting with the background elements */
+            /* Instantiates the notes on the canvas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
+            beatSprite.name = "note_" + noteIndex;
 
             /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);

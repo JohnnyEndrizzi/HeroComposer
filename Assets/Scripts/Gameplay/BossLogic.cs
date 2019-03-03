@@ -14,8 +14,7 @@ public class BossLogic : MonoBehaviour
     /* Variables used for caclulating attacks and healthbars */
     private float songPosInBeats;
     private float maxNoteCount;
-    private int currentNoteCount = 0;
-    private float bossFrequency;
+    public float bossFrequency;
 
     /* This list is used for randomly choosing the target for an attack */
     private List<int> weigthedValues = new List<int>();
@@ -31,8 +30,6 @@ public class BossLogic : MonoBehaviour
     {
         /* Plays the boss attack animation towards the target character */
         GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
-        //GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
-        //GameObject.Find("Boss").GetComponent<AttackAnimator>().ATTACK("arrowHail", 0, chosen + 1);
 
         /* These variables and calculations are tentative as we develop a better logic */
         int bossPower = 200;
@@ -122,13 +119,6 @@ public class BossLogic : MonoBehaviour
             System.Random random = newRandomSeed();
             bossFrequency = 5 + random.Next(-2, 3);
             target = chooseAttackTarget();
-        }
-
-        /* The bossFrequency will decrease on every beat until it reaches zero. */
-        if (songPosInBeats > GetComponent<GameLogic>().getNextBeat())
-        {
-            currentNoteCount++;
-            bossFrequency--;
         }
     }
 

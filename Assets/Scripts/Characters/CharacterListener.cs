@@ -81,24 +81,29 @@ public class CharacterListener : MonoBehaviour
         if (errorDifference <= 25)
         {
             perfectCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
             greatCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
             goodCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
-            //missCount++;
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
@@ -158,7 +163,7 @@ public class CharacterListener : MonoBehaviour
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
-        Vector3 toPosition = new Vector3(2.45f, 1.5f, -7.77f);
+        Vector3 toPosition = new Vector3(2.02f, 1.5f, -7.77f);
 
         /* This calls the moveNoteScore function using varying values to lerp the text */
         float counter = 0;
@@ -353,8 +358,9 @@ public class CharacterListener : MonoBehaviour
         if (currentSprite > 0)
         {
             toUseGO = GameObject.Find("character_" + currentSprite);
-            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
-            StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
+            //SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
+            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit());
+            StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
 
         /* Functional Requirement
