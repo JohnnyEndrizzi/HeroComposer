@@ -5629,6 +5629,7 @@ Transform:
   m_Children:
   - {fileID: 1766647189}
   - {fileID: 967322284}
+  - {fileID: 1097744127}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6254,7 +6255,7 @@ Prefab:
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224806461357327646, guid: 99121d6520edbb043807429fa258188f,
         type: 2}
@@ -7358,6 +7359,70 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4137486168269956, guid: da41fd2967a439d409358c2214a5409e,
     type: 2}
   m_PrefabInternal: {fileID: 1087428379}
+--- !u!1 &1097744126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097744127}
+  - component: {fileID: 1097744128}
+  m_Layer: 0
+  m_Name: Level 1 Cutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1097744127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1097744126}
+  m_LocalRotation: {x: -0, y: -0, z: -7.1054274e-15, w: 1}
+  m_LocalPosition: {x: -10.56, y: -1.1800001, z: -15.88}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_Children: []
+  m_Father: {fileID: 905791585}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097744128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1097744126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ef4897c74dd5e4fbd0e826046422f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    sentences:
+    - speaker: You
+      body: What... Where am I?
+    - speaker: Sitar
+      body: Hey, can you hear me?
+    - speaker: You
+      body: Huh? What in the world are you?
+    - speaker: Sitar
+      body: Wow, you can actually see me! This is amazing, you are the one prophesized!
+        The one to save music!
+    - speaker: You
+      body: Prophesized? Music? Hold up, what is going on?
+    - speaker: Sitar
+      body: 'Right, you must think you are going crazy. Let me try to explain, you
+        ever hear about music? '
+    - speaker: You
+      body: 'Music? I think read about it in books but '
+    - speaker: You
+      body: 'Prophesized? Hold '
+    - speaker: You
+      body: 'Prophesized? Hold '
+    - speaker: You
+      body: 'Prophesized? Hold '
 --- !u!1001 &1107566052
 Prefab:
   m_ObjectHideFlags: 0
@@ -7731,7 +7796,7 @@ Prefab:
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224393294433273938, guid: bd325bdf34685cd4f8aaf480e3d3a11e,
         type: 2}
@@ -10936,6 +11001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766647189}
+  - component: {fileID: 1766647190}
   m_Layer: 0
   m_Name: InteractionPoint
   m_TagString: Untagged
@@ -10956,6 +11022,21 @@ Transform:
   m_Father: {fileID: 905791585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1766647190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766647188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3cc5705a2f8d844a8bbd12f112d0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 10
+  interactionTransform: {fileID: 1766647189}
+  songName: ALiVE
+  dialogueTrigger: {fileID: 1097744128}
 --- !u!1001 &1776843644
 Prefab:
   m_ObjectHideFlags: 0
