@@ -23,7 +23,7 @@ public class Curtain : UILayer
             //Save singleton instance
             Instance = this;
             //Dont destroy between scenes
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         //Destroy this instance
         }else{
             Destroy(this.gameObject);
