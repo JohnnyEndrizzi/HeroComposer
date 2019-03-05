@@ -81,7 +81,7 @@ public class ShopController : MonoBehaviour {
          if (Input.GetKeyDown(KeyCode.Escape))
         {
             LastScene.instance.prevScene = "shop";
-            GameObject.Find("CurtainsOpenTransition").GetComponent<Curtain>().Close();
+            GameObject.Find("Curtain").GetComponent<Curtain>().Close();
         }
     }
 

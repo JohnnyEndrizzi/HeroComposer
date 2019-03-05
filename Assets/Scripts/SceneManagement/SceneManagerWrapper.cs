@@ -55,4 +55,10 @@ public class SceneManagerWrapper : MonoBehaviour
     {
         SwitchScene(previousScene);
     }
+
+    //Switch to new scene without saving previousScene - allows the back button to ignore certain scenes
+    public void SwitchSceneHidden(string scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
 }

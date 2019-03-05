@@ -20,6 +20,7 @@ public class StartScreen : MonoBehaviour {
         continueText = GameObject.Find("ContinueText").GetComponent<Text>();
         curtain = GameObject.Find("Curtain").GetComponent<Curtain>();
         audioSource = GetComponent<AudioSource>();
+        continueText.enabled = true;
         HideGraphic(studioLogo);
         HideGraphic(continueText);
         StartCoroutine(SplashScreen());
@@ -32,20 +33,26 @@ public class StartScreen : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(FadeGraphicIn(studioLogo));
         yield return new WaitForSeconds(1.0f);
+
         //Fade out logo
         yield return StartCoroutine(FadeGraphicOut(studioLogo));
         yield return new WaitForSeconds(0.1f);
-        //Open curtain
-        curtain.Open();
-        yield return new WaitForSeconds(1.0f);
+        
         //Pulse "Press to Continue" text until button is pressed       
         Coroutine pulseCoroutine = StartCoroutine(Pulse(continueText));
         yield return new WaitUntil(() => Input.anyKeyDown == true);
-        StopAllCoroutines();
+        StopCoroutine(pulseCoroutine);
+
         //Hide continue text
-        HideGraphic(continueText);
+        continueText.enabled = false;
+
+        //Open curtain
+        curtain.Open();
+        yield return new WaitForSeconds(2.0f);
+
         //Fade audio
         StartCoroutine(FadeAudio());
+
         //Switch to main menu
         SceneManagerWrapper.Instance.SwitchSceneWithCurtains("MainMenu",true);
     }

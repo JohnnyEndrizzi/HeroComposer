@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -182,7 +182,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 152972696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.104729, y: -2.7640305, z: -73.085686}
+  m_LocalPosition: {x: 432.39526, y: 257.73596, z: -73.085686}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1390865509}
@@ -555,7 +555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 209.14526, y: 58.375977}
+  m_AnchoredPosition: {x: 672.64526, y: 318.87598}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &962662253
@@ -896,11 +896,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4012878482701526, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -30.894737
+      value: 432.60526
       objectReference: {fileID: 0}
     - target: {fileID: 4012878482701526, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.1840286
+      value: 256.31598
       objectReference: {fileID: 0}
     - target: {fileID: 4012878482701526, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_LocalPosition.z
@@ -942,7 +942,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4012878482701526, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.7000002
+      value: 0.70000046
       objectReference: {fileID: 0}
     - target: {fileID: 1749578779645212, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_IsActive
@@ -990,7 +990,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4012878482701526, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.0000005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f9096477bf444d468ffa90f250dae65, type: 2}
@@ -1191,6 +1191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54384704de7ebc442be978b75a787fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIEventSystem: {fileID: 0}
 --- !u!1 &1614279937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,7 +1228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 54}
+  m_AnchoredPosition: {x: 0, y: 132.7}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1614279939
