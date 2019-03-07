@@ -39,17 +39,29 @@ public class Curtain : UILayer
         curtainClosing = (AudioClip)Resources.Load("SoundEffects/menu_curtain_close");                
     }
 
+    //Enable input when curtain is finished opening
+    private void EnableInput()
+    {
+        GameManager.Instance.IsInputEnabled = true;
+    }
+
+    //Disable input when curtain is closing/closed
+    private void DisableInput()
+    {
+        GameManager.Instance.IsInputEnabled = false;
+    }
+
     //Open curtain
     public void Open()
     {
-        audioSource.PlayOneShot(curtainOpening, 0.7F);
         animator.SetBool("IsOpen", true);
+        audioSource.PlayOneShot(curtainOpening, 0.7F);
     }
 
     //Close curtain
     public void Close()
     {
-        audioSource.PlayOneShot(curtainClosing, 0.7f);
         animator.SetBool("IsOpen", false);
+        audioSource.PlayOneShot(curtainClosing, 0.7f);
     }
 }

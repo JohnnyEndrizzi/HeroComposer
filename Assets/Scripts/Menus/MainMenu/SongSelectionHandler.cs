@@ -37,12 +37,14 @@ public class SongSelectionHandler : MonoBehaviour {
         Assets.Scripts.MainMenu.ApplicationModel.songName = Regex.Replace(songTitle, @"\s+", "");
         Assets.Scripts.MainMenu.ApplicationModel.songPathName = Regex.Replace(songTitle, @"\s+", "") + "_" + songDifficulty;
 
-        GameObject.Find("SceneManagerWrapper").GetComponent<SceneManagerWrapper>().SwitchScene("main");
+        HideSongSelectUI();
+
+        GameManager.Instance.sceneManager.SwitchSceneWithCurtains("main",false);
     }
 
     public void OpenSongSelectionMenu()
     {
-        MainMenuHandler.DisableDoors();
+        MainMenuHandler.Instance.DisableDoors();
         ShowSongSelectUI();
     }
 
@@ -50,6 +52,6 @@ public class SongSelectionHandler : MonoBehaviour {
     {
         HideSongSelectUI();
         GameObject.Find("PlayDoor").GetComponent<PlayDoor>().CloseDoor();
-        MainMenuHandler.EnableDoors();
+        MainMenuHandler.Instance.EnableDoors();
     }
 }

@@ -4,36 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerWrapper : MonoBehaviour
 {
-    //Singleton instance
-    public static SceneManagerWrapper Instance { get; private set; }
-
     //Previous scene
     private string previousScene;
-
-    //Called before start
-    void Awake()
-    {
-        // Check if instance already exists
-        if (Instance == null)
-        {
-            //Save singleton instance
-            Instance = this;
-            //Dont destroy between scenes
-            DontDestroyOnLoad(gameObject);
-        //Destroy this instance
-        }else{
-            Destroy(this.gameObject);
-        }
-    }
 
     //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
         StartCoroutine(SwitchSceneWithCurtainsCoroutine(scene, openCurtainsAfter));
     }
-    //Coroutine to swtich scenes with curtain transition
+    //Coroutine to switch scenes with curtain transition
     IEnumerator SwitchSceneWithCurtainsCoroutine(string scene, bool openCurtainsAfter)
     {
+        GameManager.Instance.IsInputEnabled = false;
         Curtain.Instance.Close();
         yield return new WaitForSeconds(2.0f);
         SwitchScene(scene);
@@ -44,15 +26,20 @@ public class SceneManagerWrapper : MonoBehaviour
     }
 
     //Switch to new scene
-    public void SwitchScene(string scene)
+    private void SwitchScene(string scene)
     {
         previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(scene);
     }
 
+    public void LoadPreviousScreenWithCurtains()
+    { 
+        LoadPreviousScene();
+    }
+
     //Load previous scene
-    public void LoadPreviousScene()
+    private void LoadPreviousScene()
     {
-        SwitchScene(previousScene);
+        SwitchSceneWithCurtains(previousScene, true);
     }
 }
