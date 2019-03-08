@@ -20,7 +20,7 @@ public class LoadData : MonoBehaviour
     //Imported types from JSON
     Character[] characters;
     Inventory[] inventory;
-    Items[] items;
+    Item[] items;
     Magic[] magic;
     Levels[] levels;
 
@@ -29,8 +29,8 @@ public class LoadData : MonoBehaviour
     // Load Unit data from file to CharacterScriptableObject for use in game and Unit Dictionary for use elsewhere
     public void LoadCharacters()
     {
-        string jsonString = LoadResourceTextfileStreaming("characters.json");
-        characters = JsonHelper.getJsonArray<Character>(jsonString);
+        string jsonString = LoadResourceTextfileStreaming("JSON/characters.json");
+        characters = JSONUtilityWrapper.getJsonArray<Character>(jsonString);
 
         //Debug.Log("TEST: " + jsonString);
 
@@ -75,13 +75,13 @@ public class LoadData : MonoBehaviour
     // Load inventory and team data from file
     public void LoadInv()
     {
-        string jsonString = LoadResourceTextfileStreaming("inventory.json");
-        inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
+       /* string jsonString = LoadResourceTextfileStreaming("inventory.json");
+        inventory = JSONUtilityWrapper.getJsonArray<Inventory>(jsonString);
 
         gameObject.GetComponent<StoredValues>().importInventory(inventory[0].StoredItems.Split(';'));
         gameObject.GetComponent<StoredValues>().CashL(inventory[0].Money);
 
-        string[] tempNames = inventory[0].SelUnits.Split(';');
+        string[] tempNames = inventory[0].SelUnits.Split(';');*/
 
         /*
         Debug.Log(tempNames[0]);
@@ -90,6 +90,7 @@ public class LoadData : MonoBehaviour
         Debug.Log(tempNames[3]);
         */
 
+        /*
         for (int i = 0; i < tempNames.Length; i++)
         {
             CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[i].charName);
@@ -113,13 +114,14 @@ public class LoadData : MonoBehaviour
                 }
             }
         }   
+        */
     }       
 
     // Load Item data from file to Item Dictionary
     public void LoadItems()
     {
         string jsonString = LoadResourceTextfile("items.json");
-        items = JsonHelper.getJsonArray<Items>(jsonString);
+        items = JSONUtilityWrapper.getJsonArray<Item>(jsonString);
 
         GameObject.Find("__app").GetComponent<StoredValues>().nullItem();
         for (int j = 0; j < items.Length; j++)
@@ -138,7 +140,7 @@ public class LoadData : MonoBehaviour
     public void LoadLevels()
     {
         string jsonString = LoadResourceTextfileStreaming("levels.json");
-        levels = JsonHelper.getJsonArray<Levels>(jsonString);
+        levels = JSONUtilityWrapper.getJsonArray<Levels>(jsonString);
 
         for (int i = 0; i < levels.Length; i++)
         {
@@ -160,32 +162,6 @@ public class LoadData : MonoBehaviour
     {    
         string fileText = File.ReadAllText(Application.streamingAssetsPath + "/" + path);        
         return fileText;
-    }
-}
-
-/* The following is a wrapper class used for JSON (de)serialization.
- * Unity's JsonUtility doesn't support JSON arrays properly, so the wrapper
- * is required to make things easier. */
-public class JsonHelper
-{
-    public static T[] getJsonArray<T>(string json)
-    {
-        string newJson = "{ \"array\": " + json + "}";
-        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
-        return wrapper.array;
-    }
-
-    public static string ToJson<T>(T[] array, bool prettyPrint)
-    {
-        Wrapper<T> wrapper = new Wrapper<T>();
-        wrapper.array = array;
-        return JsonUtility.ToJson(wrapper, prettyPrint);
-    }
-
-    [System.Serializable]
-    private class Wrapper<T>
-    {
-        public T[] array;
     }
 }
 

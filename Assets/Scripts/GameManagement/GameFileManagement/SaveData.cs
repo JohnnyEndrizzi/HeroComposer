@@ -178,7 +178,7 @@ public class SaveData : MonoBehaviour
     }
 
     private string SaveInvExceptRowJSON(string data, int row)
-    {
+    {/*
         string jsonString = LoadResourceTextfile("inventory.json");
         inventory = JsonHelper.getJsonArray<Inventory>(jsonString);
 
@@ -200,7 +200,8 @@ public class SaveData : MonoBehaviour
             data += inventory[0].Money;
         }
         
-        return data;
+        return data;*/
+        return "";
     }
 
     //Load file to string from path

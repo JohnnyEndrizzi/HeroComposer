@@ -1,8 +1,8 @@
-﻿/* Used to store (de)serialized JSON data */
-
+﻿//Serializable JSON object
 [System.Serializable]
 public class Levels
 {
+    public string objectIDName;
     public string LevelName;
     public string LevelSong;
     public string Enemy;

@@ -1,7 +1,6 @@
-﻿/* Used to store (de)serialized JSON data */
-
+﻿//Serializable JSON object
 [System.Serializable]
-public class Items
+public class Item
 {
     public string NameKey;
     public string NameTitle;

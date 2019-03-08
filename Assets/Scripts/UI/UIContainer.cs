@@ -16,10 +16,9 @@ public class UIContainer : MonoBehaviour {
             Instance = this;
             //Dont destroy between scenes
             DontDestroyOnLoad(gameObject);
-            //Destroy this instance
         }
         //Add this UI's elements to already existing UI container
-        else
+        else if(Instance != this)
         {
             Transform newParent = Instance.transform;
             Transform oldParent = this.transform;
@@ -28,6 +27,17 @@ public class UIContainer : MonoBehaviour {
                 oldParent.GetChild(oldParent.childCount - 1).SetParent(newParent, false);
             }
             Destroy(this.gameObject);
+        }
+    }
+
+    public void ClearUILayers()
+    {
+        foreach (Transform child in this.transform)
+        {
+            if (!child.GetComponent<Curtain>())
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 }

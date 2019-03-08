@@ -1,0 +1,20 @@
+{"money": 100000,
+	"items": {
+		"0":{
+			"NameKey":"amp",
+			"NameTitle":"Amp",
+			"Desc":"Amplifies attacks",
+			"cost":2500,
+			"sprite": "greenPotion",
+			"sound": "acoustic_sound"
+		},
+		"1":{
+			"NameKey":"tuner",
+			"NameTitle":"Tuner",
+			"Desc":"Tunes Defences",
+			"cost":1500,
+			"sprite": "potion",
+			"sound": "acoustic_sound"
+		}
+	}
+}

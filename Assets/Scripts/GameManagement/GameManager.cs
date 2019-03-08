@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour {
     //SceneManager
     public SceneManagerWrapper sceneManager;
 
+    //GameData
+    public GameDataManager gameDataManager;
+
     //Called before start
     void Awake()
     {
