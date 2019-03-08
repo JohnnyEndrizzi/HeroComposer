@@ -35,4 +35,21 @@ public class GameManager : MonoBehaviour {
     void Start () {
         IsInputEnabled = true;
 	}
+
+    //Called every frame
+    void Update()
+    {
+        //Enter debug mode
+        if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            EnterDebugMode();
+        }    
+    }
+
+    //Enter debug mode (skip to gameplay) 
+    private void EnterDebugMode()
+    {
+        Debug.Log("Entering DEBUG mode.");
+        //Add code here
+    }
 }
