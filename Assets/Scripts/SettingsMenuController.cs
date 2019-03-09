@@ -75,7 +75,7 @@ public class SettingsMenuController : MonoBehaviour {
     public void PauseGame()
     {
         PauseMenu.GetComponent<Canvas>().enabled = true;
-        audioSource.PlayOneShot(back, volB);
+        audioSource.PlayOneShot(confirm, volB);
         //audioSource2.PlayOneShot(crowd, volA);
     }
     public void UnPauseGame()
