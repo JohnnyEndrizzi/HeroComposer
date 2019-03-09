@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UILayer : MonoBehaviour {
@@ -10,10 +8,7 @@ public class UILayer : MonoBehaviour {
     //Show the UI
     public void Show()
     {
-        foreach (Transform child in this.transform)
-        {
-            child.gameObject.SetActive(true);
-        }
+        this.gameObject.SetActive(true);
         if (UIEventSystem != null)
         {
             UIEventSystem.gameObject.SetActive(true);
@@ -23,10 +18,7 @@ public class UILayer : MonoBehaviour {
     //Hide the UI
     public void Hide()
     {
-        foreach (Transform child in this.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
+        this.gameObject.SetActive(false);
         if (UIEventSystem != null)
         {
             UIEventSystem.gameObject.SetActive(false);

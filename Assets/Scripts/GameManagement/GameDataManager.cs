@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class JSONFiles
@@ -21,7 +22,7 @@ public class GameDataManager : MonoBehaviour {
     private Dictionary<string,Item> items;
     //Inventory
     private Inventory inventory;
-    //Part
+    //Party
     private Party party;
 
     // Use this for initialization
@@ -37,6 +38,12 @@ public class GameDataManager : MonoBehaviour {
         items = gameFileHandler.LoadJSONAsGameObjectDictionary<Item>(JSONFiles.Items);
         inventory = gameFileHandler.LoadJSONAsGameObject<Inventory>(JSONFiles.Inventory);
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
+    }
+
+    //Return the current characters in players party
+    public Dictionary<int,Character> GetCharactersInParty()
+    {
+        return party.characters.Keys.ToDictionary(x => int.Parse(x), x => party.characters[x]);
     }
     
 }

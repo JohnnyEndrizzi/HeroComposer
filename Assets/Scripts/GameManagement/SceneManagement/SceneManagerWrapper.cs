@@ -10,7 +10,7 @@ public class SceneManagerWrapper : MonoBehaviour
     //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
-        if(UIContainer.Instance != null)
+        if (UIContainer.Instance != null)
         {
             UIContainer.Instance.ClearUILayers();
         }
@@ -29,21 +29,28 @@ public class SceneManagerWrapper : MonoBehaviour
         }
     }
 
+    //Load previous screen using curtains
+    public void LoadPreviousScreenWithCurtains()
+    {
+        LoadPreviousScene();
+    }
+
     //Switch to new scene
     private void SwitchScene(string scene)
     {
-        previousScene = SceneManager.GetActiveScene().name;
+        previousScene = GetCurrentScene();
         SceneManager.LoadScene(scene);
-    }
-
-    public void LoadPreviousScreenWithCurtains()
-    { 
-        LoadPreviousScene();
     }
 
     //Load previous scene
     private void LoadPreviousScene()
     {
         SwitchSceneWithCurtains(previousScene, true);
+    }
+
+    //Return current scene
+    public string GetCurrentScene()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 }

@@ -54,6 +54,6 @@ public class RehCharMenuCtrl : MonoBehaviour {
     { 
         LightsOut();
         GameObject.Find("RehCharBtn #" + intID).GetComponent<RehCharMenuBtn>().HighOn();    
-        GameObject.Find("RehController").GetComponent<RehController>().OnClickUnitMenu(intID);
+        //GameObject.Find("RehController").GetComponent<RehController>().OnClickUnitMenu(intID);
     }
 }

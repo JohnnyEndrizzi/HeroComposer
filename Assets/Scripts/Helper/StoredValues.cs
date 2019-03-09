@@ -33,7 +33,7 @@ public class StoredValues : MonoBehaviour
     //Scene Controllers
     private ShopController ShopCtrl = null; 
     private InvController InvCtrl = null;
-    private RehController RehCtrl = null;
+    //private RehController RehCtrl = null;
 
     //Shop lists
     private List<int> spcOffers = new List<int>();
@@ -113,9 +113,9 @@ public class StoredValues : MonoBehaviour
         try
         { ShopCtrl = GameObject.Find("ShopController").GetComponent<ShopController>(); }
         catch { }
-        try
-        { RehCtrl = GameObject.Find("RehController").GetComponent<RehController>(); }
-        catch { }
+        /*try
+        { //RehCtrl = GameObject.Find("RehController").GetComponent<RehController>(); }
+        catch { }*/
 
         //Pass information and start any existing scene controllers
         if (ShopCtrl != null) {
@@ -137,13 +137,13 @@ public class StoredValues : MonoBehaviour
 
             InvCtrl.Starter();
         }
-        else if (RehCtrl != null)
+        /*else if (RehCtrl != null)
         {
             RehCtrl.Units = Units;
             RehCtrl.AllItems = AllItems;
 
             RehCtrl.Starter();
-        }
+        }*/
     }
     
     private void findOffers(){ //Temporary setting of shop lists //TODO
