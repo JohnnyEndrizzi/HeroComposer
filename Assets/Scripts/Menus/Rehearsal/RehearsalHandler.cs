@@ -47,13 +47,8 @@ public class RehearsalHandler : MonoBehaviour {
     private AudioClip pickUpCharacter;
     private AudioClip errorSound;
 
-    RectTransform rectTransform;
-    Image image;
 
-    //Local Values
-    private int HoldNum; //Save what is held
-    private int[] unitsInPortraits = new int[4];
-
+    //Used for initialization
     void Start()
     {
         //Show UI Layer
@@ -105,46 +100,8 @@ public class RehearsalHandler : MonoBehaviour {
     }
 
     //Remove character sprite from portrait
-    private void RemoveCharacterInPortrait(Button positionButton)
+    private void RemoveCharacterInPortrait(Portrait portrait)
     {
-        positionButton.GetComponentInChildren<Portrait>().RemoveCharacter();
-    }
-
-    public void SetTeam(string[] teamSet) //Takes unit names - locates characterScripts - sets those to load on play
-    {
-        //ClearTeam();
-
-        CharacterScriptObject[] characters = Resources.LoadAll<CharacterScriptObject>("ScriptableObjects/Characters");
-        //Debug.Log(characters.Length + characters[0].name);
-
-        Debug.Log("======");
-        for (int i = 0; i < characters.Length; i++)
-        {
-            
-            CharacterScriptObject currentCharacterSO = characters[i];
-            Debug.Log("SO " + currentCharacterSO.charName);
-            if (characters[i])
-            {
-                if (currentCharacterSO.charName == teamSet[0])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[0] = currentCharacterSO;
-                    Debug.Log("Set0" + Assets.Scripts.MainMenu.ApplicationModel.characters[0].charName);
-                }
-                else if (currentCharacterSO.charName == teamSet[1])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[1] = currentCharacterSO;
-                    Debug.Log("Set1" + Assets.Scripts.MainMenu.ApplicationModel.characters[1].charName);
-                }
-                else if (currentCharacterSO.charName == teamSet[2])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[2] = currentCharacterSO;
-                }
-                else if (currentCharacterSO.charName == teamSet[3])
-                {
-                    Assets.Scripts.MainMenu.ApplicationModel.characters[3] = currentCharacterSO;
-                }
-            }
-        }
-        GameObject.Find("__app").GetComponent<SaveData>().SaveInv(false, true, false);
+        portrait.RemoveCharacter();
     }
 }

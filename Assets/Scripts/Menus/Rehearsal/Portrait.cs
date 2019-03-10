@@ -1,21 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Portrait : ItemDragHandler {
+public class Portrait : MonoBehaviour{
 
     //Image displayed in portrait
     private Image image = null;
+    private Character character = null;
 
+    //Called before start
     private void Awake()
     {
         image = GetComponent<Image>();
-        image.enabled = false;
+        RemoveCharacter();
     }
 
     //Display character sprite in portrait
     public void DisplayCharacter(Character character)
     {
-        Sprite characterSprite = Resources.Load<Sprite>(character.sprite);
+        this.character = character;
+        Sprite characterSprite = Resources.Load<Sprite>(this.character.sprite);
         image.sprite = characterSprite;
         Color c = image.color;
         c.a = 1;
@@ -25,6 +29,7 @@ public class Portrait : ItemDragHandler {
     //Remove character sprite from portrait
     public void RemoveCharacter()
     {
+        character = null;
         image.sprite = null;
         Color c = image.color;
         c.a = 0;
