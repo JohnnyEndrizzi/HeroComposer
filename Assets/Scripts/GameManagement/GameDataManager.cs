@@ -40,6 +40,13 @@ public class GameDataManager : MonoBehaviour {
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
     }
 
+    //Set characters in party
+    public void SetCharactersInParty(Dictionary<int, Character> party)
+    {
+        this.party.characters = party.Keys.ToDictionary(x => x.ToString(), x => party[x]);
+        gameFileHandler.SaveGameObjectAsJSON(this.party,JSONFiles.Party);
+    }
+
     //Return the current characters in players party
     public Dictionary<int,Character> GetCharactersInParty()
     {

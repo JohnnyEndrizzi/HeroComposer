@@ -98,6 +98,11 @@ public class RehearsalHandler : MonoBehaviour {
     //Save party to local game data and JSON file
     public void SaveParty()
     {
-        Debug.Log("Saving party.");
+        Dictionary<int, Character> party = new Dictionary<int, Character>();
+        party[(int)CharacterPosition.FrontRow] = FrontRowPortrait.character;
+        party[(int)CharacterPosition.CentreLeft] = CentreLeftPortrait.character;
+        party[(int)CharacterPosition.CentreRight] = CentreRightPortrait.character;
+        party[(int)CharacterPosition.BackRow] = BackRowPortrait.character;
+        GameManager.Instance.gameDataManager.SetCharactersInParty(party);
     }
 }
