@@ -42,6 +42,12 @@ public class Portrait : Draggable{
         image.color = c;
     }
 
+    //Return parent before being dragged
+    public Transform GetStartParent() {
+        return startParent;
+    }
+
+    //Called when portrait is stopped being dragged
     public override void OnEndDrag(PointerEventData eventData)
     {
         //Reset Draggable interface

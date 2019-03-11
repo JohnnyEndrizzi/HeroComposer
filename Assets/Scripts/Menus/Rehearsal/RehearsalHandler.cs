@@ -32,13 +32,17 @@ public class RehearsalHandler : MonoBehaviour {
 
     //Party location buttons
     [SerializeField]
-    private Portrait FrontRowPortrait = null; 
+    private Portrait frontRowPortrait = null; 
     [SerializeField]
-    private Portrait CentreLeftPortrait = null;
+    private Portrait centreLeftPortrait = null;
     [SerializeField]
-    private Portrait CentreRightPortrait = null;
+    private Portrait centreRightPortrait = null;
     [SerializeField]
-    private Portrait BackRowPortrait = null;
+    private Portrait backRowPortrait = null;
+
+    //Character list
+    [SerializeField]
+    private CharacterList characterList; 
 
     //Audio
     private AudioSource audioSource;
@@ -61,12 +65,33 @@ public class RehearsalHandler : MonoBehaviour {
         pickUpCharacter = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
         errorSound = (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
 
-        //Load characters
-        DisplayCharactersInPortraits();
+        //Load characters in party
+        DisplayParty();
+
+        //Load character list
+        LoadCharacterList();
+    }
+
+    //Populate character list scrollbox
+    private void LoadCharacterList()
+    {
+        Dictionary<string, Character> characters = GameManager.Instance.gameDataManager.GetCharacters();
+        foreach(Character character in characters.Values)
+        {
+            //Only add character to list if not in party
+            if (!GameManager.Instance.gameDataManager.IsCharacterInParty(character))
+            {
+                //Only add character to list if unlocked
+                if (character.unlocked)
+                {
+                    characterList.AddCharacter(character);
+                }
+            }
+        }
     }
 
     //Display all portraits of characters in party 
-    private void DisplayCharactersInPortraits()
+    private void DisplayParty()
     {
         Dictionary<int, Character> charactersInParty = GameManager.Instance.gameDataManager.GetCharactersInParty();
         foreach(CharacterPosition position in System.Enum.GetValues(typeof(CharacterPosition)))
@@ -78,19 +103,19 @@ public class RehearsalHandler : MonoBehaviour {
 
             if (position == CharacterPosition.FrontRow)
             {
-                FrontRowPortrait.DisplayCharacter(character);
+                frontRowPortrait.DisplayCharacter(character);
             }
             else if (position == CharacterPosition.CentreLeft)
             {
-                CentreLeftPortrait.DisplayCharacter(character);
+                centreLeftPortrait.DisplayCharacter(character);
             }
             else if (position == CharacterPosition.CentreRight)
             {
-                CentreRightPortrait.DisplayCharacter(character);
+                centreRightPortrait.DisplayCharacter(character);
             }
             else if (position == CharacterPosition.BackRow)
             {
-                BackRowPortrait.DisplayCharacter(character);
+                backRowPortrait.DisplayCharacter(character);
             }
         }
     }
@@ -99,10 +124,14 @@ public class RehearsalHandler : MonoBehaviour {
     public void SaveParty()
     {
         Dictionary<int, Character> party = new Dictionary<int, Character>();
-        party[(int)CharacterPosition.FrontRow] = FrontRowPortrait.character;
-        party[(int)CharacterPosition.CentreLeft] = CentreLeftPortrait.character;
-        party[(int)CharacterPosition.CentreRight] = CentreRightPortrait.character;
-        party[(int)CharacterPosition.BackRow] = BackRowPortrait.character;
+        if (frontRowPortrait.character != null)
+            party[(int)CharacterPosition.FrontRow] = frontRowPortrait.character;
+        if (centreLeftPortrait.character != null)
+            party[(int)CharacterPosition.CentreLeft] = centreLeftPortrait.character;
+        if (centreRightPortrait.character != null)
+            party[(int)CharacterPosition.CentreRight] = centreRightPortrait.character;
+        if (backRowPortrait.character != null)
+            party[(int)CharacterPosition.BackRow] = backRowPortrait.character;
         GameManager.Instance.gameDataManager.SetCharactersInParty(party);
     }
 }
