@@ -36,9 +36,9 @@ public class RehearsalHandler : MonoBehaviour {
     [SerializeField]
     private Portrait CentreLeftPortrait = null;
     [SerializeField]
-    private Button CentreRightButton = null;
+    private Portrait CentreRightPortrait = null;
     [SerializeField]
-    private Button BackRowButton = null;
+    private Portrait BackRowPortrait = null;
 
     //Audio
     private AudioSource audioSource;
@@ -71,37 +71,33 @@ public class RehearsalHandler : MonoBehaviour {
         Dictionary<int, Character> charactersInParty = GameManager.Instance.gameDataManager.GetCharactersInParty();
         foreach(CharacterPosition position in System.Enum.GetValues(typeof(CharacterPosition)))
         {
+            Character character = null;
             if (charactersInParty.ContainsKey((int)position)){
-                DisplayCharacterInPortrait(charactersInParty[(int)position], position);
+                character = charactersInParty[(int)position];
+            }
+
+            if (position == CharacterPosition.FrontRow)
+            {
+                FrontRowPortrait.DisplayCharacter(character);
+            }
+            else if (position == CharacterPosition.CentreLeft)
+            {
+                CentreLeftPortrait.DisplayCharacter(character);
+            }
+            else if (position == CharacterPosition.CentreRight)
+            {
+                CentreRightPortrait.DisplayCharacter(character);
+            }
+            else if (position == CharacterPosition.BackRow)
+            {
+                BackRowPortrait.DisplayCharacter(character);
             }
         }
     }
 
-    //Load character sprite into portrait
-    private void DisplayCharacterInPortrait(Character character, CharacterPosition position)
+    //Save party to local game data and JSON file
+    public void SaveParty()
     {
-
-        if(position == CharacterPosition.FrontRow)
-        {
-            FrontRowPortrait.DisplayCharacter(character);
-        }
-        else if(position == CharacterPosition.CentreLeft)
-        {
-            CentreLeftPortrait.DisplayCharacter(character);
-        }
-        else if(position == CharacterPosition.CentreRight)
-        {
-            CentreRightButton.GetComponentInChildren<Portrait>().DisplayCharacter(character);
-        }
-        else if(position == CharacterPosition.BackRow)
-        {
-            BackRowButton.GetComponentInChildren<Portrait>().DisplayCharacter(character);
-        }
-    }
-
-    //Remove character sprite from portrait
-    private void RemoveCharacterInPortrait(Portrait portrait)
-    {
-        portrait.RemoveCharacter();
+        Debug.Log("Saving party.");
     }
 }

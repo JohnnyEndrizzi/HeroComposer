@@ -10,10 +10,6 @@ public class SceneManagerWrapper : MonoBehaviour
     //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
-        if (UIContainer.Instance != null)
-        {
-            UIContainer.Instance.ClearUILayers();
-        }
         StartCoroutine(SwitchSceneWithCurtainsCoroutine(scene, openCurtainsAfter));
     }
     //Coroutine to switch scenes with curtain transition
@@ -22,6 +18,10 @@ public class SceneManagerWrapper : MonoBehaviour
         GameManager.Instance.IsInputEnabled = false;
         Curtain.Instance.Close();
         yield return new WaitForSeconds(2.0f);
+        if (UIContainer.Instance != null)
+        {
+            UIContainer.Instance.ClearUILayers();
+        }
         SwitchScene(scene);
         if (openCurtainsAfter)
         {
