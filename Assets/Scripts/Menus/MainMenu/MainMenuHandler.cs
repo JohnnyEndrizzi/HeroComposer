@@ -21,7 +21,6 @@ public class MainMenuHandler : MonoBehaviour {
         }else{
             Destroy(this.gameObject);
         }
-
     }
 
     //This is called every frame
@@ -35,17 +34,17 @@ public class MainMenuHandler : MonoBehaviour {
             {
                 //Return to title screen 
                 Destroy(this.gameObject);
-                SceneManagerWrapper.Instance.SwitchSceneWithCurtains("StartScreen", false);
+                GameManager.Instance.sceneManager.SwitchSceneWithCurtains("StartScreen", false);
             }
             else
             {
                 //Return to previous scene
-                SceneManagerWrapper.Instance.LoadPreviousScene();
+                GameManager.Instance.sceneManager.LoadPreviousScreenWithCurtains();
             }
         }
     }
 
-    public static void EnableDoors()
+    public void EnableDoors()
     {
         foreach (Door d in GameObject.FindObjectsOfType<Door>())
         {
@@ -53,7 +52,7 @@ public class MainMenuHandler : MonoBehaviour {
         }
     }
 
-    public static void DisableDoors()
+    public void DisableDoors()
     {
         foreach (Door d in GameObject.FindObjectsOfType<Door>())
         {

@@ -81,7 +81,7 @@ public class CharMenuBtn : MonoBehaviour {
         }
         else if(GameObject.Find("RehController") != null)
         {
-            this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
+            //this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
         }
     }
 }

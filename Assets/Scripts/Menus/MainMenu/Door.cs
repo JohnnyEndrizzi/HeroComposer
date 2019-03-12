@@ -17,12 +17,6 @@ public class Door : MonoBehaviour {
     //Used to enable/disable a door
     public bool doorEnabled { get; set; }
 
-    //Called every frame
-    void Update()
-    {
-               
-    }
-
     // Use this for initialization
     void Start () {
         //Enable door
@@ -49,15 +43,15 @@ public class Door : MonoBehaviour {
         * Description: The system must preserve insight about character and party customization between level completions and menu selections.
         * 
         * The scene corresponding to the door will be loaded, as long as its not the play door (which is covered in the function below) */
-        if (doorEnabled) { 
-           SceneManagerWrapper.Instance.SwitchScene(doorName);
+        if (doorEnabled && GameManager.Instance.IsInputEnabled) {
+            GameManager.Instance.sceneManager.SwitchSceneWithCurtains(doorName, true);
         }
     }
 
     //This function is called when the mouse hovers over a door
     void OnMouseEnter()
     {
-        if (doorEnabled)
+        if (doorEnabled && GameManager.Instance.IsInputEnabled)
         {
             OpenDoor();
         }
@@ -66,7 +60,7 @@ public class Door : MonoBehaviour {
     //This function is called while the mouse hovers over a door
     private void OnMouseOver()
     {
-        if (doorEnabled == true && animator.GetBool("IsOpen")==false)
+        if (doorEnabled == true && GameManager.Instance.IsInputEnabled && animator.GetBool("IsOpen")==false)
         {
             OpenDoor();
         }
@@ -75,7 +69,7 @@ public class Door : MonoBehaviour {
     //This function is called when the mouse stops hovering over a door
     void OnMouseExit()
     {
-        if (doorEnabled)
+        if (doorEnabled && GameManager.Instance.IsInputEnabled)
         {
             CloseDoor();
         }

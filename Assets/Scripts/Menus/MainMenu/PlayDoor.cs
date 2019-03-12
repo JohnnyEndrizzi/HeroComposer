@@ -8,7 +8,7 @@ public class PlayDoor : Door {
     * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
     protected new void OnMouseDown()
     {
-        if (doorEnabled)
+        if (doorEnabled && GameManager.Instance.IsInputEnabled)
         {
             GameObject.Find("SongSelection").GetComponent<SongSelectionHandler>().OpenSongSelectionMenu();
         }

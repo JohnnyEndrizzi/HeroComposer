@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIContainer : MonoBehaviour {
     //Singleton instance
@@ -16,10 +14,9 @@ public class UIContainer : MonoBehaviour {
             Instance = this;
             //Dont destroy between scenes
             DontDestroyOnLoad(gameObject);
-            //Destroy this instance
         }
         //Add this UI's elements to already existing UI container
-        else
+        else if(Instance != this)
         {
             Transform newParent = Instance.transform;
             Transform oldParent = this.transform;
@@ -27,7 +24,24 @@ public class UIContainer : MonoBehaviour {
             {
                 oldParent.GetChild(oldParent.childCount - 1).SetParent(newParent, false);
             }
+            //Move curtain to the bottom of the UI container
+            if (newParent.Find("Curtain"))
+            {
+                newParent.Find("Curtain").SetAsLastSibling();
+            }
             Destroy(this.gameObject);
+        }
+    }
+
+    //Clear all UI layers except for the curtain
+    public void ClearUILayers()
+    {
+        foreach (Transform child in this.transform)
+        {
+            if (!child.GetComponent<Curtain>())
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 }

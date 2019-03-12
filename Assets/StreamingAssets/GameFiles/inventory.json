@@ -1,0 +1,13 @@
+{"money": 100000,
+	"items": [{
+		"name":"Amp",
+		"description":"Amplifies attacks",
+		"cost":2500,
+		"sprite": "greenPotion"
+	},{
+		"name":"Tuner",
+		"description":"Tunes Defences",
+		"cost":1500,
+		"sprite": "potion"
+	}]
+}

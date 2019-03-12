@@ -47,7 +47,7 @@ public class StartScreen : MonoBehaviour {
         //Fade audio
         StartCoroutine(FadeAudio());
         //Switch to main menu
-        SceneManagerWrapper.Instance.SwitchSceneWithCurtains("MainMenu",true);
+        GameManager.Instance.sceneManager.SwitchSceneWithCurtains("MainMenu", true);
     }
 
     //Pulse (fade in/out) graphic
