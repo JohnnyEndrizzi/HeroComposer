@@ -4,5 +4,5 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Inventory{
     public int money;
-    public Item[] items;
+    public Dictionary<string, Item> items;    
 }
