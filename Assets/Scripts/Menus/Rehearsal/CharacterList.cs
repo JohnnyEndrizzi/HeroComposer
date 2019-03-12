@@ -23,13 +23,13 @@ public class CharacterList : Droppable
     {
         GameObject characterPortrait = Instantiate(characterPortraitPrefab, GetComponent<ScrollRect>().content.transform);
         characterPortrait.GetComponent<Portrait>().DisplayCharacter(character);
-        charactersInList.Add(character.charName, true);
+        charactersInList.Add(character.name, true);
     }
 
     //Remove character from list
     public void RemoveCharacter(Character character)
     {
-        charactersInList.Remove(character.charName);
+        charactersInList.Remove(character.name);
     }
 
     //Called when character is dropped over list
@@ -38,7 +38,7 @@ public class CharacterList : Droppable
         //Get character being dragged
         Character characterBeingDragged = Draggable.itemBeingDragged.GetComponent<Portrait>().character;
         //Add character to list if it doesn't already exist
-        if (!charactersInList.ContainsKey(characterBeingDragged.charName))
+        if (!charactersInList.ContainsKey(characterBeingDragged.name))
         {
             AddCharacter(characterBeingDragged);
             Draggable.itemBeingDragged.GetComponent<Portrait>().RemoveCharacter();

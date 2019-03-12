@@ -5,7 +5,7 @@ using UnityEngine;
 
 //Classs to interact with game save files
 public class GameFileHandler : MonoBehaviour  {
-    //Load JSON file as (string,game object) dictionary
+    //Load JSON file as (string, game object) dictionary
     public Dictionary<string, T> LoadJSONAsGameObjectDictionary<T>(string file)
     {
         //Load JSON as string
@@ -24,7 +24,7 @@ public class GameFileHandler : MonoBehaviour  {
     //Save object as JSON
     public void SaveGameObjectAsJSON(object o, string file)
     {
-        string JSONString = JsonConvert.SerializeObject(o);
+        string JSONString = JsonConvert.SerializeObject(o, Formatting.Indented);
         File.WriteAllText(Application.streamingAssetsPath+"/GameFiles/"+file, JSONString);
     }
 }

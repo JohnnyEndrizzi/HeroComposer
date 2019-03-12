@@ -1,9 +1,9 @@
 ﻿//Serializable JSON object
 [System.Serializable]
-public class Item
+public class MagicAbility
 {
     public string name;
     public string description;
-    public int cost;
-    public string sprite;
+    public string prefab;
+    public string soundEffect;
 }

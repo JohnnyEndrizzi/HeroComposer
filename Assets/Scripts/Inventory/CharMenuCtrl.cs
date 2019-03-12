@@ -8,7 +8,7 @@ public class CharMenuCtrl : MonoBehaviour {
     [SerializeField]
     private GameObject buttonTemplate = null;
 
-    public Dictionary<int, UnitDict> Units;
+    //public Dictionary<int, UnitDict> Units;
 
     private List<GameObject> buttons;   
 
@@ -24,24 +24,24 @@ public class CharMenuCtrl : MonoBehaviour {
             buttons.Clear();
         }            
 
-        for (int i = 0; i<Units.Count-1; i++) //Create a button for each unit (excluding null)
+        /*for (int i = 0; i<Units.Count-1; i++) //Create a button for each unit (excluding null)
         {            
             if (Units[i].Unlocked == true) {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
 
-                button.GetComponent<CharMenuBtn>().SetText(Units[i].unitName);
-                button.GetComponent<CharMenuBtn>().SetImage(Units[i].img);
+                //button.GetComponent<CharMenuBtn>().SetText(Units[i].unitName);
+                //button.GetComponent<CharMenuBtn>().SetImage(Units[i].img);
                 button.GetComponent<CharMenuBtn>().SetInvID(i);
 
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
-        }
+        }*/
     }
     
     public void ButtonClicked(int intID) //sub button Clicked
     { 
-        GameObject.Find("InvController").GetComponent<InvController>().setImage(Units[intID].img);
+        //GameObject.Find("InvController").GetComponent<InvController>().setImage(Units[intID].img);
         GameObject.Find("InvController").GetComponent<InvController>().loadInv(intID);
     }
 }

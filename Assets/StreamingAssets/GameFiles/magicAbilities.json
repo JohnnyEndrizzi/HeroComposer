@@ -1,0 +1,32 @@
+{"0":{
+        "name": "Arrow Hail",
+        "description": "A deadly hail of arrows",
+        "prefab": "arrow1",
+        "soundEffect": "magic_arrow_edit"
+    },"1":{
+        "name": "Slash",
+        "description": "A deadly slash",
+        "prefab": "slash1",
+        "soundEffect": "slash_sound"
+    },"2":{
+        "name": "Blizzard",
+        "description": "A deadly blizzard",
+        "prefab": "Blizzard",
+        "soundEffect": "magic_ice_edit"
+    },"3":{
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": "magic_fire_edit"
+    },"4":{
+        "name": "Shield Block",
+        "description": "A sturdy shield",
+        "prefab": "shield1",
+        "soundEffect": "shield_sound"
+    },"5":{
+        "name": "Heal",
+        "description": "A livesaving heal",
+        "prefab": "heal1",
+        "soundEffect": "heal_sound"
+    }
+}

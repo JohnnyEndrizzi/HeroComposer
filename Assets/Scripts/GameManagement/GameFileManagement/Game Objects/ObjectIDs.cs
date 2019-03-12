@@ -3,9 +3,27 @@
     Sitar,
     Taiko,
     Trumpet
-};
+}
 
-public enum ObjectIDs
+public enum MabicAbilityIDs
+{
+    ArrowHail,
+    Slash,
+    Blizzard,
+    Fireball,
+    ShieldBlock,
+    Heal
+}
+
+public enum LevelIDs
+{
+    Level1 = 1,
+    Level2,
+    Level3,
+    Level4,
+}
+
+public enum ItemIDs
 {
     Amp,
     Tuner,
@@ -13,8 +31,6 @@ public enum ObjectIDs
     Mixer,
     Strings,
     Metronome,
-    Item1,
-    Item2,
     Cymbol,
     GuitarString,
     TrumpetStand

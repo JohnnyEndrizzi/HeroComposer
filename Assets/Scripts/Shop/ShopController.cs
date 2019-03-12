@@ -17,8 +17,8 @@ public class ShopController : MonoBehaviour {
     private ShopMenuCtrl shopMenuCtrl = null;
     [SerializeField]
     private SpcMenuCtrl spcMenuCtrl = null;
-    [SerializeField]
-    private StoredValues storedValues = null;
+    //[SerializeField]
+    //private StoredValues storedValues = null;
 
     //Item lists are passed in from the StoredVariables class on load
     [HideInInspector]
@@ -30,8 +30,8 @@ public class ShopController : MonoBehaviour {
 
     /*Dictionary lists are passed in from the StoredVariables class on load,
      * they contain all information about all Units and Items present in the game */ 
-    public Dictionary<int, UnitDict> Units;
-    public Dictionary<int, AllItemDict> AllItems;
+    //public Dictionary<int, UnitDict> Units;
+    //public Dictionary<int, AllItemDict> AllItems;
 
     //Text gameobject locations
     public Image HoverTxt;
@@ -65,13 +65,13 @@ public class ShopController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */ 
     public void Starter() 
     {
-        storedValues = GameObject.Find("__app").GetComponent<StoredValues>();
+        //storedValues = GameObject.Find("__app").GetComponent<StoredValues>();
 
-        shopMenuCtrl.Dict = AllItems;
+        //shopMenuCtrl.Dict = AllItems;
         shopMenuCtrl.shopItems = normalOffers;
         shopMenuCtrl.Creator();
 
-        spcMenuCtrl.Dict = AllItems;
+        //spcMenuCtrl.Dict = AllItems;
         spcMenuCtrl.shopItems = specialOffers;
         spcMenuCtrl.Creator();
     }
@@ -109,8 +109,8 @@ public class ShopController : MonoBehaviour {
         FrontAndCentreTile = invID;
 
         //display text
-        txtBoxTitle.text = AllItems[itemID].Title;
-        txtBoxDesc.text = AllItems[itemID].Desc;
+        //txtBoxTitle.text = AllItems[itemID].Title;
+        //txtBoxDesc.text = AllItems[itemID].Desc;
         //txtBoxStats
 
         //Display how many of that item the player currently owns
@@ -128,7 +128,7 @@ public class ShopController : MonoBehaviour {
         else if (FrontAndCentreTile > 0) //Item is selected from normal shop display
         {
             FrontAndCentreTile--; //account for invID being +1
-            if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
+            /*if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
             {
                 //play audio error
                 audioSource.PlayOneShot(error, 0.7F);
@@ -136,7 +136,7 @@ public class ShopController : MonoBehaviour {
             else //you can buy!
             {
                 storedItems.Add(FrontAndCentre); //add item to inventory
-                StoredValues.Cash -= AllItems[FrontAndCentre].Cost; //you pay for what you buy
+                //StoredValues.Cash -= AllItems[FrontAndCentre].Cost; //you pay for what you buy
 
                 //remove bought item from shop
                 GameObject.Find("ShopBtn #" + FrontAndCentreTile).GetComponent<ShopMenuItem>().SetIcon(null);
@@ -150,21 +150,21 @@ public class ShopController : MonoBehaviour {
                 OnClick(0, 0);
 
                 //Save Inventory
-                storedValues.passUp(storedItems);
-                storedValues.saveInv();
-            }
+                //storedValues.passUp(storedItems);
+                //storedValues.saveInv();
+            }*/
         }
         else //item is selected from special shop display
         {
             FrontAndCentreTile = FrontAndCentreTile*-1 -1; //remove negative identifier from selected item
 
-            if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
-            {
+            //if (StoredValues.Cash < AllItems[FrontAndCentre].Cost) //You don't have enough money
+            //{
                 //play audio error
-                audioSource.PlayOneShot(error, 0.7F);
-            }
-            else //you can buy!
-            {
+                //audioSource.PlayOneShot(error, 0.7F);
+            //}
+            //else //you can buy!
+            /*{
                 storedItems.Add(FrontAndCentre); //add item to inventory
                 StoredValues.Cash -= AllItems[FrontAndCentre].Cost; //you pay for what you buy
 
@@ -180,9 +180,9 @@ public class ShopController : MonoBehaviour {
                 OnClick(0, 0);
 
                 //Save Inventory
-                storedValues.passUp(storedItems);
-                storedValues.saveInv();
-            }
+                //storedValues.passUp(storedItems);
+                //storedValues.saveInv();
+            }*/
         }
     }
     
@@ -190,12 +190,12 @@ public class ShopController : MonoBehaviour {
     {
         int total = 0;
 
-        for(int i = 0; i<Units.Count-1 ;i++) //search equipted items
-        {
-            if(Units[i].item1 == item){total++;}
-            if(Units[i].item2 == item){total++;}
-            if(Units[i].item3 == item){total++;}
-        }
+        //for(int i = 0; i<Units.Count-1 ;i++) //search equipted items
+        //{
+            //if(Units[i].item1 == item){total++;}
+            //if(Units[i].item2 == item){total++;}
+            //if(Units[i].item3 == item){total++;}
+        //}
         for (int i = 0; i<storedItems.Count; i++) //search inventory
         {
             if(storedItems[i] == item){total++;}

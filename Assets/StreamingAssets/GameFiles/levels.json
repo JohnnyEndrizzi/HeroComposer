@@ -1,38 +1,20 @@
-[
-  {
-    "LevelName": "ALiVE",
-    "LevelSong": "Songs/ALiVE",
-    "Enemy": "boss",
-    "Terrain": "main",
-    "scoreNormal": [ 0, 0, 0, 0, 0 ],
-    "nameNormal": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreHard": [ 0, 0, 0, 0, 0 ],
-    "nameHard": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreExpert": [ 0, 0, 0, 0, 0 ],
-    "nameExpert": [ "AAA", "AAA", "AAA", "AAA", "AAA" ]
-  },
-  {
-    "LevelName": "dancing-dollz",
-    "LevelSong": "Songs/dancing-dollz",
-    "Enemy": "boss",
-    "Terrain": "main",
-    "scoreNormal": [ 0, 0, 0, 0, 0 ],
-    "nameNormal": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreHard": [ 0, 0, 0, 0, 0 ],
-    "nameHard": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreExpert": [ 0, 0, 0, 0, 0 ],
-    "nameExpert": [ "AAA", "AAA", "AAA", "AAA", "AAA" ]
-  },
-  {
-    "LevelName": "TriggerHappy",
-    "LevelSong": "Songs/TriggerHappy",
-    "Enemy": "boss",
-    "Terrain": "main",
-    "scoreNormal": [ 0, 0, 0, 0, 0 ],
-    "nameNormal": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreHard": [ 0, 0, 0, 0, 0 ],
-    "nameHard": [ "AAA", "AAA", "AAA", "AAA", "AAA" ],
-    "scoreExpert": [ 0, 0, 0, 0, 0 ],
-    "nameExpert": [ "AAA", "AAA", "AAA", "AAA", "AAA" ]
-  }
-]
+{"1":{
+        "levelTag": "1-1",
+        "songName": "AliVE",
+        "enemy": "boss",
+        "backdrop": "storm",
+        "highscore": 0
+    },"2":{
+        "levelTag": "1-2",
+        "songName": "dancing-dollz",
+        "enemy": "boss",
+        "backdrop": "storm",
+        "highscore": 0
+    },"3":{
+        "levelTag": "1-3",
+        "songName": "TriggerHappy",
+        "enemy": "boss",
+        "backdrop": "storm",
+        "highscore": 0
+    }
+}

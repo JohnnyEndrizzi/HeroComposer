@@ -1,5 +1,4 @@
 ﻿//Serializable JSON object
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,8 +8,8 @@ public class Party {
 
     public bool IsCharacterInParty(Character character)
     {
-        Dictionary<string, bool> characterNames = characters.Values.ToDictionary(x => x.charName, x => true);
-        if (characterNames.ContainsKey(character.charName))
+        Dictionary<string, bool> characterNames = characters.Values.ToDictionary(x => x.name, x => true);
+        if (characterNames.ContainsKey(character.name))
         {
             return true;
         }

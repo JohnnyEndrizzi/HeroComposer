@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,6 +7,9 @@ public class GameManager : MonoBehaviour {
 
     //Enable or disable input
     public bool IsInputEnabled { get; set; }
+
+    //Debug mode 
+    public bool IsDebugModeEnabled { get; private set; }
 
     //SceneManager
     public SceneManagerWrapper sceneManager;
@@ -53,6 +54,9 @@ public class GameManager : MonoBehaviour {
     private void EnterDebugMode()
     {
         Debug.Log("Entering DEBUG mode.");
+        IsDebugModeEnabled = true;
         //Add code here
+        //Then use this line to switch to desired scene, "main" for actual gameplay
+        //sceneManager.SwitchSceneWithCurtains("#sceneName", true);
     }
 }

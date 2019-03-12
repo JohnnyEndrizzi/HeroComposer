@@ -1,1 +1,29 @@
-{"characters":{"0":{"charName":"Sitar","desc":"I am Sitar","sprite":"Characters/sitar_sprite","headshot":"Headshots/sitar_headshot","sound":"SoundEffects/sitar_sound","unlocked":true,"level":1,"hp":100,"atk":5,"def":5,"rcv":2,"mgc":2,"eqp1":0,"eqp2":0,"eqp3":0,"mag_Eqp":"fireball"},"1":{"charName":"Acoustic","desc":"I am Acoustic","sprite":"Characters/acoustic_sprite","headshot":"Headshots/acoustic_headshot","sound":"SoundEffects/acoustic_sound","unlocked":true,"level":1,"hp":100,"atk":5,"def":5,"rcv":2,"mgc":2,"eqp1":1,"eqp2":2,"eqp3":3,"mag_Eqp":"blizzard"}}}
+{
+  "characters": {
+    "0": {
+      "name": "Acoustic",
+      "description": "I am Acoustic",
+      "sprite": "Characters/acoustic_sprite",
+      "headshot": "Headshots/acoustic_headshot",
+      "soundEffect": "SoundEffects/acoustic_sound",
+      "unlocked": true,
+      "equippedItems": {
+        "0": null,
+        "1": null,
+        "2": null
+      },
+      "magicAbility": {
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": null
+      },
+      "level": 1,
+      "hp": 100,
+      "atk": 5,
+      "def": 5,
+      "rcv": 2,
+      "mgc": 2
+    }
+  }
+}

@@ -32,8 +32,8 @@ public class InvController : MonoBehaviour {
     [SerializeField]
     private DragImg Drag = null; 
     [SerializeField]
-    private StoredValues storedValues = null;
-    [SerializeField]
+    //private StoredValues storedValues = null;
+    //[SerializeField]
     private InvMenuCtrl InventoryMenu = null;
     [SerializeField]
     private CharMenuCtrl UnitMenu = null;
@@ -44,8 +44,8 @@ public class InvController : MonoBehaviour {
 
     /*Dictionary lists are passed in from the StoredVariables class on load,
     * they contain all information about all Units, what is equipt to who and all Items present in the game */
-    public Dictionary<int, UnitDict> Units;
-    public Dictionary<int, AllItemDict> AllItems;
+    //public Dictionary<int, UnitDict> Units;
+    //public Dictionary<int, AllItemDict> AllItems;
 
     //Equip Button Locations
     [SerializeField]
@@ -87,19 +87,19 @@ public class InvController : MonoBehaviour {
      * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
     public void Starter() 
     {
-        storedValues = GameObject.Find("__app").GetComponent<StoredValues>();
+        //storedValues = GameObject.Find("__app").GetComponent<StoredValues>();
 
         //Pass information to menus
-        InventoryMenu.AllItems = AllItems;
+        //InventoryMenu.AllItems = AllItems;
         InventoryMenu.storedItems = storedItems;
         InventoryMenu.Creator();
 
-        UnitMenu.Units = Units;
-        UnitMenu.Creator();
+        //UnitMenu.Units = Units;
+        //UnitMenu.Creator();
 
         //place first unit into centre portrait
         loadInv(0);
-        setImage(Units[0].img);
+        //setImage(Units[0].img);
     }
 
 
@@ -147,14 +147,14 @@ public class InvController : MonoBehaviour {
         DropHeld();
 
         //Set equip buttons icons
-        BtnTop.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item1].img);
-        BtnMid.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item2].img);
-        BtnBottom.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item3].img);
+        //BtnTop.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item1].img);
+        //BtnMid.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item2].img);
+        //BtnBottom.GetComponent<BtnEquipt>().SetIcon(AllItems[Units[SelName].item3].img);
 
         //Local save of currently displayed equipt items
-        it[1] = Units[SelName].item1;
-        it[2] = Units[SelName].item2;
-        it[3] = Units[SelName].item3;
+        //it[1] = Units[SelName].item1;
+        //it[2] = Units[SelName].item2;
+        //it[3] = Units[SelName].item3;
 
         //Pass and regenerate inventory menu
         InventoryMenu.storedItems = storedItems;
@@ -164,9 +164,9 @@ public class InvController : MonoBehaviour {
     public void saveInv() //takes currently displayed items and saves to global
     {
         //Saves equipt items
-        Units[FrontAndCentre].item1 = it[1]; 
-        Units[FrontAndCentre].item2 = it[2];
-        Units[FrontAndCentre].item3 = it[3];
+        //Units[FrontAndCentre].item1 = it[1]; 
+        //Units[FrontAndCentre].item2 = it[2];
+        //Units[FrontAndCentre].item3 = it[3];
 
         /*
         for (int i = 0; i < Units.Count; i++)
@@ -187,9 +187,9 @@ public class InvController : MonoBehaviour {
 
         //Save inventory items
         storedItems = InventoryMenu.GetStoredItems();
-        storedValues.passUp(storedItems);
-        storedValues.saveInv();
-        storedValues.saveChar();
+        //storedValues.passUp(storedItems);
+        //storedValues.saveInv();
+        //storedValues.saveChar();
     }
 
 
@@ -322,14 +322,14 @@ public class InvController : MonoBehaviour {
         if (origin > 0) //hoverEnter - fade in
         {
             origin--;
-            ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
+            //ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
             StartCoroutine(ImageFader(0.1f, HoverTxt, 0f, 0.75f));
             StartCoroutine(TextFader2(0.1f, txtBoxTitle, txtBoxDesc, 0f, 1f)); 
         }
         else if (origin < 0) //hoverExit - fade out
         {
             origin = Mathf.Abs(origin) - 1;
-            ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
+            //ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
             StartCoroutine(ImageFader(1f, HoverTxt, 0.75f, 0f));
             StartCoroutine(TextFader2(1f, txtBoxTitle, txtBoxDesc, 1f, 0f));
         }
@@ -344,10 +344,10 @@ public class InvController : MonoBehaviour {
         HoverTxt.gameObject.SetActive(true); //starts disabled
 
         //Sets text to item in origin button
-        if (origin.Equals("ButtonTop")){       ReWriter(AllItems[it[1]].Title, AllItems[it[1]].Desc);}
-        else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
-        else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
-        else {Debug.Log("ERROR, hover origin unknown");}
+        //if (origin.Equals("ButtonTop")){       ReWriter(AllItems[it[1]].Title, AllItems[it[1]].Desc);}
+        //else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
+        //else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
+        //else {Debug.Log("ERROR, hover origin unknown");}
         
         if (check > 0) //hoverEnter - fade in
         {

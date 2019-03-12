@@ -5,7 +5,9 @@ using UnityEngine;
 public static class JSONFiles
 {
     public const string Characters = "characters.json";
+    public const string MagicAbilities = "magicAbilities.json";
     public const string Items = "items.json";
+    public const string Levels = "levels.json";
     public const string Inventory = "inventory.json";
     public const string Party = "party.json";
 }
@@ -15,11 +17,15 @@ public class GameDataManager : MonoBehaviour {
     //GameFileHandler for interacting with game files
     public GameFileHandler gameFileHandler;
 
-    //GameObjects
+    //GAME OBJECTS
     //Characters
     private Dictionary<string,Character> characters;
+    //Magic Abilities
+    private Dictionary<string, MagicAbility> magicAbilities;
     //Items
     private Dictionary<string,Item> items;
+    //Levels
+    private Dictionary<string, Level> levels;
     //Inventory
     private Inventory inventory;
     //Party
@@ -35,7 +41,9 @@ public class GameDataManager : MonoBehaviour {
     private void InitializeGameData()
     {
         characters = gameFileHandler.LoadJSONAsGameObjectDictionary<Character>(JSONFiles.Characters);
+        magicAbilities = gameFileHandler.LoadJSONAsGameObjectDictionary<MagicAbility>(JSONFiles.MagicAbilities);
         items = gameFileHandler.LoadJSONAsGameObjectDictionary<Item>(JSONFiles.Items);
+        levels = gameFileHandler.LoadJSONAsGameObjectDictionary<Level>(JSONFiles.Levels);
         inventory = gameFileHandler.LoadJSONAsGameObject<Inventory>(JSONFiles.Inventory);
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
     }
