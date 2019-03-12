@@ -78,26 +78,24 @@ public class BossLogic : MonoBehaviour
          * 
          * If the player chooses to enter a team with less than 4 player, these rates will alter accordingly. */
 
-        if (Assets.Scripts.MainMenu.ApplicationModel.characters[0] != null)
+        Dictionary<int, Character> charactersInParty = GameManager.Instance.gameDataManager.GetCharactersInParty();
+        if (charactersInParty.ContainsKey((int)CharacterPosition.FrontRow))
         {
             weigthedValues.Add(0);
             weigthedValues.Add(0);
         }
-
-        if (Assets.Scripts.MainMenu.ApplicationModel.characters[1] != null)
+        if(charactersInParty.ContainsKey((int)CharacterPosition.CentreLeft))
         {
             weigthedValues.Add(1);
             weigthedValues.Add(1);
             weigthedValues.Add(1);
         }
-
-        if (Assets.Scripts.MainMenu.ApplicationModel.characters[2] != null)
+        if(charactersInParty.ContainsKey((int)CharacterPosition.CentreRight))
         {
             weigthedValues.Add(2);
             weigthedValues.Add(2);
         }
-
-        if (Assets.Scripts.MainMenu.ApplicationModel.characters[3] != null)
+        if(charactersInParty.ContainsKey((int)CharacterPosition.BackRow))
         {
             weigthedValues.Add(3);
         }

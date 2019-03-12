@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour {
         IsDebugModeEnabled = true;
         //Add code here
         //Then use this line to switch to desired scene, "main" for actual gameplay
-        //sceneManager.SwitchSceneWithCurtains("#sceneName", true);
+        Destroy(GameObject.Find("UIContainer"));
+        SceneManager.LoadScene("main");
     }
 }

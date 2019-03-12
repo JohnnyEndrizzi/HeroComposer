@@ -28,8 +28,8 @@ public class LevelStart : Interactable {
        * Description: The player must be able to choose a level.
        * 
        * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
-        Assets.Scripts.MainMenu.ApplicationModel.songName = songName;
-        Assets.Scripts.MainMenu.ApplicationModel.songPathName = songName + "_" + difficulty;
+        //Assets.Scripts.MainMenu.ApplicationModel.songName = songName;
+        //Assets.Scripts.MainMenu.ApplicationModel.songPathName = songName + "_" + difficulty;
 
         GameManager.Instance.sceneManager.SwitchSceneWithCurtains("main", false);
     }

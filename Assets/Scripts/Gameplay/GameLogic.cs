@@ -6,6 +6,7 @@ using OsuParser;
 using UnityEngine.SceneManagement;
 /* This is used for debugging */
 using System.IO;
+using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour
 {
@@ -59,76 +60,68 @@ public class GameLogic : MonoBehaviour
     private decimal latency = 0.150m;
     public static decimal songStartTime;
 
-    /* The following function spawns in the selected characters that are sent to ApplicationModel */
     public void spawnCharacters()
     {
         /* This loop counts how many characters are on the current team and spawns them to the correct location.
          * HealthBars are also spawned and linked to their respective character. */
-        for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Length; i++)
+        Dictionary<int, Character> charactersInParty = GameManager.Instance.gameDataManager.GetCharactersInParty();
+        foreach (int position in charactersInParty.Keys)
         {
             Vector3 characterSpawnPosition;
             Vector3 healthPos;
             Vector3 specialPos;
 
-            /* Uncomment this to debug Main without first the two menus ------------------------------------------------------------------- */
-            string jsonString = File.ReadAllText(Application.streamingAssetsPath + "/characters.json");
-            Character[] characters = JsonHelper.getJsonArray<Character>(jsonString);
-            Assets.Scripts.MainMenu.ApplicationModel.characters[0] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[0].charName);
-            Assets.Scripts.MainMenu.ApplicationModel.characters[1] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[1].charName);
-            Assets.Scripts.MainMenu.ApplicationModel.characters[2] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[2].charName);
-            Assets.Scripts.MainMenu.ApplicationModel.characters[3] = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + characters[3].charName);
-            /* Code ends here -------------------------------------------------------------------------------------------------------------- */
-
-            if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
+            //Front row
+            if(position == (int)CharacterPosition.FrontRow)
             {
-                if (i == 0)
-                {
-                    characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
-                    healthPos = new Vector3(216.3f, 107.34f, 0.0f);
-                    specialPos = new Vector3(203.77f, 99.6f, 0.0f);
-                }
-                else if (i == 1)
-                {
-                    characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                    healthPos = new Vector3(92.6f, -134.4f, 0.0f);
-                    specialPos = new Vector3(80f, -142f, 0.0f);
-                }
-                else if (i == 2)
-                {
-                    characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
-                    healthPos = new Vector3(216.3f, -210.0f, 0.0f);
-                    specialPos = new Vector3(203.77f, -217.5f, 0.0f);
-                }
-                else
-                {
-                    characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
-                    healthPos = new Vector3(350.6f, -134.4f, 0.0f);
-                    specialPos = new Vector3(338f, -142f, 0.0f);
-                }
-
-                /* Health Bars */
-                GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
-                healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
-                healthBar.name = "character_health_" + (i + 1);
-
-                /* Special Bars */
-                GameObject specialBar = Instantiate(characterSpecialBar, specialPos, Quaternion.identity);
-                specialBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
-                specialBar.name = "character_special_" + (i + 1);
-
-                characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
-                GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
-
-                /* Characters */
-                spawnedPlayer.name = "character_" + (i + 1);
-                spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-                spawnedPlayer.GetComponent<CharacterLogic>().currentHp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-                spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
-                spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
-                spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
-                spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
-                spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mag_Eqp;
+                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(80f, -142f, 0.0f);
+            //Centre left (top)
+            }else if(position == (int)CharacterPosition.CentreLeft){
+                characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
+                healthPos = new Vector3(216.3f, 107.34f, 0.0f);
+                specialPos = new Vector3(203.77f, 99.6f, 0.0f);
             }
+            //Centre right (bottom)
+            else if (position == (int)CharacterPosition.CentreRight)
+            {
+                characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
+                healthPos = new Vector3(216.3f, -210.0f, 0.0f);
+                specialPos = new Vector3(203.77f, -217.5f, 0.0f);
+            }
+            //Back row
+            else
+            {
+                characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
+                healthPos = new Vector3(350.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(338f, -142f, 0.0f);
+            }
+
+            /* Health Bars */
+            GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
+            healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+            healthBar.name = "character_health_" + (position + 1);
+
+            /* Special Bars */
+            GameObject specialBar = Instantiate(characterSpecialBar, specialPos, Quaternion.identity);
+            specialBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+            specialBar.name = "character_special_" + (position + 1);
+
+            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(charactersInParty[position].sprite);
+            GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
+
+            /* Characters */
+            spawnedPlayer.name = "character_" + (position + 1);
+            spawnedPlayer.GetComponent<CharacterLogic>().hp = charactersInParty[position].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().currentHp = charactersInParty[position].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().atk = charactersInParty[position].atk;
+            spawnedPlayer.GetComponent<CharacterLogic>().def = charactersInParty[position].def;
+            spawnedPlayer.GetComponent<CharacterLogic>().mgc = charactersInParty[position].mgc;
+            spawnedPlayer.GetComponent<CharacterLogic>().rcv = charactersInParty[position].rcv;
+            //TODO: This needs to eventually be changed to
+            //spawnedPlayer.GetComponent<CharacterLogic>().attack = charactersInParty[position].magicAbility;
+            spawnedPlayer.GetComponent<CharacterLogic>().attack = "fireball";   
         }
     }
 
@@ -343,20 +336,10 @@ public class GameLogic : MonoBehaviour
         /* Spawns the current team */
         spawnCharacters();
 
-        if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "" && false)
-        {
-            /* Creates a beatmap object from the selected song */
-            Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
-            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
-        }
-        else
-        {
-            /* This is the default song in case of an error */
-            Debug.Log("Loading beatmap file for ALiVE_Normal...");
-            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
-        }
+        /* This is the default song in case of an error */
+        Debug.Log("Loading beatmap file for RedLips_Easy...");
+        beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
+        GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
 
         GetComponent<BossLogic>().setupBoss();
 
@@ -503,7 +486,7 @@ public class GameLogic : MonoBehaviour
                     beatSprite.gameObject.name = "defendNoteStart";
 
                     beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
-                    beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                    beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
 
                     defenseState = defendNote;
 
@@ -516,13 +499,13 @@ public class GameLogic : MonoBehaviour
                     /* This is a standalone note */
                     if (defendNote > -1)
                     {
-                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
                         beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
                     }
                     /* This is a note that ends a hold note pair */
                     else
                     {
-                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defenseState].headshot);
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defenseState].headshot);
                         beatSprite.GetComponent<CircleNote>().defendTarget = defenseState;
                     }
 
