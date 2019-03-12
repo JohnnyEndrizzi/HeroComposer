@@ -46,6 +46,27 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+        if (Input.GetKey("up"))
+        {
+            transform.Translate(0, 0, 10*Time.deltaTime);
+            Debug.Log("going forward");
+        }
+        else if (Input.GetKey("down"))
+        {
+            transform.Translate(0, 0, -10*Time.deltaTime);
+            Debug.Log("going back");
+        }
+        if (Input.GetKey("left"))
+        {
+            transform.Translate(-10*Time.deltaTime, 0, 0);
+            Debug.Log("going left");
+        }
+        else if (Input.GetKey("right"))
+        {
+            transform.Translate(10*Time.deltaTime, 0, 0);
+            Debug.Log("going right");
+        }
+
     }
 
     void setFocus(Interactable newFocus)
