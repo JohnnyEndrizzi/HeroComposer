@@ -15,9 +15,9 @@ public class ShopMenuCtrl : MonoBehaviour {
     private int maxBtns = 16;
 
     public List<int> shopItems;
-    public Dictionary<int, AllItemDict> Dict;
+    //public Dictionary<int, AllItemDict> Dict;
 
-    public void creator() //Generate/Regenerate List 
+    public void Creator() //Generate/Regenerate List 
     { 
         shopInventory = new List<PlayerItem>();
 
@@ -30,7 +30,7 @@ public class ShopMenuCtrl : MonoBehaviour {
         { 
             PlayerItem newItem = new PlayerItem();
 
-            newItem.iconSprite = Dict[shopItems[i]].img;  
+            //newItem.iconSprite = Dict[shopItems[i]].img;  
             newItem.itemID = shopItems[i];
 
             shopInventory.Add(newItem);
@@ -58,7 +58,7 @@ public class ShopMenuCtrl : MonoBehaviour {
             button.GetComponent<ShopMenuItem>().SetIcon(newItem.iconSprite);
             button.GetComponent<ShopMenuItem>().SetInvID(i);
             button.GetComponent<ShopMenuItem>().SetItemID(newItem.itemID);
-            button.GetComponent<ShopMenuItem>().SetText(Dict[newItem.itemID].Cost.ToString());
+            //button.GetComponent<ShopMenuItem>().SetText(Dict[newItem.itemID].Cost.ToString());
             button.transform.SetParent(buttonTemplate.transform.parent,false);
 
             i++;

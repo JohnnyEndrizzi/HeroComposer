@@ -58,7 +58,7 @@ public class CurtainMovement : MonoBehaviour
     }
 
     /* The following coroutine plays the closing animation for the curtains upon finishing a level */
-    private IEnumerator closeAnimation()
+    private IEnumerator CloseAnimation()
     {
         delayLock = true;
 
@@ -98,11 +98,7 @@ public class CurtainMovement : MonoBehaviour
 
     /* Use this for initialization */
     void Start()
-    {
-        RectTransform rectTransform = this.GetComponent<RectTransform>();
-        RectTransform rectTransformCanvas = GameObject.Find("Healthbar").GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(rectTransformCanvas.rect.width, rectTransformCanvas.rect.height);
-
+    {        
         delayLock = false;
         curtainAnim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();

@@ -14,10 +14,10 @@ public class InvMenuCtrl : MonoBehaviour {
     private List<PlayerItem> playerInventory;
     private int maxBtns = 98;
     
-    public Dictionary<int, AllItemDict> AllItems;
+    //public Dictionary<int, AllItemDict> AllItems;
     public List<int> storedItems;
 
-    public void creator() //Generate/Regenerate List 
+    public void Creator() //Generate/Regenerate List 
     {
         playerInventory = new List<PlayerItem>();
                 
@@ -30,7 +30,7 @@ public class InvMenuCtrl : MonoBehaviour {
         {
             PlayerItem newItem = new PlayerItem
             {
-                iconSprite = AllItems[storedItems[i]].img,
+                //iconSprite = AllItems[storedItems[i]].img,
                 itemID = storedItems[i]
             };
 

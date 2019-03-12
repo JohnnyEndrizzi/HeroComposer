@@ -28,10 +28,25 @@ public class AtkMove : MonoBehaviour {
         if (this.transform.childCount == 1) { 
             mask = this.transform.GetChild(0);
             StartPosMask = mask.localPosition;
-            if      (custCmd == 51) {EndPosMask = new Vector3(StartPosMask.x + 1, StartPosMask.y, StartPosMask.z);}
-            else if (custCmd == 52) {EndPosMask = new Vector3(StartPosMask.x, StartPosMask.y * -1, StartPosMask.z);}
-            else if (custCmd == 53) {EndPosMask = StartPosMask; StartPosMask.y = StartPosMask.y * -1;}
-            else if (custCmd == 12) {EndPosMask = StartPosMask; counter = Random.Range(-5f, 5f);} //it's not a mask, it's a child! 
+            switch (custCmd)
+            {
+                case 51:
+                    EndPosMask = new Vector3(StartPosMask.x + 1, StartPosMask.y, StartPosMask.z);
+                    break;
+                case 52:
+                    EndPosMask = new Vector3(StartPosMask.x, StartPosMask.y * -1, StartPosMask.z);
+                    break;
+                case 53:
+                    EndPosMask = StartPosMask;
+                    StartPosMask.y = StartPosMask.y * -1;
+                    break;
+                case 12: //it's not a mask, it's a child! 
+                    EndPosMask = StartPosMask;
+                    counter = Random.Range(-5f, 5f);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -60,16 +75,20 @@ public class AtkMove : MonoBehaviour {
             currentLerpTime = 0;
             EndSize = EndSize * 0.25f;
         }
-        if (custCmd == 3 & perc >= 1 & counter<2) { //triple move
+        else if (custCmd == 3 & perc >= 1 & counter < 2) { //triple move
             perc = 0; counter++;
             currentLerpTime = 0;
             transform.position = StartPos;
             transform.localScale = StartSize;
             EndPos.x = EndPos.x + Random.Range(-2f, 2f);
             EndPos.y = EndPos.y + Random.Range(-2f, 2f);
-            this.transform.parent.GetComponent<AttackAnimator>().PewPew(this.name);
+            
+            //GameObject.Find
+            //this.transform.parent.GetComponent<AttackAnimator>().PewPew(this.name);
+            //this.transform.parent.GetChild(this.transform.GetSiblingIndex() + 2).GetComponent<AttackAnimator>().PewPew(this.name); 
+            //todo Optimize (setting obj as child changes scale settings), will play sound from wrong character
         }
-        if (custCmd == 12) {//spin child object
+        else if (custCmd == 12) {//spin child object
             mask.localRotation = Quaternion.Euler(Vector3.right*counter);
         }
 

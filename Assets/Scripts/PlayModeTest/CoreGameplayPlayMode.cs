@@ -88,7 +88,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         Assert.Fail();
     }
 
-    /* Test 117: This test checks the calculation for deciding whether a note was Perfect, Great, Good, or Miss. */
+    /* Test 117: This test checks the calculation for deciding whether a note was Perfect, Great, Good, or Miss. 
     [UnityTest]
     public IEnumerator NoteBarNoteSpawnTiming()
     {
@@ -138,7 +138,7 @@ public class CoreGameplayPlayMode : MonoBehaviour
         }
 
         Assert.Fail();
-    }
+    }*/
 
     /* Test 118: This test checks that the song's physical note objects are destroyed at the proper position. */
     [UnityTest]

@@ -7,11 +7,11 @@ public class MoneyOutput : MonoBehaviour {
     public Text txtOut;
 
     void Start () {
-        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
+        //txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
     void Update () {
-        txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
+        //txtOut.text = "Money\n" + "$" +  CommaSpliter(StoredValues.Cash);
     }
 
     private string CommaSpliter(int bigNum) //Adds , ev,ery, 3 ,dig,its

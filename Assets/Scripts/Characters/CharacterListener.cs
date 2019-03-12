@@ -81,24 +81,29 @@ public class CharacterListener : MonoBehaviour
         if (errorDifference <= 25)
         {
             perfectCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(300);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
         {
             greatCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(100);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
         {
             goodCount++;
+            GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
+
             UpdateScore(50);
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
-            //missCount++;
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
@@ -158,7 +163,7 @@ public class CharacterListener : MonoBehaviour
         SpriteRenderer score;
         score = Instantiate(noteSprite, spawnPoint, Quaternion.identity);
 
-        Vector3 toPosition = new Vector3(2.45f, 1.5f, -7.77f);
+        Vector3 toPosition = new Vector3(2.02f, 1.5f, -7.77f);
 
         /* This calls the moveNoteScore function using varying values to lerp the text */
         float counter = 0;
@@ -264,7 +269,7 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 1;
 
         /* Plays the corresponding animation for the selected character */
-        toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
+        //toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
         //GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         /* Unlock the coroutine */
@@ -328,19 +333,19 @@ public class CharacterListener : MonoBehaviour
          * K - character_3
          * L - character_4 
          */
-        if (Input.GetKeyUp("i"))
+        if (Input.GetKeyDown("i"))
         {
             currentSprite = 1;
         }
-        else if (Input.GetKeyUp("j"))
+        else if (Input.GetKeyDown("j"))
         {
             currentSprite = 2;
         }
-        else if (Input.GetKeyUp("k"))
+        else if (Input.GetKeyDown("k"))
         {
             currentSprite = 3;
         }
-        else if (Input.GetKeyUp("l"))
+        else if (Input.GetKeyDown("l"))
         {
             currentSprite = 4;
         }
@@ -353,8 +358,9 @@ public class CharacterListener : MonoBehaviour
         if (currentSprite > 0)
         {
             toUseGO = GameObject.Find("character_" + currentSprite);
-            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
-            StartCoroutine(spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
+            //SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
+            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit());
+            StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
 
         /* Functional Requirement

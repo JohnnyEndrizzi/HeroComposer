@@ -4,11 +4,16 @@ using System.Collections;
 using Game;
 using OsuParser;
 using UnityEngine.SceneManagement;
+/* This is used for debugging */
+using System.IO;
+using System.Collections.Generic;
 
 public class GameLogic : MonoBehaviour
 {
     /* GameObjects that will appear on the Canvas*/
-    public GameObject healthBar;
+    public GameObject healthBarBoss;
+    private GameObject specialBar;
+    public GameObject characterSpecialBar;
     public GameObject characterHealthBar;
     public GameObject holdNote;
     public GameObject test;
@@ -25,7 +30,8 @@ public class GameLogic : MonoBehaviour
     public static float nextHit;
     public static float nextBeat;
     public static float nextHitEnd = 0;
-    public static int hitIndex = 0;
+    public static bool nextHitHold = false;
+    public int hitIndex = 0;
     public bool introFinished;
 
     /* Variables used for defending against attacks and health logic*/
@@ -54,64 +60,82 @@ public class GameLogic : MonoBehaviour
     private decimal latency = 0.150m;
     public static decimal songStartTime;
 
-    /* The following function spawns in the selected characters that are sent to ApplicationModel */
     public void spawnCharacters()
     {
         /* This loop counts how many characters are on the current team and spawns them to the correct location.
          * HealthBars are also spawned and linked to their respective character. */
-        for (int i = 0; i < Assets.Scripts.MainMenu.ApplicationModel.characters.Length; i++)
+        Dictionary<int, Character> charactersInParty = GameManager.Instance.gameDataManager.GetCharactersInParty();
+        foreach (int position in charactersInParty.Keys)
         {
             Vector3 characterSpawnPosition;
             Vector3 healthPos;
+            Vector3 specialPos;
 
-            if (Assets.Scripts.MainMenu.ApplicationModel.characters[i] != null)
+            //Front row
+            if(position == (int)CharacterPosition.FrontRow)
             {
-                if (i == 0)
-                {
-                    characterSpawnPosition = new Vector3(3.29f, 1.75f, -4.8f);
-                    healthPos = new Vector3(187.7f, 97.2f, 0.0f);
-                }
-                else if (i == 1)
-                {
-                    characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                    healthPos = new Vector3(74.3f, -103.2f, 0.0f);
-                }
-                else if (i == 2)
-                {
-                    characterSpawnPosition = new Vector3(2.94f, -0.82f, -5.5f);
-                    healthPos = new Vector3(198.6f, -166.4f, 0.0f);
-                }
-                else
-                {
-                    characterSpawnPosition = new Vector3(5.31f, 0.32f, -5.1f);
-                    healthPos = new Vector3(337.0f, -103.2f, 0.0f);
-                }
-
-                /* Health Bars */
-                GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
-                healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
-                healthBar.name = "character_health_" + (i + 1);
-
-                characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[i].sprite);
-                GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
-
-                /* Characters */
-                spawnedPlayer.name = "character_" + (i + 1);
-                spawnedPlayer.GetComponent<CharacterLogic>().hp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-                spawnedPlayer.GetComponent<CharacterLogic>().currentHp = Assets.Scripts.MainMenu.ApplicationModel.characters[i].hp;
-                spawnedPlayer.GetComponent<CharacterLogic>().atk = Assets.Scripts.MainMenu.ApplicationModel.characters[i].atk;
-                spawnedPlayer.GetComponent<CharacterLogic>().def = Assets.Scripts.MainMenu.ApplicationModel.characters[i].def;
-                spawnedPlayer.GetComponent<CharacterLogic>().mgc = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mgc;
-                spawnedPlayer.GetComponent<CharacterLogic>().rcv = Assets.Scripts.MainMenu.ApplicationModel.characters[i].rcv;
-                spawnedPlayer.GetComponent<CharacterLogic>().attack = Assets.Scripts.MainMenu.ApplicationModel.characters[i].mag_Eqp;
+                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(80f, -142f, 0.0f);
+            //Centre left (top)
+            }else if(position == (int)CharacterPosition.CentreLeft){
+                characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
+                healthPos = new Vector3(216.3f, 107.34f, 0.0f);
+                specialPos = new Vector3(203.77f, 99.6f, 0.0f);
             }
+            //Centre right (bottom)
+            else if (position == (int)CharacterPosition.CentreRight)
+            {
+                characterSpawnPosition = new Vector3(2.52f, -0.82f, -5.5f);
+                healthPos = new Vector3(216.3f, -210.0f, 0.0f);
+                specialPos = new Vector3(203.77f, -217.5f, 0.0f);
+            }
+            //Back row
+            else
+            {
+                characterSpawnPosition = new Vector3(4.26f, 0.32f, -5.1f);
+                healthPos = new Vector3(350.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(338f, -142f, 0.0f);
+            }
+
+            /* Health Bars */
+            GameObject healthBar = Instantiate(characterHealthBar, healthPos, Quaternion.identity);
+            healthBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+            healthBar.name = "character_health_" + (position + 1);
+
+            /* Special Bars */
+            GameObject specialBar = Instantiate(characterSpecialBar, specialPos, Quaternion.identity);
+            specialBar.transform.SetParent(GameObject.FindGameObjectWithTag("Health Bar").transform, false);
+            specialBar.name = "character_special_" + (position + 1);
+
+            characterPlaceholder.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(charactersInParty[position].sprite);
+            GameObject spawnedPlayer = Instantiate(characterPlaceholder, characterSpawnPosition, Quaternion.identity) as GameObject;
+
+            /* Characters */
+            spawnedPlayer.name = "character_" + (position + 1);
+            spawnedPlayer.GetComponent<CharacterLogic>().hp = charactersInParty[position].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().currentHp = charactersInParty[position].hp;
+            spawnedPlayer.GetComponent<CharacterLogic>().atk = charactersInParty[position].atk;
+            spawnedPlayer.GetComponent<CharacterLogic>().def = charactersInParty[position].def;
+            spawnedPlayer.GetComponent<CharacterLogic>().mgc = charactersInParty[position].mgc;
+            spawnedPlayer.GetComponent<CharacterLogic>().rcv = charactersInParty[position].rcv;
+            //TODO: This needs to eventually be changed to
+            //spawnedPlayer.GetComponent<CharacterLogic>().attack = charactersInParty[position].magicAbility;
+            spawnedPlayer.GetComponent<CharacterLogic>().attack = "fireball";   
         }
     }
 
     /* Returns the next note's beat in the song */
-    public float getNextHit()
+    public static float getNextHit()
     {
-        return nextHit;
+        if (nextHitHold)
+        {
+            return nextHitEnd;
+        }
+        else
+        {
+            return nextHit;
+        }
     }
 
     /* Sets the next noteas a defend note */
@@ -312,26 +336,16 @@ public class GameLogic : MonoBehaviour
         /* Spawns the current team */
         spawnCharacters();
 
-        if (Assets.Scripts.MainMenu.ApplicationModel.songPathName != "")
-        {
-            /* Creates a beatmap object from the selected song */
-            Debug.Log("Loading beatmap file for " + Assets.Scripts.MainMenu.ApplicationModel.songPathName + "...");
-            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + Assets.Scripts.MainMenu.ApplicationModel.songPathName + ".osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + Assets.Scripts.MainMenu.ApplicationModel.songName);
-        }
-        else
-        {
-            /* This is the default song in case of an error */
-            Debug.Log("Loading beatmap file for ALiVE_Normal...");
-            beatmap = new Beatmap("Assets/Resources/Songs/ALiVE_Normal.osu");
-            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/ALiVE");
-        }
+        /* This is the default song in case of an error */
+        Debug.Log("Loading beatmap file for RedLips_Easy...");
+        beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
+        GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
 
         GetComponent<BossLogic>().setupBoss();
 
         /* The spawn and kill points for incoming notes */
-        startPos = new Vector2(-372f, 134.2F);
-        endPos = new Vector2(322.37F, 134.2F);
+        startPos = new Vector2(-355.4f, 170.54F);
+        endPos = new Vector2(352.0F, 170.54F);
 
         /* Tentative: Set boss' health tothe duration of the selected song */
         maxHealth = GetComponent<AudioSource>().clip.length;
@@ -367,7 +381,12 @@ public class GameLogic : MonoBehaviour
                 /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
                 if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
                 {
+                    nextHitHold = true;
                     nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
+                }
+                else
+                {
+                    nextHitHold = false;
                 }
             }
             else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
@@ -376,27 +395,13 @@ public class GameLogic : MonoBehaviour
                 songDone = true;
                 Debug.Log("Song ended.");
             }
-
+            
             /* Updates the boss' health as the song plays out */
             float currHealth = GetComponent<AudioSource>().time;
-            healthBar.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+            healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
 
             /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
             metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            //if (!pauseMenu.enabled) //TODO
-            //{
-            //    //Unpause game
-            //    //close pause menu
-            //}
-            //if (pauseMenu.enabled)
-            //{
-            //    //Pause game
-            //    //open pause menu
-            //}
         }
     }
 
@@ -420,7 +425,7 @@ public class GameLogic : MonoBehaviour
             notesDone = true;
             return;
         }
-
+        
         /* The following is the logic that defines how held notes spawn, which sets appropriate 'SecondaryNote' and 
          * 'PrimaryNote' labels to each GameObject */
         if (iterationsLeft == 2 || firstNoteOfSlider == false)
@@ -441,23 +446,15 @@ public class GameLogic : MonoBehaviour
             firstNoteOfSlider = true;
         }
 
-        /* This will display a 'Miss' label when a note travels past the input region of the note bar. */
-        if (e.positionInBeats > beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat))
-        {
-            GetComponent<CharacterListener>().missCount++;
-            StartCoroutine(GetComponent<CharacterListener>().spawnNoteScore(new Vector3(2.45f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
-            hitIndex++;
-        }
-
         /* Functional Requirement 
          * ID: 8.1-1
          * Description: The player must be able to view incoming notes.
          *
          * Spawn next note */
-        Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
+        //Debug.Log(string.Format("Position in Beats: {0} Next Note at Beat: {1}",e.positionInBeats,nextBeat-beatmap.GetApproachRate()));
         if (e.positionInBeats >= (nextBeat - beatmap.GetApproachRate()))
         {
-            Debug.Log(string.Format("Spawned note {0}!", hitIndex));
+            //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
@@ -466,9 +463,10 @@ public class GameLogic : MonoBehaviour
                 iterationsLeft = 2;
             }
 
-            /* Instantiates the notes on the cavas, to avoid Z-fighting with the background elements */
+            /* Instantiates the notes on the canvas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
+            beatSprite.name = "note_" + noteIndex;
 
             /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
@@ -488,7 +486,7 @@ public class GameLogic : MonoBehaviour
                     beatSprite.gameObject.name = "defendNoteStart";
 
                     beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
-                    beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                    beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
 
                     defenseState = defendNote;
 
@@ -501,13 +499,13 @@ public class GameLogic : MonoBehaviour
                     /* This is a standalone note */
                     if (defendNote > -1)
                     {
-                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defendNote].headshot);
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
                         beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
                     }
                     /* This is a note that ends a hold note pair */
                     else
                     {
-                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(Assets.Scripts.MainMenu.ApplicationModel.characters[defenseState].headshot);
+                        beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defenseState].headshot);
                         beatSprite.GetComponent<CircleNote>().defendTarget = defenseState;
                     }
 

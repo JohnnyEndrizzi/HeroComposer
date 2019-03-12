@@ -177,67 +177,69 @@ public class ArtController2 : MonoBehaviour
                 }
             }
 
-            //Attack Animations - grouped by time length/frequency
-            if (anims == true && upCount >= 20 && upCount <= 40)
-            {
-                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
-            }
-            if (anims == true && upCount >= 40 && upCount <= 60)
-            {
-                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
-            }
-            if (anims == true && upCount >= 60 && upCount <= 80)
-            {
-                if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
-            }
-            if (anims == true && upCount >= 80)
-            {
-                upCount = 0;
+            /*  Disabled as ATTACKdemo was removed, planned to be re-enabled once a suitable replacement is created
+             //Attack Animations - grouped by time length/frequency
+             if (anims == true && upCount >= 20 && upCount <= 40)
+             {
+                 if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+             }
+             if (anims == true && upCount >= 40 && upCount <= 60)
+             {
+                 if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+             }
+             if (anims == true && upCount >= 60 && upCount <= 80)
+             {
+                 if (Spin(currLoc * -1) == 8) attacker.ATTACKdemo("blizzard", 1, 1);
+             }
+             if (anims == true && upCount >= 80)
+             {
+                 upCount = 0;
 
-                switch (Spin(currLoc * -1))
-                {
-                    case 0:
-                        attacker.ATTACKdemo("heal", 1, 1);
-                        break;
-                    case 1:
-                        if (dbCount == 0)
-                        {
-                            attacker.ATTACKdemo("slash1", 1, 1);
-                            dbCount = 1;
-                        }
-                        else
-                        {
-                            attacker.ATTACKdemo("slash2", 1, 1);
-                            dbCount = 0;
-                        }
-                        break;
-                    case 2:
-                        attacker.ATTACKdemo("fireball", 1, 1);
-                        break;
-                    case 3:
-                        attacker.ATTACKdemo("arrow", 1, 1);
-                        break;
-                    case 4:
-                        attacker.ATTACKdemo("healTeam", 1, 1);
-                        break;
-                    case 5:
-                        attacker.ATTACKdemo("meteor", 1, 1);
-                        break;
-                    case 6:
-                        attacker.ATTACKdemo("arrowHail", 1, 1);
-                        break;
-                    case 7:
-                        attacker.ATTACKdemo("fire3", 1, 1);
-                        break;
-                    case 8:
-                        attacker.ATTACKdemo("blizzard", 1, 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+                 switch (Spin(currLoc * -1))
+                 {
+                     case 0:
+                         attacker.ATTACKdemo("heal", 1, 1);
+                         break;
+                     case 1:
+                         if (dbCount == 0)
+                         {
+                             attacker.ATTACKdemo("slash1", 1, 1);
+                             dbCount = 1;
+                         }
+                         else
+                         {
+                             attacker.ATTACKdemo("slash2", 1, 1);
+                             dbCount = 0;
+                         }
+                         break;
+                     case 2:
+                         attacker.ATTACKdemo("fireball", 1, 1);
+                         break;
+                     case 3:
+                         attacker.ATTACKdemo("arrow", 1, 1);
+                         break;
+                     case 4:
+                         attacker.ATTACKdemo("healTeam", 1, 1);
+                         break;
+                     case 5:
+                         attacker.ATTACKdemo("meteor", 1, 1);
+                         break;
+                     case 6:
+                         attacker.ATTACKdemo("arrowHail", 1, 1);
+                         break;
+                     case 7:
+                         attacker.ATTACKdemo("fire3", 1, 1);
+                         break;
+                     case 8:
+                         attacker.ATTACKdemo("blizzard", 1, 1);
+                         break;
+                     default:
+                         break;
+                 }
+             }
+             */
         }
-
+        
         ReWriter(titles[Spin(currLoc * -1)], descriptions[Spin(currLoc * -1)]); //TODO move between text Lerps to change at top
         upCount++;
     }

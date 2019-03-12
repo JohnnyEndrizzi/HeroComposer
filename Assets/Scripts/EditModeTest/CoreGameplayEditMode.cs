@@ -1958,13 +1958,9 @@ public class CoreGameplayTest : MonoBehaviour
             {
                 testState = ClickListener.state.DEF;
             }
-            else if (allStates[i] == "MGC")
-            {
-                testState = ClickListener.state.MGC;
-            }
             else
             {
-                testState = ClickListener.state.ULT;
+                testState = ClickListener.state.MGC;
             }
 
             /* Calls the function to reload the menu, providing the new sprite and menu state.  */

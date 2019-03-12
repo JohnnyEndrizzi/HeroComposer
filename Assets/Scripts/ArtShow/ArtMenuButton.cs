@@ -8,10 +8,10 @@ public class ArtMenuButton : MonoBehaviour {
 
 	void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)){toggle();} 
+        if(Input.GetKeyDown(KeyCode.Escape)){Toggle();} 
 	}
 
-    void toggle()
+    void Toggle()
     {
         if (R2Menu.activeInHierarchy == true) {
             R2Menu.SetActive(false);
