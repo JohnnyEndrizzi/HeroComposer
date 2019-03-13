@@ -13,9 +13,10 @@ public class InvMenuCtrl : MonoBehaviour {
 
     private List<PlayerItem> playerInventory;
     private int maxBtns = 98;
-    
-    //public Dictionary<int, AllItemDict> AllItems;
-    public List<int> storedItems;
+
+    Dictionary<string, Item> allItems;
+    Dictionary<string, Item> invItems;
+    public List<string> storedItems;
 
     public void Creator() //Generate/Regenerate List 
     {
@@ -40,7 +41,7 @@ public class InvMenuCtrl : MonoBehaviour {
         {
             PlayerItem newItem = new PlayerItem
             {
-                itemID = 0
+                itemID = "0"
             };
 
             playerInventory.Add(newItem);
@@ -59,15 +60,16 @@ public class InvMenuCtrl : MonoBehaviour {
             button.GetComponent<InvMenuBtn>().SetIcon(newItem.iconSprite);
             button.GetComponent<InvMenuBtn>().SetInvID(i);
             button.GetComponent<InvMenuBtn>().SetItemID(newItem.itemID);
+            //add comp<dragable> TODO
             button.transform.SetParent(buttonTemplate.transform.parent,false);
 
             i++;
         }
     }
 
-    public List<int> GetStoredItems() //returns all item values
+    public List<string> GetStoredItems() //returns all item values
     { 
-        List<int> realValues = new List<int>();         
+        List<string> realValues = new List<string>();         
 
         for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++)
         {
@@ -84,13 +86,13 @@ public class InvMenuCtrl : MonoBehaviour {
         }
     }
 
-    public void ButtonClicked(int invID, int itemID) //sub button Clicked
+    public void ButtonClicked(int invID, string itemID) //sub button Clicked
     { 
-        GameObject.Find("InvController").GetComponent<InvController>().GridOnClick(invID, itemID);      
+        GameObject.Find("InvController").GetComponent<InvController>().GridOnClick(invID, itemID);       //TODO
     }
 
     public class PlayerItem{
         public Sprite iconSprite;
-        public int itemID;
+        public string itemID;
     }
 }

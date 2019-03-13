@@ -33,11 +33,11 @@ public class BtnEquipt : EventTrigger {
 
     public override void OnPointerEnter(PointerEventData data)
     {
-        GameObject.Find("InvController").GetComponent<InvController>().HoverText(this.name, 1);   
+        GameObject.Find("InvController").GetComponent<InvController>().HoverTextFadeInEquip(this.name);   
     }
 
     public override void OnPointerExit(PointerEventData data)
     {
-        GameObject.Find("InvController").GetComponent<InvController>().HoverText(this.name, -1);   
+        GameObject.Find("InvController").GetComponent<InvController>().HoverTextFadeOutEquip(this.name);   
     }
 }

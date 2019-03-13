@@ -81,6 +81,12 @@ public class GameDataManager : MonoBehaviour {
         return party.characters.Keys.ToDictionary(x => int.Parse(x), x => party.characters[x]);
     }
       
+    //Get all item list
+    public Dictionary<string, Item> GetItemList()
+    {
+        return items;
+    }
+
     //Get inventory item list
     public Dictionary<string, Item> GetInvItems()
     {

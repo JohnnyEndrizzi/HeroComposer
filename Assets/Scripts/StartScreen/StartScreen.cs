@@ -55,13 +55,13 @@ public class StartScreen : MonoBehaviour {
     {
         while (true)
         {
-            yield return StartCoroutine(FadeGraphicIn(pulseObject));
+            yield return StartCoroutine(FadeGraphicIn(pulseObject)); 
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(FadeGraphicOut(pulseObject));
             yield return new WaitForSeconds(0.5f);
         }
     }
-
+    
     //Set alpha channel to 0
     private void HideGraphic(Graphic g)
     {

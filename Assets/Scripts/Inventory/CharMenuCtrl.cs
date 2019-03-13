@@ -42,6 +42,6 @@ public class CharMenuCtrl : MonoBehaviour {
     public void ButtonClicked(int intID) //sub button Clicked
     { 
         //GameObject.Find("InvController").GetComponent<InvController>().setImage(Units[intID].img);
-        GameObject.Find("InvController").GetComponent<InvController>().loadInv(intID);
+        //GameObject.Find("InvController").GetComponent<InvController>().loadInv(intID); //TODO
     }
 }

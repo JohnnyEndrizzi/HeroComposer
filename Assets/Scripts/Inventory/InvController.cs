@@ -51,11 +51,7 @@ public class InvController : MonoBehaviour {
     //[HideInInspector]
     //public List<int> storedItems;  //Inventory Storage
 
-    /*Dictionary lists are passed in from the StoredVariables class on load,
-    * they contain all information about all Units, what is equipt to who and all Items present in the game */
-    //public Dictionary<int, UnitDict> Units;
-    //public Dictionary<int, AllItemDict> AllItems;
-
+    Dictionary<string, Item> allItems;
     Dictionary<string, Item> invItems;
     Dictionary<string, Character> characters;
 
@@ -92,33 +88,14 @@ public class InvController : MonoBehaviour {
     int titleFontSize = 18;
     int descFontSize = 14;
 
-    RectTransform rectTransform;
+    //RectTransform rectTransform;
     Image image;
     Font myFont;
     
     //Local Values
-    private Character FrontChar; //Save who is in front
+    private Character frontChar; //Save who is in front
     private Item[] shownItems = new Item[3]; //Save what is in front
-    private Item HoldItem; //Save what is held
-
-    /* Behaves similar to a start function but will only act after needed information has been passed in from above.
-     * It passes any needed information to its sub-menus and tells them to start upon recieving their information */
-    public void Starter() 
-    {
-        //storedValues = GameObject.Find("__app").GetComponent<StoredValues>();
-
-        //Pass information to menus
-        //InventoryMenu.AllItems = AllItems;
-        //InventoryMenu.storedItems = storedItems;
-        //InventoryMenu.Creator();
-
-        //UnitMenu.Units = Units;
-        //UnitMenu.Creator();
-
-        //place first unit into centre portrait
-        //loadInv(0);
-        //setImage(Units[0].img);
-    }
+    private Item holdItem; //Save what is held
 
 
 	void Start ()
@@ -126,33 +103,36 @@ public class InvController : MonoBehaviour {
         //Show UI Layer
         soundChecklUI.Show();
 
+        allItems = GameManager.Instance.gameDataManager.GetItemList();
+
         //Font
         myFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         txtBoxTitle.fontSize = titleFontSize;
         txtBoxDesc.fontSize = descFontSize;
 
+        //Assign buttons to group
+        Btns[0] = BtnTop;
+        Btns[1] = BtnMid;
+        Btns[2] = BtnBottom;
+
         //Equipted items buttons
-        BtnTop.onClick.AddListener(delegate {EqpOnClick(BtnTop, 1);});	
-        BtnMid.onClick.AddListener(delegate {EqpOnClick(BtnMid, 2);});
-        BtnBottom.onClick.AddListener(delegate {EqpOnClick(BtnBottom, 3);});
+        Btns[0].onClick.AddListener(delegate {EqpOnClick(Btns[0], 1);});
+        Btns[1].onClick.AddListener(delegate {EqpOnClick(Btns[1], 2);});
+        Btns[2].onClick.AddListener(delegate {EqpOnClick(Btns[2], 3);});
 
         //Import Audio
         audioSource = GetComponent<AudioSource>();
         equip = (AudioClip)Resources.Load("SoundEffects/inventory_equip_item");
         pickUp = (AudioClip)Resources.Load("SoundEffects/inventory_pick_up_item");
         place = (AudioClip)Resources.Load("SoundEffects/inventory_place_item_back");
-        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
-        
-        Btns[0] = BtnTop;
-        Btns[1] = BtnMid;
-        Btns[2] = BtnBottom;
-}
+        pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");        
+    }
 
     void Update()
     {        
         if (Input.GetMouseButtonUp(1))
         {
-            loadInv(FrontChar);  //Drop held item and reload menus
+            loadInv(frontChar);  //Drop held item and reload menus on right click
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -163,7 +143,7 @@ public class InvController : MonoBehaviour {
 
     //Populate character list scrollbox
     private void LoadInvList()
-    {
+    {        
         characters = GameManager.Instance.gameDataManager.GetCharacters();
 
         invItems = GameManager.Instance.gameDataManager.GetInvItems();
@@ -178,12 +158,12 @@ public class InvController : MonoBehaviour {
 
     public void loadInv(Character SelChar) //Loads last saved data and brings a selected Character to the front
     {        
-        if (FrontChar != SelChar)
+        if (frontChar != SelChar)
         {
             audioSource.PlayOneShot(pickUpChar, 0.5F);
         }
 
-        FrontChar = SelChar;
+        frontChar = SelChar;
         DropHeld();
 
         //Set equip buttons icons and information
@@ -193,10 +173,6 @@ public class InvController : MonoBehaviour {
         }
         //TODO SelName int -> String
 
-        
-        
-
-        //Pass and regenerate inventory menu
         //InventoryMenu.storedItems = storedItems;
         InventoryMenu.Creator();
     }
@@ -205,16 +181,10 @@ public class InvController : MonoBehaviour {
     {
         if (characters[SelName].equippedItems[slotNum.ToString()] != null)
         {
-            SetShownItem(slotNum, characters[SelName].equippedItems[slotNum.ToString()].name);
+            shownItems[slotNum] = invItems[characters[SelName].equippedItems[slotNum.ToString()].name];
+            Btns[slotNum].GetComponent<BtnEquipt>().SetIcon(Resources.Load<Sprite>(shownItems[slotNum].sprite));
         }
     }
-
-    void SetShownItem(int slotNum, string itemName)
-    {
-        shownItems[slotNum] = invItems[itemName];
-        Btns[slotNum].GetComponent<BtnEquipt>().SetIcon(Resources.Load<Sprite>(shownItems[slotNum].sprite));        
-    }
-
  
 
 
@@ -222,20 +192,20 @@ public class InvController : MonoBehaviour {
     {
         for (int i = 0; i < 3; i++)
         {
-            characters[FrontChar.name].equippedItems[i.ToString()] = shownItems[i];
+            characters[frontChar.name].equippedItems[i.ToString()] = shownItems[i];
         }
 
         GameManager.Instance.gameDataManager.SetCharacters(characters);
 
         //If character is in party, write to it as well.
-        if (GameManager.Instance.gameDataManager.IsCharacterInParty(FrontChar))
+        if (GameManager.Instance.gameDataManager.IsCharacterInParty(frontChar))
         {
             Dictionary<int, Character> party = GameManager.Instance.gameDataManager.GetCharactersInParty();
 
             for (int j = 0; j < 4; j++)
             {
-                if (party[j] != null && party[j].name == FrontChar.name) {
-                    party[j] = characters[FrontChar.name];
+                if (party[j] != null && party[j].name == frontChar.name) {
+                    party[j] = characters[frontChar.name];
                 }
             }            
             GameManager.Instance.gameDataManager.SetCharactersInParty(party);
@@ -243,75 +213,48 @@ public class InvController : MonoBehaviour {
 
         GameManager.Instance.gameDataManager.SaveInvItems(invItems);
 
-        //TODO make sure FrontChar, char and SelChar are synced up when needed
-
-        //Saves equipt items
-        //Units[FrontAndCentre].item1 = it[1]; 
-        //Units[FrontAndCentre].item2 = it[2];
-        //Units[FrontAndCentre].item3 = it[3];
-
-        /*
-        for (int i = 0; i < Units.Count; i++)
-        {
-            CharacterScriptObject currentCharacterSO = (CharacterScriptObject)Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName);
-            if (Resources.Load("ScriptableObjects/Characters/" + Units[i].unitName))
-            {
-                currentCharacterSO.eqp1 = Units[i].item1;
-                currentCharacterSO.eqp2 = Units[i].item2;
-                currentCharacterSO.eqp3 = Units[i].item3;
-            }
-            else
-            {
-                // Debug.Log("HEY " + characters[i].name);
-            }
-        }
-        */
-
-
-        //Save inventory items
-        //storedItems = InventoryMenu.GetStoredItems();
-        //storedValues.passUp(storedItems);
-        //storedValues.saveInv();
-        //storedValues.saveChar();
+        //TODO make sure FrontChar, char and SelChar are synced up when needed       
     }
+
+    public void SetImage(Sprite img) //Sets portrait image
+    {
+        UnitDisplay.GetComponent<Image>().sprite = img;
+    }
+
 
 
 
     void DropHeld() // Drop held item
     {
-        if (HoldItem != null)
+        if (holdItem != null)
         {
             audioSource.PlayOneShot(place, 0.7F);
         }
         Drag.SetIcon(null);
-        HoldItem = null;        
+        holdItem = null;        
     }
-
-    public void setImage(Sprite img) //Sets portrait image
+    
+    public void GridOnClick(int intID, string itemID)  //Grid of Inventory items clicked
     {
-        UnitDisplay.GetComponent<Image>().sprite = img;
-    }
+        Item SelectedItem = allItems[itemID];
 
-    /*
-    public void GridOnClick(int intID, Item itemID)  //Grid of Inventory items clicked
-    {
         if (Drag.Dragging() == false) //pick up item 
         {          
             Drag.SetIcon(GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon());
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(null);
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(0);
+            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(null);
 
-            HoldItem = itemID;
+            holdItem = SelectedItem;
             audioSource.PlayOneShot(pickUp, 0.7F);
 
         }
         else if(Drag.Dragging() == true && GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().HasIcon() == false) //place item
         {
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldItem);
+            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(holdItem.name);
             Drag.SetIcon(null);
 
-            HoldItem = null;
+            holdItem = null;
             audioSource.PlayOneShot(place, 0.7F);
             SaveInv();
         }  
@@ -320,10 +263,10 @@ public class InvController : MonoBehaviour {
             Sprite tempS = GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().GetIcon();
 
             GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetIcon(Drag.GetIcon());
-            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(HoldItem);
+            GameObject.Find("InvBtn #" + intID).GetComponent<InvMenuBtn>().SetItemID(holdItem.name);
             Drag.SetIcon(tempS);
 
-            HoldItem = itemID;
+            holdItem = SelectedItem;
             audioSource.PlayOneShot(place, 0.7F);
             SaveInv();
         }         
@@ -336,7 +279,7 @@ public class InvController : MonoBehaviour {
             Drag.SetIcon(origin.GetComponent<BtnEquipt>().GetIcon());
             origin.GetComponent<BtnEquipt>().SetIcon(null);  
 
-            HoldItem = shownItems[item];
+            holdItem = shownItems[item];
             audioSource.PlayOneShot(pickUp, 0.7F);
             shownItems[item] = null;
 
@@ -346,42 +289,44 @@ public class InvController : MonoBehaviour {
             origin.GetComponent<BtnEquipt>().SetIcon(Drag.GetIcon());
             Drag.SetIcon(null);
 
-            shownItems[item] = HoldItem;
-            HoldItem = null;
+            shownItems[item] = holdItem;
+            holdItem = null;
             audioSource.PlayOneShot(equip, 0.7F);
             SaveInv();
         }
         else if (Drag.Dragging() == true && origin.GetComponent<BtnEquipt>().HasIcon() == true) //switch item
         {
             Sprite tempS = origin.GetComponent<BtnEquipt>().GetIcon();
-            Item tempN = HoldItem;
+            Item tempN = holdItem;
 
             origin.GetComponent<BtnEquipt>().SetIcon(Drag.GetIcon());
             Drag.SetIcon(tempS);
 
-            HoldItem = shownItems[item];
+            holdItem = shownItems[item];
             shownItems[item] = tempN;
             audioSource.PlayOneShot(equip, 0.7F);
             SaveInv();
         }
     }
-    */
+
+
+    
 
     //Text control  
-    void ReWriter(string title, string desc) //Update Text
+    void ReWriter(Item itemInfo) //Update Text
     {
-        txtBoxTitle.text = title;
-        txtBoxDesc.text = desc;             
+        txtBoxTitle.text = itemInfo.name;
+        txtBoxDesc.text = itemInfo.description;             
 
-        rectTransform = HoverTxt.GetComponent<RectTransform>();
+        RectTransform rectTransform = HoverTxt.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(170, 200);
 
-        if (StringLength(desc, descFontSize) == 0 && StringLength(title, titleFontSize) == 0){ 
+        if (StringLength(itemInfo.description, descFontSize) == 0 && StringLength(itemInfo.name, titleFontSize) == 0){ 
             rectTransform.sizeDelta = new Vector2(0, 200);
         }        
     }
 
-    int StringLength(string s, int size) //get the amount of size the string will take up using 
+    int StringLength(string s, int size) //get the amount of physical space the string will take up 
     {
         int totalLength = 0;
         CharacterInfo characterInfo = new CharacterInfo();
@@ -397,104 +342,41 @@ public class InvController : MonoBehaviour {
         return totalLength;
     }
 
-    public void HoverText(int origin, int itemID) //An item has triggered OnPointerEnter or OnPointerExit - text is changed accordingly
+    public void HoverTextFadeIn(string origin)
     {
-        HoverTxt.gameObject.SetActive(true); //starts disabled
-
-        if (itemID == 0) { origin = 0; }
-
-        if (origin > 0) //hoverEnter - fade in
-        {
-            origin--;
-            //ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(GraphicFader(0.1f, HoverTxt, 0f, 0.75f));
-            StartCoroutine(GraphicFader(0.1f, txtBoxTitle, 0f, 1f));
-            StartCoroutine(GraphicFader(0.1f, txtBoxDesc, 0f, 1f));
-        }
-        else if (origin < 0) //hoverExit - fade out
-        {
-            origin = Mathf.Abs(origin) - 1;
-            //ReWriter(AllItems[itemID].Title, AllItems[itemID].Desc);
-            StartCoroutine(GraphicFader(1f, HoverTxt, 0.75f, 0f));
-            StartCoroutine(GraphicFader(1f, txtBoxTitle, 1f, 0f));
-            StartCoroutine(GraphicFader(1f, txtBoxDesc, 1f, 0f));
-        }
-        else //catch
-        {
-            
-        }
-    }
-
-    public void HoverText(string origin, int check) //An equip button has triggered OnPointerEnter or OnPointerExit - text is changed accordingly
-    {
-        HoverTxt.gameObject.SetActive(true); //starts disabled
-
-        //Sets text to item in origin button
-        //if (origin.Equals("ButtonTop")){       ReWriter(AllItems[it[1]].Title, AllItems[it[1]].Desc);}
-        //else if(origin.Equals("ButtonMid")){   ReWriter(AllItems[it[2]].Title, AllItems[it[2]].Desc);}
-        //else if(origin.Equals("ButtonBottom")){ReWriter(AllItems[it[3]].Title, AllItems[it[3]].Desc);}
-        //else {Debug.Log("ERROR, hover origin unknown");}
+        if (origin.Equals("ButtonTop")) {       ReWriter(allItems[shownItems[1].name]); }
+        else if (origin.Equals("ButtonMid")) {  ReWriter(allItems[shownItems[2].name]); }
+        else if (origin.Equals("ButtonBottom")) { ReWriter(allItems[shownItems[3].name]); }
+        else { ReWriter(allItems[origin]); }
         
-        if (check > 0) //hoverEnter - fade in
-        {
-            StartCoroutine(GraphicFader(0.2f, HoverTxt, 0f, 0.75f));
-            StartCoroutine(GraphicFader(0.2f, txtBoxTitle, 0f,1f));
-            StartCoroutine(GraphicFader(0.2f, txtBoxDesc, 0f, 1f));
-        }
-        else if (check < 0) //hoverEnter - fade out
-        {
-            StartCoroutine(GraphicFader(1f, HoverTxt, 0.75f, 0f));
-            StartCoroutine(GraphicFader(1f, txtBoxTitle, 1f,0f));
-            StartCoroutine(GraphicFader(1f, txtBoxDesc, 1f, 0f));
-        }
+        StartCoroutine(GraphicFader(0.2f, HoverTxt, 0.75f));
+        StartCoroutine(GraphicFader(0.2f, txtBoxTitle, 1f));
+        StartCoroutine(GraphicFader(0.2f, txtBoxDesc, 1f));
     }
-
-    //Fade graphic in
-    IEnumerator FadeGraphicIn(Graphic fadeObject)
+    public void HoverTextFadeOut(string origin)
     {
-        for (float f = 0f; f <= 1; f += 0.1f)
-        {
-            Color c = fadeObject.material.color;
-            c.a = (f + 0.1f > 1) ? 1 : f;
-            fadeObject.material.color = c;
-            yield return null;
-        }
-    }
+        StartCoroutine(GraphicFader(1f, HoverTxt, 0f));
+        StartCoroutine(GraphicFader(1f, txtBoxTitle, 0f));
+        StartCoroutine(GraphicFader(1f, txtBoxDesc, 0f));
 
-    //Fade graphic out
-    IEnumerator FadeGraphicOut(Graphic fadeObject)
-    {
-        for (float f = 1f; f >= 0; f -= 0.1f)
-        {
-            Color c = fadeObject.material.color;
-            c.a = (f - 0.1f < 0) ? 0 : f;
-            fadeObject.material.color = c;
-            yield return null;
-        }
+        if (origin.Equals("ButtonTop")) {       ReWriter(allItems[shownItems[1].name]); }
+        else if (origin.Equals("ButtonMid")) {  ReWriter(allItems[shownItems[2].name]); }
+        else if (origin.Equals("ButtonBottom")) { ReWriter(allItems[shownItems[3].name]); }
+        else { ReWriter(allItems[origin]); }
     }
-
-    IEnumerator GraphicFader(float transitionTime, Graphic fadeObject, float fadeStart, float fadeEnd) //Graphic fading in or out
+       
+    IEnumerator GraphicFader(float transitionTime, Graphic fadeObject, float fadeEnd) //Graphic fading in or out
     { //0 to invisible, 1 to visible
         Color c = fadeObject.material.color;
-        c.a = fadeStart;
+        float fadeStart = c.a;
 
-        while (c.a < fadeStart + 0.1 && c.a > fadeEnd - 0.1 || c.a < fadeEnd + 0.1 && c.a > fadeStart - 0.1)
+        int mult = (int)Mathf.Sign(fadeStart - fadeEnd);
+
+        for (float f = fadeStart; f >= fadeEnd * mult; f -= 0.1f * transitionTime)
         {
-            c.a = fadeObject.color.a - (Time.deltaTime / transitionTime) * fadeStart + (Time.deltaTime / transitionTime) * fadeEnd;
+            c.a = (f - 0.1f < fadeEnd * mult) ? fadeEnd : f * mult;
             fadeObject.material.color = c;
             yield return null;
         }
     }
-
-    IEnumerator GraphicFader2(float transitionTime, Graphic fadeObject, float fadeStart, float fadeEnd) //Graphic fading in or out
-    { //0 to invisible, 1 to visible
-        fadeObject.color = new Color(fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeStart);
-        while (fadeObject.color.a < fadeStart + 0.1 && fadeObject.color.a > fadeEnd - 0.1 || fadeObject.color.a < fadeEnd + 0.1 && fadeObject.color.a > fadeStart - 0.1)
-        {
-            fadeObject.color = new Color(fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeObject.color.a - (Time.deltaTime / transitionTime) * fadeStart + (Time.deltaTime / transitionTime) * fadeEnd);
-            yield return null;
-        }
-    }
-
-    
 }
