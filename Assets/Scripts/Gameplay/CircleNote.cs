@@ -81,6 +81,7 @@ public class CircleNote : MonoBehaviour
         /* Unlock the coroutine */
         noteLock = 0;
 
+        GameObject.Find("Menu").GetComponent<CharacterListener>().showDamage = false;
         Destroy(transform.gameObject);
     }
 

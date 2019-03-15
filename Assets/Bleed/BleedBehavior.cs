@@ -53,8 +53,8 @@ public class BleedBehavior : MonoBehaviour
     {
         if (GameObject.Find("Menu").GetComponent<CharacterListener>().showDamage)
         {
-            minAlpha = 0.4f;
-            distortion = 0.1f;
+            minAlpha = 0.35f;
+            distortion = 0.05f;
         }
         else
         {
