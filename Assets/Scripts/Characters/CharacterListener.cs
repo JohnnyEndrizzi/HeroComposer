@@ -6,9 +6,11 @@ public class CharacterListener : MonoBehaviour
 {
     /* Used for attack sound effects */
     public AudioClip ATK_sfx;
+    public AudioClip Boss_barrier_sfx;
     public AudioClip DEF_low_sfx;
     public AudioClip DEF_high_sfx;
     public AudioClip fireball_sfx;
+    private AudioClip chosenATK_sfx;
 
     /* Used for keeping score */
     public float songScore;
@@ -20,6 +22,7 @@ public class CharacterListener : MonoBehaviour
 
     public GameObject boss;
     public SpriteRenderer shield;
+    public bool showDamage = false;
 
     private bool inSliderHitRange = false;
     private bool keyUp;
@@ -62,7 +65,7 @@ public class CharacterListener : MonoBehaviour
      * Description: The system must be able to calculate the accuracy of the player’s inputted command.
      * 
      * This function will determine the accuracy of the entered note */
-    public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
+    public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit, int currentCharacter, bool isAttacking)
     {
         decimal hitTime = currentHit * 1000;
         decimal nextTime = nextHit + (1000 * songStartTime);
@@ -84,6 +87,7 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(300);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.5));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
@@ -92,6 +96,7 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(100);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.2));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
@@ -100,10 +105,31 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(50);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.0));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
+            if (isAttacking)
+            {
+                chosenATK_sfx = Boss_barrier_sfx;
+                GameObject.Find("Barrier").GetComponent<Renderer>().enabled = true;
+                showDamage = true;
+
+                float maxHealth = GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp;
+
+                if (GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp - (int)(GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp * 0.1) > 0)
+                {
+                    GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp -= (int)(GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp * 0.1);
+                }
+                else
+                {
+                    GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp = 0;
+                }
+
+                GameObject.Find("character_health_" + currentSprite).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
+            }
+
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
@@ -130,7 +156,7 @@ public class CharacterListener : MonoBehaviour
      * attack animations. */
     public void characterAttackMovement()
     {
-        GetComponent<AudioSource>().PlayOneShot(ATK_sfx, 0.5F);
+        GetComponent<AudioSource>().PlayOneShot(chosenATK_sfx, 0.5F);
         startTime = Time.time;
     }
 
@@ -176,6 +202,8 @@ public class CharacterListener : MonoBehaviour
         }
 
         Destroy(score.gameObject);
+        GameObject.Find("Barrier").GetComponent<Renderer>().enabled = false;
+        showDamage = false;
 
         /* Unlock the coroutine */
         noteLock = 0;
@@ -357,9 +385,11 @@ public class CharacterListener : MonoBehaviour
         /* If i, j, k or l are inputted, fetch the character GameObject corresponding to them and calculate the accuracy of the input */
         if (currentSprite > 0)
         {
+            chosenATK_sfx = ATK_sfx;
+
             toUseGO = GameObject.Find("character_" + currentSprite);
             //SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
-            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit());
+            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit(), currentSprite, ClickListener.menu_state == ClickListener.state.ATK ? true : false);
             StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
         }
 

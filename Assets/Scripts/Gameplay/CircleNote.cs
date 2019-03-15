@@ -54,7 +54,8 @@ public class CircleNote : MonoBehaviour
         menu.GetComponent<GameLogic>().hitIndex++;
 
         /* If this was a note where the boss was queued to attack, the attack coroutine is called */
-        if (this.name == "defendNoteEnd")
+
+        if (this.name.Split('_')[0] == "defendNoteEnd")
         {
             GameObject.Find("Menu").GetComponent<BossLogic>().BossAttack(defendTarget);
         }
