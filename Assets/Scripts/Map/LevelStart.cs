@@ -5,14 +5,14 @@ public class LevelStart : Interactable {
 
     public string songName = "";
     public DialogueTrigger dialogueTrigger;
+    public LevelLabel label;
 
     string difficulty = "Normal";
 
     public override void Interact()
     {
         var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
-        var level = GetComponent<LevelLabel>().level;
-        if (!lockedLevels.ContainsKey(level) || level == 0)
+        if (label == null || !lockedLevels.ContainsKey(label.level) || label.level == 0)
         {
             //Start cutscene
             if (dialogueTrigger != null)
