@@ -74,14 +74,16 @@ public class GameLogic : MonoBehaviour
             //Front row
             if(position == (int)CharacterPosition.FrontRow)
             {
-                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
-                specialPos = new Vector3(80f, -142f, 0.0f);
-            //Centre left (top)
-            }else if(position == (int)CharacterPosition.CentreLeft){
                 characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
                 healthPos = new Vector3(216.3f, 107.34f, 0.0f);
                 specialPos = new Vector3(203.77f, 99.6f, 0.0f);
+                //Centre left (top)
+            }
+            else if(position == (int)CharacterPosition.CentreLeft)
+            {
+                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(80f, -142f, 0.0f);
             }
             //Centre right (bottom)
             else if (position == (int)CharacterPosition.CentreRight)
@@ -483,7 +485,7 @@ public class GameLogic : MonoBehaviour
                 /* These are notes that lead a hold note pair*/
                 if (firstNoteOfSlider == true && iterationsLeft == 2)
                 {
-                    beatSprite.gameObject.name = "defendNoteStart";
+                    beatSprite.gameObject.name = "defendNoteStart_" + noteIndex;
 
                     beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
                     beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
@@ -494,7 +496,7 @@ public class GameLogic : MonoBehaviour
                 /* These are notes that either end a hold note pair or are just regular standalone notes*/
                 else
                 {
-                    beatSprite.gameObject.name = "defendNoteEnd";
+                    beatSprite.gameObject.name = "defendNoteEnd_" + noteIndex;
 
                     /* This is a standalone note */
                     if (defendNote > -1)
