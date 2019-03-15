@@ -40,8 +40,6 @@ public class BossLogic : MonoBehaviour
         }
 
         GameObject.Find("boss_healthbar").transform.Find("Health").transform.localScale = new Vector3(((currentBossHP) / bossHP), 1, 1);
-
-
     }
 
     /* Functional Requirement
@@ -68,6 +66,8 @@ public class BossLogic : MonoBehaviour
             GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp = 0;
         }
 
+        GameObject.Find("Menu").GetComponent<CharacterListener>().showDamage = true;
+        CameraShake.Shake(0.25f, 0.1f);
         GameObject.Find("character_health_" + (chosen + 1)).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
     }
 

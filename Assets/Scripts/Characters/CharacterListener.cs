@@ -115,6 +115,7 @@ public class CharacterListener : MonoBehaviour
                 chosenATK_sfx = Boss_barrier_sfx;
                 GameObject.Find("Barrier").GetComponent<Renderer>().enabled = true;
                 showDamage = true;
+                CameraShake.Shake(0.25f, 0.1f);
 
                 float maxHealth = GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp;
 
