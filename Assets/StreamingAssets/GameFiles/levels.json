@@ -3,18 +3,21 @@
         "songName": "AliVE",
         "enemy": "boss",
         "backdrop": "storm",
-        "highscore": 0
+        "highscore": 0,
+        "locked": false
     },"2":{
         "levelTag": "1-2",
         "songName": "dancing-dollz",
         "enemy": "boss",
         "backdrop": "storm",
-        "highscore": 0
+        "highscore": 0,
+        "locked": true
     },"3":{
         "levelTag": "1-3",
         "songName": "TriggerHappy",
         "enemy": "boss",
         "backdrop": "storm",
-        "highscore": 0
+        "highscore": 0,
+        "locked": true
     }
 }

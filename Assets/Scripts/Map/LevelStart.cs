@@ -10,14 +10,19 @@ public class LevelStart : Interactable {
 
     public override void Interact()
     {
-        //Start cutscene
-        if (dialogueTrigger != null)
+        var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
+        var level = GetComponent<LevelLabel>().level;
+        if (!lockedLevels.ContainsKey(level))
         {
-            StartCoroutine(DisplayCutscene());
-        }
-        else
-        {
-            StartLevel();
+            //Start cutscene
+            if (dialogueTrigger != null)
+            {
+                StartCoroutine(DisplayCutscene());
+            }
+            else
+            {
+                StartLevel();
+            }
         }
     }
 

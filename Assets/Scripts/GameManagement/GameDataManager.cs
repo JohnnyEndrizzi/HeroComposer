@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -46,6 +47,21 @@ public class GameDataManager : MonoBehaviour {
         levels = gameFileHandler.LoadJSONAsGameObjectDictionary<Level>(JSONFiles.Levels);
         inventory = gameFileHandler.LoadJSONAsGameObject<Inventory>(JSONFiles.Inventory);
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
+    }
+
+    //Set level to unlocked
+    public void unlockLevel(int level)
+    {
+        var newlevel = levels[Convert.ToString(level)];
+        newlevel.locked = false;
+        levels[Convert.ToString(level)] = newlevel;
+        gameFileHandler.SaveGameObjectAsJSON(levels, JSONFiles.Levels);
+    }
+
+    //Get the levels
+    public Dictionary<int, Level> getLockedLevels()
+    {
+        return levels.Where(kvp => kvp.Value.locked).ToDictionary(x => Convert.ToInt32(x.Key), x => x.Value); ;
     }
 
     //Return all characters
