@@ -30,6 +30,8 @@ public class GameDataManager : MonoBehaviour {
     private Inventory inventory;
     //Party
     private Party party;
+    //Acitve Level
+    private Level activeLevel;
 
     // Use this for initialization
     void Start () {
@@ -46,6 +48,18 @@ public class GameDataManager : MonoBehaviour {
         levels = gameFileHandler.LoadJSONAsGameObjectDictionary<Level>(JSONFiles.Levels);
         inventory = gameFileHandler.LoadJSONAsGameObject<Inventory>(JSONFiles.Inventory);
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
+    }
+
+    //Set active level
+    public void SetActiveLevel(string songName)
+    {
+        activeLevel = levels[songName];
+    }
+
+    //Get active level
+    public Level GetActiveLevel()
+    {
+        return activeLevel;
     }
 
     //Return all characters
