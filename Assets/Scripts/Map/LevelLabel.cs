@@ -12,7 +12,7 @@ public class LevelLabel : MonoBehaviour {
 	void Start () {
 		var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
         var gameobject = GetComponent<TMP_Text>();
-        if (lockedLevels.ContainsKey(level))
+        if (lockedLevels.ContainsKey(level)|| level == 0)
         {
             gameobject.fontSize = 50f;
             gameobject.SetText("LOCKED");

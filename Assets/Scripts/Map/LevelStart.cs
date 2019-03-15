@@ -12,7 +12,7 @@ public class LevelStart : Interactable {
     {
         var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
         var level = GetComponent<LevelLabel>().level;
-        if (!lockedLevels.ContainsKey(level))
+        if (!lockedLevels.ContainsKey(level) || level == 0)
         {
             //Start cutscene
             if (dialogueTrigger != null)
