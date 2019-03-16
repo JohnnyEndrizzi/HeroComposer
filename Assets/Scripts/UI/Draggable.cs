@@ -34,7 +34,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     //Called when first start dragging
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         //Store item being dragged, original position and parent
         itemBeingDragged = gameObject;

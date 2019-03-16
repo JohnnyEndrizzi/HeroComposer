@@ -86,15 +86,15 @@ public class GameDataManager : MonoBehaviour {
     {
         return items;
     }
-
+        
     //Get inventory item list
-    public Dictionary<string, Item> GetInvItems()
+    public List<Item> GetInvItems()
     {
         return inventory.items;
     }
 
     //Set inventory items
-    public void SaveInvItems(Dictionary<string, Item> inventory)
+    public void SaveInvItems(List<Item> inventory)
     {
         this.inventory.items = inventory;
         gameFileHandler.SaveGameObjectAsJSON(this.inventory, JSONFiles.Inventory);

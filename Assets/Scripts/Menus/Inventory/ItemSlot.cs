@@ -2,10 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InvMenuBtnIcon : Draggable {
-    
+public class ItemSlot : Draggable
+{
+
     //Image to display to
-    private Image image = null;
+    public Image image = null;
     //Item displayed in portrait
     public Item item = null;
 
@@ -21,8 +22,8 @@ public class InvMenuBtnIcon : Draggable {
         if (item != null)
         {
             this.item = item;
-            Sprite characterSprite = Resources.Load<Sprite>(this.item.sprite);
-            image.sprite = characterSprite;
+            Sprite ItemSprite = Resources.Load<Sprite>(this.item.sprite);
+            image.sprite = ItemSprite;
             Color c = image.color;
             c.a = 1;
             image.color = c;
@@ -48,6 +49,18 @@ public class InvMenuBtnIcon : Draggable {
     {
         return startParent;
     }
+
+    
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        //Reset Draggable interface
+        base.OnBeginDrag(eventData);
+        //Tell Controller of the event
+        if (item != null)
+        {
+            FindObjectOfType<InvController>().Pickup();
+        }
+    }    
 
     //Called when portrait is stopped being dragged
     public override void OnEndDrag(PointerEventData eventData)

@@ -71,7 +71,7 @@ public class ShopMenuCtrl : MonoBehaviour {
 
         for (int i = 0; i < buttonTemplate.transform.parent.childCount - 1; i++)
         {
-            realValues.Add(GameObject.Find("ShopBtn #" + i).GetComponent<InvMenuBtn>().GetItemID());
+            //realValues.Add(GameObject.Find("ShopBtn #" + i).GetComponent<InvMenuBtn>().GetItemID());
         }
         return realValues;
     }
