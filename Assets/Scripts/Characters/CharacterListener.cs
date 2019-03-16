@@ -127,6 +127,7 @@ public class CharacterListener : MonoBehaviour
                 else
                 {
                     GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp = 0;
+                    this.GetComponent<BossLogic>().killCharacter(currentSprite);
                 }
 
                 GameObject.Find("character_health_" + currentSprite).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
@@ -330,7 +331,8 @@ public class CharacterListener : MonoBehaviour
 
         /* The highlight for the note bar will be white while either i, j, k or l is being pressed, 
          * but wille be red upon releasing those keys. */
-        if (Input.GetKeyDown("i") || Input.GetKeyDown("j") || Input.GetKeyDown("k") || Input.GetKeyDown("l"))
+        if ((Input.GetKeyDown("i") && GameObject.Find("character_1")) || (Input.GetKeyDown("j") && GameObject.Find("character_2")) || 
+            (Input.GetKeyDown("k") && GameObject.Find("character_3")) || (Input.GetKeyDown("l") && GameObject.Find("character_3")))
         {
             color = Color.white;
         }
@@ -389,7 +391,7 @@ public class CharacterListener : MonoBehaviour
         else
         {
             bool holdInterval = Input.GetKeyDown("j") && GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval;
-            if (Input.GetKeyDown("i"))
+            if (Input.GetKeyDown("i") && GameObject.Find("character_1"))
             {
                 if (!holdInterval)
                 {
@@ -400,7 +402,7 @@ public class CharacterListener : MonoBehaviour
                     initHoldInterval = true;
                 }
             }
-            else if (Input.GetKeyDown("j"))
+            else if (Input.GetKeyDown("j") && GameObject.Find("character_2"))
             {
                 if (!holdInterval)
                 {
@@ -411,7 +413,7 @@ public class CharacterListener : MonoBehaviour
                     initHoldInterval = true;
                 }
             }
-            else if (Input.GetKeyDown("k"))
+            else if (Input.GetKeyDown("k") && GameObject.Find("character_3"))
             {
                 if (!holdInterval)
                 {
@@ -422,7 +424,7 @@ public class CharacterListener : MonoBehaviour
                     initHoldInterval = true;
                 }
             }
-            else if (Input.GetKeyDown("l"))
+            else if (Input.GetKeyDown("l") && GameObject.Find("character_4"))
             {
                 if (!holdInterval)
                 {
