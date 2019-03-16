@@ -33,6 +33,7 @@ public class GameLogic : MonoBehaviour
     public static bool nextHitHold = false;
     public int hitIndex = 0;
     public bool introFinished;
+    public bool holdNoteInterval = false;
 
     /* Variables used for defending against attacks and health logic*/
     public static int defendNote = -1;
@@ -368,6 +369,8 @@ public class GameLogic : MonoBehaviour
             scoringDone = true;
         }
 
+        //Debug.Log("Hold Interval: " + holdNoteInterval);
+
         if (delayLock == false)
         {
             /* There are 4 states of a song:
@@ -459,16 +462,25 @@ public class GameLogic : MonoBehaviour
             //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
+            string noteName = "";
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
-            if (inSliderRange && firstNoteOfSlider == true)
+            if (inSliderRange)
             {
-                iterationsLeft = 2;
+                if (firstNoteOfSlider == true)
+                {
+                    iterationsLeft = 2;
+                    noteName = "heldStart";
+                }
+                else
+                {
+                    noteName = "heldEnd";
+                }
             }
 
             /* Instantiates the notes on the canvas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
-            beatSprite.name = "note_" + noteIndex;
+            beatSprite.name = noteName + "Note_" + noteIndex;
 
             /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
