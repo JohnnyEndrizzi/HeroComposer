@@ -1,98 +1,57 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InvMenuCtrl : MonoBehaviour { 
     //Controls Item menu in Invantory
 
     //Gameobject locations
     [SerializeField]
-    private GameObject buttonTemplate = null;
-    [SerializeField]
-    private GridLayoutGroup gridGroup;
+    GameObject buttonTemplate = null;
+    GameObject[] ItemSlots;
+        
+    private int maxItems = 98;
 
-    private List<PlayerItem> playerInventory;
-    private int maxBtns = 98;
+    public void GenInventory() //Create Buttons and sets values
+    {        
+        List<Item> storedItems = GameManager.Instance.gameDataManager.GetInvItems();        
+        List<Item> playerInventory = new List<Item>();
+        ItemSlots = new GameObject[maxItems];
 
-    Dictionary<string, Item> allItems;
-    Dictionary<string, Item> invItems;
-    public List<string> storedItems;
-
-    public void Creator() //Generate/Regenerate List 
-    {
-        playerInventory = new List<PlayerItem>();
-                
-        if (GameObject.Find("InvBtn #0") != null) //Destroy existing buttons to allow for reload
-        { 
-            DestroyerOfLists();
-        }
-                
-        for (int i = 0; i<storedItems.Count; i++) //Fill inventory slots with owned items
+        //Fill inventory slots with owned items
+        for (int i = 0; i < storedItems.Count; i++) 
         {
-            PlayerItem newItem = new PlayerItem
-            {
-                //iconSprite = AllItems[storedItems[i]].img,
-                itemID = storedItems[i]
-            };
-
-            playerInventory.Add(newItem);
-        }                
-        for (int i = storedItems.Count; i<=maxBtns-1; i++) //Fill remaining inventory slots with empty items
-        {
-            PlayerItem newItem = new PlayerItem
-            {
-                itemID = "0"
-            };
-
-            playerInventory.Add(newItem);
+            playerInventory.Add(storedItems[i]);
         }
-        GenInventory();
-    }
-    
-    void GenInventory() //Create Buttons and sets values
-    { 
-        int i = 0;
-        foreach (PlayerItem newItem in playerInventory) { 
-            GameObject button = Instantiate(buttonTemplate) as GameObject;
-            button.SetActive(true);
+        //Fill remaining inventory slots with empty items
+        for (int i = storedItems.Count; i <= maxItems - 1; i++) 
+        {
+            playerInventory.Add(null);
+        }
+        
+        //Generate Buttons
+        int j = 0;
+        foreach (var newItem in playerInventory) {
+            ItemSlots[j] = Instantiate(buttonTemplate);
+            ItemSlots[j].SetActive(true);
 
-            button.name = ("InvBtn #" + i);
-            button.GetComponent<InvMenuBtn>().SetIcon(newItem.iconSprite);
-            button.GetComponent<InvMenuBtn>().SetInvID(i);
-            button.GetComponent<InvMenuBtn>().SetItemID(newItem.itemID);
-            //add comp<dragable> TODO
-            button.transform.SetParent(buttonTemplate.transform.parent,false);
-
-            i++;
+            ItemSlots[j].name = ("InvBtn #" + j);
+            ItemSlots[j].GetComponentInChildren<ItemSlot>().DisplayItem(newItem);
+            ItemSlots[j].transform.SetParent(buttonTemplate.transform.parent,false);
+            j++;
         }
     }
-
-    public List<string> GetStoredItems() //returns all item values
+           
+    //Returns all item values
+    public List<Item> GetStoredItems() 
     { 
-        List<string> realValues = new List<string>();         
-
-        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++)
+        List<Item> realValues = new List<Item>();         
+        for (int i = 0; i < ItemSlots.Length; i++)
         {
-            realValues.Add(GameObject.Find("InvBtn #" + i).GetComponent<InvMenuBtn>().GetItemID());            
+            if (ItemSlots[i].GetComponentInChildren<ItemSlot>() != null)
+            {
+                realValues.Add(ItemSlots[i].GetComponentInChildren<ItemSlot>().item);
+            }                     
         }
         return realValues;
-    }
-
-    void DestroyerOfLists() //Destroys existing objects
-    {
-        for (int i = 0; i < buttonTemplate.transform.parent.childCount-1; i++)
-        {
-            Destroy(GameObject.Find("InvBtn #" + i)); 
-        }
-    }
-
-    public void ButtonClicked(int invID, string itemID) //sub button Clicked
-    { 
-        GameObject.Find("InvController").GetComponent<InvController>().GridOnClick(invID, itemID);       //TODO
-    }
-
-    public class PlayerItem{
-        public Sprite iconSprite;
-        public string itemID;
     }
 }

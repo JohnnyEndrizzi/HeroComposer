@@ -4,18 +4,21 @@ using UnityEngine.UI;
 public class CharMenuBtn : MonoBehaviour {
     //Menu cell for Units in Inventory
 
-    //Gameobject locations
-    [SerializeField]
-    private Text btnText = null;
-    [SerializeField]
-    private Image imgIcon = null;
     [SerializeField]
     private Image highlighter = null;
+    private Text btnText;
 
-    private string btnTextTxt;
+    //Image to display to
+    public Image image = null;
 
-    private int invID;  //Location ID
-    private int itemID; //Held item ID
+    public Character character;
+
+    //Called before start
+    private void Awake()
+    {
+        image = GetComponent<Image>();
+        btnText = GetComponentInChildren<Text>();
+    }
 
     void Start()
     {
@@ -26,41 +29,42 @@ public class CharMenuBtn : MonoBehaviour {
         btnText.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         btnText.fontSize = 16;
     }
-       
-    public void SetText(string textString) //Set Text
-    { 
-        btnText.text = textString; 
-        btnTextTxt = textString;
-	}
 
-    public void SetInvID(int ID){invID = ID;}   //Set invID value   
-    public int  GetInvID(){return invID; }      //Get invID value
-    public void SetItemID(int ID){itemID = ID;} //Set itemID value
-    public int  GetItemID(){return itemID; }    //Get itemID value
+    //Display character sprite in portrait
+    public void DisplayCharacter(Character character)
+    {
+        if (character != null)
+        {
+            this.character = character;
+            Sprite characterSprite = Resources.Load<Sprite>(this.character.sprite);
+            image.sprite = characterSprite;
+            Color c = image.color;
+            c.a = 1;
+            image.color = c;
 
-    public void SetImage(Sprite image) //Set Sprite
-    { 
-        this.GetComponent<Image>().sprite = image;
+            btnText.text = character.name;
+        }
+        else
+        {
+            RemoveCharacter();
+        }
+
     }
 
-    public void SetIcon(Sprite mySprite) //Set Sprite on icon child object
-    { 
-        if (mySprite == null){imgIcon.GetComponent<Image>().enabled = false;}
-        else{imgIcon.GetComponent<Image>().enabled = true;} 
+    //Remove character sprite from portrait
+    public void RemoveCharacter()
+    {
+        character = null;
+        image.sprite = null;
+        Color c = image.color;
+        c.a = 0;
+        image.color = c;
 
-        imgIcon.sprite = mySprite; 
-    }
-    public Sprite GetIcon() //Get Sprite from child object
-    { 
-        return imgIcon.sprite;
-    }
-    public bool HasIcon() //Is child object icon spot filled?
-    { 
-        if (imgIcon.sprite == true) {return true;}
-        else{return false;}
+        btnText.text = "";
     }
 
-    public void ToggleHigh() //Toggle Highlighting on/off
+    //Toggle Highlighting on/off  TODO
+    public void ToggleHigh() 
     {
         Debug.Log(highlighter.enabled.ToString() + " High");
         if (highlighter.enabled) {
@@ -72,16 +76,7 @@ public class CharMenuBtn : MonoBehaviour {
     }
 
     void OnClick() //Gets clicked
-    { 
-        //To find who called this sceipt (different parents use this child script)
-        if(GameObject.Find("InvController") != null)
-        {
-            this.transform.parent.parent.parent.GetComponent<CharMenuCtrl>().ButtonClicked(invID);
-
-        }
-        else if(GameObject.Find("RehController") != null)
-        {
-            //this.transform.parent.parent.parent.GetComponent<RehCharMenuCtrl>().ButtonClicked(invID);
-        }
+    {
+        FindObjectOfType<InvController>().LoadInv(character);
     }
 }
