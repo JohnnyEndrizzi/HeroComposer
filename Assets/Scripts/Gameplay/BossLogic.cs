@@ -28,6 +28,13 @@ public class BossLogic : MonoBehaviour
         currentBossHP = bossHP;
     }
 
+    public void killCharacter(int character)
+    {
+        Destroy(GameObject.Find("character_health_" + character));
+        Destroy(GameObject.Find("character_special_" + character));
+        Destroy(GameObject.Find("character_" + character));
+    }
+
     public void takeDamage(int damage)
     {
         if (currentBossHP - damage > 0)
@@ -64,6 +71,7 @@ public class BossLogic : MonoBehaviour
         else
         {
             GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp = 0;
+            killCharacter(chosen + 1);
         }
 
         GameObject.Find("Menu").GetComponent<CharacterListener>().showDamage = true;
