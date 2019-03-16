@@ -7162,8 +7162,8 @@ GameObject:
   - component: {fileID: 596043990}
   - component: {fileID: 596043989}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: Text12
+  m_TagString: SkipText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7218,7 +7218,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SKIP >>
+  m_Text: 
 --- !u!222 &596043990
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18416,7 +18416,7 @@ GameObject:
   - component: {fileID: 1469311907}
   m_Layer: 5
   m_Name: Button Skip
-  m_TagString: Untagged
+  m_TagString: SkipBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18474,7 +18474,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1469311908}
   m_OnClick:
     m_PersistentCalls:

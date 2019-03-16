@@ -12,12 +12,12 @@ public class LevelStart : Interactable {
     public override void Interact()
     {
         var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
-        if (label != null || !lockedLevels.ContainsKey(label.level) || label.level == 0)
+        if (label != null && (!lockedLevels.ContainsKey(label.level) || label.level == 0))
         {
             //Start cutscene
             if (dialogueTrigger != null)
             {
-                StartCoroutine(DisplayCutscene());
+                StartCoroutine(DisplayCutscene(label.level));
             }
             else
             {
@@ -39,9 +39,9 @@ public class LevelStart : Interactable {
         GameManager.Instance.sceneManager.SwitchSceneWithCurtains("main", false);
     }
 
-    IEnumerator DisplayCutscene()
+    IEnumerator DisplayCutscene(int level)
     {
-        dialogueTrigger.TriggerDialogue();
+        dialogueTrigger.TriggerDialogue(level);
         yield return new WaitUntil(() => GameObject.Find("DialogueManager").GetComponent<DialogueManager>().dialogueBoxAnimator.GetBool("IsOpen") == false);
         StartLevel();
     }

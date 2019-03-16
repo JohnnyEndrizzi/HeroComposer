@@ -58,10 +58,24 @@ public class GameDataManager : MonoBehaviour {
         gameFileHandler.SaveGameObjectAsJSON(levels, JSONFiles.Levels);
     }
 
-    //Get the levels
+    //Get specific level
+    public Level getSpecificLevel(int level)
+    {
+        return levels[Convert.ToString(level)];
+    }
+
+    public void setCutsceneOfLeveltoSeen(int level)
+    {
+        var newlevel = levels[Convert.ToString(level)];
+        newlevel.cutsceneDisplayed = true;
+        levels[Convert.ToString(level)] = newlevel;
+        gameFileHandler.SaveGameObjectAsJSON(levels, JSONFiles.Levels);
+    }
+
+    //Get the locked levels
     public Dictionary<int, Level> getLockedLevels()
     {
-        return levels.Where(kvp => kvp.Value.locked).ToDictionary(x => Convert.ToInt32(x.Key), x => x.Value); ;
+        return levels.Where(kvp => kvp.Value.locked).ToDictionary(x => Convert.ToInt32(x.Key), x => x.Value);
     }
 
     //Return all characters
