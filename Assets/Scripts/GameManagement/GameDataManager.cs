@@ -48,8 +48,25 @@ public class GameDataManager : MonoBehaviour {
         levels = gameFileHandler.LoadJSONAsGameObjectDictionary<Level>(JSONFiles.Levels);
         inventory = gameFileHandler.LoadJSONAsGameObject<Inventory>(JSONFiles.Inventory);
         party = gameFileHandler.LoadJSONAsGameObject<Party>(JSONFiles.Party);
-    }
+    }    
 
+    //CHARACTERS
+    //Return all characters
+    public Dictionary<string, Character> GetCharacters()
+    {
+        return characters;
+    }
+    //////////
+
+    //ITEMS
+    //Get all items
+    public Dictionary<int, Item> GetItems()
+    {
+        return items.Keys.ToDictionary(x => int.Parse(x), x => items[x]);
+    }
+    //////////
+
+    //LEVELS
     //Set active level
     public void SetActiveLevel(string songName)
     {
@@ -61,30 +78,31 @@ public class GameDataManager : MonoBehaviour {
     {
         return activeLevel;
     }
+    //////////
 
-    //Return all characters
-    public Dictionary<string, Character> GetCharacters()
+    //INVENTORY
+    public int GetAvailableMoney()
     {
-        return characters;
+        return inventory.money;
     }
+    //////////
 
+    //PARTY
     //Check if character is in party 
     public bool IsCharacterInParty(Character character)
     {
         return party.IsCharacterInParty(character);
     }
-
     //Set characters in party
     public void SetCharactersInParty(Dictionary<int, Character> party)
     {
         this.party.characters = party.Keys.ToDictionary(x => x.ToString(), x => party[x]);
         gameFileHandler.SaveGameObjectAsJSON(this.party,JSONFiles.Party);
     }
-
     //Return the current characters in players party
     public Dictionary<int,Character> GetCharactersInParty()
     {
         return party.characters.Keys.ToDictionary(x => int.Parse(x), x => party.characters[x]);
     }
-    
+    //////////
 }
