@@ -28,6 +28,7 @@ public class CharacterListener : MonoBehaviour
     private bool keyUp;
     private bool keyHold;
     private Color color;
+    private bool initHoldInterval = false;
 
     private float startTime;
 
@@ -362,25 +363,80 @@ public class CharacterListener : MonoBehaviour
          * K - character_3
          * L - character_4 
          */
-        if (Input.GetKeyDown("i"))
+        if (initHoldInterval)
         {
-            currentSprite = 1;
-        }
-        else if (Input.GetKeyDown("j"))
-        {
-            currentSprite = 2;
-        }
-        else if (Input.GetKeyDown("k"))
-        {
-            currentSprite = 3;
-        }
-        else if (Input.GetKeyDown("l"))
-        {
-            currentSprite = 4;
+            if (Input.GetKeyUp("i"))
+            {
+                currentSprite = 1;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("j"))
+            {
+                currentSprite = 2;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("k"))
+            {
+                currentSprite = 3;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("l"))
+            {
+                currentSprite = 4;
+                initHoldInterval = false;
+            }
         }
         else
         {
-            currentSprite = 0;
+            bool holdInterval = Input.GetKeyDown("j") && GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval;
+            if (Input.GetKeyDown("i"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 1;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("j"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 2;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("k"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 3;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("l"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 4;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else
+            {
+                currentSprite = 0;
+            }
         }
 
         /* If i, j, k or l are inputted, fetch the character GameObject corresponding to them and calculate the accuracy of the input */

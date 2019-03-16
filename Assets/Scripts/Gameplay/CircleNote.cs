@@ -97,8 +97,14 @@ public class CircleNote : MonoBehaviour
         {
             /* If the circle note is the leading note of a hold note pair, it will wait for the duration of the hold note 
              * to end (when the end of the hold note arrives at the kill point) before dying. */
+            string[] noteName = this.name.Split('_');
             if (firstNoteOfSlider)
             {
+                if (noteName[0] == "heldStartNote")
+                {
+                    GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval = true;
+                }
+
                 if (songPosInBeats >= endTimeOfSlider)
                 {
                     Destroy(transform.gameObject);
@@ -108,8 +114,13 @@ public class CircleNote : MonoBehaviour
             else
             {
                 this.gameObject.GetComponent<Image>().enabled = false;
-                if (GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex == float.Parse(this.name.Split('_')[1]))
+                if (GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex == float.Parse(noteName[1]))
                 {
+                    if (noteName[0] == "heldEndNote" || noteName[0] == "defendNoteEnd")
+                    {
+                        GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval = false;
+                    }
+
                     StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss")));
                 }
             }
