@@ -24,6 +24,8 @@ TagManager:
   - SpcBtn
   - ScoreLayer
   - NoteBarCircle
+  - SkipBtn
+  - SkipText
   layers:
   - Default
   - TransparentFX

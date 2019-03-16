@@ -1264,16 +1264,16 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 132025413}
-  m_LocalRotation: {x: 0.052216828, y: -0.93094265, z: 0.10174774, w: 0.34679472}
-  m_LocalPosition: {x: 0, y: 0, z: 3.455885}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.052216828, y: -0.93094265, z: 0.1017477, w: 0.34679466}
+  m_LocalPosition: {x: 0, y: 0, z: 3.4558864}
+  m_LocalScale: {x: 1.0545356, y: 1.011621, z: 1.0614489}
   m_Children: []
   m_Father: {fileID: 2032024398}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 13.042001, y: -45.631, z: -1.5680001}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5753777, y: 22.95}
+  m_AnchoredPosition: {x: -1.5753751, y: 22.95}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &132025415
@@ -1452,6 +1452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 2
 --- !u!1001 &135818989
 Prefab:
   m_ObjectHideFlags: 0
@@ -2349,6 +2350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &188715149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3328,6 +3330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &261017514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4004,6 +4007,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 111230740}
   songName: ALiVE
   dialogueTrigger: {fileID: 490552834}
+  label: {fileID: 132025419}
 --- !u!136 &325734306
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4308,6 +4312,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 1566530090}
   songName: ALiVE
   dialogueTrigger: {fileID: 1551010630}
+  label: {fileID: 0}
 --- !u!136 &336267813
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5428,6 +5433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &463360818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5822,6 +5828,7 @@ Transform:
   m_Children:
   - {fileID: 645082656}
   - {fileID: 830781682}
+  - {fileID: 1510590061}
   - {fileID: 1993287120}
   - {fileID: 1898943532}
   - {fileID: 1944376240}
@@ -5857,12 +5864,11 @@ Transform:
   - {fileID: 908166904}
   - {fileID: 1808486518}
   - {fileID: 2046696549}
-  - {fileID: 1293101479}
   - {fileID: 107949230}
   - {fileID: 1200833672}
   - {fileID: 520205515}
   - {fileID: 1865877524}
-  - {fileID: 1510590061}
+  - {fileID: 1293101479}
   - {fileID: 72452916}
   - {fileID: 1261874205}
   - {fileID: 398186205}
@@ -5886,12 +5892,12 @@ Transform:
   - {fileID: 1491148279}
   - {fileID: 1771026707}
   - {fileID: 1585084661}
+  - {fileID: 554621408}
   - {fileID: 2122028256}
   - {fileID: 1928459281}
   - {fileID: 1059551750}
   - {fileID: 53768871}
   - {fileID: 629481594}
-  - {fileID: 554621408}
   - {fileID: 231217780}
   - {fileID: 420788067}
   - {fileID: 1931129263}
@@ -6637,7 +6643,7 @@ Transform:
   - {fileID: 286579030}
   - {fileID: 1429799426}
   m_Father: {fileID: 491264303}
-  m_RootOrder: 71
+  m_RootOrder: 66
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556434436
 GameObject:
@@ -7145,6 +7151,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 448174, guid: 2e85e654d9d08b54294966420d8a2155,
     type: 2}
   m_PrefabInternal: {fileID: 1846637470}
+--- !u!1 &596043987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 596043988}
+  - component: {fileID: 596043990}
+  - component: {fileID: 596043989}
+  m_Layer: 5
+  m_Name: Text12
+  m_TagString: SkipText
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &596043988
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 596043987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1469311906}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -30, y: 15}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &596043989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 596043987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: ba66554ccdb46a84babe899b463d245e, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &596043990
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 596043987}
+  m_CullTransparentMesh: 0
 --- !u!1001 &618155381
 Prefab:
   m_ObjectHideFlags: 0
@@ -8465,6 +8546,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 1251743228}
   songName: ALiVE
   dialogueTrigger: {fileID: 1195089865}
+  label: {fileID: 1909368005}
 --- !u!136 &717455376
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11022,6 +11104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &922830447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12238,6 +12321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 1
 --- !u!1 &975564544
 GameObject:
   m_ObjectHideFlags: 0
@@ -16462,6 +16546,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 1218653065}
   songName: ALiVE
   dialogueTrigger: {fileID: 1140820400}
+  label: {fileID: 0}
 --- !u!136 &1277321695
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18133,6 +18218,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 773427146}
   songName: ALiVE
   dialogueTrigger: {fileID: 286579029}
+  label: {fileID: 0}
 --- !u!136 &1429799429
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18317,6 +18403,129 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 402774, guid: 3cdde60b1f6962c49929ebd07f7284ec,
     type: 2}
   m_PrefabInternal: {fileID: 1036631248}
+--- !u!1 &1469311905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1469311906}
+  - component: {fileID: 1469311909}
+  - component: {fileID: 1469311908}
+  - component: {fileID: 1469311907}
+  m_Layer: 5
+  m_Name: Button Skip
+  m_TagString: SkipBtn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1469311906
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469311905}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+  m_Children:
+  - {fileID: 596043988}
+  m_Father: {fileID: 1595853537}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -1272, y: -45.5}
+  m_SizeDelta: {x: 300, y: 70}
+  m_Pivot: {x: 0.5, y: -0.65}
+--- !u!114 &1469311907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469311905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 1469311908}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 897943257}
+        m_MethodName: EndDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1469311908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469311905}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1469311909
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469311905}
+  m_CullTransparentMesh: 0
 --- !u!1 &1476526403
 GameObject:
   m_ObjectHideFlags: 0
@@ -18367,6 +18576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &1476526406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19095,7 +19305,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 491264303}
-  m_RootOrder: 42
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &1510590062
 Light:
@@ -20171,6 +20381,7 @@ RectTransform:
   - {fileID: 184825690}
   - {fileID: 930241139}
   - {fileID: 1165794650}
+  - {fileID: 1469311906}
   m_Father: {fileID: 876679544}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21248,6 +21459,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 556434437}
   songName: ALiVE
   dialogueTrigger: {fileID: 2038313017}
+  label: {fileID: 0}
 --- !u!136 &1715745370
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21386,6 +21598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 0
 --- !u!114 &1725472831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23462,6 +23675,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 1351332469}
   songName: ALiVE
   dialogueTrigger: {fileID: 124880080}
+  label: {fileID: 0}
 --- !u!136 &1902434607
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -23675,6 +23889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  level: 3
 --- !u!114 &1909368006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25021,6 +25236,7 @@ MonoBehaviour:
   interactionTransform: {fileID: 2061588744}
   songName: ALiVE
   dialogueTrigger: {fileID: 847371710}
+  label: {fileID: 0}
 --- !u!136 &2009266202
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -26108,6 +26324,10 @@ Prefab:
     - target: {fileID: 11418234, guid: c209967a5ce303246a9d2f8523cbd19a, type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400016, guid: c209967a5ce303246a9d2f8523cbd19a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11418234, guid: c209967a5ce303246a9d2f8523cbd19a, type: 2}
