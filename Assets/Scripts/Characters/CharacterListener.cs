@@ -280,6 +280,12 @@ public class CharacterListener : MonoBehaviour
             yield return null;
         }
 
+        GameObject check = GameObject.Find("character_" + spriteLock);
+        if (check.GetComponent<SpriteRenderer>().enabled == false)
+        {
+            Destroy(check);
+        }
+
         /* Unlock the coroutine */
         lockCoroutine[spriteLock - 1] = 0;
     }
@@ -446,10 +452,10 @@ public class CharacterListener : MonoBehaviour
         {
             chosenATK_sfx = ATK_sfx;
 
-            toUseGO = GameObject.Find("character_" + currentSprite);
-            //SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
             SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit(), currentSprite, ClickListener.menu_state == ClickListener.state.ATK ? true : false);
             StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
+
+            toUseGO = GameObject.Find("character_" + currentSprite);
         }
 
         /* Functional Requirement
