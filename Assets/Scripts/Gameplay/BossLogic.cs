@@ -32,7 +32,7 @@ public class BossLogic : MonoBehaviour
     {
         Destroy(GameObject.Find("character_health_" + character));
         Destroy(GameObject.Find("character_special_" + character));
-        Destroy(GameObject.Find("character_" + character));
+        GameObject.Find("character_" + character).GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void takeDamage(int damage)
