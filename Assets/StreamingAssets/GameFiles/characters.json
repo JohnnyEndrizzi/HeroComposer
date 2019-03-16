@@ -7,7 +7,12 @@
     "soundEffect": "SoundEffects/acoustic_sound",
     "unlocked": true,
     "equippedItems": {
-      "0": null,
+      "0": {
+        "name": "Tuner",
+        "description": "Tunes Defences",
+        "cost": 1500,
+        "sprite": "Items/potion"
+      },
       "1": null,
       "2": null
     },

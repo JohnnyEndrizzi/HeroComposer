@@ -187,6 +187,11 @@ public class InvController : MonoBehaviour {
     //Update Text
     void ReWriter(Item itemInfo) 
     {
+        if(itemInfo == null)
+        {
+            itemInfo = new Item{name = "", description = ""};
+        }
+
         txtBoxTitle.text = itemInfo.name;
         txtBoxDesc.text = itemInfo.description;             
 
@@ -217,23 +222,27 @@ public class InvController : MonoBehaviour {
 
     public void HoverTextFadeIn(Item itemInfo)
     {
-        if(itemInfo != null) ReWriter(itemInfo);
+        ReWriter(itemInfo);
 
-        //StartCoroutine(GraphicFader(0.2f, HoverTxt, 0.75f));
-        //StartCoroutine(GraphicFader(0.2f, txtBoxTitle, 1f));
-        //StartCoroutine(GraphicFader(0.2f, txtBoxDesc, 1f));
+        StopAllCoroutines();
+
+        StartCoroutine(GraphicFader(1f, HoverTxt, 0.75f));
+        StartCoroutine(GraphicFader(1f, txtBoxTitle, 1f));
+        StartCoroutine(GraphicFader(1f, txtBoxDesc, 1f));
     }
     public void HoverTextFadeOut()
     {
-        //StartCoroutine(GraphicFader(1f, HoverTxt, 0f));
-        //StartCoroutine(GraphicFader(1f, txtBoxTitle, 0f));
-        //StartCoroutine(GraphicFader(1f, txtBoxDesc, 0f));
+        StopAllCoroutines();
+
+        StartCoroutine(GraphicFader(0.5f, HoverTxt, 0f));
+        StartCoroutine(GraphicFader(0.5f, txtBoxTitle, 0f));
+        StartCoroutine(GraphicFader(0.5f, txtBoxDesc, 0f));
     }
 
     //Graphic fading in or out
     IEnumerator GraphicFader(float transitionTime, Graphic fadeObject, float fadeEnd) 
     { //0 to invisible, 1 to visible
-        Color c = fadeObject.material.color;
+        Color c = fadeObject.color;
         float fadeStart = c.a;
 
         int mult = (int)Mathf.Sign(fadeStart - fadeEnd);
@@ -241,7 +250,7 @@ public class InvController : MonoBehaviour {
         for (float f = fadeStart; f >= fadeEnd * mult; f -= 0.1f * transitionTime)
         {
             c.a = (f - 0.1f < fadeEnd * mult) ? fadeEnd : f * mult;
-            fadeObject.material.color = c;
+            fadeObject.color = c;
             yield return null;
         }
     }

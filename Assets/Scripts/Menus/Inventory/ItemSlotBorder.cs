@@ -1,18 +1,18 @@
 ﻿using UnityEngine.EventSystems;
 
-public class ItemSlotBorder : Droppable
+public class ItemSlotBorder : EventTrigger
 {
 
-    public void OnPointerEnter(PointerEventData data) //Turns on text on hoverEnter 
+    public override void OnPointerEnter(PointerEventData data) //Turns on text on hoverEnter 
     {
         //To prevent call when hovering over button while holding its ItemSlot
         if (this.gameObject.transform.childCount == 1)
         {
             FindObjectOfType<InvController>().HoverTextFadeIn(GetComponentInChildren<ItemSlot>().item);
-        }        
+        }
     }
 
-    public void OnPointerExit(PointerEventData data) //Turns off text on hoverExit
+    public override void OnPointerExit(PointerEventData data) //Turns off text on hoverExit
     {
         FindObjectOfType<InvController>().HoverTextFadeOut();
     }
