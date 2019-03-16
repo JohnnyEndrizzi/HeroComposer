@@ -41,19 +41,19 @@ public class AttackAnimator : MonoBehaviour
         /* List of all targetable locations on the field.  
          * These can be referenced to from elsewhere whenever a location is required. 
          * It also provides a central location from which locations can be efficiently added or modified if needed. */
-        LocationMap.Add("P1", new Locations(3.29f, 1.75f, -4.8f));   //P1
-        LocationMap.Add("P2", new Locations(1.02f, 0.33f, -5.1f)); //P2
-        LocationMap.Add("P3", new Locations(2.94f, -0.82f, -5.5f)); //P3
-        LocationMap.Add("P4", new Locations(5.31f, 0.32f, -5.1f)); //P4    
+        LocationMap.Add("P1", new Locations(3.29f, 1.75f, -4.8f)); //Player 1
+        LocationMap.Add("P2", new Locations(1.02f, 0.33f, -5.1f)); //Player 2
+        LocationMap.Add("P3", new Locations(2.94f, -0.82f, -5.5f)); //Player 3
+        LocationMap.Add("P4", new Locations(5.31f, 0.32f, -5.1f)); //Player 4    
         LocationMap.Add("P5", new Locations(6.5f, 0, 1)); //Centre of team
 
         LocationMap.Add("C", new Locations(0, 0, 1)); //CentrePoint
         LocationMap.Add("CP", new Locations(6.5f, 0, 1)); //Centre of team
 
-        LocationMap.Add("E1", new Locations(-4, 3, 1)); //E1
-        LocationMap.Add("E2", new Locations(-4, -3, 1)); //E2
-        LocationMap.Add("E3", new Locations(-9, 4, 1)); //E3
-        LocationMap.Add("E4", new Locations(-9, -4, 1)); //E4
+        LocationMap.Add("E1", new Locations(-4, 3, 1)); //Enemy 1
+        LocationMap.Add("E2", new Locations(-4, -3, 1)); //Enemy 2
+        LocationMap.Add("E3", new Locations(-9, 4, 1)); //Enemy 3
+        LocationMap.Add("E4", new Locations(-9, -4, 1)); //Enemy 4
         LocationMap.Add("E5", new Locations(-3.5f, 1.16f, -5.5f)); //Boss
 
         LocationMap.Add("HL", new Locations(-5f, 20, 1)); //High Left
@@ -66,18 +66,19 @@ public class AttackAnimator : MonoBehaviour
          * Below is a guide legend of the various behavior types and special actions so all relevent information 
          * is located here for ease of use. */
         //AttackMap.Add("name", new Attacks(int attackCode, Transform prefab, intintfloat SpawnOffset, int scaleFactor, int customCmd, audioClip sound));
-        AttackMap.Add("heal", new Attacks(0, heal, 0, 0, 0.0f, 3, 4));
-        AttackMap.Add("shield", new Attacks(1, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
-        AttackMap.Add("slash1", new Attacks(1, slash, -1, 0, 0.0f, 1, 52));
-        AttackMap.Add("slash2", new Attacks(1, slash, -1, 0, 0.0f, 1, 53));
-        AttackMap.Add("fireball", new Attacks(3, fireball, 0, 0, 0.0f, 5, fireSound));
-        AttackMap.Add("arrow", new Attacks(3, arrow, 0, 0, 0.0f, 1, arrowSound));
-        AttackMap.Add("healTeam", new Attacks(4, heal, 0, 0, 0.0f, 7, 4, healSound));
-        AttackMap.Add("arrowHail", new Attacks(6, arrow, 0, 0, 0.0f, 0.25f, 11, bigArrowSound));
-        AttackMap.Add("meteor", new Attacks(6, fireball, 0, 0, 0.0f, 10, 2, fireSound));
-        AttackMap.Add("fire3", new Attacks(2, fireball, 0, 0, 0.0f, 2, 3, fireSound));
-        AttackMap.Add("blizzard", new Attacks(2, snow, 0, 0, 0.0f, 1, 12, iceSound));
+        AttackMap.Add("heal",      new Attacks((int)AtkCode.SingleChar, heal, 0, 0, 0.0f, 3, 4));
+        AttackMap.Add("shield",    new Attacks((int)AtkCode.SingleCharWave, shield, -1, 0, 0.0f, 1, 51)); //TODO make spherical sprite
+        AttackMap.Add("slash1",    new Attacks((int)AtkCode.SingleCharWave, slash, -1, 0, 0.0f, 1, 52));
+        AttackMap.Add("slash2",    new Attacks((int)AtkCode.SingleCharWave, slash, -1, 0, 0.0f, 1, 53));
+        AttackMap.Add("fireball",  new Attacks((int)AtkCode.AtoBLong, fireball, 0, 0, 0.0f, 5, fireSound));
+        AttackMap.Add("arrow",     new Attacks((int)AtkCode.AtoBLong, arrow, 0, 0, 0.0f, 1, arrowSound));
+        AttackMap.Add("healTeam",  new Attacks((int)AtkCode.WholeTeam, heal, 0, 0, 0.0f, 7, 4, healSound));
+        AttackMap.Add("arrowHail", new Attacks((int)AtkCode.AerialBossAtk, arrow, 0, 0, 0.0f, 0.25f, 11, bigArrowSound));
+        AttackMap.Add("meteor",    new Attacks((int)AtkCode.AerialBossAtk, fireball, 0, 0, 0.0f, 10, 2, fireSound));
+        AttackMap.Add("fire3",     new Attacks((int)AtkCode.AtoB, fireball, 0, 0, 0.0f, 2, 3, fireSound));
+        AttackMap.Add("blizzard",  new Attacks((int)AtkCode.AtoB, snow, 0, 0, 0.0f, 1, 12, iceSound));
 
+        //For some reason these 2 sounds arent being added
         AttackMap["arrow"].sound = arrowSound;
         AttackMap["fireball"].sound = fireSound;
         
@@ -101,31 +102,6 @@ public class AttackAnimator : MonoBehaviour
         //51 - mask Left
         //52 - mask Up
         //53 - mask Down
-    }
-
-    public enum CmdCode //WIP
-    {
-        ColorOverlay = 0, //plus vector4(r,g,b,a)
-        multishot10 = 11,
-        multishotSpin20 = 12,
-        slowShotAtk = 2,
-        tripleShotAtk = 3,
-        revertMove = 4,
-        maskL = 51,
-        maskU = 52,
-        maskD = 53
-    }
-
-    public enum AtkCode //WIP
-    {
-        SingleChar = 0,
-        SingleCharWave = 1,
-        AtoB = 2,
-        AtoBLong = 3,
-        WholeTeam = 4,
-        AtoBTeam = 5,
-        AerialBossAtk = 6,
-        AerialPlayerAtk = 7
     }
 
     private void LoadResources() //Load assets 
@@ -379,4 +355,29 @@ public class Attacks //Dictionary for all magical, special and ranged attacks
     //    overlay = overlayX;
     //    sound = soundX;
     //}
+}
+
+public enum AtkCode
+{
+    SingleChar,
+    SingleCharWave,
+    AtoB,
+    AtoBLong,
+    WholeTeam,
+    AtoBTeam,
+    AerialBossAtk,
+    AerialPlayerAtk
+}
+
+public enum CmdCode //WIP
+{
+    ColorOverlay = 0, //plus vector4(r,g,b,a)
+    multishot10 = 11,
+    multishotSpin20 = 12,
+    slowShotAtk = 2,
+    tripleShotAtk = 3,
+    revertMove = 4,
+    maskL = 51,
+    maskU = 52,
+    maskD = 53
 }
