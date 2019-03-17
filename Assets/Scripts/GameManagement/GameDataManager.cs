@@ -69,9 +69,9 @@ public class GameDataManager : MonoBehaviour {
 
     //LEVELS
     //Set active level
-    public void SetActiveLevel(string songName)
+    public void SetActiveLevel(int level)
     {
-        activeLevel = levels[songName];
+        activeLevel = levels[Convert.ToString(level)];
     }
 
     //Get active level
