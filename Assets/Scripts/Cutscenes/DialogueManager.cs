@@ -20,9 +20,11 @@ public class DialogueManager : MonoBehaviour {
 
     private string prevSpeakerName;
 
+    private int setLevel;
+
     private List<Coroutine> coroutines = new List<Coroutine>();
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, int level)
     {
         dialogueBoxAnimator.SetBool("IsOpen", true);
         sentences.Clear();
@@ -35,6 +37,16 @@ public class DialogueManager : MonoBehaviour {
         leftCharacterAnimator.SetBool("IsFocus", true);
         rightCharacterAnimator.SetBool("IsFocus", false);
         prevSpeakerName = sentences.Peek().speaker;
+
+        setLevel = level;
+        if (GameManager.Instance.gameDataManager.getSpecificLevel(level).cutsceneDisplayed == true)
+        {
+            GameObject buttonForSkip = GameObject.FindWithTag("SkipBtn");
+            GameObject textForSkip = GameObject.FindWithTag("SkipText");
+            buttonForSkip.GetComponent<Button>().interactable = true;
+            textForSkip.GetComponent<Text>().text = "Skip >>";
+        }
+
         DisplayNextSentence();
     }
 
@@ -42,6 +54,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if(sentences.Count == 0)
         {
+            GameManager.Instance.gameDataManager.setCutsceneOfLeveltoSeen(setLevel);
             EndDialogue();
             return;
         }
@@ -110,9 +123,13 @@ public class DialogueManager : MonoBehaviour {
 
     public void EndDialogue()
     {
-        dialogueBoxAnimator.SetBool("IsOpen", false);
+        GameObject buttonForSkip1 = GameObject.FindWithTag("SkipBtn");
+        GameObject textForSkip1 = GameObject.FindWithTag("SkipText");
+        textForSkip1.GetComponent<Text>().text = "";
+        buttonForSkip1.GetComponent<Button>().interactable = false;
         StopRunningCoroutines();
         coroutines.Add(StartCoroutine(FadeOut(leftCharacter)));
         coroutines.Add(StartCoroutine(FadeOut(rightCharacter)));
+        dialogueBoxAnimator.SetBool("IsOpen", false);
     }
 }

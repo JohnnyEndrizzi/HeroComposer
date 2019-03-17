@@ -7,4 +7,6 @@ public class Level
     public string enemy;
     public string backdrop;
     public int highscore;
+    public bool locked;
+    public bool cutsceneDisplayed;
 }
