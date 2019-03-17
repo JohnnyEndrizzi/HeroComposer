@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224591602901390464}
   - component: {fileID: 222883421823056208}
   - component: {fileID: 114619316616643010}
-  - component: {fileID: 114578970532668080}
+  - component: {fileID: 114734285294892446}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -29,22 +29,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114578970532668080
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1245199517892026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3abdc85d63d4e74a9a9e910af952e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item:
-    name: 
-    description: 
-    cost: 0
-    sprite: 
 --- !u!114 &114619316616643010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,6 +56,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114734285294892446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1245199517892026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167b3ace45cdcf34ea2e8e8e5db63c6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item:
+    name: 
+    description: 
+    cost: 0
+    sprite: 
 --- !u!222 &222883421823056208
 CanvasRenderer:
   m_ObjectHideFlags: 1

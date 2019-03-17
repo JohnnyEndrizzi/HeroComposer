@@ -81,10 +81,22 @@ public class GameDataManager : MonoBehaviour {
     //////////
 
     //INVENTORY
+    public void AddItemToInventory(Item item)
+    {
+        inventory.AddItem(item);
+    }
+    public void UpdateAvailableMoney(int amount)
+    {
+        inventory.money += amount;
+    }
     public int GetAvailableMoney()
     {
         return inventory.money;
     }
+    public void SaveInventory() {
+        gameFileHandler.SaveGameObjectAsJSON(inventory, JSONFiles.Inventory);
+    }
+
     //////////
 
     //PARTY

@@ -1,45 +1,55 @@
 {"0":{
+		"name":"Green Potion",
+		"description":"Temporary health bonus",
+		"cost":1000,
+		"sprite": "Items/greenPotion",
+	},"1":{
+		"name":"Red Potion",
+		"description":"Boosts attack strength",
+		"cost":1500,
+		"sprite": "Items/redPotion"
+	},"2":{
 		"name":"Amp",
 		"description":"Amplifies attacks",
 		"cost":2500,
 		"sprite": "greenPotion"
-	},"1":{
+	},"3":{
 		"name":"Tuner",
 		"description":"Tunes Defences",
 		"cost":1500,
 		"sprite": "potion"
-	},"2":{
+	},"4":{
 		"name":"Speaker",
 		"description":"Makes a wall of sound upping HP",
 		"cost":2000,
 		"sprite": "redPotion"
-	},"3":{
+	},"5":{
 		"name":"Mixer",
 		"description":"Boosts magical attacks",
 		"cost":1500,
 		"sprite": "yellowPotion"
-	},"4":{
+	},"6":{
 		"name":"Spare Strings",
 		"description":"Increases HP",
 		"cost":1000,
 		"sprite": "greenPotion"
-	},"5":{
+	},"7":{
 		"name":"Metronome",
 		"description":"Adds some recovery",
 		"cost":4000,
 		"sprite": "potion"
-	},"6":{
+	},"8":{
 		"name":"Cymbol",
 		"description":"Increases a drummers HP",
 		"cost":5000,
 		"sprite": "redPotion"
-	},"7":{
+	},"9":{
 		"name":"Spare Guitar Strings",
 		"Desc":"Increases Guitarists HP",
 		"cost":5000,
 		"sprite": "greenPotion",
 		"sound": "acoustic_sound"
-	},"8":{
+	},"10":{
 		"name":"Trumpet Stand",
 		"description":"Increases a trumpeters Ranged Attack power",
 		"cost":5000,

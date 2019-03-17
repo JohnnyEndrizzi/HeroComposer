@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LimitedTimeItems : MonoBehaviour {
     //Item prefab
@@ -7,11 +8,16 @@ public class LimitedTimeItems : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        DisplayLimitedTimeItems();
+    }
+
+    //Display limited time items
+    private void DisplayLimitedTimeItems()
+    {
+        Dictionary<int, Item> items = GameManager.Instance.gameDataManager.GetItems();
+        GameObject UIItem = Instantiate(itemPrefab, this.transform);
+        int randomItem = 0;
+        Item item = items[randomItem];
+        UIItem.GetComponent<UIItem>().SetItem(item);
+    }
 }
