@@ -149,7 +149,7 @@ public class InvController : MonoBehaviour {
             characters[((int)Enum.Parse(typeof(CharacterIDs), frontChar.name)).ToString()].equippedItems[i.ToString()] = BtnsItemSlot[i].item;
         }
 
-        GameManager.Instance.gameDataManager.SetCharacters(characters);
+        GameManager.Instance.gameDataManager.SaveCharacters(characters);
 
         //If character is in party, write to it as well.
         if (GameManager.Instance.gameDataManager.IsCharacterInParty(frontChar))
@@ -165,7 +165,7 @@ public class InvController : MonoBehaviour {
             GameManager.Instance.gameDataManager.SetCharactersInParty(party);
         }
         //Save inventory list
-        GameManager.Instance.gameDataManager.SaveInvItems(InventoryMenu.GetStoredItems());       
+        GameManager.Instance.gameDataManager.SaveInventory(InventoryMenu.GetStoredItems());       
     }
            
     //Audio and save triggers on drags and drops

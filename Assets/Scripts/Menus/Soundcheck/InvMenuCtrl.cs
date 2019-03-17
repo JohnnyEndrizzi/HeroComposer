@@ -13,7 +13,7 @@ public class InvMenuCtrl : MonoBehaviour {
 
     public void GenInventory() //Create Buttons and sets values
     {        
-        List<Item> storedItems = GameManager.Instance.gameDataManager.GetInvItems();        
+        List<Item> storedItems = GameManager.Instance.gameDataManager.GetItemsInInventory();        
         List<Item> playerInventory = new List<Item>();
         ItemSlots = new GameObject[maxItems];
 
