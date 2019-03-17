@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -77,6 +78,34 @@ public class GameDataManager : MonoBehaviour {
     public Level GetActiveLevel()
     {
         return activeLevel;
+    }   
+    //Set level to unlocked
+    public void unlockLevel(int level)
+    {
+        var newlevel = levels[Convert.ToString(level)];
+        newlevel.locked = false;
+        levels[Convert.ToString(level)] = newlevel;
+        gameFileHandler.SaveGameObjectAsJSON(levels, JSONFiles.Levels);
+    }
+
+    //Get specific level
+    public Level getSpecificLevel(int level)
+    {
+        return levels[Convert.ToString(level)];
+    }
+
+    public void setCutsceneOfLeveltoSeen(int level)
+    {
+        var newlevel = levels[Convert.ToString(level)];
+        newlevel.cutsceneDisplayed = true;
+        levels[Convert.ToString(level)] = newlevel;
+        gameFileHandler.SaveGameObjectAsJSON(levels, JSONFiles.Levels);
+    }
+
+    //Get the locked levels
+    public Dictionary<int, Level> getLockedLevels()
+    {
+        return levels.Where(kvp => kvp.Value.locked).ToDictionary(x => Convert.ToInt32(x.Key), x => x.Value);
     }
     //////////
 
