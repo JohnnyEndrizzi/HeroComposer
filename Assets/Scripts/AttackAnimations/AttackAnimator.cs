@@ -112,7 +112,7 @@ public class AttackAnimator : MonoBehaviour
         string spritePath = "Prefab/Attacks/";
 
         //Prefab transforms
-        arrow = Resources.Load<Transform>(spritePath + "arrow1");
+        arrow = Resources.Load<Transform>(spritePath + "arrow");
         fireball = Resources.Load<Transform>(spritePath + "fireball1");
         slash = Resources.Load<Transform>(spritePath + "slash1");
         shield = Resources.Load<Transform>(spritePath + "shield1");
