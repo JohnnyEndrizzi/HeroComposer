@@ -16,6 +16,7 @@ public class BossLogic : MonoBehaviour
     private float songPosInBeats;
     private float maxNoteCount;
     public float bossFrequency;
+    public SpriteRenderer deathEnergy;
 
     /* This list is used for randomly choosing the target for an attack */
     private List<int> weigthedValues = new List<int>();
@@ -30,9 +31,20 @@ public class BossLogic : MonoBehaviour
 
     public void killCharacter(int character)
     {
+        weigthedValues.RemoveAll(item => item == (character - 1));
+        if (weigthedValues.Count > 0)
+        {
+            target = chooseAttackTarget();
+        }
+
         Destroy(GameObject.Find("character_health_" + character));
         Destroy(GameObject.Find("character_special_" + character));
-        GameObject.Find("character_" + character).GetComponent<SpriteRenderer>().enabled = false;
+
+        GameObject foundCharacter = GameObject.Find("character_" + character);
+        foundCharacter.GetComponent<SpriteRenderer>().enabled = false;
+
+        //GetComponent<AudioSource>().PlayOneShot(DEF_low_sfx, 0.7F);
+        Instantiate(deathEnergy, foundCharacter.transform.position, Quaternion.identity);
     }
 
     public void takeDamage(int damage)
