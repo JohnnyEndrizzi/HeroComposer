@@ -8,6 +8,11 @@ public class SceneManagerWrapper : MonoBehaviour
     //Previous scene
     private string previousScene;
 
+    public void SwitchToMapFromMain()
+    {
+        StartCoroutine(SwitchSceneWithCurtainsCoroutine("Map", true));
+    }
+
     //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
@@ -29,7 +34,7 @@ public class SceneManagerWrapper : MonoBehaviour
         {
             Curtain.Instance.Open();
         }
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         Curtain.Instance.GetComponent<Image>().enabled = false;
     }
 

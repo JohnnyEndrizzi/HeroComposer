@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 /* This is used for debugging */
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class GameLogic : MonoBehaviour
 {
@@ -370,6 +371,18 @@ public class GameLogic : MonoBehaviour
                 scoreCanvas.enabled = true;
                 StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
                 scoringDone = true;
+
+                var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
+                
+                for (int i = 1; i <= 9; i++)
+                {
+                    if(lockedLevels.ContainsKey(i))
+                    {
+                        GameManager.Instance.gameDataManager.unlockLevel(i);
+                        break;
+                    }
+                }
+
             }
 
             //Debug.Log("Hold Interval: " + holdNoteInterval);
