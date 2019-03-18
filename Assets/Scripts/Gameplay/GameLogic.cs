@@ -51,6 +51,7 @@ public class GameLogic : MonoBehaviour
     private static bool scoringDone = false;
     [SerializeField]
     private Button returnButton;
+    public bool gameOver=  false;
 
     /* Variables used for note movement */
     public Beatmap beatmap;
@@ -360,53 +361,56 @@ public class GameLogic : MonoBehaviour
     /* Update is called once per frame */
     void Update()
     {
-        if (songDone && !scoringDone)
+        if (!gameOver)
         {
-            Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
-
-            scoreCanvas.enabled = true;
-            StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
-            scoringDone = true;
-        }
-
-        //Debug.Log("Hold Interval: " + holdNoteInterval);
-
-        if (delayLock == false)
-        {
-            /* There are 4 states of a song:
-             * 1) introDelay phase (pre-song)
-             * 2) Song (incoming notes)
-             * 3) notesDone phase (but song is still playing)
-             * 4) songDone phase (song and notes are finished, and level ends) */
-            if (!notesDone)
+            if (songDone && !scoringDone)
             {
-                /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
-                nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
-                nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
-                /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
-                if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
-                {
-                    nextHitHold = true;
-                    nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
-                }
-                else
-                {
-                    nextHitHold = false;
-                }
-            }
-            else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
-            {
-                /* Waits for the song's AudioClip to finish, then marks it as done */
-                songDone = true;
-                Debug.Log("Song ended.");
-            }
-            
-            /* Updates the boss' health as the song plays out */
-            float currHealth = GetComponent<AudioSource>().time;
-            healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+                Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
 
-            /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
-            metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
+                scoreCanvas.enabled = true;
+                StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
+                scoringDone = true;
+            }
+
+            //Debug.Log("Hold Interval: " + holdNoteInterval);
+
+            if (delayLock == false)
+            {
+                /* There are 4 states of a song:
+                 * 1) introDelay phase (pre-song)
+                 * 2) Song (incoming notes)
+                 * 3) notesDone phase (but song is still playing)
+                 * 4) songDone phase (song and notes are finished, and level ends) */
+                if (!notesDone)
+                {
+                    /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
+                    nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
+                    nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
+                    /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
+                    if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
+                    {
+                        nextHitHold = true;
+                        nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
+                    }
+                    else
+                    {
+                        nextHitHold = false;
+                    }
+                }
+                else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
+                {
+                    /* Waits for the song's AudioClip to finish, then marks it as done */
+                    songDone = true;
+                    Debug.Log("Song ended.");
+                }
+
+                /* Updates the boss' health as the song plays out */
+                float currHealth = GetComponent<AudioSource>().time;
+                healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+
+                /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
+                metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
+            }
         }
     }
 

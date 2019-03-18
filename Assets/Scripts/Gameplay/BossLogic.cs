@@ -29,12 +29,24 @@ public class BossLogic : MonoBehaviour
         currentBossHP = bossHP;
     }
 
+    private void gameOver()
+    {
+        Canvas gameOverCanvas = GameObject.FindGameObjectWithTag("GameOverLayer").GetComponent<Canvas>();
+        gameOverCanvas.enabled = true;
+
+        GetComponent<GameLogic>().gameOver = true;
+}
+
     public void killCharacter(int character)
     {
         weigthedValues.RemoveAll(item => item == (character - 1));
         if (weigthedValues.Count > 0)
         {
             target = chooseAttackTarget();
+        }
+        else
+        {
+            gameOver();
         }
 
         Destroy(GameObject.Find("character_health_" + character));
