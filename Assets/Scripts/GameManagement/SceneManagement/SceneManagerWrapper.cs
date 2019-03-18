@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneManagerWrapper : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SceneManagerWrapper : MonoBehaviour
     //Coroutine to switch scenes with curtain transition
     IEnumerator SwitchSceneWithCurtainsCoroutine(string scene, bool openCurtainsAfter)
     {
+        Curtain.Instance.GetComponent<Image>().enabled = true;
         GameManager.Instance.IsInputEnabled = false;
         Curtain.Instance.Close();
         yield return new WaitForSeconds(2.0f);
@@ -27,6 +29,8 @@ public class SceneManagerWrapper : MonoBehaviour
         {
             Curtain.Instance.Open();
         }
+        yield return new WaitForSeconds(2.0f);
+        Curtain.Instance.GetComponent<Image>().enabled = false;
     }
 
     //Load previous screen using curtains
