@@ -75,7 +75,7 @@ public class Up_Down : MonoBehaviour {
 	 IEnumerator updown(float time)
 	{
 	yield return new WaitForSeconds(time);
-		Debug.Log("current is  " + this.transform.position.y + " init is " + init_position + " deltay is " + deltay + " direction is " + direction);
+		//Debug.Log("current is  " + this.transform.position.y + " init is " + init_position + " deltay is " + deltay + " direction is " + direction);
 		
 		float newy = this.transform.position.y + movement(deltay,direction);
 		deltay = this.transform.position.y - init_position;
