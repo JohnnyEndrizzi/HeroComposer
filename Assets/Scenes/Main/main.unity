@@ -2393,6 +2393,40 @@ MonoBehaviour:
 --- !u!1 &1054930183
 GameObject:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034579127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111147cff0ad1a94aafcd607c33cb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestingBloodAmount: 0.4
+  EdgeSharpness: 1.7
+  minAlpha: 0
+  maxAlpha: 0
+  distortion: 0
+  autoFadeOut: 0
+  autoFadeOutAbsReduc: 0.05
+  autoFadeOutRelReduc: 0.5
+  updateSpeed: 20
+  Image: {fileID: 2800000, guid: 07536878954ee034295e46c482f9ddae, type: 3}
+  Normals: {fileID: 2800000, guid: d6a4e510717eae7478cfc7e28099e214, type: 3}
+  Shader: {fileID: 4800000, guid: 1899c349878167040bd0fd1c3cfc7c79, type: 3}
+--- !u!114 &1034579132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034579127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575a7b77a2850d34f99721895a2bce58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1054930183
+GameObject:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 1062803907266300, guid: 11aee0653c8498c45bff43a390839817,
     type: 2}
   m_PrefabInternal: {fileID: 0}
