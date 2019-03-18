@@ -518,6 +518,8 @@ MonoBehaviour:
   bossHP: 0
   target: 0
   bossFrequency: 0
+  deathEnergy: {fileID: 212319043905542664, guid: 0bb271ace28d689449c16d8259d354e4,
+    type: 2}
 --- !u!114 &276376269
 MonoBehaviour:
   m_ObjectHideFlags: 0
