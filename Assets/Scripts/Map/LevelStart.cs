@@ -21,12 +21,12 @@ public class LevelStart : Interactable {
             }
             else
             {
-                StartLevel();
+                StartLevel(label.level);
             }
         }
     }
 
-    private void StartLevel()
+    private void StartLevel(int level)
     {
         /* Functional Requirement
        * ID: 8.2-1
@@ -35,14 +35,14 @@ public class LevelStart : Interactable {
        * Creates a path to the selected song using the provided name and difficulty, and saves it in ApplicationModel */
         //Assets.Scripts.MainMenu.ApplicationModel.songName = songName;
         //Assets.Scripts.MainMenu.ApplicationModel.songPathName = songName + "_" + difficulty;
-        GameManager.Instance.gameDataManager.SetActiveLevel(songName);
-        GameManager.Instance.sceneManager.SwitchSceneWithCurtains("main", false);
+        GameManager.Instance.gameDataManager.SetActiveLevel(level);
+        GameManager.Instance.sceneManager.SwitchSceneWithCurtains("main", true);
     }
 
     IEnumerator DisplayCutscene(int level)
     {
         dialogueTrigger.TriggerDialogue(level);
         yield return new WaitUntil(() => GameObject.Find("DialogueManager").GetComponent<DialogueManager>().dialogueBoxAnimator.GetBool("IsOpen") == false);
-        StartLevel();
+        StartLevel(label.level);
     }
 }
