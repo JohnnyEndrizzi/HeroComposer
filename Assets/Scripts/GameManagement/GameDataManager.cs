@@ -121,7 +121,14 @@ public class GameDataManager : MonoBehaviour {
     //INVENTORY
     public void AddItemToInventory(Item item)
     {
-        inventory.AddItem(item);
+        if (inventory.invItems.Count > 0)
+        {
+            inventory.invItems.Add((inventory.invItems.Keys.ToDictionary(x => int.Parse(x), x => inventory.invItems[x]).Keys.Max() + 1).ToString(), item);
+        }
+        else
+        {
+            inventory.invItems.Add("0", item);
+        }            
     }
     public void UpdateAvailableMoney(int amount)
     {
@@ -134,20 +141,18 @@ public class GameDataManager : MonoBehaviour {
     public void SaveInventory() {
         gameFileHandler.SaveGameObjectAsJSON(inventory, JSONFiles.Inventory);
     }
-    //------JOHNNY TODO: Cleanup----------------------------------------------------
     //Get inventory item list
-    public List<Item> GetItemsInInventory()
-    {
-        return inventory.items;
+    public Dictionary<int, Item> GetItemsInInventory()
+    {        
+        return inventory.invItems.Keys.ToDictionary(x => int.Parse(x), x => inventory.invItems[x]);
     }
 
     //Overwrite inventory
-    public void SaveInventory(List<Item> inventory)
+    public void SaveInventory(Dictionary<int, Item> inventory)
     {
-        this.inventory.items = inventory;
+        this.inventory.invItems = inventory.Keys.ToDictionary(x => x.ToString(), x => inventory[x]);
         gameFileHandler.SaveGameObjectAsJSON(this.inventory, JSONFiles.Inventory);
-    }
-    //------------------------------------------------------------------------------
+    }    
     //////////
 
 

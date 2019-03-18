@@ -21,7 +21,7 @@ public class ItemSlotBorder : EventTrigger
     {        
         ItemSlot displayedItemSlot = GetComponentInChildren<ItemSlot>();
         //TODO clean up null types
-        if (displayedItemSlot != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item.name != null)
+        if (displayedItemSlot != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>() && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item.name != null)
         {
             //If slot is empty
             if (displayedItemSlot.item == null)

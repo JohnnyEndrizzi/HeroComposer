@@ -1,21 +1,23 @@
 {
-  "money": 95500,
-  "items": [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    {
+  "money": 83500,
+  "invItems": {
+    "4": {
+      "name": "Red Potion",
+      "description": "Boosts attack strength",
+      "cost": 1500,
+      "sprite": "Items/redPotion"
+    },
+    "9": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion"
+    },
+    "10": {
       "name": "Red Potion",
       "description": "Boosts attack strength",
       "cost": 1500,
       "sprite": "Items/redPotion"
     }
-  ]
+  }
 }
