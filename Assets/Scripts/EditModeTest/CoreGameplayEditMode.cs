@@ -1729,25 +1729,25 @@ public class CoreGameplayTest : MonoBehaviour
         CharacterListener listener = new CharacterListener();
         
         /* Hit time = 100, Note time = 125, Expected Output = Perfect */
-        if (listener.GetNoteAccuracySprite(100, 100, 25) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect"))
+        if (listener.GetNoteAccuracySprite(100, 100, 25, 1, true) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect"))
         {
             Assert.Fail();
         }
 
         /* Hit time = 100, Note time = 150, Expected Output = Great */
-        if (listener.GetNoteAccuracySprite(100, 100, 50) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great"))
+        if (listener.GetNoteAccuracySprite(100, 100, 50, 1, true) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great"))
         {
             Assert.Fail();
         }
 
         /* Hit time = 100, Note time = 250, Expected Output = Good */
-        if (listener.GetNoteAccuracySprite(100, 100, 150) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good"))
+        if (listener.GetNoteAccuracySprite(100, 100, 150, 1, true) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good"))
         {
             Assert.Fail();
         }
 
         /* Hit time = 100, Note time = 350, Expected Output = Miss */
-        if (listener.GetNoteAccuracySprite(100, 100, 250) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss"))
+        if (listener.GetNoteAccuracySprite(100, 100, 250, 1, true) != Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss"))
         {
             Assert.Fail();
         }
@@ -1860,7 +1860,7 @@ public class CoreGameplayTest : MonoBehaviour
         Characters character = new Characters();
 
         float currentGaugeValue = character.specialGaugeValue;
-        Menu.GetComponent<CharacterListener>().GetNoteAccuracySprite(100, 100, 25);
+        Menu.GetComponent<CharacterListener>().GetNoteAccuracySprite(100, 100, 25, 1, true);
 
         if (character.specialGaugeValue > currentGaugeValue)
         {

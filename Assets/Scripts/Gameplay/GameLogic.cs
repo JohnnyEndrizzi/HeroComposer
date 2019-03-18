@@ -33,6 +33,7 @@ public class GameLogic : MonoBehaviour
     public static bool nextHitHold = false;
     public int hitIndex = 0;
     public bool introFinished;
+    public bool holdNoteInterval = false;
 
     /* Variables used for defending against attacks and health logic*/
     public static int defendNote = -1;
@@ -50,6 +51,7 @@ public class GameLogic : MonoBehaviour
     private static bool scoringDone = false;
     [SerializeField]
     private Button returnButton;
+    public bool gameOver=  false;
 
     /* Variables used for note movement */
     public Beatmap beatmap;
@@ -74,14 +76,16 @@ public class GameLogic : MonoBehaviour
             //Front row
             if(position == (int)CharacterPosition.FrontRow)
             {
-                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
-                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
-                specialPos = new Vector3(80f, -142f, 0.0f);
-            //Centre left (top)
-            }else if(position == (int)CharacterPosition.CentreLeft){
                 characterSpawnPosition = new Vector3(2.87f, 1.75f, -4.8f);
                 healthPos = new Vector3(216.3f, 107.34f, 0.0f);
                 specialPos = new Vector3(203.77f, 99.6f, 0.0f);
+                //Centre left (top)
+            }
+            else if(position == (int)CharacterPosition.CentreLeft)
+            {
+                characterSpawnPosition = new Vector3(1.02f, 0.33f, -5.1f);
+                healthPos = new Vector3(92.6f, -134.4f, 0.0f);
+                specialPos = new Vector3(80f, -142f, 0.0f);
             }
             //Centre right (bottom)
             else if (position == (int)CharacterPosition.CentreRight)
@@ -357,51 +361,56 @@ public class GameLogic : MonoBehaviour
     /* Update is called once per frame */
     void Update()
     {
-        if (songDone && !scoringDone)
+        if (!gameOver)
         {
-            Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
-
-            scoreCanvas.enabled = true;
-            StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
-            scoringDone = true;
-        }
-
-        if (delayLock == false)
-        {
-            /* There are 4 states of a song:
-             * 1) introDelay phase (pre-song)
-             * 2) Song (incoming notes)
-             * 3) notesDone phase (but song is still playing)
-             * 4) songDone phase (song and notes are finished, and level ends) */
-            if (!notesDone)
+            if (songDone && !scoringDone)
             {
-                /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
-                nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
-                nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
-                /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
-                if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
-                {
-                    nextHitHold = true;
-                    nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
-                }
-                else
-                {
-                    nextHitHold = false;
-                }
-            }
-            else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
-            {
-                /* Waits for the song's AudioClip to finish, then marks it as done */
-                songDone = true;
-                Debug.Log("Song ended.");
-            }
-            
-            /* Updates the boss' health as the song plays out */
-            float currHealth = GetComponent<AudioSource>().time;
-            healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+                Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
 
-            /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
-            metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
+                scoreCanvas.enabled = true;
+                StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
+                scoringDone = true;
+            }
+
+            //Debug.Log("Hold Interval: " + holdNoteInterval);
+
+            if (delayLock == false)
+            {
+                /* There are 4 states of a song:
+                 * 1) introDelay phase (pre-song)
+                 * 2) Song (incoming notes)
+                 * 3) notesDone phase (but song is still playing)
+                 * 4) songDone phase (song and notes are finished, and level ends) */
+                if (!notesDone)
+                {
+                    /* This is the time in millseconds in respect to the start of the song of when the next note will arrive */
+                    nextHit = beatmap.HitObjects[hitIndex].StartTimeInMiliseconds();
+                    nextBeat = beatmap.HitObjects[hitIndex].StartTimeInBeats(beatmap.TimingPoints[0].TimePerBeat);
+                    /* Since held notes pairs are stored together, if the next note is a hold note the end time is also saved */
+                    if (beatmap.HitObjects[hitIndex].HitObjectType == HitObjectType.Slider)
+                    {
+                        nextHitHold = true;
+                        nextHitEnd = ((SliderObject)beatmap.HitObjects[hitIndex]).EndTimeInMs((float)beatmap.TimingPoints[0].TimePerBeat, beatmap.SliderMultiplier) + nextHit;
+                    }
+                    else
+                    {
+                        nextHitHold = false;
+                    }
+                }
+                else if (!GetComponent<AudioSource>().isPlaying && notesDone && !songDone)
+                {
+                    /* Waits for the song's AudioClip to finish, then marks it as done */
+                    songDone = true;
+                    Debug.Log("Song ended.");
+                }
+
+                /* Updates the boss' health as the song plays out */
+                float currHealth = GetComponent<AudioSource>().time;
+                healthBarBoss.transform.localScale = new Vector3(((maxHealth - currHealth) / maxHealth), transform.localScale.y, transform.localScale.z);
+
+                /* Notifies the metronome of the current time, so it can publish a message to us at the expected time */
+                metronome.Update((decimal)AudioSettings.dspTime, (decimal)Time.deltaTime);
+            }
         }
     }
 
@@ -457,16 +466,25 @@ public class GameLogic : MonoBehaviour
             //Debug.Log(string.Format("Spawned note {0}!", hitIndex));
             /* The variable 'iterationsLeft' is used to keep track of where we are in a slider note in terms
              * of spawn and movement */
+            string noteName = "";
             bool inSliderRange = beatmap.HitObjects[noteIndex].HitObjectType == HitObjectType.Slider;
-            if (inSliderRange && firstNoteOfSlider == true)
+            if (inSliderRange)
             {
-                iterationsLeft = 2;
+                if (firstNoteOfSlider == true)
+                {
+                    iterationsLeft = 2;
+                    noteName = "heldStart";
+                }
+                else
+                {
+                    noteName = "heldEnd";
+                }
             }
 
             /* Instantiates the notes on the canvas, to avoid Z-fighting with the background elements */
             GameObject beatSprite;
             beatSprite = Instantiate(test, startPos, Quaternion.identity);
-            beatSprite.name = "note_" + noteIndex;
+            beatSprite.name = noteName + "Note_" + noteIndex;
 
             /* Adds the note to the NotesLayer canvas */
             beatSprite.transform.SetParent(GameObject.FindGameObjectWithTag("NotesLayer").transform, false);
@@ -483,7 +501,7 @@ public class GameLogic : MonoBehaviour
                 /* These are notes that lead a hold note pair*/
                 if (firstNoteOfSlider == true && iterationsLeft == 2)
                 {
-                    beatSprite.gameObject.name = "defendNoteStart";
+                    beatSprite.gameObject.name = "defendNoteStart_" + noteIndex;
 
                     beatSprite.GetComponent<CircleNote>().defendTarget = defendNote;
                     beatSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>(GameManager.Instance.gameDataManager.GetCharactersInParty()[defendNote].headshot);
@@ -494,7 +512,7 @@ public class GameLogic : MonoBehaviour
                 /* These are notes that either end a hold note pair or are just regular standalone notes*/
                 else
                 {
-                    beatSprite.gameObject.name = "defendNoteEnd";
+                    beatSprite.gameObject.name = "defendNoteEnd_" + noteIndex;
 
                     /* This is a standalone note */
                     if (defendNote > -1)

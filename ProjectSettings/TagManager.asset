@@ -26,6 +26,7 @@ TagManager:
   - NoteBarCircle
   - SkipBtn
   - SkipText
+  - GameOverLayer
   layers:
   - Default
   - TransparentFX
