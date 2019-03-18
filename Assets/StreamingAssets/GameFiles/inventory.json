@@ -1,4 +1,21 @@
 {
-  "money": 100000,
-  "items": null
+  "money": 95500,
+  "items": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "name": "Red Potion",
+      "description": "Boosts attack strength",
+      "cost": 1500,
+      "sprite": "Items/redPotion"
+    }
+  ]
 }

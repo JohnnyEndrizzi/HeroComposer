@@ -13,8 +13,9 @@ public class InvMenuCtrl : MonoBehaviour {
 
     public void GenInventory() //Create Buttons and sets values
     {        
-        List<Item> storedItems = GameManager.Instance.gameDataManager.GetItemsInInventory();        
-        List<Item> playerInventory = new List<Item>();
+        List<Item> storedItems = GameManager.Instance.gameDataManager.GetItemsInInventory();
+        storedItems = storedItems ?? new List<Item>();        
+        List<Item> playerInventory = new List<Item>();        
         ItemSlots = new GameObject[maxItems];
 
         //Fill inventory slots with owned items
@@ -43,14 +44,27 @@ public class InvMenuCtrl : MonoBehaviour {
            
     //Returns all item values
     public List<Item> GetStoredItems() 
-    { 
+    {
+        int zeroes = 0; //to crop trailing empties
         List<Item> realValues = new List<Item>();         
         for (int i = 0; i < ItemSlots.Length; i++)
         {
-            if (ItemSlots[i].GetComponentInChildren<ItemSlot>() != null)
+            //TODO clean up null types
+            //ignore empty slots
+            if (ItemSlots[i].GetComponentInChildren<ItemSlot>() == null || ItemSlots[i].GetComponentInChildren<ItemSlot>().item == null)
             {
+                zeroes++;
+            }
+            else
+            {
+                //Re-add emptyies when an item follows   
+                for (int j = 0; j < zeroes; j++)
+                {
+                    realValues.Add(null);
+                }
                 realValues.Add(ItemSlots[i].GetComponentInChildren<ItemSlot>().item);
-            }                     
+                zeroes = 0;
+            }                               
         }
         return realValues;
     }

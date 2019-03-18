@@ -20,7 +20,8 @@ public class ItemSlotBorder : EventTrigger
     public override void OnDrop(PointerEventData eventData)
     {        
         ItemSlot displayedItemSlot = GetComponentInChildren<ItemSlot>();
-        if (displayedItemSlot != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item.name != null)
+        //TODO clean up null types
+        if (displayedItemSlot != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item != null && Draggable.itemBeingDragged.GetComponent<ItemSlot>().item.name != null)
         {
             //If slot is empty
             if (displayedItemSlot.item == null)
