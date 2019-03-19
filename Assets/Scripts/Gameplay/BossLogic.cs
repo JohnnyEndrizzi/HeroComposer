@@ -10,16 +10,68 @@ public class BossLogic : MonoBehaviour
     public float bossPower;
     public float bossHP;
     public int target;
+    private float currentBossHP;
 
     /* Variables used for caclulating attacks and healthbars */
     private float songPosInBeats;
     private float maxNoteCount;
     public float bossFrequency;
+    public SpriteRenderer deathEnergy;
 
     /* This list is used for randomly choosing the target for an attack */
     private List<int> weigthedValues = new List<int>();
 
     private Beatmap beatmap;
+
+    void Start()
+    {
+        bossHP = 1000;
+        currentBossHP = bossHP;
+    }
+
+    private void gameOver()
+    {
+        Canvas gameOverCanvas = GameObject.FindGameObjectWithTag("GameOverLayer").GetComponent<Canvas>();
+        gameOverCanvas.enabled = true;
+
+        GetComponent<GameLogic>().gameOver = true;
+}
+
+    public void killCharacter(int character)
+    {
+        weigthedValues.RemoveAll(item => item == (character - 1));
+        if (weigthedValues.Count > 0)
+        {
+            target = chooseAttackTarget();
+        }
+        else
+        {
+            gameOver();
+        }
+
+        Destroy(GameObject.Find("character_health_" + character));
+        Destroy(GameObject.Find("character_special_" + character));
+
+        GameObject foundCharacter = GameObject.Find("character_" + character);
+        foundCharacter.GetComponent<SpriteRenderer>().enabled = false;
+
+        //GetComponent<AudioSource>().PlayOneShot(DEF_low_sfx, 0.7F);
+        Instantiate(deathEnergy, foundCharacter.transform.position, Quaternion.identity);
+    }
+
+    public void takeDamage(int damage)
+    {
+        if (currentBossHP - damage > 0)
+        {
+            currentBossHP -= damage;
+        }
+        else
+        {
+            currentBossHP = 0;
+        }
+
+        GameObject.Find("boss_healthbar").transform.Find("Health").transform.localScale = new Vector3(((currentBossHP) / bossHP), 1, 1);
+    }
 
     /* Functional Requirement
      * ID: 8.1.1-4
@@ -35,8 +87,19 @@ public class BossLogic : MonoBehaviour
         int bossPower = 200;
         float maxHealth = GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().hp;
 
-        /* Reduce the target character's current healt hand have it show in their health bar */
-        GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp -= (int)(bossPower * 0.75f * (GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().def / 100.0f));
+        /* Reduce the target character's current health and have it show in their health bar */
+        if (GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp - (int)(GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().hp * 0.1) > 0)
+        {
+            GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp -= (int)(GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().hp * 0.1);
+        }
+        else
+        {
+            GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp = 0;
+            killCharacter(chosen + 1);
+        }
+
+        GameObject.Find("Menu").GetComponent<CharacterListener>().showDamage = true;
+        CameraShake.Shake(0.25f, 0.1f);
         GameObject.Find("character_health_" + (chosen + 1)).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + (chosen + 1)).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
     }
 

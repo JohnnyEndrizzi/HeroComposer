@@ -6,9 +6,11 @@ public class CharacterListener : MonoBehaviour
 {
     /* Used for attack sound effects */
     public AudioClip ATK_sfx;
+    public AudioClip Boss_barrier_sfx;
     public AudioClip DEF_low_sfx;
     public AudioClip DEF_high_sfx;
     public AudioClip fireball_sfx;
+    private AudioClip chosenATK_sfx;
 
     /* Used for keeping score */
     public float songScore;
@@ -20,11 +22,13 @@ public class CharacterListener : MonoBehaviour
 
     public GameObject boss;
     public SpriteRenderer shield;
+    public bool showDamage = false;
 
     private bool inSliderHitRange = false;
     private bool keyUp;
     private bool keyHold;
     private Color color;
+    private bool initHoldInterval = false;
 
     private float startTime;
 
@@ -62,7 +66,7 @@ public class CharacterListener : MonoBehaviour
      * Description: The system must be able to calculate the accuracy of the player’s inputted command.
      * 
      * This function will determine the accuracy of the entered note */
-    public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit)
+    public SpriteRenderer GetNoteAccuracySprite(decimal songStartTime, decimal currentHit, decimal nextHit, int currentCharacter, bool isAttacking)
     {
         decimal hitTime = currentHit * 1000;
         decimal nextTime = nextHit + (1000 * songStartTime);
@@ -84,6 +88,7 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(300);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.5));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Perfect");
         }
         else if (errorDifference <= 100)
@@ -92,6 +97,7 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(100);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.2));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Great");
         }
         else if (errorDifference <= 200)
@@ -100,10 +106,33 @@ public class CharacterListener : MonoBehaviour
             GameObject.Find("Menu").GetComponent<GameLogic>().hitIndex++;
 
             UpdateScore(50);
+            GetComponent<BossLogic>().takeDamage((int)(GameObject.Find("character_" + currentCharacter).GetComponent<CharacterLogic>().atk * 1.0));
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Good");
         }
         else
         {
+            if (isAttacking)
+            {
+                chosenATK_sfx = Boss_barrier_sfx;
+                GameObject.Find("Barrier").GetComponent<Renderer>().enabled = true;
+                showDamage = true;
+                CameraShake.Shake(0.25f, 0.1f);
+
+                float maxHealth = GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp;
+
+                if (GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp - (int)(GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp * 0.1) > 0)
+                {
+                    GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp -= (int)(GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().hp * 0.1);
+                }
+                else
+                {
+                    GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp = 0;
+                    this.GetComponent<BossLogic>().killCharacter(currentSprite);
+                }
+
+                GameObject.Find("character_health_" + currentSprite).transform.Find("Health").transform.localScale = new Vector3(((GameObject.Find("character_" + currentSprite).GetComponent<CharacterLogic>().currentHp) / maxHealth), 1, 1);
+            }
+
             return Resources.Load<SpriteRenderer>("Prefab/NoteMessage/Miss");
         }
     }
@@ -130,7 +159,7 @@ public class CharacterListener : MonoBehaviour
      * attack animations. */
     public void characterAttackMovement()
     {
-        GetComponent<AudioSource>().PlayOneShot(ATK_sfx, 0.5F);
+        GetComponent<AudioSource>().PlayOneShot(chosenATK_sfx, 0.5F);
         startTime = Time.time;
     }
 
@@ -176,6 +205,8 @@ public class CharacterListener : MonoBehaviour
         }
 
         Destroy(score.gameObject);
+        GameObject.Find("Barrier").GetComponent<Renderer>().enabled = false;
+        showDamage = false;
 
         /* Unlock the coroutine */
         noteLock = 0;
@@ -249,6 +280,12 @@ public class CharacterListener : MonoBehaviour
             yield return null;
         }
 
+        GameObject check = GameObject.Find("character_" + spriteLock);
+        if (check.GetComponent<SpriteRenderer>().enabled == false)
+        {
+            Destroy(check);
+        }
+
         /* Unlock the coroutine */
         lockCoroutine[spriteLock - 1] = 0;
     }
@@ -300,7 +337,8 @@ public class CharacterListener : MonoBehaviour
 
         /* The highlight for the note bar will be white while either i, j, k or l is being pressed, 
          * but wille be red upon releasing those keys. */
-        if (Input.GetKeyDown("i") || Input.GetKeyDown("j") || Input.GetKeyDown("k") || Input.GetKeyDown("l"))
+        if ((Input.GetKeyDown("i") && GameObject.Find("character_1")) || (Input.GetKeyDown("j") && GameObject.Find("character_2")) || 
+            (Input.GetKeyDown("k") && GameObject.Find("character_3")) || (Input.GetKeyDown("l") && GameObject.Find("character_3")))
         {
             color = Color.white;
         }
@@ -333,34 +371,91 @@ public class CharacterListener : MonoBehaviour
          * K - character_3
          * L - character_4 
          */
-        if (Input.GetKeyDown("i"))
+        if (initHoldInterval)
         {
-            currentSprite = 1;
-        }
-        else if (Input.GetKeyDown("j"))
-        {
-            currentSprite = 2;
-        }
-        else if (Input.GetKeyDown("k"))
-        {
-            currentSprite = 3;
-        }
-        else if (Input.GetKeyDown("l"))
-        {
-            currentSprite = 4;
+            if (Input.GetKeyUp("i"))
+            {
+                currentSprite = 1;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("j"))
+            {
+                currentSprite = 2;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("k"))
+            {
+                currentSprite = 3;
+                initHoldInterval = false;
+            }
+            else if (Input.GetKeyUp("l"))
+            {
+                currentSprite = 4;
+                initHoldInterval = false;
+            }
         }
         else
         {
-            currentSprite = 0;
+            bool holdInterval = Input.GetKeyDown("j") && GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval;
+            if (Input.GetKeyDown("i") && GameObject.Find("character_1"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 1;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("j") && GameObject.Find("character_2"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 2;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("k") && GameObject.Find("character_3"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 3;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else if (Input.GetKeyDown("l") && GameObject.Find("character_4"))
+            {
+                if (!holdInterval)
+                {
+                    currentSprite = 4;
+                }
+                else
+                {
+                    initHoldInterval = true;
+                }
+            }
+            else
+            {
+                currentSprite = 0;
+            }
         }
 
         /* If i, j, k or l are inputted, fetch the character GameObject corresponding to them and calculate the accuracy of the input */
         if (currentSprite > 0)
         {
-            toUseGO = GameObject.Find("character_" + currentSprite);
-            //SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.nextHit);
-            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit());
+            chosenATK_sfx = ATK_sfx;
+
+            SpriteRenderer noteScoreSprite = GetNoteAccuracySprite(GameLogic.songStartTime, ((decimal)AudioSettings.dspTime + 0.150m), (decimal)GameLogic.getNextHit(), currentSprite, ClickListener.menu_state == ClickListener.state.ATK ? true : false);
             StartCoroutine(spawnNoteScore(new Vector3(2.02f, 1.87f, -7.77f), 0.3f, noteScoreSprite));
+
+            toUseGO = GameObject.Find("character_" + currentSprite);
         }
 
         /* Functional Requirement
