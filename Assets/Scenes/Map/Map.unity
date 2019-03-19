@@ -6292,13 +6292,13 @@ MonoBehaviour:
   dialogue:
     sentences:
     - speaker: BOSS
-      body: HAHA.
+      body: You again?
     - speaker: BOSS
-      body: You puny mortals...
+      body: Wait this isn't normal!
     - speaker: BOSS
-      body: You can never hope to defeat me!
+      body: Not according to script!
     - speaker: Player
-      body: Oh yeah! Just watch us!
+      body: Yeah, this is demo so no spoilers!
 --- !u!4 &490552835
 Transform:
   m_ObjectHideFlags: 0
