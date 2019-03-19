@@ -34,7 +34,7 @@ public class SceneManagerWrapper : MonoBehaviour
         {
             Curtain.Instance.Open();
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.0f);
         Curtain.Instance.GetComponent<Image>().enabled = false;
     }
 
