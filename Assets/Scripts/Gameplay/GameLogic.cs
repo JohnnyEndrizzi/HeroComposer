@@ -343,8 +343,18 @@ public class GameLogic : MonoBehaviour
 
         /* This is the default song in case of an error */
         Debug.Log("Loading beatmap file for RedLips_Easy...");
-        beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
-        GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
+
+        var currentLevel = GameManager.Instance.gameDataManager.GetActiveLevel();
+        if (currentLevel != null)
+        {
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + currentLevel.songName + ".osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + currentLevel.songName.Split('_')[0]);
+        }
+        else
+        {
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
+        }
 
         GetComponent<BossLogic>().setupBoss();
 
@@ -382,7 +392,6 @@ public class GameLogic : MonoBehaviour
                         break;
                     }
                 }
-
             }
 
             //Debug.Log("Hold Interval: " + holdNoteInterval);
