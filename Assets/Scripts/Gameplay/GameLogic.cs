@@ -376,22 +376,21 @@ public class GameLogic : MonoBehaviour
         {
             if (songDone && !scoringDone)
             {
-                Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
-
-                scoreCanvas.enabled = true;
-                StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
-                scoringDone = true;
-
                 var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
-                
                 for (int i = 1; i <= 9; i++)
                 {
-                    if(lockedLevels.ContainsKey(i))
+                    if (lockedLevels.ContainsKey(i))
                     {
                         GameManager.Instance.gameDataManager.unlockLevel(i);
                         break;
                     }
                 }
+
+                Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
+
+                scoreCanvas.enabled = true;
+                StartCoroutine(updateScoreCanvas(scoreCanvas, CaclulateSongGrade()));
+                scoringDone = true;
             }
 
             //Debug.Log("Hold Interval: " + holdNoteInterval);
