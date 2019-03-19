@@ -317,6 +317,7 @@ public class CharacterListener : MonoBehaviour
     {
         /* Sets the colour of the note bar's highlight as "off" (white is for "on")*/
         color = Color.red;
+
     }
     
     void Update()

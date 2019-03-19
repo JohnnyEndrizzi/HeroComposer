@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("up"))
         {
             transform.Translate(0, 0, 10*Time.deltaTime);
+            //transform.Translate(0, 1*Time.deltaTime, 0);
             Debug.Log("going forward");
+            
         }
         else if (Input.GetKey("down"))
         {
