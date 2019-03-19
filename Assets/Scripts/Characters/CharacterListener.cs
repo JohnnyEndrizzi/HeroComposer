@@ -398,7 +398,7 @@ public class CharacterListener : MonoBehaviour
         }
         else
         {
-            bool holdInterval = Input.GetKeyDown("j") && GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval;
+            bool holdInterval = (Input.GetKeyDown("i") || Input.GetKeyDown("j") || Input.GetKeyDown("k") || Input.GetKeyDown("l")) && GameObject.Find("Menu").GetComponent<GameLogic>().holdNoteInterval;
             if (Input.GetKeyDown("i") && GameObject.Find("character_1"))
             {
                 if (!holdInterval)
