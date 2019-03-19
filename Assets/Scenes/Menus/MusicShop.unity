@@ -442,6 +442,7 @@ GameObject:
   - component: {fileID: 269882906}
   - component: {fileID: 269882907}
   - component: {fileID: 269882908}
+  - component: {fileID: 269882909}
   m_Layer: 0
   m_Name: MusicShopHandler
   m_TagString: Untagged
@@ -568,6 +569,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &269882909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 269882905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64dc1d7bf2b2a2041b6449646f98553b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LeftShelf: {fileID: 1637611733}
+  RightShelf: {fileID: 936821488}
+  CenterShelf: {fileID: 215631798}
 --- !u!1 &278927016
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +611,7 @@ Transform:
   m_LocalScale: {x: 4.96015, y: 4.96015, z: 4.96015}
   m_Children: []
   m_Father: {fileID: 330785008}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &278927018
 MonoBehaviour:
@@ -727,8 +742,8 @@ RectTransform:
   - {fileID: 215631799}
   - {fileID: 1637611734}
   - {fileID: 936821489}
-  - {fileID: 278927017}
   - {fileID: 2051198821}
+  - {fileID: 278927017}
   m_Father: {fileID: 744108693}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2681,7 +2696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010455743, y: -0.000024769375}
+  m_AnchoredPosition: {x: 0.00001676934, y: -0.000031185256}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1778096899
@@ -3120,7 +3135,7 @@ Transform:
   - {fileID: 1852026521}
   - {fileID: 523481695}
   m_Father: {fileID: 330785008}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2054437008
 GameObject:
