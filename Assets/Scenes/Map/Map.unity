@@ -6267,10 +6267,7 @@ Transform:
   - {fileID: 107949230}
   - {fileID: 1200833672}
   - {fileID: 520205515}
-<<<<<<< HEAD
   - {fileID: 1865877524}
-=======
->>>>>>> remotes/origin/map-refractor-3
   - {fileID: 1293101479}
   - {fileID: 72452916}
   - {fileID: 1261874205}
@@ -6294,13 +6291,9 @@ Transform:
   - {fileID: 19375893}
   - {fileID: 1491148279}
   - {fileID: 1771026707}
-<<<<<<< HEAD
   - {fileID: 1585084661}
   - {fileID: 554621408}
-=======
-  - {fileID: 554621408}
   - {fileID: 1865877524}
->>>>>>> remotes/origin/map-refractor-3
   - {fileID: 2122028256}
   - {fileID: 1928459281}
   - {fileID: 1059551750}
@@ -7051,11 +7044,7 @@ Transform:
   - {fileID: 286579030}
   - {fileID: 1429799426}
   m_Father: {fileID: 491264303}
-<<<<<<< HEAD
   m_RootOrder: 66
-=======
-  m_RootOrder: 65
->>>>>>> remotes/origin/map-refractor-3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556434436
 GameObject:
@@ -8152,7 +8141,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1143991583}
-<<<<<<< HEAD
   - {fileID: 1775968914}
   - {fileID: 461531159}
   - {fileID: 651669090}
@@ -8190,9 +8178,6 @@ Transform:
   - {fileID: 1560357939}
   - {fileID: 702408063}
   - {fileID: 894001298}
-=======
-  - {fileID: 905791585}
->>>>>>> remotes/origin/map-refractor-3
   - {fileID: 2032024398}
   - {fileID: 2103583006}
   - {fileID: 950718519}
@@ -11277,96 +11262,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 476522, guid: cd55e245d3cf33c4dab2e9577a37bbcc,
     type: 2}
   m_PrefabInternal: {fileID: 1423591146}
-<<<<<<< HEAD
-=======
---- !u!1 &905791581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 905791585}
-  - component: {fileID: 905791584}
-  - component: {fileID: 905791583}
-  - component: {fileID: 905791582}
-  m_Layer: 0
-  m_Name: Level 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!135 &905791582
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905791581}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &905791583
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905791581}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &905791584
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905791581}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &905791585
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905791581}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.92, y: 1.1800001, z: -3.5599992}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1766647189}
-  - {fileID: 967322284}
-  m_Father: {fileID: 653519840}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> remotes/origin/map-refractor-3
 --- !u!1 &906683230
 GameObject:
   m_ObjectHideFlags: 0
@@ -12404,11 +12299,7 @@ Transform:
   m_LocalScale: {x: 1.2000004, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 653519840}
-<<<<<<< HEAD
   m_RootOrder: 40
-=======
-  m_RootOrder: 4
->>>>>>> remotes/origin/map-refractor-3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!212 &950718520
 SpriteRenderer:
@@ -19978,7 +19869,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 402774, guid: 3cdde60b1f6962c49929ebd07f7284ec,
     type: 2}
   m_PrefabInternal: {fileID: 1036631248}
-<<<<<<< HEAD
 --- !u!1 &1469311905
 GameObject:
   m_ObjectHideFlags: 0
@@ -20102,7 +19992,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1469311905}
   m_CullTransparentMesh: 0
-=======
 --- !u!1001 &1464852893
 Prefab:
   m_ObjectHideFlags: 0
@@ -20178,7 +20067,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 476522, guid: cd55e245d3cf33c4dab2e9577a37bbcc,
     type: 2}
   m_PrefabInternal: {fileID: 1464852893}
->>>>>>> remotes/origin/map-refractor-3
 --- !u!1 &1476526403
 GameObject:
   m_ObjectHideFlags: 0
@@ -26983,7 +26871,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 448174, guid: 2e85e654d9d08b54294966420d8a2155,
     type: 2}
   m_PrefabInternal: {fileID: 1993287119}
-<<<<<<< HEAD
 --- !u!1 &1995173534
 GameObject:
   m_ObjectHideFlags: 0
@@ -27034,7 +26921,6 @@ Transform:
   m_Father: {fileID: 865571990}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
 --- !u!1001 &2002207476
 Prefab:
   m_ObjectHideFlags: 0
@@ -27110,7 +26996,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 476522, guid: cd55e245d3cf33c4dab2e9577a37bbcc,
     type: 2}
   m_PrefabInternal: {fileID: 2002207476}
->>>>>>> remotes/origin/map-refractor-3
 --- !u!1001 &2008563840
 Prefab:
   m_ObjectHideFlags: 0
@@ -27660,11 +27545,7 @@ Transform:
   - {fileID: 490552835}
   - {fileID: 325734304}
   m_Father: {fileID: 653519840}
-<<<<<<< HEAD
   m_RootOrder: 38
-=======
-  m_RootOrder: 2
->>>>>>> remotes/origin/map-refractor-3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2038313016
 GameObject:
@@ -28454,11 +28335,7 @@ Transform:
   - {fileID: 1195089866}
   - {fileID: 717455373}
   m_Father: {fileID: 653519840}
-<<<<<<< HEAD
   m_RootOrder: 39
-=======
-  m_RootOrder: 3
->>>>>>> remotes/origin/map-refractor-3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2108113561
 Prefab:
