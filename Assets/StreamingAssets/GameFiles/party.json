@@ -9,12 +9,17 @@
       "unlocked": true,
       "equippedItems": {
         "0": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        },
+        "1": {
           "name": "Tuner",
           "description": "Tunes Defences",
           "cost": 1500,
           "sprite": "Items/potion"
         },
-        "1": null,
         "2": null
       },
       "magicAbility": {
