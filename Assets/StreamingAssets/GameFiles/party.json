@@ -1,6 +1,6 @@
 {
   "characters": {
-    "1": {
+    "0": {
       "name": "Taiko",
       "description": "I am Taiko",
       "sprite": "Characters/taiko_sprite",
@@ -35,7 +35,7 @@
       "rcv": 2,
       "mgc": 2
     },
-    "2": {
+    "1": {
       "name": "Sitar",
       "description": "I am Sitar",
       "sprite": "Characters/sitar_sprite",
@@ -60,7 +60,7 @@
       "rcv": 2,
       "mgc": 2
     },
-    "3": {
+    "2": {
       "name": "Trumpet",
       "description": "I am Trumpet",
       "sprite": "Characters/trumpet_sprite",
@@ -79,6 +79,41 @@
         "soundEffect": null
       },
       "level": 99,
+      "hp": 100,
+      "atk": 5,
+      "def": 5,
+      "rcv": 2,
+      "mgc": 2
+    },
+    "3": {
+      "name": "Acoustic",
+      "description": "I am Acoustic",
+      "sprite": "Characters/acoustic_sprite",
+      "headshot": "Headshots/acoustic_headshot",
+      "soundEffect": "SoundEffects/acoustic_sound",
+      "unlocked": true,
+      "equippedItems": {
+        "0": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        },
+        "1": {
+          "name": "Tuner",
+          "description": "Tunes Defences",
+          "cost": 1500,
+          "sprite": "Items/potion"
+        },
+        "2": null
+      },
+      "magicAbility": {
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": null
+      },
+      "level": 1,
       "hp": 100,
       "atk": 5,
       "def": 5,

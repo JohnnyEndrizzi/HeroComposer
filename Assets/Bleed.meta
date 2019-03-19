@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Bleed.meta
 guid: bbb0dbe1dd5ead14cb1c90306b1661d0
+=======
+guid: 271187d9e605dfd44892c03beeabb634
+>>>>>>> c912b0e1d431b0142688e80893a9b5aab3b70a27:Assets/Bleed.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -21,6 +21,8 @@ public class BossLogic : MonoBehaviour
     /* This list is used for randomly choosing the target for an attack */
     private List<int> weigthedValues = new List<int>();
 
+    public AudioClip death_fade_sfx;
+
     private Beatmap beatmap;
 
     void Start()
@@ -55,7 +57,7 @@ public class BossLogic : MonoBehaviour
         GameObject foundCharacter = GameObject.Find("character_" + character);
         foundCharacter.GetComponent<SpriteRenderer>().enabled = false;
 
-        //GetComponent<AudioSource>().PlayOneShot(DEF_low_sfx, 0.7F);
+        GetComponent<AudioSource>().PlayOneShot(death_fade_sfx, 0.7F);
         Instantiate(deathEnergy, foundCharacter.transform.position, Quaternion.identity);
     }
 

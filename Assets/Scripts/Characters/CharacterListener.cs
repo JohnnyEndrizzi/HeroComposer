@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CharacterListener : MonoBehaviour
@@ -306,8 +307,8 @@ public class CharacterListener : MonoBehaviour
         lockCoroutine[spriteLock - 1] = 1;
 
         /* Plays the corresponding animation for the selected character */
-        //toUseGO.GetComponent<AttackAnimator>().ATTACK(Assets.Scripts.MainMenu.ApplicationModel.characters[spriteLock - 1].mag_Eqp, spriteLock, 5);
-        //GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
+        toUseGO.GetComponent<AttackAnimator>().ATTACK(toUseGO.GetComponent<CharacterLogic>().attack, spriteLock, 5);
+        GetComponent<AudioSource>().PlayOneShot(fireball_sfx, 0.5F);
 
         /* Unlock the coroutine */
         lockCoroutine[spriteLock - 1] = 0;

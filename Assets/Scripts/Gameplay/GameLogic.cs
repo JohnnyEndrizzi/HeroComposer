@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 /* This is used for debugging */
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class GameLogic : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class GameLogic : MonoBehaviour
     private int noteIndex = 0;
     private decimal latency = 0.150m;
     public static decimal songStartTime;
+
+    public AudioClip victory_song;
 
     public void spawnCharacters()
     {
@@ -187,7 +190,7 @@ public class GameLogic : MonoBehaviour
     {
         AudioSource cashAudioSource = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<AudioSource>();
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -197,7 +200,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -207,7 +210,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -217,7 +220,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -227,7 +230,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -248,7 +251,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -342,8 +345,18 @@ public class GameLogic : MonoBehaviour
 
         /* This is the default song in case of an error */
         Debug.Log("Loading beatmap file for RedLips_Easy...");
-        beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
-        GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
+
+        var currentLevel = GameManager.Instance.gameDataManager.GetActiveLevel();
+        if (currentLevel != null)
+        {
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/" + currentLevel.songName + ".osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/" + currentLevel.songName.Split('_')[0]);
+        }
+        else
+        {
+            beatmap = new Beatmap(Application.streamingAssetsPath + "/Beatmaps/RedLips_Easy.osu");
+            GetComponent<AudioSource>().clip = (AudioClip)Resources.Load("Songs/RedLips");
+        }
 
         GetComponent<BossLogic>().setupBoss();
 
@@ -365,6 +378,18 @@ public class GameLogic : MonoBehaviour
         {
             if (songDone && !scoringDone)
             {
+                GetComponent<AudioSource>().PlayOneShot(victory_song, 0.7F);
+
+                var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
+                for (int i = 1; i <= 9; i++)
+                {
+                    if (lockedLevels.ContainsKey(i))
+                    {
+                        GameManager.Instance.gameDataManager.unlockLevel(i);
+                        break;
+                    }
+                }
+
                 Canvas scoreCanvas = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<Canvas>();
 
                 scoreCanvas.enabled = true;
