@@ -14,10 +14,10 @@
         "sprite": "Items/greenPotion"
       },
       "1": {
-        "name": "Tuner",
-        "description": "Tunes Defences",
+        "name": "Red Potion",
+        "description": "Boosts attack strength",
         "cost": 1500,
-        "sprite": "Items/potion"
+        "sprite": "Items/redPotion"
       },
       "2": null
     },

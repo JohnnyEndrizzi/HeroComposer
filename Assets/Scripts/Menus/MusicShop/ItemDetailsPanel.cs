@@ -26,6 +26,9 @@ public class ItemDetailsPanel : MonoBehaviour {
     {
         availableMoney.text = "Money: $" + GameManager.Instance.gameDataManager.GetAvailableMoney();
         purchaseButton.interactable = false;
+        Color c = icon.color;
+        c.a = 0;
+        icon.color = c;
     }
 
     //Update available money after a purchase/sale
@@ -44,6 +47,9 @@ public class ItemDetailsPanel : MonoBehaviour {
         purchaseButton.GetComponentInChildren<Text>().text = "Buy: $"+this.item.cost.ToString();
         icon.sprite = Resources.Load<Sprite>(this.item.sprite);
         purchaseButton.interactable = true;
+        Color c = icon.color;
+        c.a = 1;
+        icon.color = c;
     }
 
     //Remove item from details panel
@@ -52,8 +58,11 @@ public class ItemDetailsPanel : MonoBehaviour {
         this.item = null;
         name.text = "";
         description.text = "";
-        purchaseButton.GetComponentInChildren<Text>().text = "Unavailable";
+        purchaseButton.GetComponentInChildren<Text>().text = "Select an Item!";
         icon.sprite = null;
         purchaseButton.interactable = false;
+        Color c = icon.color;
+        c.a = 0;
+        icon.color = c;
     }
 }

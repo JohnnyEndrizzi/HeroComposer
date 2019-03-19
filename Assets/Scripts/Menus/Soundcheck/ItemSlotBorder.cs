@@ -1,9 +1,10 @@
-﻿using UnityEngine.EventSystems;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ItemSlotBorder : EventTrigger
+public class ItemSlotBorder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
 
-    public override void OnPointerEnter(PointerEventData data) //Turns on text on hoverEnter 
+    public void OnPointerEnter(PointerEventData data) //Turns on text on hoverEnter 
     {
         //To prevent call when hovering over button while holding its ItemSlot
         if (this.gameObject.transform.childCount == 1)
@@ -12,12 +13,12 @@ public class ItemSlotBorder : EventTrigger
         }
     }
 
-    public override void OnPointerExit(PointerEventData data) //Turns off text on hoverExit
+    public void OnPointerExit(PointerEventData data) //Turns off text on hoverExit
     {
         FindObjectOfType<InvController>().HoverTextFadeOut();
     }
 
-    public override void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)
     {        
         ItemSlot displayedItemSlot = GetComponentInChildren<ItemSlot>();
         //TODO clean up null types

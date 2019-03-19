@@ -66,7 +66,7 @@ public class ItemSlot : Draggable
     public override void OnEndDrag(PointerEventData eventData)
     {
         //Reset Draggable interface
-        base.OnEndDrag(eventData);
+        base.OnEndDrag(eventData);        
         //Reset object location
         transform.SetParent(startParent);
         transform.SetSiblingIndex(startSiblingIndex);
