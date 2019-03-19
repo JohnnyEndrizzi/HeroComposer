@@ -43,9 +43,24 @@
       "soundEffect": "SoundEffects/sitar_sound",
       "unlocked": true,
       "equippedItems": {
-        "0": null,
-        "1": null,
-        "2": null
+        "0": {
+          "name": "Tuner",
+          "description": "Tunes Defences",
+          "cost": 1500,
+          "sprite": "Items/potion"
+        },
+        "1": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        },
+        "2": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        }
       },
       "magicAbility": {
         "name": "Fireball",
@@ -100,12 +115,17 @@
           "sprite": "Items/greenPotion"
         },
         "1": {
-          "name": "Tuner",
-          "description": "Tunes Defences",
+          "name": "Red Potion",
+          "description": "Boosts attack strength",
           "cost": 1500,
-          "sprite": "Items/potion"
+          "sprite": "Items/redPotion"
         },
-        "2": null
+        "2": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        }
       },
       "magicAbility": {
         "name": "Fireball",
