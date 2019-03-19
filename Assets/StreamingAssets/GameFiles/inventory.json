@@ -1,19 +1,49 @@
 {
-  "money": 83500,
+  "money": 77000,
   "invItems": {
     "0": {
+      "name": "Tuner",
+      "description": "Tunes Defences",
+      "cost": 1500,
+      "sprite": "Items/potion"
+    },
+    "1": {
       "name": "Red Potion",
       "description": "Boosts attack strength",
       "cost": 1500,
       "sprite": "Items/redPotion"
     },
-    "9": {
+    "8": {
       "name": "Green Potion",
       "description": "Temporary health bonus",
       "cost": 1000,
       "sprite": "Items/greenPotion"
     },
+    "9": {
+      "name": "Tuner",
+      "description": "Tunes Defences",
+      "cost": 1500,
+      "sprite": "Items/potion"
+    },
     "10": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion"
+    },
+    "11": {
+      "name": "Red Potion",
+      "description": "Boosts attack strength",
+      "cost": 1500,
+      "sprite": "Items/redPotion"
+    },
+    "12": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion"
+    },
+    "13": {
       "name": "Red Potion",
       "description": "Boosts attack strength",
       "cost": 1500,

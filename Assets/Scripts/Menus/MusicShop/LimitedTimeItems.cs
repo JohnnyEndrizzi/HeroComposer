@@ -6,9 +6,19 @@ public class LimitedTimeItems : MonoBehaviour {
     [SerializeField]
     private GameObject itemPrefab;
 
+    Dictionary<int, Item> items;
+
+
     // Use this for initialization
     void Start () {
-        DisplayLimitedTimeItems();
+        items = GameManager.Instance.gameDataManager.GetItems();
+
+        DispItems(0);
+        DispItems(1);
+        DispItems(2);
+        DispItems(3);
+        DispItems(0);
+        DispItems(1);
     }
 
     //Display limited time items
@@ -18,6 +28,14 @@ public class LimitedTimeItems : MonoBehaviour {
         GameObject UIItem = Instantiate(itemPrefab, this.transform);
         int randomItem = 0;
         Item item = items[randomItem];
+        UIItem.GetComponent<UIItem>().SetItem(item);
+    }
+
+    //Temp
+    private void DispItems(int itemNum)
+    {
+        GameObject UIItem = Instantiate(itemPrefab, this.transform);
+        Item item = items[itemNum];
         UIItem.GetComponent<UIItem>().SetItem(item);
     }
 }
