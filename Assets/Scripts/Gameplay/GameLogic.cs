@@ -63,6 +63,8 @@ public class GameLogic : MonoBehaviour
     private decimal latency = 0.150m;
     public static decimal songStartTime;
 
+    public AudioClip victory_song;
+
     public void spawnCharacters()
     {
         /* This loop counts how many characters are on the current team and spawns them to the correct location.
@@ -188,7 +190,7 @@ public class GameLogic : MonoBehaviour
     {
         AudioSource cashAudioSource = GameObject.FindGameObjectWithTag("ScoreLayer").GetComponent<AudioSource>();
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -198,7 +200,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -208,7 +210,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -218,7 +220,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -228,7 +230,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -249,7 +251,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
 
         foreach (Text text in scoreCanvas.GetComponentsInChildren<Text>())
         {
@@ -376,6 +378,8 @@ public class GameLogic : MonoBehaviour
         {
             if (songDone && !scoringDone)
             {
+                GetComponent<AudioSource>().PlayOneShot(victory_song, 0.7F);
+
                 var lockedLevels = GameManager.Instance.gameDataManager.getLockedLevels();
                 for (int i = 1; i <= 9; i++)
                 {

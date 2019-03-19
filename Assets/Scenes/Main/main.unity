@@ -617,6 +617,11 @@ Prefab:
       propertyPath: Boss_barrier_sfx
       value: 
       objectReference: {fileID: 8300000, guid: 31eaef098fb447444af7fd135cdd8403, type: 3}
+    - target: {fileID: 114510844959590258, guid: e79425c619a4b9f43822ffdd9e40e7e2,
+        type: 2}
+      propertyPath: victory_song
+      value: 
+      objectReference: {fileID: 8300000, guid: f26a245dfb2fd0242ab52c05af3fe341, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79425c619a4b9f43822ffdd9e40e7e2, type: 2}
   m_IsPrefabAsset: 0

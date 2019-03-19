@@ -14,7 +14,7 @@
     "enemy": "boss",
     "backdrop": "storm",
     "highscore": 0,
-    "locked": true,
+    "locked": false,
     "cutsceneDisplayed": true
   },
   "3": {
@@ -23,7 +23,7 @@
     "enemy": "boss",
     "backdrop": "storm",
     "highscore": 0,
-    "locked": true,
+    "locked": false,
     "cutsceneDisplayed": true
   }
 }
