@@ -22,6 +22,7 @@ public class BossLogic : MonoBehaviour
     private List<int> weigthedValues = new List<int>();
 
     public AudioClip death_fade_sfx;
+    public AudioClip gameover_song;
 
     private Beatmap beatmap;
 
@@ -33,6 +34,9 @@ public class BossLogic : MonoBehaviour
 
     private void gameOver()
     {
+        GetComponent<AudioSource>().Stop();
+        GetComponent<AudioSource>().PlayOneShot(gameover_song, 0.7F);
+
         Canvas gameOverCanvas = GameObject.FindGameObjectWithTag("GameOverLayer").GetComponent<Canvas>();
         gameOverCanvas.enabled = true;
 
