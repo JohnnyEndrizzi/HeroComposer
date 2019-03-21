@@ -123,15 +123,31 @@ public class RehearsalHandler : MonoBehaviour {
     //Save party to local game data and JSON file
     public void SaveParty()
     {
-        Dictionary<int, Character> party = new Dictionary<int, Character>();
-        if (frontRowPortrait.character != null)
-            party[(int)CharacterPosition.FrontRow] = frontRowPortrait.character;
-        if (centreLeftPortrait.character != null)
-            party[(int)CharacterPosition.CentreLeft] = centreLeftPortrait.character;
-        if (centreRightPortrait.character != null)
-            party[(int)CharacterPosition.CentreRight] = centreRightPortrait.character;
-        if (backRowPortrait.character != null)
-            party[(int)CharacterPosition.BackRow] = backRowPortrait.character;
-        GameManager.Instance.gameDataManager.SetCharactersInParty(party);
+        //Check if party is empty
+        if (frontRowPortrait.character == null && centreLeftPortrait.character == null && centreLeftPortrait.character == null && centreLeftPortrait.character == null)
+        {
+            //Display message
+            Modal messageModal = Instantiate(GameManager.Instance.prefabManager.simpleMessageModal, FindObjectOfType<UIContainer>().transform);
+            messageModal.DisplayMessage("Party cannot be empty! Please try again.");
+            messageModal.ChangeBanner(ModalBanner.Error);
+        }
+        //Save party
+        else
+        {
+            Dictionary<int, Character> party = new Dictionary<int, Character>();
+            if (frontRowPortrait.character != null)
+                party[(int)CharacterPosition.FrontRow] = frontRowPortrait.character;
+            if (centreLeftPortrait.character != null)
+                party[(int)CharacterPosition.CentreLeft] = centreLeftPortrait.character;
+            if (centreRightPortrait.character != null)
+                party[(int)CharacterPosition.CentreRight] = centreRightPortrait.character;
+            if (backRowPortrait.character != null)
+                party[(int)CharacterPosition.BackRow] = backRowPortrait.character;
+            GameManager.Instance.gameDataManager.SetCharactersInParty(party);
+            //Display message
+            Modal messageModal = Instantiate(GameManager.Instance.prefabManager.simpleMessageModal, FindObjectOfType<UIContainer>().transform);
+            messageModal.DisplayMessage("Party saved succesfully!");
+            messageModal.ChangeBanner(ModalBanner.Success);
+        }
     }
 }

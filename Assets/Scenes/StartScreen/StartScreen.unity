@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -812,6 +812,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c434f93ccd702d4ab51ba5f65ec6452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1338616684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338616685}
+  - component: {fileID: 1338616686}
+  m_Layer: 0
+  m_Name: PrefabManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1338616685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338616684}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1858048537}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1338616686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338616684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b106eec5b441aa45b3f374d60720863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleMessageModal: {fileID: 114114647872419106, guid: 8949448fd4baf3d418601e0a9924cf22,
+    type: 2}
 --- !u!1 &1390865508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1397,7 @@ Transform:
   m_Children:
   - {fileID: 1174472518}
   - {fileID: 439861843}
+  - {fileID: 1338616685}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1371,3 +1414,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 439861842}
   gameDataManager: {fileID: 1174472517}
+  prefabManager: {fileID: 1338616686}

@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour {
     //GameData
     public GameDataManager gameDataManager;
 
+    //Prefabs
+    public PrefabManager prefabManager;
+
     //Called before start
     void Awake()
     {
