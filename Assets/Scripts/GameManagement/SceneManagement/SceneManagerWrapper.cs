@@ -8,11 +8,6 @@ public class SceneManagerWrapper : MonoBehaviour
     //Previous scene
     private string previousScene;
 
-    public void SwitchToMapFromMain()
-    {
-        StartCoroutine(SwitchSceneWithCurtainsCoroutine("Map", true));
-    }
-
     //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
@@ -21,7 +16,6 @@ public class SceneManagerWrapper : MonoBehaviour
     //Coroutine to switch scenes with curtain transition
     IEnumerator SwitchSceneWithCurtainsCoroutine(string scene, bool openCurtainsAfter)
     {
-        Curtain.Instance.GetComponent<Image>().enabled = true;
         GameManager.Instance.IsInputEnabled = false;
         Curtain.Instance.Close();
         yield return new WaitForSeconds(2.0f);
@@ -35,7 +29,6 @@ public class SceneManagerWrapper : MonoBehaviour
             Curtain.Instance.Open();
         }
         yield return new WaitForSeconds(2.0f);
-        Curtain.Instance.GetComponent<Image>().enabled = false;
     }
 
     //Load previous screen using curtains
