@@ -1,6 +1,46 @@
 {
   "characters": {
     "0": {
+      "name": "Sitar",
+      "description": "I am Sitar",
+      "sprite": "Characters/sitar_sprite",
+      "headshot": "Headshots/sitar_headshot",
+      "soundEffect": "SoundEffects/sitar_sound",
+      "unlocked": true,
+      "equippedItems": {
+        "0": {
+          "name": "Tuner",
+          "description": "Tunes Defences",
+          "cost": 1500,
+          "sprite": "Items/potion"
+        },
+        "1": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        },
+        "2": {
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion"
+        }
+      },
+      "magicAbility": {
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": null
+      },
+      "level": 1,
+      "hp": 100,
+      "atk": 5,
+      "def": 5,
+      "rcv": 2,
+      "mgc": 2
+    },
+    "1": {
       "name": "Acoustic",
       "description": "I am Acoustic",
       "sprite": "Characters/acoustic_sprite",
@@ -34,6 +74,56 @@
         "soundEffect": null
       },
       "level": 1,
+      "hp": 100,
+      "atk": 5,
+      "def": 5,
+      "rcv": 2,
+      "mgc": 2
+    },
+    "2": {
+      "name": "Taiko",
+      "description": "I am Taiko",
+      "sprite": "Characters/taiko_sprite",
+      "headshot": "Headshots/taiko_headshot",
+      "soundEffect": "SoundEffects/acoustic_sound",
+      "unlocked": true,
+      "equippedItems": {
+        "0": null,
+        "1": null,
+        "2": null
+      },
+      "magicAbility": {
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": null
+      },
+      "level": 1,
+      "hp": 100,
+      "atk": 5,
+      "def": 5,
+      "rcv": 2,
+      "mgc": 2
+    },
+    "3": {
+      "name": "Trumpet",
+      "description": "I am Trumpet",
+      "sprite": "Characters/trumpet_sprite",
+      "headshot": "Headshots/trumpet_headshot",
+      "soundEffect": "SoundEffects/trumpet_sound",
+      "unlocked": true,
+      "equippedItems": {
+        "0": null,
+        "1": null,
+        "2": null
+      },
+      "magicAbility": {
+        "name": "Fireball",
+        "description": "A deadly fireball",
+        "prefab": "fireball1",
+        "soundEffect": null
+      },
+      "level": 99,
       "hp": 100,
       "atk": 5,
       "def": 5,
