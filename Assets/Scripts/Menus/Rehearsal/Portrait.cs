@@ -26,6 +26,10 @@ public class Portrait : Draggable{
             Color c = image.color;
             c.a = 1;
             image.color = c;
+            if(transform.parent.GetComponent<PortraitBorder>() != null)
+            {
+                transform.parent.GetComponent<PortraitBorder>().RemoveIndicator();
+            }
         }else{
             RemoveCharacter();
         }
@@ -56,5 +60,10 @@ public class Portrait : Draggable{
         transform.SetParent(startParent);
         transform.SetSiblingIndex(startSiblingIndex);
         transform.position = startPosition;
+        //Display indicator if empty
+        if (transform.parent.GetComponent<PortraitBorder>() != null && character == null)
+        {
+            transform.parent.GetComponent<PortraitBorder>().DisplayIndicator();
+        }
     }
 }

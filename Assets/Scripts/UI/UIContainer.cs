@@ -22,7 +22,7 @@ public class UIContainer : MonoBehaviour {
             Transform oldParent = this.transform;
             while (oldParent.childCount > 0)
             {
-                oldParent.GetChild(oldParent.childCount - 1).SetParent(newParent, false);
+                oldParent.GetChild(0).SetParent(newParent, false);
             }
             //Move curtain to the bottom of the UI container
             if (newParent.Find("Curtain"))

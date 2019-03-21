@@ -4,6 +4,23 @@ using UnityEngine.UI;
 
 public class PortraitBorder : Droppable
 {
+    public string indicator;
+
+    public void DisplayIndicator()
+    {
+        GetComponent<Image>().sprite = Resources.Load<Sprite>(indicator);
+        Color c = GetComponent<Image>().color;
+        c.a = 1;
+        GetComponent<Image>().color = c;
+    }
+
+    public void RemoveIndicator()
+    {
+        Color c = GetComponent<Image>().color;
+        c.a = 0;
+        GetComponent<Image>().color = c;
+        GetComponent<Image>().sprite = null;
+    }
 
     public override void OnDrop(PointerEventData eventData)
     {
