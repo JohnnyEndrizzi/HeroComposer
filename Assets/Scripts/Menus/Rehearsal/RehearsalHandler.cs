@@ -124,7 +124,7 @@ public class RehearsalHandler : MonoBehaviour {
     public void SaveParty()
     {
         //Check if party is empty
-        if (frontRowPortrait.character == null && centreLeftPortrait.character == null && centreLeftPortrait.character == null && centreLeftPortrait.character == null)
+        if (frontRowPortrait.character == null && centreLeftPortrait.character == null && centreRightPortrait.character == null && backRowPortrait.character == null)
         {
             //Display message
             Modal messageModal = Instantiate(GameManager.Instance.prefabManager.simpleMessageModal, FindObjectOfType<UIContainer>().transform);
