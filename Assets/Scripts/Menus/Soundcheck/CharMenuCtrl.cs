@@ -7,6 +7,8 @@ public class CharMenuCtrl : MonoBehaviour {
     //Gameobject locations
     [SerializeField]
     private GameObject buttonTemplate = null;
+    [SerializeField]
+    private GameObject lockTemplate = null;
 
     //Characters in list
     private Dictionary<string, bool> charactersInList;
@@ -34,7 +36,20 @@ public class CharMenuCtrl : MonoBehaviour {
                 characterPortrait.transform.SetParent(buttonTemplate.transform.parent, false);
 
                 charactersInList.Add(character.name, true);
-            }            
+            }
+            else
+            {
+                //Add character to list
+                GameObject characterPortrait = Instantiate(buttonTemplate);
+                characterPortrait.SetActive(true);
+                characterPortrait.GetComponent<CharMenuBtn>().DisplayCharacterSilhouette(character);
+                characterPortrait.transform.SetParent(buttonTemplate.transform.parent, false);
+                
+                charactersInList.Add(character.name, true);
+
+                GameObject lockIcon = Instantiate(lockTemplate);
+                lockIcon.transform.SetParent(characterPortrait.transform, false);
+            }
         }
     }
 }

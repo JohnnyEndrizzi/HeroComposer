@@ -63,7 +63,7 @@
     "sprite": "Characters/sitar_sprite",
     "headshot": "Headshots/sitar_headshot",
     "soundEffect": "SoundEffects/sitar_sound",
-    "unlocked": true,
+    "unlocked": false,
     "equippedItems": {
       "0": {
         "name": "Tuner",

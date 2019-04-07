@@ -62,6 +62,7 @@ public class InvController : MonoBehaviour {
     private AudioClip pickUp;
     private AudioClip place;
     private AudioClip pickUpChar;
+    private AudioClip errorSound;
 
     //Text Locations
     [SerializeField]
@@ -102,6 +103,7 @@ public class InvController : MonoBehaviour {
         pickUp = (AudioClip)Resources.Load("SoundEffects/inventory_pick_up_item");
         place = (AudioClip)Resources.Load("SoundEffects/inventory_place_item_back");
         pickUpChar = (AudioClip)Resources.Load("SoundEffects/rehersal_pick_up_character");
+        errorSound = (AudioClip)Resources.Load("SoundEffects/shop_not_enough_money");
 
         //Populate character list scrollbox
         InventoryMenu.GenInventory();
@@ -186,6 +188,10 @@ public class InvController : MonoBehaviour {
         audioSource.PlayOneShot(place, 0.7F);
         SaveInv();
         holdItem = new Item();
+    }
+    public void LockedChar()
+    {
+        audioSource.PlayOneShot(errorSound, 0.7F);       
     }
 
     public void HoverTextFadeIn(Item itemInfo, int SlotNum)

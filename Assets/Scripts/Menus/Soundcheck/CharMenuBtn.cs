@@ -48,9 +48,28 @@ public class CharMenuBtn : MonoBehaviour {
         {
             RemoveCharacter();
         }
-
     }
 
+    //Display character sprite in portrait
+    public void DisplayCharacterSilhouette(Character character)
+    {
+        if (character != null)
+        {
+            this.character = character;
+            Sprite characterSprite = Resources.Load<Sprite>("Silhouette" + this.character.sprite);
+            image.sprite = characterSprite;
+            Color c = image.color;
+            c.a = 1;
+            image.color = c;
+
+            btnText.text = "LOCKED";
+        }
+        else
+        {
+            RemoveCharacter();
+        }
+    }
+    
     //Remove character sprite from portrait
     public void RemoveCharacter()
     {
@@ -77,6 +96,9 @@ public class CharMenuBtn : MonoBehaviour {
 
     void OnClick() //Gets clicked
     {
-        FindObjectOfType<InvController>().LoadInv(character);
+        if (character.unlocked == true)
+        {
+            FindObjectOfType<InvController>().LoadInv(character);
+        }
     }
 }

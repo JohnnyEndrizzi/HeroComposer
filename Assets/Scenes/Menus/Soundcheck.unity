@@ -3772,6 +3772,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonTemplate: {fileID: 2759271}
+  lockTemplate: {fileID: 1079348554063050, guid: 033ab791004979f4e836827a4efc66e6,
+    type: 2}
 --- !u!1 &1492598668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4087,7 +4089,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 27168303}
   m_HandleRect: {fileID: 27168302}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4465,8 +4467,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 950975291}
   m_HandleRect: {fileID: 950975290}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
