@@ -79,13 +79,13 @@
           "mgc": 0
         },
         "1": {
-          "name": "Red Potion",
-          "description": "Boosts attack strength",
-          "cost": 1500,
-          "sprite": "Items/redPotion",
+          "name": "Green Potion",
+          "description": "Temporary health bonus",
+          "cost": 1000,
+          "sprite": "Items/greenPotion",
           "level": 0,
-          "hp": 0,
-          "atk": 6,
+          "hp": 25,
+          "atk": 0,
           "def": 0,
           "rcv": 0,
           "mgc": 0

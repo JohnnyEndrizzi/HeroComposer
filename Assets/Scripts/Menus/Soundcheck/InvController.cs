@@ -188,37 +188,9 @@ public class InvController : MonoBehaviour {
         holdItem = new Item();
     }
 
-    //Update Item info box Text
-    void ReWriter(Item itemInfo) 
-    {
-        if(itemInfo == null)
-        {
-            itemInfo = new Item{name = "", description = ""};
-        }
-
-        //Row Names
-        string[] statName = new string[] { "Level", "HP   ", "ATK  ", "DEF  ", "RCV  ", "MGC  " };
-        int[] itemStat = ToStats(itemInfo);
-
-        string desc = itemInfo.description;
-
-        for(int i=0; i< itemStat.Length; i++)
-        {
-            if (itemStat[i] != 0)
-            {
-                desc += "\n" + statName[i] + ": " + ((Math.Sign(itemStat[i]) > 0) ? "<color=green><size=20>+" : "<color=red><size=20>-") + itemStat[i] + "</size></color>";                
-            }
-        }
-
-        txtBoxTitle.text = itemInfo.name;
-        txtBoxDesc.text = desc; 
-    }
-
-
-
     public void HoverTextFadeIn(Item itemInfo, int SlotNum)
     {
-        ReWriter(itemInfo);
+        InfoWindow(itemInfo);
         StatsWindow(holdItem, itemInfo, SlotNum);        
 
         StopAllCoroutines();
@@ -238,24 +210,30 @@ public class InvController : MonoBehaviour {
         StatsWindow(holdItem, new Item(),-1);
     }
 
-    //Graphic fading in or out
-    IEnumerator GraphicFader(float transitionTime, Graphic fadeObject, float fadeEnd) 
-    { //0 to invisible, 1 to visible
-        Color c = fadeObject.color;
-        float fadeStart = c.a;
-        fadeObject.canvasRenderer.SetAlpha(c.a);
-
-        int mult = (int)Mathf.Sign(fadeStart - fadeEnd);
-
-        for (float f = fadeStart; f >= fadeEnd * mult; f -= 0.1f * transitionTime)
-        {            
-            c.a = (f - 0.1f < fadeEnd * mult) ? fadeEnd : f * mult;
-            fadeObject.color = c;
-            fadeObject.canvasRenderer.SetAlpha(c.a);
-            yield return null;
+    //Update Item info box Text
+    void InfoWindow(Item itemInfo)
+    {
+        if (itemInfo == null)
+        {
+            itemInfo = new Item { name = "", description = "" };
         }
+
+        //Row Names
+        string[] statName = new string[] { "Level", "HP   ", "ATK  ", "DEF  ", "RCV  ", "MGC  " };
+        int[] itemStat = ToStats(itemInfo);
+        string desc = itemInfo.description;
+
+        for (int i = 0; i < itemStat.Length; i++)
+        {
+            if (itemStat[i] != 0)
+            {
+                desc += "\n" + statName[i] + ": " + ((Math.Sign(itemStat[i]) > 0) ? "<color=green><size=20>+" : "<color=red><size=20>-") + itemStat[i] + "</size></color>";
+            }
+        }
+        txtBoxTitle.text = itemInfo.name;
+        txtBoxDesc.text = desc;
     }
-  
+
     public void StatsWindow(Item holdItem, Item hoverItem, int hoverSlot)
     {
         //name == null for new Item(), hoverItem == null for empty item slots
@@ -274,7 +252,7 @@ public class InvController : MonoBehaviour {
         }
         else  if (!hoverItem.name.Equals(""))
         {
-            if (hoverSlot <= 0)
+            if (hoverSlot < 0)
             {
                 StatCall(hoverItem, hoverSlot);
             }
@@ -345,6 +323,24 @@ public class InvController : MonoBehaviour {
         statsWindowR.text = rightBox;
     }
 
+    //Graphic fading in or out
+    IEnumerator GraphicFader(float transitionTime, Graphic fadeObject, float fadeEnd)
+    { //0 to invisible, 1 to visible
+        Color c = fadeObject.color;
+        float fadeStart = c.a;
+        fadeObject.canvasRenderer.SetAlpha(c.a);
+
+        int mult = (int)Mathf.Sign(fadeStart - fadeEnd);
+
+        for (float f = fadeStart; f >= fadeEnd * mult; f -= 0.1f * transitionTime)
+        {
+            c.a = (f - 0.1f < fadeEnd * mult) ? fadeEnd : f * mult;
+            fadeObject.color = c;
+            fadeObject.canvasRenderer.SetAlpha(c.a);
+            yield return null;
+        }
+    }
+
     public string AllignTextSpaces(int L)
     {
         int DesiredLength = 4;
@@ -366,6 +362,7 @@ public class InvController : MonoBehaviour {
         };
         return stats;
     }
+
     public int[] ToStats(Item item)
     {
         if (item == null)
