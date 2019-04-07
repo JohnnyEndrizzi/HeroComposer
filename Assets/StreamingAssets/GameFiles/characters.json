@@ -8,22 +8,40 @@
     "unlocked": true,
     "equippedItems": {
       "0": {
-        "name": "Green Potion",
-        "description": "Temporary health bonus",
-        "cost": 1000,
-        "sprite": "Items/greenPotion"
+        "name": "Red Potion",
+        "description": "Boosts attack strength",
+        "cost": 1500,
+        "sprite": "Items/redPotion",
+        "level": 0,
+        "hp": 0,
+        "atk": 6,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       },
       "1": {
         "name": "Red Potion",
         "description": "Boosts attack strength",
         "cost": 1500,
-        "sprite": "Items/redPotion"
+        "sprite": "Items/redPotion",
+        "level": 0,
+        "hp": 0,
+        "atk": 6,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       },
       "2": {
         "name": "Green Potion",
         "description": "Temporary health bonus",
         "cost": 1000,
-        "sprite": "Items/greenPotion"
+        "sprite": "Items/greenPotion",
+        "level": 0,
+        "hp": 25,
+        "atk": 0,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       }
     },
     "magicAbility": {
@@ -51,19 +69,37 @@
         "name": "Tuner",
         "description": "Tunes Defences",
         "cost": 1500,
-        "sprite": "Items/potion"
+        "sprite": "Items/potion",
+        "level": 0,
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       },
       "1": {
         "name": "Green Potion",
         "description": "Temporary health bonus",
         "cost": 1000,
-        "sprite": "Items/greenPotion"
+        "sprite": "Items/greenPotion",
+        "level": 0,
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       },
       "2": {
         "name": "Green Potion",
         "description": "Temporary health bonus",
         "cost": 1000,
-        "sprite": "Items/greenPotion"
+        "sprite": "Items/greenPotion",
+        "level": 0,
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "rcv": 0,
+        "mgc": 0
       }
     },
     "magicAbility": {

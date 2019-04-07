@@ -1,4 +1,6 @@
-﻿using UnityEngine.EventSystems;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+
 
 public class BtnEquipBorder : EventTrigger
 {
@@ -8,8 +10,17 @@ public class BtnEquipBorder : EventTrigger
         //To prevent call when hovering over button while holding its ItemSlot
         if (this.gameObject.transform.childCount == 1)
         {
-            FindObjectOfType<InvController>().HoverTextFadeIn(GetComponentInChildren<ItemSlot>().item);
+            FindObjectOfType<InvController>().HoverTextFadeIn(GetComponentInChildren<ItemSlot>().item, GetIDNum());
         }
+    }
+
+    //Get which equip slot this is
+    private int GetIDNum()
+    {
+        if (this.gameObject.name.Equals("ButtonTop")) { return 0; }
+        else if (this.gameObject.name.Equals("ButtonMid")) { return 1; }
+        else if (this.gameObject.name.Equals("ButtonBottom")) { return 2; }
+        else { Debug.Log("ERROR " + this.gameObject.name); return -1; }        
     }
 
     public override void OnPointerExit(PointerEventData data)

@@ -69,4 +69,70 @@ public class SceneManagerWrapper : MonoBehaviour
     {
         return SceneManager.GetActiveScene().name;
     }
+
+
+    public void SceneSwitchToMain()
+    {
+        StartCoroutine(DebugSwitchToMain());
+    }
+    private IEnumerator DebugSwitchToMain()
+    {
+        //Disable input while switching scenes
+        GameManager.Instance.IsInputEnabled = false;
+        //Close the curtain
+        Curtain.Instance.Close();
+        yield return new WaitForSeconds(2.0f);
+        //Clear all UI elements except for the curtain
+        if (UIContainer.Instance != null)
+        {
+            UIContainer.Instance.ClearUILayers();
+        }
+        //Switch scene (async) 
+        previousScene = GetCurrentScene();
+        AsyncOperation operation = SceneManager.LoadSceneAsync("main");
+        //Loading bar
+        loadingBar.Show();
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            Debug.Log(progress);
+            loadingBar.UpdateProgress(progress);
+            yield return null;
+        }
+        loadingBar.Hide();
+        //Open curtains after switching scene 
+        Curtain.Instance.OpenThenGrow();        
+        //Delay to allow curtains to open
+        yield return new WaitForSeconds(2.0f);
+    }
+
+
+
+
+    
+
+
+    //TODO /* The following coroutine plays the closing animation for the curtains upon finishing a level */
+    private void CloseWithShrink()
+    {
+        Curtain.Instance.ShrinkThenClose();
+    }
+
+    /* The following coroutine plays the opening animation for the curtains upon starting a level */
+    private IEnumerator GameIntroCurtains()
+    {
+        //audioSource.PlayOneShot(applauseSFX, 0.7F);
+        /* After 3 seconds, start playing the applause sound */
+        /*
+        float startVolume = audioSource.volume;
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / 1;
+            yield return null;
+        }    
+        */
+        yield return null;
+    }
+
+
 }

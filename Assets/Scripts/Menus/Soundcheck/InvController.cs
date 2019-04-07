@@ -5,14 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-//Enum for portait indexing
-public enum EqpSlotPos
-{
-    ButtonTop,
-    ButtonMiddle,
-    ButtonBottom
-}
-
 public class InvController : MonoBehaviour {
     //Main controller for Inventory scene
 
@@ -50,6 +42,8 @@ public class InvController : MonoBehaviour {
     Dictionary<string, Character> characters;
     //Save which character is selected
     private Character frontChar;
+    //Save which item is being held
+    Item holdItem = new Item();
 
     //Equip Button Locations
     [SerializeField]
@@ -71,18 +65,20 @@ public class InvController : MonoBehaviour {
 
     //Text Locations
     [SerializeField]
-    private Image HoverTxt = null;
-    [SerializeField]
     private Text txtBoxTitle = null;
     [SerializeField]
     private Text txtBoxDesc = null;
-    
+    [SerializeField]
+    private Text statsWindowL = null;
+    [SerializeField]
+    private Text statsWindowR = null;
+
     //Text Size Variables
     private int titleFontSize = 18;
     private int descFontSize = 14;
     Font myFont;
-        
-	void Start ()
+    
+    void Start ()
     {
         //Show UI Layer
         soundChecklUI.Show();
@@ -111,7 +107,10 @@ public class InvController : MonoBehaviour {
         InventoryMenu.GenInventory();
 
         //Sets first char to the front
-        LoadInv(characters[characters.Keys.ToArray()[0]]); 
+        LoadInv(characters[characters.Keys.ToArray()[0]]);
+
+        //Pre-fill stat window                    
+        StatsWindow(new Item(), new Item(), -1);
     }
 
     void Update()
@@ -165,26 +164,31 @@ public class InvController : MonoBehaviour {
             GameManager.Instance.gameDataManager.SetCharactersInParty(party);
         }
         //Save inventory list
-        GameManager.Instance.gameDataManager.SaveInventory(InventoryMenu.GetStoredItems());       
+        GameManager.Instance.gameDataManager.SaveInventory(InventoryMenu.GetStoredItems());               
     }
            
-    //Audio and save triggers on drags and drops
-    public void Pickup()
+    //Audio, save and text triggers on drags and drops
+    public void Pickup(Item heldItem)
     {
         audioSource.PlayOneShot(pickUp, 0.7F);        
-    }        
+        holdItem = heldItem;
+        StatsWindow(holdItem, new Item(), -1);
+    }
     public void Equip()
     {
         audioSource.PlayOneShot(equip, 0.7F);
         SaveInv();
+        holdItem = new Item();
+        StatsWindow(new Item(), new Item(), -1);
     }
     public void Place()
     {
         audioSource.PlayOneShot(place, 0.7F);
         SaveInv();
+        holdItem = new Item();
     }
-       
-    //Update Text
+
+    //Update Item info box Text
     void ReWriter(Item itemInfo) 
     {
         if(itemInfo == null)
@@ -192,41 +196,34 @@ public class InvController : MonoBehaviour {
             itemInfo = new Item{name = "", description = ""};
         }
 
-        txtBoxTitle.text = itemInfo.name;
-        txtBoxDesc.text = itemInfo.description;             
+        //Row Names
+        string[] statName = new string[] { "Level", "HP   ", "ATK  ", "DEF  ", "RCV  ", "MGC  " };
+        int[] itemStat = ToStats(itemInfo);
 
-        RectTransform rectTransform = HoverTxt.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(170, 200);
+        string desc = itemInfo.description;
 
-        if (StringLength(itemInfo.description, descFontSize) == 0 && StringLength(itemInfo.name, titleFontSize) == 0){ 
-            rectTransform.sizeDelta = new Vector2(0, 200);
-        }        
-    }
-
-    //get the amount of physical space the string will take up 
-    int StringLength(string s, int size) 
-    {
-        int totalLength = 0;
-        CharacterInfo characterInfo = new CharacterInfo();
-
-        if (s.Equals(null)) { s = ""; }
-        char[] chars = s.ToCharArray();
-
-        foreach(char c in chars){
-            myFont.RequestCharactersInTexture(c.ToString(), size, txtBoxTitle.fontStyle);
-            myFont.GetCharacterInfo(c, out characterInfo, size);
-            totalLength += characterInfo.advance;
+        for(int i=0; i< itemStat.Length; i++)
+        {
+            if (itemStat[i] != 0)
+            {
+                desc += "\n" + statName[i] + ": " + ((Math.Sign(itemStat[i]) > 0) ? "<color=green><size=20>+" : "<color=red><size=20>-") + itemStat[i] + "</size></color>";                
+            }
         }
-        return totalLength;
+
+        txtBoxTitle.text = itemInfo.name;
+        txtBoxDesc.text = desc; 
     }
 
-    public void HoverTextFadeIn(Item itemInfo)
+
+
+    public void HoverTextFadeIn(Item itemInfo, int SlotNum)
     {
         ReWriter(itemInfo);
+        StatsWindow(holdItem, itemInfo, SlotNum);        
 
         StopAllCoroutines();
 
-        StartCoroutine(GraphicFader(1f, HoverTxt, 0.75f));
+        //StartCoroutine(GraphicFader(1f, HoverTxt, 0.75f));
         StartCoroutine(GraphicFader(1f, txtBoxTitle, 1f));
         StartCoroutine(GraphicFader(1f, txtBoxDesc, 1f));
     }
@@ -234,9 +231,11 @@ public class InvController : MonoBehaviour {
     {
         StopAllCoroutines();
 
-        StartCoroutine(GraphicFader(0.5f, HoverTxt, 0f));
+        //StartCoroutine(GraphicFader(0.5f, HoverTxt, 0f));
         StartCoroutine(GraphicFader(0.5f, txtBoxTitle, 0f));
         StartCoroutine(GraphicFader(0.5f, txtBoxDesc, 0f));
+
+        StatsWindow(holdItem, new Item(),-1);
     }
 
     //Graphic fading in or out
@@ -244,14 +243,144 @@ public class InvController : MonoBehaviour {
     { //0 to invisible, 1 to visible
         Color c = fadeObject.color;
         float fadeStart = c.a;
+        fadeObject.canvasRenderer.SetAlpha(c.a);
 
         int mult = (int)Mathf.Sign(fadeStart - fadeEnd);
 
         for (float f = fadeStart; f >= fadeEnd * mult; f -= 0.1f * transitionTime)
-        {
+        {            
             c.a = (f - 0.1f < fadeEnd * mult) ? fadeEnd : f * mult;
             fadeObject.color = c;
+            fadeObject.canvasRenderer.SetAlpha(c.a);
             yield return null;
         }
+    }
+  
+    public void StatsWindow(Item holdItem, Item hoverItem, int hoverSlot)
+    {
+        //name == null for new Item(), hoverItem == null for empty item slots
+        if (holdItem.name == null)
+        {
+            holdItem = new Item { name = "", description = "" };
+        }
+        if (hoverItem == null || hoverItem.name == null)
+        {
+            hoverItem = new Item { name = "", description = "" };
+        }
+
+        if (!holdItem.name.Equals(""))
+        {
+            StatCall(holdItem, hoverSlot);
+        }
+        else  if (!hoverItem.name.Equals(""))
+        {
+            if (hoverSlot <= 0)
+            {
+                StatCall(hoverItem, hoverSlot);
+            }
+            else
+            {
+                StatCall(new Item(), hoverSlot);
+            }
+        }
+        else
+        {
+            StatCall(holdItem, -1);
+        }
+    }
+
+    void StatCall(Item newItem, int replacedItem)
+    {
+        string rightBox = "", leftBox = "", director = "";
+        
+        //Row Names
+        string[] statName = new string[] { "Level", "HP   ", "ATK  ", "DEF  ", "RCV  ", "MGC  " };
+
+        //Char base stats
+        int[] baseStat = ToStats(frontChar);
+
+        //Equipt item stats
+        int[][] equiptStats = new int[3][];
+        equiptStats[0] = ToStats(frontChar.equippedItems["0"]);
+        equiptStats[1] = ToStats(frontChar.equippedItems["1"]);
+        equiptStats[2] = ToStats(frontChar.equippedItems["2"]);
+
+        //Char stats with Equipt Item Stats
+        int[] eqpStat = baseStat.Select((x, index) => x + equiptStats[0][index]).ToArray(); 
+        eqpStat = eqpStat.Select((x, index) => x + equiptStats[1][index]).ToArray(); 
+        eqpStat = eqpStat.Select((x, index) => x + equiptStats[2][index]).ToArray();
+
+        //new item stats 
+        int[] itemStat = ToStats(newItem);    
+        
+        //New Stats = Base stats + Equipted items + New Item
+        int[] newStat = eqpStat.Select((x, index) => x + itemStat[index]).ToArray();
+
+        //New Stats -= Replaced Equipt Item
+        if(replacedItem >= 0) newStat = newStat.Select((x, index) => x - equiptStats[replacedItem][index]).ToArray();
+
+        int statNum = 6; //how many stats are shown
+        for (int i = 0; i < statNum; i++)
+        {
+            director = statName[i] + " =  <size=18>" + eqpStat[i] + "</size>";
+            if (newStat[i] > eqpStat[i])
+            {
+                director += AllignTextSpaces(baseStat[i]) + " <size=14>>></size> <size=18><color=green>" + newStat[i] + "</color></size>";
+            }
+            else if (newStat[i] < eqpStat[i])
+            {
+                director += AllignTextSpaces(baseStat[i]) + " <size=14>>></size> <size=18><color=red>" + newStat[i] + "</color></size>";
+            }
+
+            if (i % 2 == 0)
+            {                
+                leftBox += director + (i == statNum-2 ? "" : "\n\n");
+            }
+            else
+            {
+                rightBox += director + (i == statNum-1 ? "" : "\n\n");
+            }
+        }
+        statsWindowL.text = leftBox;
+        statsWindowR.text = rightBox;
+    }
+
+    public string AllignTextSpaces(int L)
+    {
+        int DesiredLength = 4;
+        string outStr = "";
+        for (int i = L.ToString().Count(); i < DesiredLength; i++) { outStr += " "; }
+        return outStr;
+    }  
+
+    public int[] ToStats(Character character)
+    {         
+        int[] stats = new int[]
+        {
+            character.level,
+            character.hp,
+            character.atk,
+            character.def,
+            character.rcv,
+            character.mgc
+        };
+        return stats;
+    }
+    public int[] ToStats(Item item)
+    {
+        if (item == null)
+        {
+            return new int[] { 0, 0, 0, 0, 0, 0 };            
+        }
+        int[] stats = new int[]
+        {
+            item.level,
+            item.hp,
+            item.atk,
+            item.def,
+            item.rcv,
+            item.mgc
+        };
+        return stats;
     }
 }

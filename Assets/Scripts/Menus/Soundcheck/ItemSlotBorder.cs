@@ -9,7 +9,7 @@ public class ItemSlotBorder : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         //To prevent call when hovering over button while holding its ItemSlot
         if (this.gameObject.transform.childCount == 1)
         {
-            FindObjectOfType<InvController>().HoverTextFadeIn(GetComponentInChildren<ItemSlot>().item);
+            FindObjectOfType<InvController>().HoverTextFadeIn(GetComponentInChildren<ItemSlot>().item,-1);
         }
     }
 

@@ -32,7 +32,7 @@ public class SpotlightBehavior : MonoBehaviour {
         Vector3 start = this.transform.localPosition;
 
         /* Parameters for phase 0 */
-        Vector3 intro = converter(new Vector3(1f,-1f,0f));
+        Vector3 intro = Converter(new Vector3(1f,-1f,0f));
         intro.x += right_side ? intro.x : -intro.x;       
 
         /* Parameters for phase 1 and 4 */
@@ -105,12 +105,12 @@ public class SpotlightBehavior : MonoBehaviour {
         spotlightImage = GetComponent<Image>();
         if (right_side)
         {
-            spotlightSprite.transform.localPosition = converter(startCoord);
+            spotlightSprite.transform.localPosition = Converter(startCoord);
         }
         else
         {
             startCoord.x *= -1f;
-            spotlightSprite.transform.localPosition = converter(startCoord);
+            spotlightSprite.transform.localPosition = Converter(startCoord);
         }
 
         /* Changes the spotlight colour and opacity */
@@ -126,7 +126,7 @@ public class SpotlightBehavior : MonoBehaviour {
         spotlightImage.sprite = spotlightSprite.sprite;
     }
 
-    Vector3 converter(Vector3 point) //Convert coordinates from world space to screen points
+    Vector3 Converter(Vector3 point) //Convert coordinates from world space to screen points
     {    
         return Camera.main.WorldToScreenPoint(point);
     }

@@ -1,59 +1,101 @@
 {
   "money": 69500,
   "invItems": {
-    "0": {
-      "name": "Tuner",
-      "description": "Tunes Defences",
-      "cost": 1500,
-      "sprite": "Items/potion"
-    },
-    "1": {
-      "name": "Red Potion",
-      "description": "Boosts attack strength",
-      "cost": 1500,
-      "sprite": "Items/redPotion"
-    },
-    "2": {
-      "name": "Red Potion",
-      "description": "Boosts attack strength",
-      "cost": 1500,
-      "sprite": "Items/redPotion"
-    },
     "3": {
       "name": "Red Potion",
       "description": "Boosts attack strength",
       "cost": 1500,
-      "sprite": "Items/redPotion"
-    },
-    "4": {
-      "name": "Green Potion",
-      "description": "Temporary health bonus",
-      "cost": 1000,
-      "sprite": "Items/greenPotion"
-    },
-    "5": {
-      "name": "Red Potion",
-      "description": "Boosts attack strength",
-      "cost": 1500,
-      "sprite": "Items/redPotion"
-    },
-    "6": {
-      "name": "Amp",
-      "description": "Amplifies attacks",
-      "cost": 2500,
-      "sprite": "Items/greenPotion"
+      "sprite": "Items/redPotion",
+      "level": 0,
+      "hp": 0,
+      "atk": 6,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
     },
     "7": {
       "name": "Green Potion",
       "description": "Temporary health bonus",
       "cost": 1000,
-      "sprite": "Items/greenPotion"
+      "sprite": "Items/greenPotion",
+      "level": 0,
+      "hp": 25,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
     },
-    "8": {
+    "16": {
+      "name": "Tuner",
+      "description": "Tunes Defences",
+      "cost": 1500,
+      "sprite": "Items/potion",
+      "level": 0,
+      "hp": 0,
+      "atk": 0,
+      "def": 3,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "17": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion",
+      "level": 0,
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "18": {
+      "name": null,
+      "description": null,
+      "cost": 0,
+      "sprite": null,
+      "level": 0,
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "19": {
       "name": "Red Potion",
       "description": "Boosts attack strength",
       "cost": 1500,
-      "sprite": "Items/redPotion"
+      "sprite": "Items/redPotion",
+      "level": 0,
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "22": {
+      "name": "Amp",
+      "description": "Amplifies attacks",
+      "cost": 2500,
+      "sprite": "Items/greenPotion",
+      "level": 0,
+      "hp": 0,
+      "atk": 6,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "23": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion",
+      "level": 0,
+      "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
     }
   }
 }

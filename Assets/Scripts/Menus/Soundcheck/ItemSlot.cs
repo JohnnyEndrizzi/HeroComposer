@@ -58,7 +58,7 @@ public class ItemSlot : Draggable
         //Tell Controller of the event
         if (item != null)
         {
-            FindObjectOfType<InvController>().Pickup();
+            FindObjectOfType<InvController>().Pickup(item);
         }
     }    
 

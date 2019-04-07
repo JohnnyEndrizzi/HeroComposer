@@ -3,67 +3,133 @@
     "name": "Green Potion",
     "description": "Temporary health bonus",
     "cost": 1000,
-    "sprite": "Items/greenPotion"
+    "sprite": "Items/greenPotion",
+	"level": 0,
+    "hp": 25,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "1": {
     "name": "Red Potion",
     "description": "Boosts attack strength",
     "cost": 1500,
-    "sprite": "Items/redPotion"
+    "sprite": "Items/redPotion",
+	"level": 0,
+    "hp": 0,
+    "atk": 3,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "2": {
     "name": "Amp",
     "description": "Amplifies attacks",
     "cost": 2500,
-    "sprite": "Items/greenPotion"
+    "sprite": "Items/greenPotion",
+	"level": 0,
+    "hp": 0,
+    "atk": 6,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "3": {
     "name": "Tuner",
     "description": "Tunes Defences",
     "cost": 1500,
-    "sprite": "Items/potion"
+    "sprite": "Items/potion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 3,
+    "rcv": 0,
+    "mgc": 0
   },
   "4": {
     "name": "Speaker",
     "description": "Makes a wall of sound upping HP",
     "cost": 2000,
-    "sprite": "Items/redPotion"
+    "sprite": "Items/redPotion",
+	"level": 0,
+    "hp": 25,
+    "atk": 0,
+    "def": 3,
+    "rcv": 0,
+    "mgc": 0
   },
   "5": {
     "name": "Mixer",
     "description": "Boosts magical attacks",
     "cost": 1500,
-    "sprite": "Items/yellowPotion"
+    "sprite": "Items/yellowPotion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 5
   },
   "6": {
     "name": "Spare Strings",
     "description": "Increases HP",
     "cost": 1000,
-    "sprite": "Items/greenPotion"
+    "sprite": "Items/greenPotion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "7": {
     "name": "Metronome",
     "description": "Adds some recovery",
     "cost": 4000,
-    "sprite": "Items/potion"
+    "sprite": "Items/potion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "8": {
     "name": "Cymbol",
     "description": "Increases a drummers HP",
     "cost": 5000,
-    "sprite": "Items/redPotion"
+    "sprite": "Items/redPotion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "9": {
     "name": "Spare Guitar Strings",
     "Desc": "Increases Guitarists HP",
     "cost": 5000,
     "sprite": "Items/greenPotion",
-    "sound": "acoustic_sound"
+    "sound": "acoustic_sound",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   },
   "10": {
     "name": "Trumpet Stand",
     "description": "Increases a trumpeters Ranged Attack power",
     "cost": 5000,
-    "sprite": "Items/potion"
+    "sprite": "Items/potion",
+	"level": 0,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "rcv": 0,
+    "mgc": 0
   }
 }
