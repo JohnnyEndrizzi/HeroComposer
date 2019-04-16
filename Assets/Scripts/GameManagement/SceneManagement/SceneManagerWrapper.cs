@@ -13,6 +13,13 @@ public class SceneManagerWrapper : MonoBehaviour
     private string previousScene;
 
     //Switch scene by closing/opening curtains
+    public void SwitchSceneButton(string scene)
+    {
+        StartCoroutine(SwitchSceneWithCurtainsCoroutine(scene, true));
+    }
+
+
+    //Switch scene by closing/opening curtains
     public void SwitchSceneWithCurtains(string scene, bool openCurtainsAfter)
     {
         StartCoroutine(SwitchSceneWithCurtainsCoroutine(scene, openCurtainsAfter));
