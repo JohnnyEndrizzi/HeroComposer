@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour {
         //Add code here
         //Then use this line to switch to desired scene, "main" for actual gameplay
         //Destroy(GameObject.Find("UIContainer"));
-        //SceneManager.LoadScene("main");
+        SceneManager.LoadScene("main");
         //Instance.sceneManager.SceneSwitchToMain();
-        GameManager.Instance.sceneManager.SceneSwitchToMain();
+        //GameManager.Instance.sceneManager.SceneSwitchToMain();
 
     }
 }

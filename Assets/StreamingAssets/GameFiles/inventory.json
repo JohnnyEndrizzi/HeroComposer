@@ -1,5 +1,5 @@
 {
-  "money": 69500,
+  "money": 68500,
   "invItems": {
     "3": {
       "name": "Red Potion",
@@ -80,6 +80,18 @@
       "sprite": "Items/greenPotion",
       "level": 0,
       "hp": 0,
+      "atk": 0,
+      "def": 0,
+      "rcv": 0,
+      "mgc": 0
+    },
+    "24": {
+      "name": "Green Potion",
+      "description": "Temporary health bonus",
+      "cost": 1000,
+      "sprite": "Items/greenPotion",
+      "level": 0,
+      "hp": 25,
       "atk": 0,
       "def": 0,
       "rcv": 0,

@@ -71,9 +71,6 @@ public class Curtain : UILayer
         animator.SetBool("IsOpen", false);
         audioSource.PlayOneShot(curtainClosing, 0.7f);
     }
-    /// <summary>
-    /// //
-    /// </summary>
 
     //Open curtain with Intro effects
     public void OpenIntro()
@@ -124,14 +121,12 @@ public class Curtain : UILayer
         Close();
         yield return null;
     }
-
-    //TODO used?
+    
     //Grow Curtains
     public void Grow()
     {
         StartCoroutine(Grow(2));
     }
-
     //Shrink Curtains
     public void Shrink()
     {
